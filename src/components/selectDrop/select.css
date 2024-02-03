@@ -1,0 +1,12 @@
+.selectDropWrapper .openSelect{display: block; padding: 10px 0px; position: relative; font-weight: 600; font-size: 18px !important;}  
+.selectDropWrapper .openSelect .arrow{position: absolute; top: 8px; right: 5px; font-size: 25px;} 
+.selectDrop{width: 300px; height: auto; background: #fff; position: absolute; top:110%; left: -20px; z-index: 100;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    padding: 15px; }
+.searchField input{ width: 100%; height: 50px;  border: 1px solid #bce3c9; outline: none; padding: 0px 15px;}
+.selectDrop .searchResults{width: 100%; margin: 0px; margin-top: 10px; padding: 10px 0px; max-height: 300px; overflow-y: scroll;}
+.selectDrop .searchResults::-webkit-scrollbar{width: 10px !important;}
+.selectDrop .searchResults::-webkit-scrollbar-thumb{background: #ccc !important;}
+.selectDrop .searchResults li{list-style: none; font-size: 17px; width: 100%; padding: 10px; color: rgba(0,0,0,0.7); border-radius: 7px;}
+.selectDrop .searchResults li:hover{background: #3bb77e; color: #fff;}
+.selectDrop .searchResults li.active{background: #f1f1f1; color: #000 !important;}

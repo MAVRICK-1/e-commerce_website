@@ -1,0 +1,21 @@
+
+.cartSection{width: 100%; height: auto; padding: 10px 0px;}
+.cartSection .clearCart{font-weight: 600; font-size: 18px;}
+.cartSection .clearCart svg{font-size: 25px !important;}
+
+.cartWrapper table thead{background: #f1f1f1; overflow: hidden; }
+.cartWrapper table thead th:first-child{border-top-left-radius: 15px; border-bottom-left-radius: 15px;}
+.cartWrapper table thead th:last-child{border-top-right-radius: 15px; border-bottom-right-radius: 15px;}
+
+.cartWrapper table tbody td{vertical-align: middle;}
+.cartWrapper table tbody td .img{width: 30%; height: 150px; padding: 5px; border: 1px solid rgba(0,0,0,0.1); border-radius: 5px;}
+.cartWrapper table tbody td .img img{width: 100%; height: 100%; object-fit: cover;}
+.cartWrapper table tbody td .info{width: 70%;}
+.cartWrapper table tbody td .info a{color: rgba(0,0,0,0.7);}
+.cartWrapper table tbody td .info a:hover{text-decoration: none;}
+
+.cartWrapper table tbody td span{font-weight: 600; font-size: 28px;}
+.cartWrapper table tbody td span.text-g{font-weight: bold;}
+
+.cartRightBox{padding-left: 100px;}
+.cartRightBox .card{position: sticky; top: 150px;}
