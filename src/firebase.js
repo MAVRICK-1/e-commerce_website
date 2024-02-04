@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import firebase from 'firebase/compat/app'
+import { initializeApp } from "firebase/app"
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -11,6 +13,7 @@ const firebaseConfig = {
   storageBucket: "mavrick-1a92d.appspot.com",
   messagingSenderId: "588641997057",
   appId: "1:588641997057:web:02335d56c00b06961ccb00",
+  measurementId: "G-TFKR3TBE3Y"
 
 };
 // Initialize Firebase
