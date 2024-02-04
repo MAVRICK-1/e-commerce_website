@@ -141,12 +141,12 @@ const SignIn = () => {
                         <form className='mt-4'>
                             <div className='form-group mb-4 w-100'>
                                 <TextField id="email" type="email" name='email' label="Email" className='w-100'
-                                    onChange={onChangeField} value={formFields.email} />
+                                    onChange={onChangeField} value={formFields.email} autoComplete='email'/>
                             </div>
                             <div className='form-group mb-4 w-100'>
                                 <div className='position-relative'>
                                     <TextField id="password" type={showPassword === false ? 'password' : 'text'} name='password' label="Password" className='w-100'
-                                        onChange={onChangeField} value={formFields.password} />
+                                        onChange={onChangeField} value={formFields.password} autoComplete='current-password' />
                                     <Button className='icon' onClick={() => setShowPassword(!showPassword)}>
                                         {
                                             showPassword === false ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />

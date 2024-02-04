@@ -38,6 +38,7 @@ const SignUp = () => {
         createUserWithEmailAndPassword(auth, formFields.email, formFields.password)
             .then((userCredential) => {
                 // Signed up 
+                console.log(userCredential);
                 const user = userCredential.user;
                 setShowLoader(false);
                 setFormFields({
@@ -95,12 +96,13 @@ const SignUp = () => {
                         <h3>SignUp</h3>
                         <form className='mt-4'>
                             <div className='form-group mb-4 w-100'>
-                                <TextField id="email" type="email" name='email' label="Email" className='w-100' onChange={onChangeField}  value={formFields.email}/>
+                                <TextField id="email" type="email" name='email' label="Email" className='w-100' onChange={onChangeField}  value={formFields.email} autoComplete='email'/>
                             </div>
                             <div className='form-group mb-4 w-100'>
                                 <div className='position-relative'>
                                     <TextField id="password" type={showPassword === false ? 'password' : 'text'} name='password' label="Password" className='w-100' onChange={onChangeField} 
-                                     value={formFields.password}/>
+                                     value={formFields.password} 
+                                     autoComplete='new-password'/>
                                     <Button className='icon' onClick={() => setShowPassword(!showPassword)}>
                                         {
                                             showPassword === false ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />
@@ -113,7 +115,7 @@ const SignUp = () => {
 
                             <div className='form-group mb-4 w-100'>
                                 <div className='position-relative'>
-                                    <TextField id="conformPassword" type={showPassword1 === false ? 'password' : 'text'} name='conformPassword' label="Confirm Password" className='w-100' onChange={onChangeField}  value={formFields.conformPassword}/>
+                                    <TextField id="conformPassword" type={showPassword1 === false ? 'password' : 'text'} name='conformPassword' label="Confirm Password" className='w-100' onChange={onChangeField}  value={formFields.conformPassword} autoComplete='new-password'/>
                                     <Button className='icon' onClick={() => setShowPassword1(!showPassword1)}>
                                         {
                                             showPassword1 === false ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />
