@@ -11,6 +11,7 @@ import GoogleImg from '../../assets/images/google.png';
 
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 import { app } from '../../firebase';
 
 import Backdrop from '@mui/material/Backdrop';
