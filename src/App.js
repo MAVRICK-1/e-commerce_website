@@ -16,6 +16,7 @@ import Cart from './pages/cart';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Loader from './assets/images/loading.gif';
+// import AddProductForm from './pages/AddProd';
 
 import data from './data';
 
@@ -159,6 +160,7 @@ function App() {
           <Route exact={true} path="/cart" element={<Cart />} />
           <Route exact={true} path="/signIn" element={<SignIn />} />
           <Route exact={true} path="/signUp" element={<SignUp />} />
+          {/* <Route exact={true} path="/addProduct" element={<AddProductForm />} /> */}
           <Route exact={true} path="*" element={<NotFound />} />
         </Routes>
        <Footer/>
