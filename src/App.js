@@ -19,6 +19,7 @@ import Loader from './assets/images/loading.gif';
 // import AddProductForm from './pages/AddProd';
 
 import data from './data';
+import MapComponent from './components/map/ITEMmap';
 
 const MyContext = createContext();
 
@@ -160,6 +161,7 @@ function App() {
           <Route exact={true} path="/cart" element={<Cart />} />
           <Route exact={true} path="/signIn" element={<SignIn />} />
           <Route exact={true} path="/signUp" element={<SignUp />} />
+          <Route exact={true} path="/map" element={<MapComponent data={data}/>}/>
           {/* <Route exact={true} path="/addProduct" element={<AddProductForm />} /> */}
           <Route exact={true} path="*" element={<NotFound />} />
         </Routes>
