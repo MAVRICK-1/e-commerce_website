@@ -5,6 +5,7 @@ import Product from '../../components/product';
 import { Button } from '@mui/material';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined';
+import MapComponent from '../../components/map/ITEMmap';
 
 import { MyContext } from '../../App';
 
@@ -368,6 +369,11 @@ const Listing = (props) => {
                                             }
                                         </div>
                                     </div>
+                                </div>
+
+                                {/* the map component will go here */}
+                                <div className='p-3'>
+                                    <MapComponent data={data} />
                                 </div>
 
                                 <div className='productRow pl-4 pr-3'>
