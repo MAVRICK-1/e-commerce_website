@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect , useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import './map.css'
-const MapComponent = () => {
+const MapComponent = (props) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userLocation, setUserLocation] = useState(null);
     const [mapBounds, setMapBounds] = useState(null);
+    // const mapRef = useRef([]);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -21,40 +22,50 @@ const MapComponent = () => {
     }, []);
 
     useEffect(() => {
-        if (userLocation) {
-            const fetchData = async () => {
-                try {
-                    const response = await fetch('https://mavrick-1.github.io/DataApi/data.json');
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    const data = await response.json();
-                
-                    const groceriesProducts = data.productData.find(item => item.cat_name === 'groceries');
-                    if (groceriesProducts) {
-                        const allProducts = groceriesProducts.items.reduce((acc, curr) => acc.concat(curr.products), []);
-                        const sortedProducts = allProducts.sort((a, b) => {
-                            const [lat1, lng1] = userLocation;
-                            const [lat2, lng2] = a.coordinates;
-                            const distanceA = Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2));
-                            const [lat3, lng3] = b.coordinates;
-                            const distanceB = Math.sqrt(Math.pow(lat3 - lat1, 2) + Math.pow(lng3 - lng1, 2));
-                            return distanceA - distanceB;
-                        });
-                        const top50Products = sortedProducts.slice(0, 50);
-                        setProducts(top50Products);
-                        setLoading(false);
-                        calculateBounds(top50Products);
-                    }
-                } catch (error) {
-                    console.error('Error fetching data:', error);
+        const fetchData = async () => {
+            try {
+                // const response = await fetch('https://mavrick-1.github.io/DataApi/data.json');
+                // if (!response.ok) {
+                //     throw new Error('Network response was not ok');
+                // }
+                const data = await props.data;
+                // console.log(data);
+            
+                const groceriesProducts = data.filter((item) => item.parentCatName === 'groceries');
+                // console.log(groceriesProducts);
+    
+                if (groceriesProducts.length > 0) {
+                    // groceriesProducts.reduce((acc, curr) => console.log(curr,acc), []);
+                    const allProducts = groceriesProducts.reduce((acc, curr) => acc.concat(curr), []);
+                    // console.log(allProducts)
+                    const sortedProducts = allProducts.sort((a, b) => {
+                        const [lat1, lng1] = userLocation;
+                        const [lat2, lng2] = a.coordinates;
+                        const distanceA = Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2));
+                        const [lat3, lng3] = b.coordinates;
+                        const distanceB = Math.sqrt(Math.pow(lat3 - lat1, 2) + Math.pow(lng3 - lng1, 2));
+                        return distanceA - distanceB;
+                    });
+                    const top50Products = sortedProducts.slice(0, 50);
+                    console.log(top50Products)
+                    setProducts(top50Products);
+                    setLoading(false);
+                    calculateBounds(top50Products);
+                } else {
+                    console.error('No groceries products found');
                     setLoading(false);
                 }
-            };
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
     
+        if (userLocation) {
             fetchData();
         }
-    }, [userLocation]);
+    }, [userLocation , props.data]);
+    
 
     const calculateBounds = (products) => {
         if (products.length > 0) {
@@ -65,6 +76,14 @@ const MapComponent = () => {
             setMapBounds(bounds);
         }
     };
+
+    // useEffect(() => {
+    //     if (mapRef.current && products.length > 0) {
+    //         products.forEach(product => {
+    //             L.marker(product.coordinates).addTo(mapRef.current);
+    //         });
+    //     }
+    // }, [products, mapRef]);
 
     return (
         <div className="map-container">

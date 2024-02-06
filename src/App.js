@@ -49,7 +49,7 @@ useEffect(() => {
                   throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                console.log("fetced data", data)
+                // console.log("fetced data", data)
                 setData(data);
             
               } catch (error) {
