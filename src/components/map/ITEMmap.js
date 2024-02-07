@@ -1,13 +1,14 @@
-import { useState, useEffect , useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import './map.css'
+import './map.css';
+
 const MapComponent = (props) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userLocation, setUserLocation] = useState(null);
     const [mapBounds, setMapBounds] = useState(null);
-    // const mapRef = useRef([]);
+    const [key, setKey] = useState(0); // Key to force re-render of MapContainer
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -21,23 +22,23 @@ const MapComponent = (props) => {
         );
     }, []);
 
+    const calculateBounds = (products) => {
+        if (products.length > 0) {
+            let bounds = L.latLngBounds();
+            products.forEach(product => {
+                bounds.extend(product.coordinates);
+            });
+            setMapBounds(bounds);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const response = await fetch('https://mavrick-1.github.io/DataApi/data.json');
-                // if (!response.ok) {
-                //     throw new Error('Network response was not ok');
-                // }
-                const data = await props.data;
-                // console.log(data);
-            
+                const data = await props.data;            
                 const groceriesProducts = data.filter((item) => item.parentCatName === 'groceries');
-                // console.log(groceriesProducts);
-    
                 if (groceriesProducts.length > 0) {
-                    // groceriesProducts.reduce((acc, curr) => console.log(curr,acc), []);
                     const allProducts = groceriesProducts.reduce((acc, curr) => acc.concat(curr), []);
-                    // console.log(allProducts)
                     const sortedProducts = allProducts.sort((a, b) => {
                         const [lat1, lng1] = userLocation;
                         const [lat2, lng2] = a.coordinates;
@@ -65,51 +66,44 @@ const MapComponent = (props) => {
             fetchData();
         }
     }, [userLocation , props.data]);
-    
 
-    const calculateBounds = (products) => {
-        if (products.length > 0) {
-            let bounds = L.latLngBounds();
-            products.forEach(product => {
-                bounds.extend(product.coordinates);
-            });
-            setMapBounds(bounds);
-        }
-    };
+    useEffect(() => {
+        setKey(prevKey => prevKey + 1);
+    }, [props.data]);
 
-    // useEffect(() => {
-    //     if (mapRef.current && products.length > 0) {
-    //         products.forEach(product => {
-    //             L.marker(product.coordinates).addTo(mapRef.current);
-    //         });
-    //     }
-    // }, [products, mapRef]);
+    // Re-render MapContainer when key changes (props.data changes)
+    const memoizedMapContainer = useMemo(
+        () => (
+            <MapContainer key={key} style={{ height: '100vh', width: '100%' }} center={userLocation} bounds={mapBounds}>
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                {userLocation && (
+                    <Marker position={userLocation} icon={L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
+                        <Popup>You are here</Popup>
+                    </Marker>
+                )}
+                {products.map(product => (
+                    <Marker key={product.id} position={product.coordinates}>
+                        <Popup>
+                            <div>
+                                <img src={product.catImg} alt="Product" style={{ width: '100px' }} />
+                                <h3>{product.productName}</h3>
+                                <p>{product.address}</p>
+                                <p>Shop: {product.shop_name}</p>
+                            </div>
+                        </Popup>
+                    </Marker>
+                ))}
+            </MapContainer>
+        ),
+        [key, userLocation, mapBounds, products]
+    );
 
     return (
         <div className="map-container">
             {loading ? (
                 <div className="loading-screen">Loading...</div>
             ) : (
-                <MapContainer style={{ height: '100vh', width: '100%' }} center={userLocation} bounds={mapBounds}>
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    {userLocation && (
-                        <Marker position={userLocation} icon={L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
-                            <Popup>You are here</Popup>
-                        </Marker>
-                    )}
-                    {products.map(product => (
-                        <Marker key={product.id} position={product.coordinates}>
-                            <Popup>
-                                <div>
-                                    <img src={product.catImg} alt="Product" style={{ width: '100px' }} />
-                                    <h3>{product.productName}</h3>
-                                    <p>{product.address}</p>
-                                    <p>Shop: {product.shop_name}</p>
-                                </div>
-                            </Popup>
-                        </Marker>
-                    ))}
-                </MapContainer>
+                memoizedMapContainer
             )}
         </div>
     );
