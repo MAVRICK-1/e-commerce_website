@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
@@ -159,7 +159,7 @@ useEffect(() => {
 
   return (
     data && data.productData ?  (
-      <BrowserRouter>
+      <HashRouter>
         <MyContext.Provider value={value}>
           {isLoading === true && (
             <div className="loader">
@@ -208,7 +208,7 @@ useEffect(() => {
           </Routes>
           <Footer />
         </MyContext.Provider>
-      </BrowserRouter>
+      </HashRouter>
     ) : (
       <div className="loader">
         <img src={Loader} />
