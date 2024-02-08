@@ -29,6 +29,7 @@ import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { Satellite } from '@mui/icons-material';
 
 const Header = (props) => {
 
@@ -244,6 +245,7 @@ const Header = (props) => {
                                                                 <li><Button className='align-items-center'><Person2OutlinedIcon /> My Account</Button></li>
                                                                 <li><Button><LocationOnOutlinedIcon /> Order Tracking</Button></li>
                                                                 <li><Button><FavoriteBorderOutlinedIcon /> My Wishlist</Button></li>
+                                                                <li><Button><Link to={'/seller'}> Sell items</Link></Button></li>
                                                                 <li><Button><SettingsOutlinedIcon /> Setting</Button></li>
                                                                 <li><Button onClick={signOut}><LogoutOutlinedIcon /> Sign out</Button></li>
                                                             </ul>
@@ -295,6 +297,7 @@ const Header = (props) => {
                     <li><Button className='align-items-center'><Link to=""> <img src={IconCart} />Cart</Link></Button></li>
                     <li><Button><Link to=""><LocationOnOutlinedIcon /> Order Tracking</Link></Button></li>
                     <li><Button><Link to=""><FavoriteBorderOutlinedIcon /> My Wishlist</Link></Button></li>
+                    <li><Button><Link to={'/seller'}> Sell items</Link></Button></li>
                     <li><Button><Link to=""><SettingsOutlinedIcon /> Setting</Link></Button></li>
                     <li><Button onClick={signOut}><Link to=""><LogoutOutlinedIcon /> Sign out</Link></Button></li>
                 </ul>

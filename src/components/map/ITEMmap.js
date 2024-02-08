@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import './map.css';
 
+
 const MapComponent = (props) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -35,8 +36,9 @@ const MapComponent = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+
                 const data = await props.data;  
-                console.log(data.length , data) 
+                //console.log(data.length , data) 
                 // only when there is one item or viewing the product details  
                 if (typeof props.data === 'object' && !Array.isArray(props.data)) {
                     console.log("one item")
@@ -46,6 +48,10 @@ const MapComponent = (props) => {
                     return;
                 }     
                 const groceriesProducts = data.filter((item) => item.parentCatName === 'groceries');
+
+                const data = await props.data;            
+                const groceriesProducts = data.filter((item) => item.parentCatName === 'Electronics'||item.parentCatName === 'groceries'||item.parentCatName === 'Fashion');
+
                 if (groceriesProducts.length > 0) {
                     const allProducts = groceriesProducts.reduce((acc, curr) => acc.concat(curr), []);
                     const sortedProducts = allProducts.sort((a, b) => {
@@ -84,7 +90,7 @@ const MapComponent = (props) => {
     // Re-render MapContainer when key changes (props.data changes)
     const memoizedMapContainer = useMemo(
         () => (
-            <MapContainer key={key} style={{ height: '100vh', width: '100%' }} center={userLocation} bounds={mapBounds}>
+            <MapContainer scrollWheelZoom={false} key={key} zoom={4} style={{ height: '100vh', width: '100%' }} center={userLocation}  bounds={mapBounds}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {userLocation && (
                     <Marker position={userLocation} icon={L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
@@ -93,15 +99,15 @@ const MapComponent = (props) => {
                 )}
                 {products.map(product => (
                     <Marker key={product.id} position={product.coordinates}>
-                        <Popup>
+                        <Popup>  
                             <div>
                                 <img src={product.catImg} alt="Product" style={{ width: '100px' }} />
                                 <h3>{product.productName}</h3>
                                 <p>{product.address}</p>
                                 <p>Shop: {product.shop_name}</p>
-                            </div>
+                                                            </div>
                         </Popup>
-                    </Marker>
+                                    </Marker>
                 ))}
             </MapContainer>
         ),

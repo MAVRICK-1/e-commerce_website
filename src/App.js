@@ -2,8 +2,8 @@ import React, { useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+import { getDatabase, ref, push } from 'firebase/database';
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./pages/Home/index";
@@ -16,10 +16,11 @@ import Cart from "./pages/cart";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Loader from "./assets/images/loading.gif";
-// import AddProductForm from './pages/AddProd';
+import AddProductForm from './pages/AddProd';
 
 // import data from './data';
 import MapComponent from "./components/map/ITEMmap";
+import SellerForm from "./pages/SellerRegistration";
 
 const MyContext = createContext();
 
@@ -110,10 +111,10 @@ useEffect(() => {
 
     try {
       await axios.post("http://localhost:5000/cartItems", item).then((res) => {
-        if (res !== undefined) {
+          if (res !== undefined) {
           setCartItems([...cartItems, { ...item, quantity: 1 }]);
         }
-      });
+        });
     } catch (error) {
       console.log(error);
     }
@@ -159,7 +160,7 @@ useEffect(() => {
 
   return (
     data && data.productData ?  (
-      <BrowserRouter>
+      <HashRouter>
         <MyContext.Provider value={value}>
           {isLoading === true && (
             <div className="loader">
@@ -176,6 +177,11 @@ useEffect(() => {
             />
             <Route
               exact={true}
+              path="/AboutUs"
+              element={<About/>}
+            />
+            <Route
+              exact={true}
               path="/cat/:id"
               element={<Listing data={data.productData} single={true} />}
             />
@@ -184,6 +190,12 @@ useEffect(() => {
               path="/cat/:id/:id"
               element={<Listing data={data.productData} single={false} />}
             />
+            <Route
+              exact={true}
+              path="/seller"
+              element={<SellerForm/>}
+            />
+
             <Route
               exact={true}
               path="/product/:id"
@@ -197,12 +209,12 @@ useEffect(() => {
               path="/map"
               element={<MapComponent data={data} />}
             />
-            {/* <Route exact={true} path="/addProduct" element={<AddProductForm />} /> */}
+            <Route exact={true} path="/addProduct" element={<AddProductForm />} />
             <Route exact={true} path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </MyContext.Provider>
-      </BrowserRouter>
+      </HashRouter>
     ) : (
       <div className="loader">
         <img src={Loader} />
