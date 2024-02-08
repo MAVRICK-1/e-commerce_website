@@ -135,12 +135,14 @@ const DetailsPage = (props) => {
                             item_.products.map((product) => {
                                 if (parseInt(product.id) === parseInt(id)) {
                                     setCurrentProduct(product);
+                                    console.log(product)
                                 }
                             })
                     })
             })
 
 /// product data is getting fetched from here
+
 
 
 

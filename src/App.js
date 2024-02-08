@@ -20,6 +20,7 @@ import AddProductForm from './pages/AddProd';
 
 // import data from './data';
 import MapComponent from "./components/map/ITEMmap";
+import SellerForm from "./pages/SellerRegistration";
 
 const MyContext = createContext();
 
@@ -188,6 +189,11 @@ useEffect(() => {
               exact={true}
               path="/cat/:id/:id"
               element={<Listing data={data.productData} single={false} />}
+            />
+            <Route
+              exact={true}
+              path="/seller"
+              element={<SellerForm/>}
             />
 
             <Route
