@@ -36,8 +36,22 @@ const MapComponent = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+
+                const data = await props.data;  
+                //console.log(data.length , data) 
+                // only when there is one item or viewing the product details  
+                if (typeof props.data === 'object' && !Array.isArray(props.data)) {
+                    console.log("one item")
+                    setProducts([props.data]); // Wrap the single object in an array
+                    setLoading(false);
+                    calculateBounds([props.data]); // Wrap the single object in an array
+                    return;
+                }     
+                const groceriesProducts = data.filter((item) => item.parentCatName === 'groceries');
+
                 const data = await props.data;            
                 const groceriesProducts = data.filter((item) => item.parentCatName === 'Electronics'||item.parentCatName === 'groceries'||item.parentCatName === 'Fashion');
+
                 if (groceriesProducts.length > 0) {
                     const allProducts = groceriesProducts.reduce((acc, curr) => acc.concat(curr), []);
                     const sortedProducts = allProducts.sort((a, b) => {
@@ -72,6 +86,7 @@ const MapComponent = (props) => {
         setKey(prevKey => prevKey + 1);
     }, [props.data]);
 
+
     // Re-render MapContainer when key changes (props.data changes)
     const memoizedMapContainer = useMemo(
         () => (
@@ -98,6 +113,15 @@ const MapComponent = (props) => {
         ),
         [key, userLocation, mapBounds, products]
     );
+
+    useEffect(() => {
+        if (props.data.length === 1) {
+            console.log("one item")
+            setProducts(props.data);
+            setLoading(false);
+            calculateBounds(props.data);
+        }
+    }, [props.data]);
 
     return (
         <div className="map-container">

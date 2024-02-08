@@ -17,6 +17,7 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import Product from '../../components/product';
 import axios from 'axios';
 import { MyContext } from '../../App';
+import MapComponent from '../../components/map/ITEMmap';
 
 
 const DetailsPage = (props) => {
@@ -34,6 +35,7 @@ const DetailsPage = (props) => {
 
     const [currentProduct, setCurrentProduct] = useState({})
     const [isAdded, setIsadded] = useState(false);
+    const [isLoading , setIsLoading] = useState(true);
 
     const context = useContext(MyContext);
 
@@ -122,11 +124,10 @@ const DetailsPage = (props) => {
 
 
 
-
-
+    
     useEffect(() => {
         window.scrollTo(0, 0)
-
+        setIsLoading(true);
         props.data.length !== 0 &&
             props.data.map((item) => {
                 item.items.length !== 0 &&
@@ -135,13 +136,15 @@ const DetailsPage = (props) => {
                             item_.products.map((product) => {
                                 if (parseInt(product.id) === parseInt(id)) {
                                     setCurrentProduct(product);
-                                    console.log(product)
+                                   // console.log(product)
                                 }
                             })
                     })
             })
 
+
 /// product data is getting fetched from here
+
 
 
 
@@ -181,12 +184,16 @@ const DetailsPage = (props) => {
 
         showReviews();
 
-        getCartData("http://localhost:5000/cartItems");
+        getCartData("https://mavrick-1.github.io/DataApi/data.json");
 
-    }, [id]);
+        setIsLoading(false);
 
+    }, []);
 
-
+    useEffect(() => {
+        console.log(currentProduct); // Log currentProduct after it has been updated
+        setIsLoading(false);
+    }, [currentProduct]);
 
     const changeInput = (name, value) => {
         if (name === "rating") {
@@ -231,9 +238,9 @@ const DetailsPage = (props) => {
     var reviews_Arr2 = [];
     const showReviews = async () => {
         try {
-            await axios.get("http://localhost:5000/productReviews").then((response) => {
-                if (response.data.length !== 0) {
-                    response.data.map((item) => {
+            await axios.get("https://mavrick-1.github.io/DataApi/data.json").then((response) => {
+                if (response.data.productReviews.length !== 0) {
+                    response.data.productReviews.map((item) => {
                         if (parseInt(item.productId) === parseInt(id)) {
                             reviews_Arr2.push(item)
                         }
@@ -260,17 +267,12 @@ const DetailsPage = (props) => {
         setIsadded(true);
     }
 
-
-
-
-
-
     const getCartData = async (url) => {
         try {
             await axios.get(url).then((response) => {
             
 
-                response.data.length!==0 && response.data.map((item)=>{
+                response.data.cartItems.length!==0 && response.data.cartItems.map((item)=>{
                     
                     if(parseInt(item.id)===parseInt(id)){
                         setisAlreadyAddedInCart(true);
@@ -296,8 +298,9 @@ const DetailsPage = (props) => {
                 </Button>
 
             }
-
-                                    
+    <div className='p-5'>
+        {!isLoading && <MapComponent data={currentProduct} /> }
+    </div>
 
             <section className="detailsPage mb-5">
                 {
@@ -806,6 +809,7 @@ const DetailsPage = (props) => {
 
 
             </section>
+            
         </>
     )
 }
