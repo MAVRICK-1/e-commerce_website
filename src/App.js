@@ -176,6 +176,11 @@ useEffect(() => {
             />
             <Route
               exact={true}
+              path="/AboutUs"
+              element={<About/>}
+            />
+            <Route
+              exact={true}
               path="/cat/:id"
               element={<Listing data={data.productData} single={true} />}
             />
@@ -184,6 +189,7 @@ useEffect(() => {
               path="/cat/:id/:id"
               element={<Listing data={data.productData} single={false} />}
             />
+
             <Route
               exact={true}
               path="/product/:id"
