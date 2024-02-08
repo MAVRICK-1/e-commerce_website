@@ -100,7 +100,7 @@ const Nav = (props) => {
                                     }
 
                                     <li className='list-inline-item'>
-                                        <Button onClick={props.closeNav}><Link>About</Link></Button>
+                                        <Button onClick={props.closeNav}><Link to={'/AboutUs'}>About</Link></Button>
                                     </li>
 
 
