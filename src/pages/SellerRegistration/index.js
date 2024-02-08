@@ -38,7 +38,7 @@ const SellerForm = () => {
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          location=[latitude,longitude]
+          //location=[latitude,longitude]
           console.log("Current latitude:", latitude);
           console.log("Current longitude:", longitude);
           
