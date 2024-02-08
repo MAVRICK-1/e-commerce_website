@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
 import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
-
+import { getDatabase, ref, push } from 'firebase/database';
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./pages/Home/index";
@@ -16,7 +16,7 @@ import Cart from "./pages/cart";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Loader from "./assets/images/loading.gif";
-// import AddProductForm from './pages/AddProd';
+import AddProductForm from './pages/AddProd';
 
 // import data from './data';
 import MapComponent from "./components/map/ITEMmap";
@@ -110,10 +110,10 @@ useEffect(() => {
 
     try {
       await axios.post("http://localhost:5000/cartItems", item).then((res) => {
-        if (res !== undefined) {
+          if (res !== undefined) {
           setCartItems([...cartItems, { ...item, quantity: 1 }]);
         }
-      });
+        });
     } catch (error) {
       console.log(error);
     }
@@ -203,7 +203,7 @@ useEffect(() => {
               path="/map"
               element={<MapComponent data={data} />}
             />
-            {/* <Route exact={true} path="/addProduct" element={<AddProductForm />} /> */}
+            <Route exact={true} path="/addProduct" element={<AddProductForm />} />
             <Route exact={true} path="*" element={<NotFound />} />
           </Routes>
           <Footer />

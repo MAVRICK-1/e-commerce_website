@@ -140,6 +140,7 @@ const DetailsPage = (props) => {
                     })
             })
 
+/// product data is getting fetched from here
 
 
 
