@@ -47,9 +47,7 @@ const MapComponent = (props) => {
                     calculateBounds([props.data]); // Wrap the single object in an array
                     return;
                 }     
-                const groceriesProducts = data.filter((item) => item.parentCatName === 'groceries');
-
-                const data = await props.data;            
+                          
                 const groceriesProducts = data.filter((item) => item.parentCatName === 'Electronics'||item.parentCatName === 'groceries'||item.parentCatName === 'Fashion');
 
                 if (groceriesProducts.length > 0) {
