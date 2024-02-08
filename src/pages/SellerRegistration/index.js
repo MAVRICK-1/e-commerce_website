@@ -102,6 +102,7 @@ const SellerForm = () => {
                   name="ownerName"
                   value={formFields.ownerName}
                   onChange={onChangeField}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -111,6 +112,7 @@ const SellerForm = () => {
                   name="phoneNumber"
                   value={formFields.phoneNumber}
                   onChange={onChangeField}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -120,6 +122,7 @@ const SellerForm = () => {
                   name="location"
                   value={formFields.location}
                   onChange={onChangeField}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -129,6 +132,7 @@ const SellerForm = () => {
                   name="pincode"
                   value={formFields.pincode}
                   onChange={onChangeField}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -138,6 +142,7 @@ const SellerForm = () => {
                   name="shopName"
                   value={formFields.shopName}
                   onChange={onChangeField}
+                  color="success"
                 />
               </Grid>
               <Grid item xs={12}>
