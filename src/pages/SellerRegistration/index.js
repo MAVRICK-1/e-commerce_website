@@ -13,7 +13,7 @@ const SellerForm = () => {
     pincode: "",
     shopName: "",
     shopPhoto: null,
-    location:[]
+    location:[],
   });
 
   const onChangeField = (e) => {
@@ -85,7 +85,7 @@ const SellerForm = () => {
   };
 
   return (
-    <Container style={{marginTop:'30px'}}>
+    <Container style={{ marginTop: '90px', padding: '20px', marginBottom: '50px' }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h4" align="center" gutterBottom>
@@ -95,7 +95,7 @@ const SellerForm = () => {
         <Grid item xs={12}>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
                   label="Owner Name"
@@ -104,7 +104,7 @@ const SellerForm = () => {
                   onChange={onChangeField}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
                   label="Phone Number"
@@ -122,7 +122,7 @@ const SellerForm = () => {
                   onChange={onChangeField}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
                   label="Pincode"
@@ -131,7 +131,7 @@ const SellerForm = () => {
                   onChange={onChangeField}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
                   label="Shop Name"
@@ -150,8 +150,9 @@ const SellerForm = () => {
               <Grid item xs={12}>
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="success" // Change color to success
                   onClick={handleGetCurrentLocation}
+                  fullWidth
                 >
                   Get Current Location
                 </Button>
@@ -160,7 +161,7 @@ const SellerForm = () => {
                 <Button
                   type="submit"
                   variant="contained"
-                  color="primary"
+                  color="success" // Change color to success
                   fullWidth
                 >
                   Register
