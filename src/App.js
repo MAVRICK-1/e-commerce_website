@@ -64,7 +64,7 @@ useEffect(() => {
 
   useEffect(() => {
     // getData('http://localhost:5000/productData');
-    // getCartData("http://localhost:5000/cartItems");
+    getCartData("https://mavrick-1a92d-default-rtdb.firebaseio.com/");
 
     const is_Login = localStorage.getItem("isLogin");
     setIsLogin(is_Login);
@@ -80,7 +80,7 @@ useEffect(() => {
       await axios.get(url).then((response) => {
         setProductData(response.data);
         setTimeout(() => {
-          setIsloading(false);
+          // setIsLoading(false);
         }, 2000);
       });
 
@@ -98,41 +98,73 @@ useEffect(() => {
 
   const getCartData = async (url) => {
     try {
-      await axios.get(url).then((response) => {
-        setCartItems(response.data);
-      });
+      const db = getDatabase();
+      const cartRef = ref(db, url); // Assuming 'url' is the path to your cart data in Firebase
+      const snapshot = await get(cartRef);
+      console.log('data fetched')
+  
+      if (snapshot.exists()) {
+        setCartItems(snapshot.val());
+      } else {
+        console.log('No cart data available');
+      }
     } catch (error) {
-      console.log(error.message);
+      console.error('Error fetching cart data:', error);
     }
   };
+  
 
   const addToCart = async (item) => {
     item.quantity = 1;
+    console.log("item");
+    console.log(item)
 
+  
     try {
-      await axios.post("http://localhost:5000/cartItems", item).then((res) => {
+      await axios.post("https://mavrick-1a92d-default-rtdb.firebaseio.com/", item).then((res) => {
           if (res !== undefined) {
           setCartItems([...cartItems, { ...item, quantity: 1 }]);
+          console.log(cartItems)
         }
         });
     } catch (error) {
+      console.log(cartItems)
       console.log(error);
     }
   };
+//   const addToCart = async (item) => {
+//     try {
+//         // Assuming Firebase is already initialized elsewhere in your application
+//         const db = getDatabase(); // Assuming Firebase is initialized elsewhere
+//         const cartRef = ref(db, 'cartItems');
+    
+//         // Add item to the cart in Firebase
+//         push(cartRef, { ...item, quantity: 1 })
+//             .then(() => {
+//                 // Update the local state with the new cart item
+//                 setCartItems([...cartItems, { ...item, quantity: 1 }]);
+//             })
+//             .catch((error) => {
+//                 console.error('Error adding item to cart:', error);
+//             });
+//     } catch (error) {
+//         console.error('Error adding item to cart:', error);
+//     }
+// };
 
-  const removeItemsFromCart = (id) => {
+const removeItemsFromCart = (id) => {
     const arr = cartItems.filter((obj) => obj.id !== id);
     setCartItems(arr);
-  };
+};
 
-  const emptyCart = () => {
+const emptyCart = () => {
     setCartItems([]);
-  };
+};
 
-  const signIn = () => {
+const signIn = () => {
     const is_Login = localStorage.getItem("isLogin");
     setIsLogin(is_Login);
-  };
+};
 
   const signOut = () => {
     localStorage.removeItem("isLogin");

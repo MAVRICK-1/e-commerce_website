@@ -61,7 +61,7 @@ const MapComponent = (props) => {
                         return distanceA - distanceB;
                     });
                     const top50Products = sortedProducts.slice(0, 50);
-                    console.log(top50Products)
+                    //console.log(top50Products)
                     setProducts(top50Products);
                     setLoading(false);
                     calculateBounds(top50Products);

@@ -60,6 +60,7 @@ const SignIn = () => {
     }
 
     const signInWithGoogle = () => {
+        console.log('hi sign in');
         setShowLoader(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {

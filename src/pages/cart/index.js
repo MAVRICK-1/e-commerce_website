@@ -19,7 +19,7 @@ const Cart = () => {
 
     useEffect(() => {
         if(context.isLogin==="true"){
-            getCartData("http://localhost:5000/cartItems");
+            getCartData("https://mavrick-1a92d-default-rtdb.firebaseio.com/");
         }else{
             history('/');
         }

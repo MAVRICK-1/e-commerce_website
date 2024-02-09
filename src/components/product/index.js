@@ -27,10 +27,13 @@ const Product = (props) => {
         sessionStorage.setItem('parentCat', productData.parentCatName);
         sessionStorage.setItem('subCatName', productData.subCatName);
     }
+    //console.log(productData); //printing1000 data
+
 
 
     const addToCart=(item)=>{
         context.addToCart(item);
+        console.log(item);
         setIsadded(true);
     }
 

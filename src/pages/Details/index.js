@@ -13,7 +13,7 @@ import { Button } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import { getDatabase, ref, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, child, remove } from "firebase/database";
 import Product from '../../components/product';
 import axios from 'axios';
 import { MyContext } from '../../App';
@@ -268,26 +268,46 @@ const DetailsPage = (props) => {
     //     setIsadded(true);
     // }
     const addToCart = async (item) => {
+        try {
+            // Assuming Firebase is already initialized elsewhere in your application
+            const db = getDatabase(); // Assuming Firebase is initialized elsewhere
+            const cartRef = ref(db, 'Adrija');
+            console.log('data is added')
+        
+            // Add item to the cart in Firebase
+            push(cartRef, { ...item, quantity: 1 })
+                .then(() => {
+                    // Update the local state with the new cart item
+                    //setCartItems([...cartItems, { ...item, quantity: 1 }]);
+                })
+                .catch((error) => {
+                    console.error('Error adding item to cart:', error);
+                });
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+        }
+    };
+   // Fetch data from Firebase Realtime Database
+const fetchDataFromFirebase = () => {
     try {
-        // Assuming Firebase is already initialized elsewhere in your application
-        const db = getDatabase('[https://mavrick-cart.firebaseio.com/cartItems'); // Assuming Firebase is initialized elsewhere
-        const cartRef = ref(db, 'cartItems');
-        setIsadded(true);
-        console.log('in the cart');
-    
-        // Add item to the cart in Firebase
-        push(cartRef, { ...item, quantity: 1 })
-            .then(() => {
-                // Update the local state with the new cart item
-                // setCartItems([...cartItems, { ...item, quantity: 1 }]);
-            })
-            .catch((error) => {
-                console.error('Error adding item to cart:', error);
-            });
+      // Get a reference to the database
+      const db = getDatabase();
+  
+      // Reference to the node or path you want to fetch data from
+      const dataRef = ref(db, 'Adrija');
+  
+      // Fetch data from the specified path
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log("Data fetched successfully:", data);
+      }, (error) => {
+        console.error("Error fetching data:", error);
+      });
     } catch (error) {
-        console.error('Error adding item to cart:', error);
+      console.error("Error:", error);
     }
-};
+  };
+  
 
     const getCartData = async (url) => {
         try {
@@ -309,7 +329,7 @@ const DetailsPage = (props) => {
 
     return (
         <>
-
+         
 
 
             {
@@ -342,6 +362,7 @@ const DetailsPage = (props) => {
                                 <li>{currentProduct.productName}</li>
                             </ul>
                         </div>
+                        
 
                     </div>
                 }
@@ -398,6 +419,7 @@ const DetailsPage = (props) => {
                         {/* product info code start here */}
                         <div className='col-md-7 productInfo'>
                             <h1>{currentProduct.productName}</h1>
+                            <h1><button onClick={fetchDataFromFirebase()}>bhhhhhhhhhhhh</button></h1>
                             <div className='d-flex align-items-center mb-4 mt-3'>
                                 <Rating name="half-rating-read" value={parseFloat(currentProduct.rating)} precision={0.5} readOnly />
                                 <span className='text-light ml-2'>(32 reviews)</span>
@@ -611,6 +633,7 @@ const DetailsPage = (props) => {
                                                 <tr class="head-room-inside-canopy">
                                                     <th>Head room (inside canopy)</th>
                                                     <td>
+                                                       
                                                         <p>25″</p>
                                                     </td>
                                                 </tr>
