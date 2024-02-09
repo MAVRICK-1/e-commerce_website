@@ -57,6 +57,35 @@ const MapComponent = (props) => {
             item.parentCatName === "Fashion"
         );
 
+ addtocart
+                if (groceriesProducts.length > 0) {
+                    const allProducts = groceriesProducts.reduce((acc, curr) => acc.concat(curr), []);
+                    const sortedProducts = allProducts.sort((a, b) => {
+                        const [lat1, lng1] = userLocation;
+                        const [lat2, lng2] = a.coordinates;
+                        const distanceA = Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2));
+                        const [lat3, lng3] = b.coordinates;
+                        const distanceB = Math.sqrt(Math.pow(lat3 - lat1, 2) + Math.pow(lng3 - lng1, 2));
+                        return distanceA - distanceB;
+                    });
+                    const top50Products = sortedProducts.slice(0, 50);
+                    //console.log(top50Products)
+                    setProducts(top50Products);
+                    setLoading(false);
+                    calculateBounds(top50Products);
+                } else {
+                    console.error('No groceries products found');
+                    setLoading(false);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+    
+        if (userLocation) {
+            fetchData();
+
         if (groceriesProducts.length > 0) {
           const allProducts = groceriesProducts.reduce(
             (acc, curr) => acc.concat(curr),
@@ -82,6 +111,7 @@ const MapComponent = (props) => {
         } else {
           console.error("No groceries products found");
           setLoading(false);
+      main
         }
       } catch (error) {
         console.error("Error fetching data:", error);

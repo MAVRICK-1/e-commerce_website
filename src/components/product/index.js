@@ -7,7 +7,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-
+import { getDatabase, ref, onValue, set, push, child, remove } from "firebase/database";
 
 import { MyContext } from '../../App';
 
@@ -27,12 +27,27 @@ const Product = (props) => {
         sessionStorage.setItem('parentCat', productData.parentCatName);
         sessionStorage.setItem('subCatName', productData.subCatName);
     }
+    //console.log(productData); //printing1000 data
 
 
-    const addToCart=(item)=>{
-        context.addToCart(item);
-        setIsadded(true);
-    }
+
+    const addToCart = async (item) => {
+        try {
+            const user=localStorage.getItem('user')
+            // Initialize Firebase database with the provided database URL
+            const db = getDatabase();
+            const cartRef = ref(db,user );
+            // Generate a unique key using the user's email and item details
+            const uniqueKey =  user+item.id; // Modify as per your requirement
+            // Add item to the cart in Firebase
+            await set(child(cartRef, uniqueKey), { ...item, quantity: 1 });
+            setIsadded(true)
+            // Assuming setIsAdded updates the state to indicate the item is added
+            console.log('Item added to cart successfully');
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+        }
+    };
 
 
     return (

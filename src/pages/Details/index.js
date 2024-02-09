@@ -13,11 +13,14 @@ import { Button } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-
+import { getDatabase, ref, onValue, set, push, child, remove } from "firebase/database";
 import Product from '../../components/product';
 import axios from 'axios';
 import { MyContext } from '../../App';
 import MapComponent from '../../components/map/ITEMmap';
+import { Email } from '@mui/icons-material';
+import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
+
 
 
 const DetailsPage = (props) => {
@@ -26,6 +29,7 @@ const DetailsPage = (props) => {
 
     const [bigImageSize, setBigImageSize] = useState([1500, 1500]);
     const [smlImageSize, setSmlImageSize] = useState([150, 150]);
+    const [loggedInUserEmail,setLoggedInUseEmail]=useLoggedInUserEmail();
 
     const [activeSize, setActiveSize] = useState(0);
 
@@ -144,15 +148,6 @@ const DetailsPage = (props) => {
 
 
 /// product data is getting fetched from here
-
-
-
-
-
-
-
-
-
         //related products code
 
         const related_products = [];
@@ -262,10 +257,49 @@ const DetailsPage = (props) => {
 
 
 
-    const addToCart = (item) => {
-        context.addToCart(item);
-        setIsadded(true);
+    // const addToCart = (item) => {
+    //     context.addToCart(item);
+
+    //     setIsadded(true);
+    // }
+    const addToCart = async (item) => {
+        try {
+            const user=localStorage.getItem('user')
+            // Initialize Firebase database with the provided database URL
+            const db = getDatabase();
+            const cartRef = ref(db,user );
+            // Generate a unique key using the user's email and item details
+            const uniqueKey =  user+item.id; // Modify as per your requirement
+            // Add item to the cart in Firebase
+            await set(child(cartRef, uniqueKey), { ...item, quantity: 1 });
+            setIsadded(true)
+            // Assuming setIsAdded updates the state to indicate the item is added
+            console.log('Item added to cart successfully');
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+        }
+    };
+   // Fetch data from Firebase Realtime Database
+const fetchDataFromFirebase = () => {
+    try {
+      // Get a reference to the database
+      const db = getDatabase();
+  
+      // Reference to the node or path you want to fetch data from
+      const dataRef = ref(db, localStorage.getItem('user'));
+  
+      // Fetch data from the specified path
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log("Data fetched successfully:", data);
+      }, (error) => {
+        console.error("Error fetching data:", error);
+      });
+    } catch (error) {
+      console.error("Error:", error);
     }
+  };
+  
 
     const getCartData = async (url) => {
         try {
@@ -287,14 +321,17 @@ const DetailsPage = (props) => {
 
     return (
         <>
-
+         
 
 
             {
                 context.windowWidth < 992 && <Button className={`btn-g btn-lg w-100 filterBtn {isAlreadyAddedInCart===true && 'no-click'}`} onClick={() => addToCart(currentProduct)}><ShoppingCartOutlinedIcon />
                     {
+                        
                         isAdded === true || isAlreadyAddedInCart===true  ? 'Added' : 'Add To Cart'
+                        
                     }
+                    
                 </Button>
 
             }
@@ -317,6 +354,7 @@ const DetailsPage = (props) => {
                                 <li>{currentProduct.productName}</li>
                             </ul>
                         </div>
+                        
 
                     </div>
                 }
@@ -373,6 +411,7 @@ const DetailsPage = (props) => {
                         {/* product info code start here */}
                         <div className='col-md-7 productInfo'>
                             <h1>{currentProduct.productName}</h1>
+                            <h1><button onClick={fetchDataFromFirebase()}>bhhhhhhhhhhhh</button></h1>
                             <div className='d-flex align-items-center mb-4 mt-3'>
                                 <Rating name="half-rating-read" value={parseFloat(currentProduct.rating)} precision={0.5} readOnly />
                                 <span className='text-light ml-2'>(32 reviews)</span>
@@ -586,6 +625,7 @@ const DetailsPage = (props) => {
                                                 <tr class="head-room-inside-canopy">
                                                     <th>Head room (inside canopy)</th>
                                                     <td>
+                                                       
                                                         <p>25″</p>
                                                     </td>
                                                 </tr>

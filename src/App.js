@@ -2,8 +2,8 @@ import React, { useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
-import { getDatabase, ref, push } from 'firebase/database';
+import {  Routes, Route, HashRouter } from "react-router-dom";
+import { getDatabase, ref, onValue, set, push, child, remove } from "firebase/database";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./pages/Home/index";
@@ -26,7 +26,9 @@ const MyContext = createContext();
 
 function App() {
   const [productData, setProductData] = useState([]);
+ 
   const [cartItems, setCartItems] = useState([]);
+
   const [isLoading, setIsloading] = useState(true);
 
   const [loading, setLoading] = useState(true);
@@ -63,8 +65,8 @@ useEffect(() => {
 
 
   useEffect(() => {
-    // getData('http://localhost:5000/productData');
-    // getCartData("http://localhost:5000/cartItems");
+   getData();
+    getCartData();
 
     const is_Login = localStorage.getItem("isLogin");
     setIsLogin(is_Login);
@@ -77,62 +79,75 @@ useEffect(() => {
 
   const getData = async (url) => {
     try {
-      await axios.get(url).then((response) => {
-        setProductData(response.data);
-        setTimeout(() => {
-          setIsloading(false);
-        }, 2000);
+      // Get a reference to the database
+      const db = getDatabase();
+  
+      // Reference to the node or path you want to fetch data from
+      const dataRef = ref(db, localStorage.getItem('user'));
+  
+      // Fetch data from the specified path
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        setCartItems(data);
+        console.log("Data fetched successfully:", data);
+      }, (error) => {
+        console.error("Error fetching data:", error);
       });
-
-      await axios
-        .get(
-          "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=27dad2d0abd34a22965727ce8d939077"
-        )
-        .then((response) => {
-          console.log(response);
-        });
     } catch (error) {
-      console.log(error.message);
+      console.error("Error:", error);
     }
   };
 
-  const getCartData = async (url) => {
+  const getCartData = async () => {
     try {
-      await axios.get(url).then((response) => {
-        setCartItems(response.data);
+      // Get a reference to the database
+      const db = getDatabase();
+  
+      // Reference to the node or path you want to fetch data from
+      const dataRef = ref(db, localStorage.getItem('user'));
+  
+      // Fetch data from the specified path
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        setCartItems(data);
+        console.log("Data fetched successfully:", data);
+      }, (error) => {
+        console.error("Error fetching data:", error);
       });
     } catch (error) {
-      console.log(error.message);
+      console.error("Error:", error);
     }
   };
-
+  
   const addToCart = async (item) => {
-    item.quantity = 1;
-
     try {
-      await axios.post("http://localhost:5000/cartItems", item).then((res) => {
-          if (res !== undefined) {
-          setCartItems([...cartItems, { ...item, quantity: 1 }]);
-        }
-        });
+        const user=localStorage.getItem('user')
+        // Initialize Firebase database with the provided database URL
+        const db = getDatabase();
+        const cartRef = ref(db,user );
+        // Generate a unique key using the user's email and item details
+        const uniqueKey =  user+item.id; // Modify as per your requirement
+        // Add item to the cart in Firebase
+        setCartItems([...cartItems, { ...item, quantity: 1 }]);
+        console.log('Item added to cart successfully');
     } catch (error) {
-      console.log(error);
+        console.error('Error adding item to cart:', error);
     }
-  };
+};
 
-  const removeItemsFromCart = (id) => {
+const removeItemsFromCart = (id) => {
     const arr = cartItems.filter((obj) => obj.id !== id);
     setCartItems(arr);
-  };
+};
 
-  const emptyCart = () => {
+const emptyCart = () => {
     setCartItems([]);
-  };
+};
 
-  const signIn = () => {
+const signIn = () => {
     const is_Login = localStorage.getItem("isLogin");
     setIsLogin(is_Login);
-  };
+};
 
   const signOut = () => {
     localStorage.removeItem("isLogin");

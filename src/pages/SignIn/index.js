@@ -12,7 +12,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { MyContext } from '../../App';
 import GoogleImg from '../../assets/images/google.png';
-
+import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -27,6 +27,13 @@ const SignIn = () => {
     const context = useContext(MyContext);
     const history = useNavigate();
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [loggedInUserEmail,setLoggedInUseEmail]=useLoggedInUserEmail(); //get_email hook
+    function replaceSpecialCharacters(inputString) {
+        // Use a regular expression to replace special characters with underscore _
+        const replacedString = inputString.replace(/[#$\[\].]/g, '_');
+    
+        return replacedString;
+    }
     
 
     const onChangeField = (e) => {
@@ -50,7 +57,11 @@ const SignIn = () => {
                     password: '',
                 });
                 localStorage.setItem('isLogin', true);
+                const udata=replaceSpecialCharacters(user.email)
+                localStorage.setItem('user',udata)
                 context.signIn();
+                setLoggedInUseEmail(user.email)
+                console.log(loggedInUserEmail);
                 history('/');
             })
             .catch((error) => {
@@ -60,12 +71,17 @@ const SignIn = () => {
     }
 
     const signInWithGoogle = () => {
+        console.log('hi sign in');
         setShowLoader(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 setShowLoader(false);
                 localStorage.setItem('isLogin', true);
+                const udata=replaceSpecialCharacters(result.user.email)
+                localStorage.setItem('user',udata)
                 context.signIn();
+                setLoggedInUseEmail(udata)
+                console.log(loggedInUserEmail);
                 history('/');
             })
             .catch((error) => {
