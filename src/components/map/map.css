@@ -14,6 +14,6 @@
 /* Adjust map size for smaller screens */
 @media screen and (max-width: 768px) {
     .map-container {
-        height: 50vh;
+        height: 90vh;
     }
 }
