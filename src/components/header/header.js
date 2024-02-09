@@ -35,7 +35,6 @@ const Header = (props) => {
 
     const [isOpenDropDown, setisOpenDropDown] = useState(false);
     const [isOpenAccDropDown, setisOpenAccDropDown] = useState(false);
-    const [cartlen, setcartlen]=getCartlen()
     
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isopenSearch, setOpenSearch] = useState(false);

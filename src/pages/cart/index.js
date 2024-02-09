@@ -16,7 +16,7 @@ const Cart = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const context = useContext(MyContext);
     const navigate = useNavigate();
-    const [cartlen, setcartlen]=getCartlen()
+
     
 
     useEffect(() => {
@@ -43,7 +43,6 @@ const Cart = () => {
                 console.log("Data fetched successfully:", data);
                 if (data) {
                     setCartItems(Object.values(data));
-                    setcartlen(cartItems.length)
                     // Calculate total price
                     const totalPrice = Object.values(data).reduce((acc, item) => {
                         const itemPrice = parseInt(item.price.split(",").join(""));
@@ -73,7 +72,6 @@ const Cart = () => {
                 .then(() => {
                     console.log("Item deleted successfully");
                     context.removeItemsFromCart(id);
-                    setcartlen(cartItems.length)
                 })
                 .catch((error) => {
                     console.error("Error deleting item:", error);
@@ -92,7 +90,7 @@ const Cart = () => {
                     context.emptyCart();
                     console.log("Item deleted successfully");
                     setCartItems([]);
-                    setcartlen(cartItems.length) // Reset cartItems to an empty array after emptying the cart
+ // Reset cartItems to an empty array after emptying the cart
                     setTotalPrice(0); // Reset total price
                 })
                 .catch((error) => {
