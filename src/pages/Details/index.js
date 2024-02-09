@@ -280,25 +280,25 @@ const DetailsPage = (props) => {
         }
     };
    // Fetch data from Firebase Realtime Database
-const fetchDataFromFirebase = () => {
-    try {
-      // Get a reference to the database
-      const db = getDatabase();
+// const fetchDataFromFirebase = () => {
+//     try {
+//       // Get a reference to the database
+//       const db = getDatabase();
   
-      // Reference to the node or path you want to fetch data from
-      const dataRef = ref(db, localStorage.getItem('user'));
+//       // Reference to the node or path you want to fetch data from
+//       const dataRef = ref(db, localStorage.getItem('user'));
   
-      // Fetch data from the specified path
-      onValue(dataRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log("Data fetched successfully:", data);
-      }, (error) => {
-        console.error("Error fetching data:", error);
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+//       // Fetch data from the specified path
+//       onValue(dataRef, (snapshot) => {
+//         const data = snapshot.val();
+//         console.log("Data fetched successfully:", data);
+//       }, (error) => {
+//         console.error("Error fetching data:", error);
+//       });
+//     } catch (error) {
+//       console.error("Error:", error);
+//     }
+//   };
   
 
     const getCartData = async (url) => {
@@ -411,7 +411,6 @@ const fetchDataFromFirebase = () => {
                         {/* product info code start here */}
                         <div className='col-md-7 productInfo'>
                             <h1>{currentProduct.productName}</h1>
-                            <h1><button onClick={fetchDataFromFirebase()}>bhhhhhhhhhhhh</button></h1>
                             <div className='d-flex align-items-center mb-4 mt-3'>
                                 <Rating name="half-rating-read" value={parseFloat(currentProduct.rating)} precision={0.5} readOnly />
                                 <span className='text-light ml-2'>(32 reviews)</span>
