@@ -41,7 +41,7 @@ const MapComponent = (props) => {
                 //console.log(data.length , data) 
                 // only when there is one item or viewing the product details  
                 if (typeof props.data === 'object' && !Array.isArray(props.data)) {
-                    console.log("one item")
+                    // console.log("one item")
                     setProducts([props.data]); // Wrap the single object in an array
                     setLoading(false);
                     calculateBounds([props.data]); // Wrap the single object in an array
@@ -61,7 +61,7 @@ const MapComponent = (props) => {
                         return distanceA - distanceB;
                     });
                     const top50Products = sortedProducts.slice(0, 50);
-                    console.log(top50Products)
+                   // console.log(top50Products)
                     setProducts(top50Products);
                     setLoading(false);
                     calculateBounds(top50Products);
@@ -114,7 +114,7 @@ const MapComponent = (props) => {
 
     useEffect(() => {
         if (props.data.length === 1) {
-            console.log("one item")
+            // console.log("one item")
             setProducts(props.data);
             setLoading(false);
             calculateBounds(props.data);

@@ -191,7 +191,7 @@ const DetailsPage = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(currentProduct); // Log currentProduct after it has been updated
+        // console.log(currentProduct); // Log currentProduct after it has been updated
         setIsLoading(false);
     }, [currentProduct]);
 
