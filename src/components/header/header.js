@@ -29,7 +29,6 @@ import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { Satellite } from '@mui/icons-material';
-import getCartlen from '../../Hooks/cartlength';
 
 const Header = (props) => {
 
@@ -148,7 +147,7 @@ const Header = (props) => {
                                                 <span>
                                                     <Link to={'/cart'}> <img src={IconCart} />
                                                         <span className='badge bg-success rounded-circle'>
-                                                            {cartlen}
+                                                        
                                                         </span>
                                                     </Link>
                                                 </span>
