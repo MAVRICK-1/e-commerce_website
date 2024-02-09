@@ -9,7 +9,6 @@ import { MyContext } from '../../App';
 import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import getCartlen from '../../Hooks/cartlength';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [error, setError] = useState(null);
