@@ -3,77 +3,113 @@ import { Link } from 'react-router-dom';
 import './style.css';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import Rating from '@mui/material/Rating';
-import { Button } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import QuantityBox from '../../components/quantityBox';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { MyContext } from '../../App';
-import axios from 'axios';
-
+import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
-
-
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import getCartlen from '../../Hooks/cartlength';
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([])
+    const [cartItems, setCartItems] = useState([]);
+    const [error, setError] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(0);
     const context = useContext(MyContext);
-    const history = useNavigate();
+    const navigate = useNavigate();
+    const [cartlen, setcartlen]=getCartlen()
+    
 
     useEffect(() => {
-        if(context.isLogin==="true"){
-            getCartData("https://mavrick-1a92d-default-rtdb.firebaseio.com/");
-        }else{
-            history('/');
-        }
-
-        window.scrollTo(0,0);
-        
-    }, [])
-
-    const getCartData = async (url) => {
         try {
-            await axios.get(url).then((response) => {
-                setCartItems(response.data);
-            })
-
+            if (context.isLogin === "true") {
+                getCartData();
+            } else {
+                navigate('/aboutus'); // Navigate to About Us page if not logged in
+            }
+    
+            window.scrollTo(0, 0);
         } catch (error) {
-            console.log(error.message);
+            console.error("Error:", error);
+            setError("Failed to fetch data from the server"); // Set error state if there's an error with database connection
+        }
+    }, []);
+
+    const getCartData = async () => {
+        try {
+            const db = getDatabase();
+            const dataRef = ref(db, `${localStorage.getItem('user')}`);
+            onValue(dataRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log("Data fetched successfully:", data);
+                if (data) {
+                    setCartItems(Object.values(data));
+                    setcartlen(cartItems.length)
+                    // Calculate total price
+                    const totalPrice = Object.values(data).reduce((acc, item) => {
+                        const itemPrice = parseInt(item.price.split(",").join(""));
+                        return acc + itemPrice * item.quantity;
+                    }, 0);
+                    setTotalPrice(totalPrice);
+                } else {
+                    setCartItems([]);
+                     // If data is null, set cartItems to an empty array
+                }
+                setError(null); // Reset error state if data fetch is successful
+            }, (error) => {
+                console.error("Error fetching data:", error);
+                setError(error.message); // Set error state if there's an error fetching data
+            });
+        } catch (error) {
+            console.error("Error:", error);
+            setError("Failed to fetch data from the server"); // Set error state if there's an error with database connection
         }
     }
-
 
     const deleteItem = async (id) => {
-        const response = await axios.delete(`http://localhost:5000/cartItems/${id}`);
-        if (response !== null) {
-            getCartData("http://localhost:5000/cartItems");
-            context.removeItemsFromCart(id);
+        try {
+            const db = getDatabase();
+            const itemRef = ref(db, `${localStorage.getItem('user')}/${localStorage.getItem('user')}${id}`);
+            remove(itemRef)
+                .then(() => {
+                    console.log("Item deleted successfully");
+                    context.removeItemsFromCart(id);
+                    setcartlen(cartItems.length)
+                })
+                .catch((error) => {
+                    console.error("Error deleting item:", error);
+                });
+        } catch (error) {
+            console.error("Error:", error);
         }
     }
-
-
 
     const emptyCart = () => {
-        let response = null;
-        cartItems.length !== 0 &&
-            cartItems.map((item) => {
-                response = axios.delete(`http://localhost:5000/cartItems/${parseInt(item.id)}`);
-            })
-        if (response !== null) {
-            getCartData("http://localhost:5000/cartItems");
+        try {
+            const db = getDatabase();
+            const itemRef = ref(db, `${localStorage.getItem('user')}`);
+            remove(itemRef)
+                .then(() => {
+                    context.emptyCart();
+                    console.log("Item deleted successfully");
+                    setCartItems([]);
+                    setcartlen(cartItems.length) // Reset cartItems to an empty array after emptying the cart
+                    setTotalPrice(0); // Reset total price
+                })
+                .catch((error) => {
+                    console.error("Error deleting item:", error);
+                });
+        } catch (error) {
+            console.error("Error:", error);
         }
-
-        context.emptyCart();
     }
-
 
     const updateCart = (items) => {
         setCartItems(items)
     }
 
-
-
-
     return (
         <>
-           {
+        {
             context.windowWidth>992 &&  <div className="breadcrumbWrapper mb-4">
             <div className="container-fluid">
                 <ul className="breadcrumb breadcrumb2 mb-0">
@@ -91,7 +127,6 @@ const Cart = () => {
         </div>
 
            }
-
             <section className='cartSection mb-5'>
                 <div className='container-fluid'>
                     <div className='row'>
@@ -106,9 +141,6 @@ const Cart = () => {
                                     onClick={() => emptyCart()}><DeleteOutlineOutlinedIcon /> Clear Cart</span>
 
                             </div>
-
-
-
                             <div className='cartWrapper mt-4'>
                                 <div className='table-responsive'>
                                     <table className='table'>
@@ -122,8 +154,11 @@ const Cart = () => {
                                             </tr>
                                         </thead>
 
+
+
                                         <tbody>
                                             {
+
                                                 cartItems.length !== 0 &&
                                                 cartItems.map((item, index) => {
                                                     return (
@@ -186,8 +221,6 @@ const Cart = () => {
                                 </Link>
                                 {/* <Button className='btn-g ml-auto' onClick={updateCartData}>
                     <RefreshIcon /> Update Cart</Button> */}
-
-
                             </div>
 
 
@@ -216,7 +249,6 @@ const Cart = () => {
                                     <h3 className='ml-auto mb-0 font-weight-bold'>United Kingdom</h3>
                                 </div>
 
-
                                 <div className='d-flex align-items-center mb-4'>
                                     <h5 className='mb-0 text-light'>Total</h5>
                                     <h3 className='ml-auto mb-0 font-weight-bold'><span className='text-g'>
@@ -226,7 +258,6 @@ const Cart = () => {
                                         }
                                     </span></h3>
                                 </div>
-
 
                                 <br />
                                 <Button className='btn-g btn-lg'>Proceed To CheckOut</Button>
@@ -239,9 +270,9 @@ const Cart = () => {
                 </div>
             </section>
 
-
-        </>
-    )
+    </>
+    );
 }
 
 export default Cart;
+

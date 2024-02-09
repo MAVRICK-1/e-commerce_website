@@ -2,8 +2,8 @@ import React, { useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
-import { getDatabase, ref, push } from 'firebase/database';
+import {  Routes, Route, HashRouter } from "react-router-dom";
+import { getDatabase, ref, onValue, set, push, child, remove } from "firebase/database";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./pages/Home/index";
@@ -26,7 +26,9 @@ const MyContext = createContext();
 
 function App() {
   const [productData, setProductData] = useState([]);
+ 
   const [cartItems, setCartItems] = useState([]);
+
   const [isLoading, setIsloading] = useState(true);
 
   const [loading, setLoading] = useState(true);
@@ -63,8 +65,8 @@ useEffect(() => {
 
 
   useEffect(() => {
-    // getData('http://localhost:5000/productData');
-    getCartData("https://mavrick-1a92d-default-rtdb.firebaseio.com/");
+   getData();
+    getCartData();
 
     const is_Login = localStorage.getItem("isLogin");
     setIsLogin(is_Login);
@@ -77,80 +79,61 @@ useEffect(() => {
 
   const getData = async (url) => {
     try {
-      await axios.get(url).then((response) => {
-        setProductData(response.data);
-        setTimeout(() => {
-          // setIsLoading(false);
-        }, 2000);
-      });
-
-      await axios
-        .get(
-          "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=27dad2d0abd34a22965727ce8d939077"
-        )
-        .then((response) => {
-          console.log(response);
-        });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const getCartData = async (url) => {
-    try {
+      // Get a reference to the database
       const db = getDatabase();
-      const cartRef = ref(db, url); // Assuming 'url' is the path to your cart data in Firebase
-      const snapshot = await get(cartRef);
-      console.log('data fetched')
   
-      if (snapshot.exists()) {
-        setCartItems(snapshot.val());
-      } else {
-        console.log('No cart data available');
-      }
+      // Reference to the node or path you want to fetch data from
+      const dataRef = ref(db, localStorage.getItem('user'));
+  
+      // Fetch data from the specified path
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        setCartItems(data);
+        console.log("Data fetched successfully:", data);
+      }, (error) => {
+        console.error("Error fetching data:", error);
+      });
     } catch (error) {
-      console.error('Error fetching cart data:', error);
+      console.error("Error:", error);
     }
   };
-  
 
-  const addToCart = async (item) => {
-    item.quantity = 1;
-    console.log("item");
-    console.log(item)
-
-  
+  const getCartData = async () => {
     try {
-      await axios.post("https://mavrick-1a92d-default-rtdb.firebaseio.com/", item).then((res) => {
-          if (res !== undefined) {
-          setCartItems([...cartItems, { ...item, quantity: 1 }]);
-          console.log(cartItems)
-        }
-        });
+      // Get a reference to the database
+      const db = getDatabase();
+  
+      // Reference to the node or path you want to fetch data from
+      const dataRef = ref(db, localStorage.getItem('user'));
+  
+      // Fetch data from the specified path
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        setCartItems(data);
+        console.log("Data fetched successfully:", data);
+      }, (error) => {
+        console.error("Error fetching data:", error);
+      });
     } catch (error) {
-      console.log(cartItems)
-      console.log(error);
+      console.error("Error:", error);
     }
   };
-//   const addToCart = async (item) => {
-//     try {
-//         // Assuming Firebase is already initialized elsewhere in your application
-//         const db = getDatabase(); // Assuming Firebase is initialized elsewhere
-//         const cartRef = ref(db, 'cartItems');
-    
-//         // Add item to the cart in Firebase
-//         push(cartRef, { ...item, quantity: 1 })
-//             .then(() => {
-//                 // Update the local state with the new cart item
-//                 setCartItems([...cartItems, { ...item, quantity: 1 }]);
-//             })
-//             .catch((error) => {
-//                 console.error('Error adding item to cart:', error);
-//             });
-//     } catch (error) {
-//         console.error('Error adding item to cart:', error);
-//     }
-// };
+  
+  const addToCart = async (item) => {
+    try {
+        const user=localStorage.getItem('user')
+        // Initialize Firebase database with the provided database URL
+        const db = getDatabase();
+        const cartRef = ref(db,user );
+        // Generate a unique key using the user's email and item details
+        const uniqueKey =  user+item.id; // Modify as per your requirement
+        // Add item to the cart in Firebase
+        setCartItems([...cartItems, { ...item, quantity: 1 }]);
+        console.log('Item added to cart successfully');
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+    }
+};
 
 const removeItemsFromCart = (id) => {
     const arr = cartItems.filter((obj) => obj.id !== id);

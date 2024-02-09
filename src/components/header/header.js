@@ -26,15 +26,16 @@ import { MyContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
-
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { Satellite } from '@mui/icons-material';
+import getCartlen from '../../Hooks/cartlength';
 
 const Header = (props) => {
 
     const [isOpenDropDown, setisOpenDropDown] = useState(false);
     const [isOpenAccDropDown, setisOpenAccDropDown] = useState(false);
+    const [cartlen, setcartlen]=getCartlen()
     
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isopenSearch, setOpenSearch] = useState(false);
@@ -46,13 +47,9 @@ const Header = (props) => {
     const context = useContext(MyContext);
     const history = useNavigate();
 
-    useEffect(() => {
 
-    }, [context.cartItems])
 
     const [categories, setcategories] = useState([
-        'Milks and Dairies',
-        'Wines & Drinks',
         'Clothing & beauty',
         'Fresh Seafood',
         'Pet Foods & Toy',
@@ -152,7 +149,7 @@ const Header = (props) => {
                                                 <span>
                                                     <Link to={'/cart'}> <img src={IconCart} />
                                                         <span className='badge bg-success rounded-circle'>
-                                                            {context.cartItems.length}
+                                                            {cartlen}
                                                         </span>
                                                     </Link>
                                                 </span>
@@ -223,7 +220,7 @@ const Header = (props) => {
                                                 <span>
                                                     <Link to={'/cart'}> <img src={IconCart} />
                                                         <span className='badge bg-success rounded-circle'>
-                                                            {context.cartItems.length}
+                                                           
                                                         </span>
                                                         Cart</Link>
                                                 </span>

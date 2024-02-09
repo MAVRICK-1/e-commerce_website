@@ -18,6 +18,9 @@ import Product from '../../components/product';
 import axios from 'axios';
 import { MyContext } from '../../App';
 import MapComponent from '../../components/map/ITEMmap';
+import { Email } from '@mui/icons-material';
+import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
+
 
 
 const DetailsPage = (props) => {
@@ -26,6 +29,7 @@ const DetailsPage = (props) => {
 
     const [bigImageSize, setBigImageSize] = useState([1500, 1500]);
     const [smlImageSize, setSmlImageSize] = useState([150, 150]);
+    const [loggedInUserEmail,setLoggedInUseEmail]=useLoggedInUserEmail();
 
     const [activeSize, setActiveSize] = useState(0);
 
@@ -144,15 +148,6 @@ const DetailsPage = (props) => {
 
 
 /// product data is getting fetched from here
-
-
-
-
-
-
-
-
-
         //related products code
 
         const related_products = [];
@@ -269,20 +264,17 @@ const DetailsPage = (props) => {
     // }
     const addToCart = async (item) => {
         try {
-            // Assuming Firebase is already initialized elsewhere in your application
-            const db = getDatabase(); // Assuming Firebase is initialized elsewhere
-            const cartRef = ref(db, 'Adrija');
-            console.log('data is added')
-        
+            const user=localStorage.getItem('user')
+            // Initialize Firebase database with the provided database URL
+            const db = getDatabase();
+            const cartRef = ref(db,user );
+            // Generate a unique key using the user's email and item details
+            const uniqueKey =  user+item.id; // Modify as per your requirement
             // Add item to the cart in Firebase
-            push(cartRef, { ...item, quantity: 1 })
-                .then(() => {
-                    // Update the local state with the new cart item
-                    //setCartItems([...cartItems, { ...item, quantity: 1 }]);
-                })
-                .catch((error) => {
-                    console.error('Error adding item to cart:', error);
-                });
+            await set(child(cartRef, uniqueKey), { ...item, quantity: 1 });
+            setIsadded(true)
+            // Assuming setIsAdded updates the state to indicate the item is added
+            console.log('Item added to cart successfully');
         } catch (error) {
             console.error('Error adding item to cart:', error);
         }
@@ -294,7 +286,7 @@ const fetchDataFromFirebase = () => {
       const db = getDatabase();
   
       // Reference to the node or path you want to fetch data from
-      const dataRef = ref(db, 'Adrija');
+      const dataRef = ref(db, localStorage.getItem('user'));
   
       // Fetch data from the specified path
       onValue(dataRef, (snapshot) => {
