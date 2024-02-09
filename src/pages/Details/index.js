@@ -13,7 +13,7 @@ import { Button } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-
+import { getDatabase, ref, push } from "firebase/database";
 import Product from '../../components/product';
 import axios from 'axios';
 import { MyContext } from '../../App';
@@ -262,10 +262,32 @@ const DetailsPage = (props) => {
 
 
 
-    const addToCart = (item) => {
-        context.addToCart(item);
+    // const addToCart = (item) => {
+    //     context.addToCart(item);
+
+    //     setIsadded(true);
+    // }
+    const addToCart = async (item) => {
+    try {
+        // Assuming Firebase is already initialized elsewhere in your application
+        const db = getDatabase('[https://mavrick-cart.firebaseio.com/cartItems'); // Assuming Firebase is initialized elsewhere
+        const cartRef = ref(db, 'cartItems');
         setIsadded(true);
+        console.log('in the cart');
+    
+        // Add item to the cart in Firebase
+        push(cartRef, { ...item, quantity: 1 })
+            .then(() => {
+                // Update the local state with the new cart item
+                // setCartItems([...cartItems, { ...item, quantity: 1 }]);
+            })
+            .catch((error) => {
+                console.error('Error adding item to cart:', error);
+            });
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
     }
+};
 
     const getCartData = async (url) => {
         try {
@@ -293,8 +315,11 @@ const DetailsPage = (props) => {
             {
                 context.windowWidth < 992 && <Button className={`btn-g btn-lg w-100 filterBtn {isAlreadyAddedInCart===true && 'no-click'}`} onClick={() => addToCart(currentProduct)}><ShoppingCartOutlinedIcon />
                     {
+                        
                         isAdded === true || isAlreadyAddedInCart===true  ? 'Added' : 'Add To Cart'
+                        
                     }
+                    
                 </Button>
 
             }
