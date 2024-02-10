@@ -16,7 +16,9 @@ const Product = (props) => {
 
     const [productData, setProductData] = useState();
     const [isAdded, setIsadded] = useState(false);
-    
+    const [userLocation, setUserLocation] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [drivingDistance, setDrivingDistance] = useState(null);
     const context  = useContext(MyContext);
 
     useEffect(() => {
@@ -29,6 +31,65 @@ const Product = (props) => {
     }
     //console.log(productData); //printing1000 data
 
+  
+    useEffect(() => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+            // console.log(position.coords.latitude, position.coords.longitude);
+          setUserLocation([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+        }
+      );
+    }, [context.isLogin]);
+
+    // const getDrivingDistance = async (start, end) => {
+    //     const response = await fetch(`https://router.project-osrm.org/route/v1/driving/${start.longitude},${start.latitude};${end.longitude},${end.latitude}`);
+    //     const data = await response.json();
+    //     if (data.code === 'Ok') {
+    //       const distance = data.routes[0].distance; // Distance in meters
+    //       console.log(distance) ;
+    //       return distance;
+    //     } else {
+    //       throw new Error('Unable to calculate driving distance');
+    //     }
+    //   };
+
+    const getDistance = (start, end) => {
+        const toRadians = (degrees) => (degrees * Math.PI) / 180;
+    
+        const earthRadiusKm = 6371; // Radius of the Earth in kilometers
+        const dLat = toRadians(end[0] - start[0]);
+        const dLon = toRadians(end[1] - start[1]);
+    
+        const lat1 = toRadians(start[0]);
+        const lat2 = toRadians(end[0]);
+    
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = earthRadiusKm * c; // Distance in kilometers
+    
+        return distance  // Convert distance to meters
+    };
+    
+    const getDisplacement = (start, end) => {
+        const distance = getDistance(start, end); // Calculate the straight-line distance
+        return distance;
+    };
+
+    useEffect(() => {
+        if (userLocation && productData?.coordinates) {
+            const userCoords =userLocation;
+            const productCoords = productData.coordinates;
+            // taking the nearest integer value
+            const distance = Math.round(getDisplacement(userCoords, productCoords));
+            setDrivingDistance(distance);
+            setLoading(false);
+        }
+    }, [userLocation, productData]);
 
 
     const addToCart = async (item) => {
@@ -49,6 +110,10 @@ const Product = (props) => {
         }
     };
 
+    if(loading){
+        return <div>Loading...</div>
+    }
+
 
     return (
         <div className='productThumb' onClick={setProductCat}>
@@ -58,7 +123,7 @@ const Product = (props) => {
             }
 
             {
-                productData !== undefined &&
+                productData !== undefined && 
                 <>
                     <Link to={`/product/${productData.id}`}>
                         <div className='imgWrapper'>
@@ -95,7 +160,7 @@ const Product = (props) => {
                         <Rating name="half-rating-read" 
                         value={parseFloat(productData.rating)} precision={0.5} readOnly />
                         <span className='brand d-block text-g'>By <Link className='text-g'>{productData.brand}</Link></span>
-
+                        <span className='d-block text-g'>Distance: {drivingDistance} km</span>
                         <div className='d-flex align-items-center mt-3'>
                             <div className='d-flex align-items-center w-100'>
                                 <span className='price text-g font-weight-bold'>
