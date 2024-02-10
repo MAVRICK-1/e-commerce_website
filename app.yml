@@ -1,0 +1,18 @@
+# Build Configuration for React.js Application with Node.js 13
+
+# Specify the runtime environment
+runtime: nodejs13
+
+# Specify the entry point for your application
+entrypoint: npm start
+
+# Specify the build commands
+build:
+  commands:
+    - npm install   # Install dependencies
+    - npm run build # Build the React application
+
+# Specify the app's deployment settings
+deploy:
+  # Define the source directory where the build artifacts are located
+  artifact: build/
