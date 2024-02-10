@@ -19,8 +19,8 @@ export default function AddProductForm() {
   };
 
   const handleSubmit = () => {
-    const db = getDatabase('https://mavrick-1a92d-default-rtdb.firebaseio.com/');
-    const productRef = ref(db, 'products');
+    const db = getDatabase();
+    const productRef = ref(db, `${localStorage.getItem('user')}/product`);
 
     // Add email ID to the form data
     const emailId = 'example@example.com'; // Replace this with the actual email ID
