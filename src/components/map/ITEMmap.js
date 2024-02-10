@@ -123,7 +123,11 @@ const MapComponent = (props) => {
             <Popup>You are here</Popup>
           </Marker>
         )}
-        {products.map((product) => (
+        {products.map((product) => {
+          const [lat, lng] = product.coordinates;
+          const distance = L.latLng(lat, lng).distanceTo(L.latLng(userLocation));
+          const distanceInKm = (distance / 1000).toFixed(2);
+          return(
           <Marker key={product.id} position={product.coordinates}>
             <Popup>
               <div>
@@ -135,6 +139,7 @@ const MapComponent = (props) => {
                 <h3>{product.productName}</h3>
                 <p>{product.address}</p>
                 <p>Shop: {product.shop_name}</p>
+                <p>Distance from you: {distanceInKm} km</p>
                 <Button
                   variant="contained"
                   sx={{ bgcolor: green[500] }}
@@ -145,7 +150,7 @@ const MapComponent = (props) => {
               </div>
             </Popup>
           </Marker>
-        ))}
+        )})}
       </MapContainer>
     ),
     [key, userLocation, mapBounds, products]
