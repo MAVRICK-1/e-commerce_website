@@ -20,14 +20,21 @@ export default function AddProductForm() {
 
   const handleSubmit = () => {
     const db = getDatabase();
-    const productRef = ref(db, `${localStorage.getItem('user')}/product`);
+    const productRef = ref(db, `seller/${localStorage.getItem('user')}/product`);
 
     // Add email ID to the form data
-    const emailId = 'example@example.com'; // Replace this with the actual email ID
-    const productDataWithEmail = { ...formData, emailId };
-
     // Send the form data to Firebase
-    push(productRef, productDataWithEmail)
+    const productData = {
+      productName: formData.productName,
+      price: formData.price,
+      discountPrice: formData.discountPrice,
+      weightsAvailable: formData.weightsAvailable,
+      mainImage: formData.mainImage,
+      subsidiaryImages: formData.subsidiaryImages,
+      brand: formData.brand,
+      quantityAvailable: formData.quantityAvailable,
+    };
+    push(productRef,productData)
       .then(() => {
         alert('Product added successfully!');
         // Optionally, you can reset the form here
@@ -71,40 +78,46 @@ export default function AddProductForm() {
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            id="filled-number"
+            id="price"
             label="Price"
             fullWidth
             placeholder="Enter original price"
             type="number"
             variant="filled"
             color="success"
+            value={formData.price}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            id="filled-number"
+            id="discountPrice"
             label="Discount Price"
             fullWidth
             placeholder="Enter discount price"
             type="number"
             variant="filled"
             color="success"
+            value={formData.discountPrice}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            id="filled-number"
+            id="weightsAvailable"
             label="Weights Available"
             fullWidth
             placeholder="Enter weights"
             type="number"
             variant="filled"
             color="success"
+            value={formData.weightsAvailable}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            id="main-image"
+            id="mainImage"
             InputLabelProps={{ shrink: true }}
             label="Main Image"
             fullWidth
@@ -114,7 +127,7 @@ export default function AddProductForm() {
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            id="subsidiary-images"
+            id="subsidiaryImages"
             InputLabelProps={{ shrink: true }}
             label="Subsidiary Images"
             fullWidth
@@ -130,17 +143,21 @@ export default function AddProductForm() {
             fullWidth
             placeholder="Enter brand"
             color="success"
+            value={formData.brand}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            id="quantity"
+            id="quantityAvailable"
             label="Quantity Available"
             fullWidth
             placeholder="Enter quantity available"
             type="number"
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
             color="success"
+            value={formData.quantityAvailable}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>

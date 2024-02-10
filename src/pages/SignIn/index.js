@@ -61,7 +61,7 @@ const SignIn = () => {
                 localStorage.setItem('user',udata)
                 context.signIn();
                 setLoggedInUseEmail(user.email)
-                console.log(loggedInUserEmail);
+                //console.log(loggedInUserEmail);
                 history('/');
             })
             .catch((error) => {
@@ -71,7 +71,7 @@ const SignIn = () => {
     }
 
     const signInWithGoogle = () => {
-        console.log('hi sign in');
+        //console.log('hi sign in');
         setShowLoader(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
@@ -81,7 +81,7 @@ const SignIn = () => {
                 localStorage.setItem('user',udata)
                 context.signIn();
                 setLoggedInUseEmail(udata)
-                console.log(loggedInUserEmail);
+                //console.log(loggedInUserEmail);
                 history('/');
             })
             .catch((error) => {

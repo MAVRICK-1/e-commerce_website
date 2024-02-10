@@ -71,17 +71,17 @@ const Header = (props) => {
     try {
       await axios.get(url).then((res) => {
         if (res !== null) {
-          //console.log(res.data.data);
+          ////console.log(res.data.data);
           res.data.data.map((item, index) => {
             countryList.push(item.country);
-            //console.log(item.country)
+            ////console.log(item.country)
           });
 
-          //console.log(res.data.data[0].country)
+          ////console.log(res.data.data[0].country)
         }
       });
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 

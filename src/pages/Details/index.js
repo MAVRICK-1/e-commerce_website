@@ -140,7 +140,7 @@ const DetailsPage = (props) => {
                             item_.products.map((product) => {
                                 if (parseInt(product.id) === parseInt(id)) {
                                     setCurrentProduct(product);
-                                   // console.log(product)
+                                   // //console.log(product)
                                 }
                             })
                     })
@@ -186,7 +186,7 @@ const DetailsPage = (props) => {
     }, []);
 
     useEffect(() => {
-        // console.log(currentProduct); // Log currentProduct after it has been updated
+        // //console.log(currentProduct); // Log currentProduct after it has been updated
         setIsLoading(false);
     }, [currentProduct]);
 
@@ -224,7 +224,7 @@ const DetailsPage = (props) => {
             })
 
         } catch (error) {
-            console.log(error.message);
+            //console.log(error.message);
         }
 
         showReviews();
@@ -245,7 +245,7 @@ const DetailsPage = (props) => {
                 }
             })
         } catch (error) {
-            console.log(error.message);
+            //console.log(error.message);
         }
 
         if (reviews_Arr2.length !== 0) {
@@ -274,7 +274,7 @@ const DetailsPage = (props) => {
             await set(child(cartRef, uniqueKey), { ...item, quantity: 1 });
             setIsadded(true)
             // Assuming setIsAdded updates the state to indicate the item is added
-            console.log('Item added to cart successfully');
+            //console.log('Item added to cart successfully');
         } catch (error) {
             console.error('Error adding item to cart:', error);
         }
@@ -291,7 +291,7 @@ const DetailsPage = (props) => {
 //       // Fetch data from the specified path
 //       onValue(dataRef, (snapshot) => {
 //         const data = snapshot.val();
-//         console.log("Data fetched successfully:", data);
+//         //console.log("Data fetched successfully:", data);
 //       }, (error) => {
 //         console.error("Error fetching data:", error);
 //       });
@@ -315,7 +315,7 @@ const DetailsPage = (props) => {
             })
 
         } catch (error) {
-            console.log(error.message);
+            //console.log(error.message);
         }
     }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Typography, Container, Grid, TextField, Button } from "@mui/material";
-import { getDatabase, ref, push, set } from "firebase/database";
+import { getDatabase, ref, push, set ,child} from "firebase/database";
 import { useNavigate } from "react-router-dom";
 
 const SellerForm = () => {
@@ -31,6 +31,7 @@ const SellerForm = () => {
       shopPhoto: file,
     }));
   };
+  let postion=[]
 
   const handleGetCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -38,9 +39,9 @@ const SellerForm = () => {
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          //location=[latitude,longitude]
-          console.log("Current latitude:", latitude);
-          console.log("Current longitude:", longitude);
+          postion=[latitude,longitude]
+          //console.log("Current latitude:", latitude);
+          //console.log("Current longitude:", longitude);
           
           // Optionally, you can set the latitude and longitude in the formFields state
           setFormFields((prevFields) => ({
@@ -63,18 +64,22 @@ const SellerForm = () => {
     try {
       const database = getDatabase();
       const sellersRef = ref(database, "sellers");
-
-      const newSellerRef = push(sellersRef);
-      await set(newSellerRef, {
+      
+      // Generate a unique key
+      const uniqueKey = `${localStorage.getItem('user')}_details`;
+      
+      // Set the seller's details under the unique key
+      await set(child(sellersRef, uniqueKey), {
         ownerName: formFields.ownerName,
         phoneNumber: formFields.phoneNumber,
         location: formFields.location,
         pincode: formFields.pincode,
         shopName: formFields.shopName,
         // Handle shop photo upload here
-        // shopPhoto: formFields.shopPhoto,
+        shopPhoto: formFields.shopPhoto,
+        coordinate: [] // Assuming location is defined somewhere in your code
       });
-
+      
       console.log("Seller data sent to Firebase successfully!");
 
       // Redirect to '/addProduct' page

@@ -52,7 +52,7 @@ useEffect(() => {
                   throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                // console.log("fetced data", data)
+                // //console.log("fetced data", data)
                 setData(data);
             
               } catch (error) {
@@ -89,7 +89,7 @@ useEffect(() => {
       onValue(dataRef, (snapshot) => {
         const data = snapshot.val();
         setCartItems(data);
-        console.log("Data fetched successfully:", data);
+        //console.log("Data fetched successfully:", data);
       }, (error) => {
         console.error("Error fetching data:", error);
       });
@@ -110,7 +110,7 @@ useEffect(() => {
       onValue(dataRef, (snapshot) => {
         const data = snapshot.val();
         setCartItems(data);
-        console.log("Data fetched successfully:", data);
+        //console.log("Data fetched successfully:", data);
       }, (error) => {
         console.error("Error fetching data:", error);
       });
@@ -129,7 +129,7 @@ useEffect(() => {
         const uniqueKey =  user+item.id; // Modify as per your requirement
         // Add item to the cart in Firebase
         setCartItems([...cartItems, { ...item, quantity: 1 }]);
-        console.log('Item added to cart successfully');
+        //console.log('Item added to cart successfully');
     } catch (error) {
         console.error('Error adding item to cart:', error);
     }

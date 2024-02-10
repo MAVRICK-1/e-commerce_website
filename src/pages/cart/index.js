@@ -46,10 +46,10 @@ const Cart = () => {
         dataRef,
         (snapshot) => {
           const data = snapshot.val();
-          console.log("Data fetched successfully:", data);
+          //console.log("Data fetched successfully:", data);
           if (data) {
             setCartItems(Object.values(data));
-            console.log(Object.values(data).length);
+            //console.log(Object.values(data).length);
             // Calculate total price
             const totalPrice = Object.values(data).reduce((acc, item) => {
               const itemPrice = parseInt(item.price.split(",").join(""));
@@ -82,7 +82,7 @@ const Cart = () => {
       );
       remove(itemRef)
         .then(() => {
-          console.log("Item deleted successfully");
+          //console.log("Item deleted successfully");
           context.removeItemsFromCart(id);
         })
         .catch((error) => {
@@ -100,7 +100,7 @@ const Cart = () => {
       remove(itemRef)
         .then(() => {
           context.emptyCart();
-          console.log("Item deleted successfully");
+          //console.log("Item deleted successfully");
           setCartItems([]);
           // Reset cartItems to an empty array after emptying the cart
           setTotalPrice(0); // Reset total price

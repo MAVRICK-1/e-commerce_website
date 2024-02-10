@@ -29,13 +29,13 @@ const Product = (props) => {
         sessionStorage.setItem('parentCat', productData.parentCatName);
         sessionStorage.setItem('subCatName', productData.subCatName);
     }
-    //console.log(productData); //printing1000 data
+    ////console.log(productData); //printing1000 data
 
   
     useEffect(() => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-            // console.log(position.coords.latitude, position.coords.longitude);
+            // //console.log(position.coords.latitude, position.coords.longitude);
           setUserLocation([position.coords.latitude, position.coords.longitude]);
         },
         (error) => {
@@ -49,7 +49,7 @@ const Product = (props) => {
     //     const data = await response.json();
     //     if (data.code === 'Ok') {
     //       const distance = data.routes[0].distance; // Distance in meters
-    //       console.log(distance) ;
+    //       //console.log(distance) ;
     //       return distance;
     //     } else {
     //       throw new Error('Unable to calculate driving distance');
@@ -104,7 +104,7 @@ const Product = (props) => {
             await set(child(cartRef, uniqueKey), { ...item, quantity: 1 });
             setIsadded(true)
             // Assuming setIsAdded updates the state to indicate the item is added
-            console.log('Item added to cart successfully');
+            //console.log('Item added to cart successfully');
         } catch (error) {
             console.error('Error adding item to cart:', error);
         }

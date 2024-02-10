@@ -50,7 +50,7 @@ const Listing = (props) => {
                 else {
                     item.items.length !== 0 &&
                         item.items.map((item_, index_) => {
-                            // console.log(item_.cat_name.replace(/[^A-Za-z]/g,"-").toLowerCase())
+                            // //console.log(item_.cat_name.replace(/[^A-Za-z]/g,"-").toLowerCase())
                             if (item_.cat_name.split(' ').join('-').toLowerCase() == id.split(' ').join('-').toLowerCase()) {
                                 item_.products.map((item__, index__) => {
 
@@ -92,7 +92,7 @@ const Listing = (props) => {
                         item.items.map((item_) => {
                             item_.products.map((item__, index__) => {
                                 if (item__.brand.toLowerCase() === keyword.toLowerCase()) {
-                                    //console.log(item__)
+                                    ////console.log(item__)
                                     itemsData.push({ ...item__, parentCatName: item.cat_name, subCatName: item_.cat_name })
                                 }
 
@@ -107,7 +107,7 @@ const Listing = (props) => {
                 else {
                     item.items.length !== 0 &&
                         item.items.map((item_, index_) => {
-                            // console.log(item_.cat_name.replace(/[^A-Za-z]/g,"-").toLowerCase())
+                            // //console.log(item_.cat_name.replace(/[^A-Za-z]/g,"-").toLowerCase())
                             if (item_.cat_name.split(' ').join('-').toLowerCase() == id.split(' ').join('-').toLowerCase()) {
                                 item_.products.map((item__, index__) => {
                                     if (item__.brand.toLowerCase() === keyword.toLowerCase()) {
@@ -125,7 +125,7 @@ const Listing = (props) => {
 
 
         const list2 = itemsData.filter((item, index) => itemsData.indexOf(item) === index);
-        //console.log(itemsData)
+        ////console.log(itemsData)
 
 
         setData(list2);
@@ -209,7 +209,7 @@ const Listing = (props) => {
                 else {
                     item.items.length !== 0 &&
                         item.items.map((item_, index_) => {
-                            // console.log(item_.cat_name.replace(/[^A-Za-z]/g,"-").toLowerCase())
+                            // //console.log(item_.cat_name.replace(/[^A-Za-z]/g,"-").toLowerCase())
                             if (item_.cat_name.split(' ').join('-').toLowerCase() == id.split(' ').join('-').toLowerCase()) {
                                 item_.products.map((item__, index__) => {
 
