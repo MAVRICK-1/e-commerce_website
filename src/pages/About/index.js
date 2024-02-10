@@ -79,7 +79,7 @@ class Tes extends Component {
         <div className="container">
           <div className="title py-5 text-md-start text-center">
             <h4 className="sub-title text-capitalize">
-              recent <span>testimonials</span>
+              Our <span>Team</span>
             </h4>
           </div>
           <div className="box d-flex justify-content-lg-between justify-content-center flex-wrap">
