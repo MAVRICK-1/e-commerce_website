@@ -23,7 +23,7 @@ Our project is an ONDC (Open Network for Digital Commerce) site integrated with 
 - Version Control: Git, GitHub
 
 ## Installation
-1. Clone the repository: git clone <https://github.com/SHANKARA-CODERS/e-commerce_website>
+1. Clone the repository: git clone <[https://github.com/MAVRICK-1/e-commerce_website.git](https://github.com/MAVRICK-1/e-commerce_website.git)>
 2. Navigate to the project directory: cd <e-commerce_website>
 3. Install dependencies: npm install
 4. Run the development server: npm start
