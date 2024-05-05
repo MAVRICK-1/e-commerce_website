@@ -53,7 +53,7 @@ Our project is an ONDC (Open Network for Digital Commerce) site integrated with 
 
 Thank you for your interest in contributing to our project! We appreciate any contributions, whether it's bug fixes, new features, or documentation improvements.
 
-We value the time and effort you put into contributing, and we look forward to reviewing and merging your contributions. Join us on this exciting journey of creativity and collaboration, and let your projects shine on Projectshut!
+We value the time and effort you put into contributing, and we look forward to reviewing and merging your contributions. Join us on this exciting journey of creativity and collaboration, and let your projects shine on NestOndc!
 
 <div align=center>
   <h2>This Project was the part of</h2>
