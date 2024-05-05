@@ -1,13 +1,7 @@
-# ONDC Build for Bharat Hackathon Project
+# Nest ONDC Project
 
 ## Project Description
 Our project is an ONDC (Open Network for Digital Commerce) site integrated with OpenStreetMap. The aim is to provide a seamless digital commerce experience for businesses and consumers across Bharat. The platform leverages ONDC APIs for data exchange and integration with various digital commerce services.
-
-## Team Members
-- *Team Leader:* Rishi Mondal (Full Stack Developer)
-- *Debanjan Mukherjee:* Frontend Developer
-- *Animesh Barik:* Frontend Developer
-- *Rohit Gupta:* Backend Developer
 
 ## Features
 - Integration with ONDC APIs
