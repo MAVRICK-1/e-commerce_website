@@ -7,13 +7,13 @@ import { initializeApp } from "firebase/app"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCLbDQfukIhsCxal07QN3bDHMdXzko1CZ8",
-  authDomain: "mavrick-1a92d.firebaseapp.com",
-  projectId: "mavrick-1a92d",
-  storageBucket: "mavrick-1a92d.appspot.com",
-  messagingSenderId: "588641997057",
-  appId: "1:588641997057:web:02335d56c00b06961ccb00",
-  measurementId: "G-TFKR3TBE3Y"
+  apiKey: "AIzaSyAk6hLddPbZ5R7j_LBsFDDSZT64MVHrQjI",
+  authDomain: "nest-ondc.firebaseapp.com",
+  projectId: "nest-ondc",
+  storageBucket: "nest-ondc.appspot.com",
+  messagingSenderId: "318997633599",
+  appId: "1:318997633599:web:41937faa0dda917365b68a",
+  measurementId: "G-26EE7FZZZE"
 
 };
 // Initialize Firebase
