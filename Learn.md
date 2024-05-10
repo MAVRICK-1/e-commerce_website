@@ -47,6 +47,29 @@ Before you proceed with building the project locally, ensure you have the follow
    - Explore the various digital commerce services and features offered by the platform.
    - Utilize the integrated OpenStreetMap for location-based services to enhance your user experience.
 
+## Creating a Pull Request
+To contribute to the project, follow these steps to create a pull request:
+1. **Create a Branch:**
+   - Before making any changes, create a new branch with a name related to the issue you're addressing. Ensure the branch name follows the convention: `feature/issue-description-#issue_number`.
+
+2. **Make Changes:**
+   - Implement your changes or fixes in the newly created branch.
+
+3. **Commit Changes:**
+   - Commit your changes to the branch with descriptive commit messages.
+
+4. **Push Changes:**
+   - Push your changes to the remote repository using:
+     ```
+     git push origin branch-name
+     ```
+
+5. **Create Pull Request:**
+   - Visit the repository on GitHub and navigate to the "Pull Requests" tab.
+   - Click on "New Pull Request" and select your branch as the compare branch.
+   - Provide a descriptive title and summary of your changes in the pull request description.
+   - Submit the pull request for review.
+
 ## Conclusion
 Congratulations! You have successfully built and started the project locally on your machine. We appreciate your interest and effort in exploring our project. Should you have any questions or encounter any issues during the build process, feel free to reach out to our team for assistance.
 
