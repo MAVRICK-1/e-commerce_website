@@ -1,52 +1,120 @@
-@keyframes translation {
-    0%, 100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    50% {
-      transform: translateX(10px);
-      opacity: 0.3;
-    }
+* {
+  text-decoration: none;
+  list-style: none;
+}
+
+.container {
+  margin: 1vw;
+}
+
+.container-grid {
+  padding-top: 1vw;
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.contributor-text {
+  text-transform: capitalize;
+  font-size: 1vw;
+  color: #008080;
+  font-weight: 500;
+}
+
+.text-color {
+  font-size: 1.2vw;
+  color: #008080;
+}
+
+.img {
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  gap: 10px;
+  width: 300px;
+  border-radius: 2px;
+}
+
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 586px) {
+  .container {
+    width: 100vw;
+    height: 50%;
+    padding: 8vw;
   }
-  @keyframes coloring {
-    0%, 100% {
-      color: #008080;
-    }
-    50% {
-      color: grey;
-    }
-  }
-  .tes .container .title .sub-title {
-    font-size: 30px;
-    font-weight: 800;
-  }
-  .tes .container .title .sub-title span {
+
+  .contributor-text {
+    text-transform: capitalize;
+    font-size: 6vw;
     color: #008080;
   }
-  .tes .container .box .item {
+
+  .text-color {
+    font-size: 1.5vw;
+    color: #008080;
+  }
+
+  .card {
+    width: 100px;
+    height: 100px;
+  }
+}
+@media (min-width: 600px) {
+  .container {
+    width: 100vw;
+    height: 50%;
+    padding: 8vw;
+  }
+
+  .contributor-text {
+    text-transform: capitalize;
+    font-size: 4vw;
+    color: #008080;
+  }
+  
+  .text-color{
+    font-size: 1.7vw;
+    color:#008080;
+  }
+
+  .card {
     width: 300px;
   }
-  .tes .container .box .item .p-profile .pic {
-    width: 150px;
-    height: 150px;
-    border: 3px solid grey;
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+  .container {
+    width: 100vw;
+    height: 50%;
+    padding: 3vw;
   }
-  .tes .container .box .item .user-primary .name, .tes .container .box .item .user-primary .skill {
-    font-weight: bolder;
-  }
-  .tes .container .box .item .user-primary .testimonial {
-    font-size: 17px;
-  }
-  .tes .container .box .item .user-primary .testimonial span {
+
+  .contributor-text {
+    text-transform: capitalize;
+    font-size: 3vw;
     color: #008080;
   }
-  .tes .container .box .item .accounts {
-    font-size: 20px;
+  .contributor-text {
+    font-size: 2.4vw;
   }
-  .tes .container .box .item .accounts a {
-    transition: all 0.3s;
-    color: #008080;
+  
+  .text-color{
+    font-size: 1.7vw;
+    color:#008080;
   }
-  .tes .container .box .item .accounts a:hover {
-    color: grey;
+
+  .card {
+    width: 300px;
   }
+}

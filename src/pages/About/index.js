@@ -1,94 +1,81 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
-import { tes } from "./Data";
-import { GitHub, LinkedIn } from "@mui/icons-material";
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import axios from "axios";
+import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 
+function Tes() {
+  const [contributors, setContributors] = useState([]);
 
+  useEffect(() => {
+    async function fetchContributors() {
+      try {
+        const response = await axios.get(
+          "https://api.github.com/repos/MAVRICK-1/e-commerce_website/contributors"
+        );
+        setContributors(response.data);
+      } catch (error) {
+        console.error("Error fetching contributors:", error);
+      }
+    }
 
-class Tes extends Component {
-  display_tes = (_) => {
-    let items = tes.map((item, index) => {
-      return (
-        <div
-          className={`item item${index}  me-lg-0 me-md-4 me-sm-0 mb-lg-0 mb-5`}
-          key={Math.random()}
-        >
-          <div className="p-profile mb-3 text-center">
-            <img
-              className="pic rounded-circle shadow-lg"
-              alt="testimonials"
-              src={item.img}
-            />
-          </div>
-          <div className="user-primary text-center mb-4">
-            <h5 className="name text-capitalize">{item.name}</h5>
-            <h6 className="skill text-muted mb-4">{item.skill}</h6>
-            <p className="testimonial">
-              <span>
-                <FormatQuoteIcon/>
-              </span>{" "}
-              {item.bio}.{" "}
-              <span>
-              <FormatQuoteIcon/>
-              </span>
-            </p>
-          </div>
-          <div className="accounts text-center">
-            <a
-              href={item.ldkurl}
-              className="p-2"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <LinkedIn/>
-            </a>
-            <a
-              href={item.giturl}
-              className="p-2"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <GitHub/>
-            </a>
-          </div>
-      </div>
-      );
-    });
+    fetchContributors();
+  }, []);
 
-    // Split items into top and bottom sections
-    const halfIndex = Math.ceil(items.length / 2);
-    const topItems = items.slice(0, halfIndex);
-    const bottomItems = items.slice(halfIndex);
-
-    return (
-        <>
-        <div className="top-items">
-          {topItems}
-        </div>
-        <div className="bottom-items">
-          {bottomItems}
-        </div>
-      </>
-    );
-  };
-
-  render() {
-    return (
-      <div className="tes py-5 mb-5" id="testimonials">
-        <div className="container">
-          <div className="title py-5 text-md-start text-center">
-            <h4 className="sub-title text-capitalize">
-              Our <span>Team</span>
-            </h4>
-          </div>
-          <div className="box d-flex justify-content-lg-between justify-content-center flex-wrap">
-            {this.display_tes()}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div className="container">
+      <h1 className="contributor-text">Our Contributors</h1>
+      <Grid className="container-grid">
+        {contributors.map((contributor) => (
+          <Grid item key={contributor.id} xs={12} sm={6} md={4} lg={3}>
+            <Card className="card">
+              {window.innerWidth < 580 ? (
+                <a href={contributor.html_url} className="cardLink" target="_blank">
+                  <CardMedia
+                    component="img"
+                    height="250"
+                    image={contributor.avatar_url}
+                    alt={contributor.login}
+                    className="img"
+                  />
+                </a>
+              ) : (
+                <CardMedia
+                  component="img"
+                  height="250"
+                  image={contributor.avatar_url}
+                  alt={contributor.login}
+                  className="img"
+                />
+              )}
+              <CardContent>
+                <Typography variant="h6">{contributor.login}</Typography>
+              </CardContent>
+              <CardContent>
+                <Typography className="card-bottom">
+                  <a
+                    href={contributor.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-color"
+                  >
+                    View Git Profile
+                  </a>
+                  <a
+                    href={contributor.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-color"
+                  >
+                    Contributions : {contributor.contributions}
+                  </a>
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
 }
 
 export default Tes;

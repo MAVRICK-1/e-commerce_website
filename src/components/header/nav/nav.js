@@ -187,8 +187,8 @@ const Nav = (props) => {
                             </nav>
                         </div>
 
-                        <div className='col-sm-2 part3 d-flex align-items-center'>
-                            <div className='phNo d-flex align-items-center ml-auto'>
+                        <div className='col-sm-2 part3 d-flex align-items-center '>
+                            <div className='phNo d-flex align-items-center ml-auto ' >
                                 <span><HeadphonesOutlinedIcon /></span>
                                 <div className='info ml-3'>
                                     <h3 className='text-g mb-0'>1900 - 888</h3>
