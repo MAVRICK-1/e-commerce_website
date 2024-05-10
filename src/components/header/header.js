@@ -99,7 +99,7 @@ const Header = (props) => {
   const getCartCount = () => {
     try {
       const db = getDatabase();
-      const dataRef = ref(db, `${localStorage.getItem("user")}`);
+      const dataRef =  ref(db, `${localStorage.getItem("user")}`);
 
       onValue(
         dataRef,
