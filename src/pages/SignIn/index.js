@@ -19,6 +19,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { MyContext } from "../../App";
 import GoogleImg from "../../assets/images/google.png";
 import useLoggedInUserEmail from "../../Hooks/useLoggedInUserEmail";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../Redux/auth-slice";
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -40,6 +42,9 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch()
+
 
   function replaceSpecialCharacters(inputString) {
     // Use a regular expression to replace special characters with underscore _
@@ -100,6 +105,7 @@ const SignIn = () => {
         const udata = replaceSpecialCharacters(user.email);
         localStorage.setItem("user", udata);
         context.signIn();
+        dispatch(logIn({email:user.email}))
         setLoggedInUseEmail(user.email);
         //console.log(loggedInUserEmail);
         history("/");

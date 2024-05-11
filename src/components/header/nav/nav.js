@@ -7,9 +7,11 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import { useState } from 'react';
 import { MyContext } from '../../../App';
+import { useSelector } from 'react-redux';
 
 const Nav = (props) => {
 
+    const logged = useSelector((state)=>state.authReducer.value.isAuth)
 
     const [navData, setNavData] = useState([]);
     const [isOpenNav, setIsOpenNav] = useState(false);
