@@ -206,7 +206,9 @@ const Footer = () => {
 
                         <div className='row lastStrip'>
                             <div className='col-md-3 part_1'>
-                                <p>© 2022, Nest - HTML Ecommerce Template
+                                <p>© <script type="text/javascript">
+  document.write(new Date().getFullYear());
+</script>, Nest - HTML Ecommerce Template
                                     All rights reserved</p>
                             </div>
 
