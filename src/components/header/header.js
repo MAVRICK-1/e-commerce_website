@@ -38,8 +38,7 @@ const Header = (props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-
+  const {cartCount, setCartCount} = useContext(MyContext);
   const headerRef = useRef();
   const searchInput = useRef();
 
@@ -95,35 +94,6 @@ const Header = (props) => {
   //         }
   //     })
   // }, [])
-
-  const getCartCount = () => {
-    try {
-      const db = getDatabase();
-      const dataRef = ref(db, `${localStorage.getItem("user")}`);
-
-      onValue(
-        dataRef,
-        (snapshot) => {
-          const data = snapshot.val();
-          if (data) {
-            const itemCount = Object.values(data).length;
-            setCartCount(itemCount);
-          } else {
-            setCartCount(0);
-          }
-        },
-        (error) => {
-          console.error("Error fetching data:", error);
-        }
-      );
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    getCartCount();
-  }, []);
 
   const signOut = () => {
     context.signOut();
