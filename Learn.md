@@ -7,7 +7,8 @@ Welcome to our project! Our project is an ONDC (Open Network for Digital Commerc
 Before you proceed with building the project locally, ensure you have the following prerequisites installed on your machine:
 - **Git**: Version control system for cloning the project repository.
 - **Node.js and npm (Node Package Manager)**: JavaScript runtime environment and package manager for installing project dependencies.
-
+- **Node version**: Currently used node version v20.11.1
+  
 ## Step-by-step Guide
 1. **Clone the Repository:**
    - Open your terminal or command prompt.

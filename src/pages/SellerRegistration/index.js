@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Container, Grid, TextField, Button } from "@mui/material";
-import { getDatabase, ref, push, set ,child} from "firebase/database";
+//import { getDatabase, ref, push, set, child } from "firebase/database";
 import { useNavigate } from "react-router-dom";
+import { db, storage } from "../../firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import {uploadBytes,getDownloadURL, ref} from "firebase/storage"
 
 const SellerForm = () => {
   const navigate = useNavigate();
@@ -13,8 +16,10 @@ const SellerForm = () => {
     pincode: "",
     shopName: "",
     shopPhoto: null,
-    location:[],
+    coordinate: [],
   });
+
+  const [isSubmit,setIsSubmit] = useState(false);
 
   const onChangeField = (e) => {
     const { name, value } = e.target;
@@ -31,7 +36,7 @@ const SellerForm = () => {
       shopPhoto: file,
     }));
   };
-  let postion=[]
+  let postion = [];
 
   const handleGetCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -39,15 +44,14 @@ const SellerForm = () => {
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          postion=[latitude,longitude]
+          postion = [latitude, longitude];
           //console.log("Current latitude:", latitude);
           //console.log("Current longitude:", longitude);
           
           // Optionally, you can set the latitude and longitude in the formFields state
           setFormFields((prevFields) => ({
             ...prevFields,
-            latitude,
-            longitude,
+            coordinate:postion
           }));
         },
         (error) => {
@@ -58,39 +62,63 @@ const SellerForm = () => {
       console.error("Geolocation is not supported by this browser.");
     }
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const addUser = async (userId,photo) => { // funtion to add sellers data to firestore
     try {
-      const database = getDatabase();
-      const sellersRef = ref(database, "sellers");
-      
-      // Generate a unique key
-      const uniqueKey = `${localStorage.getItem('user')}_details`;
-      
-      // Set the seller's details under the unique key
-      await set(child(sellersRef, uniqueKey), {
+      await setDoc(doc(db, "sellers", userId), {
         ownerName: formFields.ownerName,
         phoneNumber: formFields.phoneNumber,
         location: formFields.location,
         pincode: formFields.pincode,
         shopName: formFields.shopName,
-        // Handle shop photo upload here
-        shopPhoto: formFields.shopPhoto,
-        coordinate: [] // Assuming location is defined somewhere in your code
+        shopPhoto: photo,
+        coordinate: formFields.coordinate , 
       });
-      
-      console.log("Seller data sent to Firebase successfully!");
-
-      // Redirect to '/addProduct' page
+      console.log("User added successfully");
       navigate("/addProduct");
     } catch (error) {
-      console.error("Error sending data to Firebase:", error.message);
+      console.error("Error adding user: ", error);
     }
   };
 
+  const checkUserInSellers = async (userId) => { // funtion to check seller is already exists or not in firestore
+    try {
+      const sellerDocRef = doc(db, 'sellers', userId);
+      const sellerDocSnapshot = await getDoc(sellerDocRef);
+      if (sellerDocSnapshot.exists()) {
+        console.log('User data exists in sellers collection');
+        navigate("/addProduct")
+      } else {
+        console.log('User data does not exist in sellers collection');
+      }
+    } catch (error) {
+      console.error('Error checking user data: ', error);
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmit(true)
+    // Generate a unique key
+    const uniqueKey = `${localStorage.getItem("user")}_details`;
+    
+    //Upload the shop photo image to firebase storage and get url
+    const imageRef = ref(storage, `sellerImages/${localStorage.getItem("user")}/shopPhoto`);
+    await uploadBytes(imageRef, formFields.shopPhoto);
+    const imageUrl = await getDownloadURL(imageRef);
+
+    //Adding seller data to firebase firestore
+    addUser(uniqueKey,imageUrl);
+
+    setIsSubmit(false)
+  };
+
+  useEffect(()=>{
+    checkUserInSellers(`${localStorage.getItem("user")}_details`)
+  },[])
+
   return (
-    <Container style={{ marginTop: '90px', padding: '20px', marginBottom: '50px' }}>
+    <Container
+      style={{ marginTop: "90px", padding: "20px", marginBottom: "50px" }}
+    >
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h4" align="center" gutterBottom>
@@ -174,7 +202,7 @@ const SellerForm = () => {
                   color="success" // Change color to success
                   fullWidth
                 >
-                  Register
+                  {isSubmit?"Registering...":"Register"}
                 </Button>
               </Grid>
             </Grid>
