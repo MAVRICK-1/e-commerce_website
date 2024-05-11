@@ -24,6 +24,7 @@ import Newsletter from '../../components/newsletter/index';
 import NewsletterImg from '../../assets/images/newsletter.png';
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
     return (
         <>
 
@@ -206,7 +207,7 @@ const Footer = () => {
 
                         <div className='row lastStrip'>
                             <div className='col-md-3 part_1'>
-                                <p>© 2022, Nest - HTML Ecommerce Template
+                                <p>© {currentYear}, Nest - HTML Ecommerce Template
                                     All rights reserved</p>
                             </div>
 
