@@ -29,6 +29,8 @@ import AddProductForm from "./pages/AddProd";
 // import data from './data';
 import MapComponent from "./components/map/ITEMmap";
 import SellerForm from "./pages/SellerRegistration";
+import { db } from "./firebase";
+import { collection, doc, getDocs } from "firebase/firestore";
 
 const MyContext = createContext();
 
@@ -48,6 +50,29 @@ function App() {
   const [isLogin, setIsLogin] = useState();
   const [isOpenFilters, setIsopenFilters] = useState(false);
   const [data, setData] = useState([]);
+  const [cartCount,setCartCount] = useState(0)
+
+
+  useEffect(()=>{
+    fetchCartProducts()
+  },[])
+
+  const fetchCartProducts = async () => {
+    try {
+      const cartRef = doc(db, 'carts', localStorage.getItem("uid"));
+      const productsCollectionRef = collection(cartRef, 'products');
+      const querySnapshot = await getDocs(productsCollectionRef);
+      const products = [];
+      querySnapshot.forEach((doc) => {
+        products.push({ id: doc.id, ...doc.data() });
+      });
+      setCartItems(products);
+      setCartCount(products.length); // Set the product count
+    } catch (error) {
+      console.error('Error fetching cart products:', error);
+    }
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -184,6 +209,8 @@ function App() {
     openFilters,
     isopenNavigation,
     setIsopenNavigation,
+    cartCount,
+    setCartCount
   };
 
   return data && data.productData ? (

@@ -107,6 +107,7 @@ const SignIn = () => {
         context.signIn();
         dispatch(logIn({email:user.email}))
         setLoggedInUseEmail(user.email);
+        localStorage.setItem("uid", userCredential.user.uid);
         //console.log(loggedInUserEmail);
         history("/");
       })
@@ -125,6 +126,7 @@ const SignIn = () => {
         localStorage.setItem("isLogin", true);
         const udata = replaceSpecialCharacters(result.user.email);
         localStorage.setItem("user", udata);
+        localStorage.setItem("uid", result.user.uid);
         context.signIn();
         setLoggedInUseEmail(udata);
         //console.log(loggedInUserEmail);

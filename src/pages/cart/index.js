@@ -16,13 +16,15 @@ import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import MapComponent from "../../components/map/ITEMmap";
+import { db } from "../../firebase";
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const context = useContext(MyContext);
   const navigate = useNavigate();
-
+  const [uid,setUid] = useState(localStorage.getItem("uid"))
   useEffect(() => {
     try {
       if (context.isLogin === "true") {
@@ -37,6 +39,27 @@ const Cart = () => {
       setError("Failed to fetch data from the server"); // Set error state if there's an error with database connection
     }
   }, []);
+
+  useEffect(() => {
+    fetchCartProducts()
+  }, [db,uid]);
+
+  const fetchCartProducts = async () => {
+    try {
+      const cartRef = doc(db, 'carts', uid);
+      const productsCollectionRef = collection(cartRef, 'products');
+      const querySnapshot = await getDocs(productsCollectionRef);
+      const products = [];
+      querySnapshot.forEach((doc) => {
+        products.push({ id: doc.id, ...doc.data() });
+      });
+      console.log(products)
+      setCartItems(products);
+    } catch (error) {
+      console.error('Error fetching cart products:', error);
+    }
+  };
+
 
   const getCartData = async () => {
     try {
