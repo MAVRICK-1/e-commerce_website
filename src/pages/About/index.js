@@ -22,11 +22,11 @@ function Tes() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="about-container">
       <h1 className="contributor-text">Our Contributors</h1>
       <Grid className="container-grid">
         {contributors.map((contributor) => (
-          <Grid item key={contributor.id} xs={12} sm={6} md={4} lg={3}>
+          <Grid  item key={contributor.id}>
             <Card className="card">
               {window.innerWidth < 580 ? (
                 <a href={contributor.html_url} className="cardLink" target="_blank">

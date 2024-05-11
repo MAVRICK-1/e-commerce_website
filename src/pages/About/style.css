@@ -3,18 +3,23 @@
   list-style: none;
 }
 
-.container {
-  margin: 1vw;
+.about-container{
+  width: 100vw;
+  height: 50%;
+  margin-top: 2vw;
+  margin-left: 2vw;
+  margin-bottom: 2vw;
+  padding-top: 2vw;
+  overflow: scroll;
+  scrollbar-width: none;
 }
 
 .container-grid {
   padding-top: 1vw;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  overflow: scroll;
-  scrollbar-width: none;
 }
 
 .contributor-text {
@@ -48,10 +53,10 @@
 }
 
 @media (max-width: 586px) {
-  .container {
-    width: 100vw;
-    height: 50%;
-    padding: 8vw;
+  .about-container {
+    width: 100%;
+    height: 80%;
+    padding: 5vw;
   }
 
   .contributor-text {
@@ -59,22 +64,29 @@
     font-size: 6vw;
     color: #008080;
   }
+  .img {
+    width: 100px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .text-color {
-    font-size: 1.5vw;
-    color: #008080;
+    font-size: 2.5vw;
   }
 
   .card {
-    width: 100px;
-    height: 100px;
+    width: 300px;
+    height: 350px;
   }
 }
 @media (min-width: 600px) {
-  .container {
-    width: 100vw;
+  .about-container {
+    width: 100%;
     height: 50%;
-    padding: 8vw;
+    padding: 5vw;
+    margin-top: 5vw;
   }
 
   .contributor-text {
@@ -94,10 +106,11 @@
 }
 
 @media (min-width: 600px) and (max-width: 1024px) {
-  .container {
-    width: 100vw;
+  .about-container {
+    width: 100%;
     height: 50%;
     padding: 3vw;
+    margin-top: 3.5vw;
   }
 
   .contributor-text {
