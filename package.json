@@ -59,5 +59,9 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.24.5"
-  }
+  },
+  "description": "<img src=\"./Images/WebsiteImg.png\">",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }
