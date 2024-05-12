@@ -108,6 +108,7 @@ const SignIn = () => {
         dispatch(logIn({email:user.email}))
         setLoggedInUseEmail(user.email);
         localStorage.setItem("uid", userCredential.user.uid);
+        localStorage.setItem("userImage","")
         //console.log(loggedInUserEmail);
         history("/");
       })
@@ -129,6 +130,7 @@ const SignIn = () => {
         localStorage.setItem("uid", result.user.uid);
         context.signIn();
         setLoggedInUseEmail(udata);
+        localStorage.setItem("userImage",result.user.photoURL)
         //console.log(loggedInUserEmail);
         history("/");
       })
