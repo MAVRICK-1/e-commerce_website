@@ -55,7 +55,7 @@ function App() {
 
   useEffect(()=>{
     fetchCartProducts()
-  },[])
+  },[isLogin])
 
   const fetchCartProducts = async () => {
     try {
@@ -96,7 +96,6 @@ function App() {
 
   useEffect(() => {
     getData();
-    getCartData();
 
     const is_Login = localStorage.getItem("isLogin");
     setIsLogin(is_Login);
@@ -210,7 +209,8 @@ function App() {
     isopenNavigation,
     setIsopenNavigation,
     cartCount,
-    setCartCount
+    setCartCount,
+    fetchCartProducts
   };
 
   return data && data.productData ? (
