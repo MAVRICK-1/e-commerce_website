@@ -41,6 +41,7 @@ const Header = (props) => {
   const {cartCount, setCartCount} = useContext(MyContext);
   const headerRef = useRef();
   const searchInput = useRef();
+  const [profile,setProfile] = useState("")
 
   const context = useContext(MyContext);
   const history = useNavigate();
@@ -66,6 +67,9 @@ const Header = (props) => {
     getCountry("https://countriesnow.space/api/v0.1/countries/");
   }, []);
 
+  useEffect(()=>{
+    setProfile(localStorage.getItem("userImage"))
+  },[context.isLogin])
   const getCountry = async (url) => {
     try {
       await axios.get(url).then((res) => {
@@ -97,6 +101,7 @@ const Header = (props) => {
 
   const signOut = () => {
     context.signOut();
+    localStorage.setItem("userImage","")
     history("/");
   };
 
@@ -155,10 +160,9 @@ const Header = (props) => {
                     </div>
                     {context.isLogin === "true" && (
                       <div
-                        className="myAccDrop"
                         onClick={() => setisOpenAccDropDown(!isOpenAccDropDown)}
                       >
-                        <PersonOutlineOutlinedIcon />
+                        {profile!=""?<img src={profile} alt="" style={{width:"65%", height:"65%", borderRadius:"50%",marginLeft:"15%"}} />:<img src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png" alt="" style={{width:"50px", height:"50px", borderRadius:"50%",marginLeft:"13%"}} />}
                       </div>
                     )}
                   </div>
@@ -253,8 +257,8 @@ const Header = (props) => {
                           <span
                             onClick={() => setisOpenDropDown(!isOpenDropDown)}
                           >
-                            <img src={IconUser} />
-                            Account
+                            
+                            {profile!=""?<img src={profile} alt="" style={{width:"65%", height:"65%", borderRadius:"50%",marginLeft:"18%"}} />:<img src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png" alt="" style={{width:"50px", height:"50px", borderRadius:"50%",marginLeft:"18%"}} />}
                           </span>
 
                           {isOpenDropDown !== false && (
