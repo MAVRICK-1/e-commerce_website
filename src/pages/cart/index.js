@@ -16,19 +16,21 @@ import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import MapComponent from "../../components/map/ITEMmap";
+import { db } from "../../firebase";
+import { collection, deleteDoc, doc, getDocs, onSnapshot } from "firebase/firestore";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const context = useContext(MyContext);
   const navigate = useNavigate();
-
+  const [uid,setUid] = useState(localStorage.getItem("uid"))
   useEffect(() => {
     try {
       if (context.isLogin === "true") {
-        getCartData();
+        fetchCartProducts();
       } else {
-        navigate("/aboutus"); // Navigate to About Us page if not logged in
+        navigate("/signIn"); // Navigate to About Us page if not logged in
       }
 
       window.scrollTo(0, 0);
@@ -38,78 +40,55 @@ const Cart = () => {
     }
   }, []);
 
-  const getCartData = async () => {
+  useEffect(() => {
+    fetchCartProducts()
+  }, [db,uid]);
+
+  const fetchCartProducts = async () => {
     try {
-      const db = getDatabase();
-      const dataRef = ref(db, `${localStorage.getItem("user")}`);
-      onValue(
-        dataRef,
-        (snapshot) => {
-          const data = snapshot.val();
-          //console.log("Data fetched successfully:", data);
-          if (data) {
-            setCartItems(Object.values(data));
-            //console.log(Object.values(data).length);
-            // Calculate total price
-            const totalPrice = Object.values(data).reduce((acc, item) => {
-              const itemPrice = parseInt(item.price.split(",").join(""));
-              return acc + itemPrice * item.quantity;
-            }, 0);
-            setTotalPrice(totalPrice);
-          } else {
-            setCartItems([]);
-            // If data is null, set cartItems to an empty array
-          }
-          setError(null); // Reset error state if data fetch is successful
-        },
-        (error) => {
-          console.error("Error fetching data:", error);
-          setError(error.message); // Set error state if there's an error fetching data
-        }
-      );
+      const cartRef = doc(db, 'carts', uid);
+      const productsCollectionRef = collection(cartRef, 'products');
+      const querySnapshot = await getDocs(productsCollectionRef);
+      let products = [];
+      let price = 0;
+      querySnapshot.forEach((doc) => {
+        products.push({ id: doc.id, ...doc.data() });
+        price+= parseInt(doc.data()?.price)*(doc.data()?.quantity)
+      });
+      context.setCartCount(products.length)
+      setCartItems(products);
+      setTotalPrice(price)
     } catch (error) {
-      console.error("Error:", error);
-      setError("Failed to fetch data from the server"); // Set error state if there's an error with database connection
+      console.error('Error fetching cart products:', error);
     }
   };
 
-  const deleteItem = async (id) => {
+
+  const deleteCartItem = async (uid, cartItemId) => {
+    const cartItemRef = doc(db, 'carts', uid, 'products', cartItemId);
+  
     try {
-      const db = getDatabase();
-      const itemRef = ref(
-        db,
-        `${localStorage.getItem("user")}/${localStorage.getItem("user")}${id}`
-      );
-      remove(itemRef)
-        .then(() => {
-          //console.log("Item deleted successfully");
-          context.removeItemsFromCart(id);
-        })
-        .catch((error) => {
-          console.error("Error deleting item:", error);
-        });
+      await deleteDoc(cartItemRef);
+      fetchCartProducts()
+      console.log('Cart item deleted successfully.');
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error deleting cart item:', error);
     }
   };
 
-  const emptyCart = () => {
+  const deleteAllCartItems = async (uid) => {
+
+    const productsCollectionRef = collection(db, 'carts', uid, 'products');
+  
     try {
-      const db = getDatabase();
-      const itemRef = ref(db, `${localStorage.getItem("user")}`);
-      remove(itemRef)
-        .then(() => {
-          context.emptyCart();
-          //console.log("Item deleted successfully");
-          setCartItems([]);
-          // Reset cartItems to an empty array after emptying the cart
-          setTotalPrice(0); // Reset total price
-        })
-        .catch((error) => {
-          console.error("Error deleting item:", error);
-        });
+      const querySnapshot = await getDocs(productsCollectionRef);
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+      });
+      await fetchCartProducts()
+      console.log('All cart items deleted successfully.');
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error deleting cart items:', error);
     }
   };
 
@@ -151,7 +130,7 @@ const Cart = () => {
 
                     <span
                       className="ml-auto clearCart d-flex align-items-center cursor "
-                      onClick={() => emptyCart()}
+                      onClick={() => deleteAllCartItems(uid)}
                     >
                       <DeleteOutlineOutlinedIcon /> Clear Cart
                     </span>
@@ -218,6 +197,7 @@ const Cart = () => {
                                       item={item}
                                       cartItems={cartItems}
                                       index={index}
+                                      quantity={item?.quantity}
                                       updateCart={updateCart}
                                     />
                                   </td>
@@ -234,7 +214,7 @@ const Cart = () => {
                                   <td align="center">
                                     <span
                                       className="cursor"
-                                      onClick={() => deleteItem(item.id)}
+                                      onClick={() => deleteCartItem(uid,`${item?.id}`)}
                                     >
                                       <DeleteOutlineOutlinedIcon />
                                     </span>

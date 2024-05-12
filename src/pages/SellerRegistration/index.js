@@ -65,6 +65,7 @@ const SellerForm = () => {
   const addUser = async (userId,photo) => { // funtion to add sellers data to firestore
     try {
       await setDoc(doc(db, "sellers", userId), {
+        uid: userId,
         ownerName: formFields.ownerName,
         phoneNumber: formFields.phoneNumber,
         location: formFields.location,
@@ -98,10 +99,10 @@ const SellerForm = () => {
     e.preventDefault();
     setIsSubmit(true)
     // Generate a unique key
-    const uniqueKey = `${localStorage.getItem("user")}_details`;
+    const uniqueKey = localStorage.getItem("uid");
     
     //Upload the shop photo image to firebase storage and get url
-    const imageRef = ref(storage, `sellerImages/${localStorage.getItem("user")}/shopPhoto`);
+    const imageRef = ref(storage, `sellerImages/${localStorage.getItem("uid")}/shopPhoto`);
     await uploadBytes(imageRef, formFields.shopPhoto);
     const imageUrl = await getDownloadURL(imageRef);
 
@@ -112,7 +113,7 @@ const SellerForm = () => {
   };
 
   useEffect(()=>{
-    checkUserInSellers(`${localStorage.getItem("user")}_details`)
+    checkUserInSellers(localStorage.getItem("uid"))
   },[])
 
   return (

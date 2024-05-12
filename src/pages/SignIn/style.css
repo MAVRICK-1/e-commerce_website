@@ -1,5 +1,5 @@
-.loginWrapper{padding: 75px 0px; background: #f1f1f1;}
-.loginWrapper .card{width: 650px; margin: auto; padding: 40px; border: 0px !important;}
+.loginWrapper{padding: 75px 0px; background: #f1f1f1; height: auto;}
+.loginWrapper .card{width: 650px; margin: auto; padding: 40px; border: 0px !important;height: auto;}
 .loginWrapper .card h3{font-weight: 500; font-size: 35px;}
 .loginWrapper .card input{height: 40px !important; font-size: 18px !important; color: #000 !important;}
 .loginWrapper .card fieldset{border-radius: 10px !important;}

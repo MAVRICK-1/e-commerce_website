@@ -20,6 +20,8 @@ import { MyContext } from '../../App';
 import MapComponent from '../../components/map/ITEMmap';
 import { Email } from '@mui/icons-material';
 import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
+import { db } from '../../firebase';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
 
 
@@ -115,7 +117,6 @@ const DetailsPage = (props) => {
         setActiveSize(index);
     }
 
-
     const plus = () => {
         setinputValue(inputValue + 1)
     }
@@ -127,8 +128,6 @@ const DetailsPage = (props) => {
     }
 
 
-
-    
     useEffect(() => {
         window.scrollTo(0, 0)
         setIsLoading(true);
@@ -179,7 +178,7 @@ const DetailsPage = (props) => {
 
         showReviews();
 
-        getCartData("https://mavrick-1.github.io/DataApi/data.json");
+        fetchCartProducts()
 
         setIsLoading(false);
 
@@ -255,70 +254,34 @@ const DetailsPage = (props) => {
 
     }
 
-
-
-    // const addToCart = (item) => {
-    //     context.addToCart(item);
-
-    //     setIsadded(true);
-    // }
     const addToCart = async (item) => {
         try {
-            const user=localStorage.getItem('user')
-            // Initialize Firebase database with the provided database URL
-            const db = getDatabase();
-            const cartRef = ref(db,user );
-            // Generate a unique key using the user's email and item details
-            const uniqueKey =  user+item.id; // Modify as per your requirement
-            // Add item to the cart in Firebase
-            await set(child(cartRef, uniqueKey), { ...item, quantity: 1 });
+            const user=localStorage.getItem('uid')
+            const cartRef = doc(db, 'carts', user);
+            const productRef = doc(cartRef, 'products', `${item.id}`);
+            await setDoc(productRef, {...item, quantity: 1});
             setIsadded(true)
-            // Assuming setIsAdded updates the state to indicate the item is added
-            //console.log('Item added to cart successfully');
+            context.setCartCount(context.cartCount+1);
         } catch (error) {
             console.error('Error adding item to cart:', error);
         }
     };
-   // Fetch data from Firebase Realtime Database
-// const fetchDataFromFirebase = () => {
-//     try {
-//       // Get a reference to the database
-//       const db = getDatabase();
-  
-//       // Reference to the node or path you want to fetch data from
-//       const dataRef = ref(db, localStorage.getItem('user'));
-  
-//       // Fetch data from the specified path
-//       onValue(dataRef, (snapshot) => {
-//         const data = snapshot.val();
-//         //console.log("Data fetched successfully:", data);
-//       }, (error) => {
-//         console.error("Error fetching data:", error);
-//       });
-//     } catch (error) {
-//       console.error("Error:", error);
-//     }
-//   };
-  
 
-    const getCartData = async (url) => {
+    const fetchCartProducts = async () => {
         try {
-            await axios.get(url).then((response) => {
-            
-
-                response.data.cartItems.length!==0 && response.data.cartItems.map((item)=>{
-                    
-                    if(parseInt(item.id)===parseInt(id)){
-                        setisAlreadyAddedInCart(true);
-                    }
-                })
-            })
-
+          const cartRef = doc(db, 'carts', localStorage.getItem("uid"));
+          const productsCollectionRef = collection(cartRef, 'products');
+          const querySnapshot = await getDocs(productsCollectionRef);
+          querySnapshot.forEach((doc) => {
+            if(parseInt(doc.data()?.id)===parseInt(id)){
+                setisAlreadyAddedInCart(true);
+            }
+          });
         } catch (error) {
-            //console.log(error.message);
+          console.error('Error fetching cart products:', error);
         }
-    }
-
+      };
+    
     return (
         <>
          

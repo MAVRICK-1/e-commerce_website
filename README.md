@@ -16,7 +16,7 @@ Our project is an ONDC (Open Network for Digital Commerce) site integrated with 
 - Secure backend architecture for data management
 
 ## Technologies Used
-- Frontend: HTML, CSS, JavaScript, React.js
+- Frontend: HTML, CSS, JavaScript, React.js, Redux
 - Backend: Node.js, Express.js, Firebase Realtime Database
 - Mapping: OpenStreetMap API
 - Version Control: Git, GitHub

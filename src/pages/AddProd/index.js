@@ -39,7 +39,7 @@ export default function AddProductForm() {
 
   const addProd = async (main,sub) => {  // funtion to add products data to firestore
     try {
-      await addDoc(collection(db, 'sellers', `${localStorage.getItem("user")}_details`, 'products'), {
+      await addDoc(collection(db, 'sellers', localStorage.getItem("uid"), 'products'), {
         productName: formData.productName,
         price: formData.price,
         discountPrice: formData.discountPrice,
@@ -70,12 +70,12 @@ export default function AddProductForm() {
   const handleSubmit = async () => { 
     setIsSubmit(true)
     //Upload the main image to firebase storage and get url
-    const imageRef = ref(storage, `productImages/${localStorage.getItem("user")}/${formData.productName}/mainImage`);
+    const imageRef = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/mainImage`);
     await uploadBytes(imageRef, formData.mainImage);
     const imageUrl = await getDownloadURL(imageRef);
     
     //Upload the subsidiary image to firebase storage and get url
-    const imageRef1 = ref(storage, `productImages/${localStorage.getItem("user")}/${formData.productName}/subsidiaryImages`);
+    const imageRef1 = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/subsidiaryImages`);
     await uploadBytes(imageRef1, formData.subsidiaryImages);
     const imageUrl1 = await getDownloadURL(imageRef1);
     

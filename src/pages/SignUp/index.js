@@ -8,6 +8,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import {
   Button,
   Snackbar,
+  Typography,
   Dialog,
   DialogContent,
   DialogContentText,
@@ -22,6 +23,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const auth = getAuth(app);
 
 const SignUp = () => {
+ 
   const navigate = useNavigate(); // Initialize useHistory
   const [openDialog, setOpenDialog] = useState(false); // State for controlling dialog visibility
 
@@ -31,11 +33,18 @@ const SignUp = () => {
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
-    conformPassword: "",
+    confirmPassword: "",
   });
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const [isDisableSignupButton, setDisableSignUpButton] = useState(true);
+  const [InputErrors, setInputErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const signUp = () => {
     setShowLoader(true);
@@ -69,14 +78,74 @@ const SignUp = () => {
       });
   };
 
+  // Email validation function
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  //Password Validation
+  const validatePassword = (password, error) => {
+    if (password.length < 6) {
+      error.password = "Password must be at least 6 characters long";
+      return false;
+    }
+
+    // Regular expressions for checking different conditions
+    const hasSpecialSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const hasUppercase = /[A-Z]+/;
+    const hasLowercase = /[a-z]+/;
+    const hasDigit = /[0-9]+/;
+
+    if (!hasSpecialSymbol.test(password)) {
+      error.password = "Password must contain at least one special symbol";
+      return false;
+    }
+
+    if (!hasUppercase.test(password)) {
+      error.password = "Password must contain at least one uppercase letter";
+      return false;
+    }
+
+    if (!hasLowercase.test(password)) {
+      error.password = "Password must contain at least one lowercase letter";
+      return false;
+    }
+
+    if (!hasDigit.test(password)) {
+      error.password = "Password must contain at least one digit";
+      return false;
+    }
+
+    error.password = "";
+  };
+
   const onChangeField = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    let errors = { ...InputErrors };
 
+    if (name == "email") {
+      errors.email = !validateEmail(value) ? "Invalid email address" : "";
+    }
+
+    if (name === "password") {
+      validatePassword(value, errors);
+    }
+
+    if (name === "confirmPassword") {
+      errors.confirmPassword =
+        formFields.password !== value ? "Password Not Matched!" : "";
+    }
+
+    setInputErrors(errors);
     setFormFields(() => ({
       ...formFields,
       [name]: value,
     }));
+
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+    if (!hasErrors) setDisableSignUpButton(false);
+    else setDisableSignUpButton(true);
   };
 
   const handleCloseSnackbar = () => {
@@ -147,7 +216,16 @@ const SignUp = () => {
                   onChange={onChangeField}
                   value={formFields.email}
                   autoComplete="email"
+                  error={InputErrors.email}
                 />
+                {InputErrors.email && (
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "red", padding: "5px" }}
+                  >
+                    {InputErrors.email}
+                  </Typography>
+                )}
               </div>
               <div className="form-group mb-4 w-100">
                 <div className="position-relative">
@@ -160,6 +238,7 @@ const SignUp = () => {
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="new-password"
+                    error={InputErrors.password}
                   />
                   <Button
                     className="icon"
@@ -171,20 +250,29 @@ const SignUp = () => {
                       <VisibilityOutlinedIcon />
                     )}
                   </Button>
+                  {InputErrors.password && (
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "red", padding: "5px" }}
+                    >
+                      {InputErrors.password}
+                    </Typography>
+                  )}
                 </div>
               </div>
 
               <div className="form-group mb-4 w-100">
                 <div className="position-relative">
                   <TextField
-                    id="conformPassword"
+                    id="confirmPassword"
                     type={showPassword1 === false ? "password" : "text"}
-                    name="conformPassword"
+                    name="confirmPassword"
                     label="Confirm Password"
                     className="w-100"
                     onChange={onChangeField}
-                    value={formFields.conformPassword}
+                    value={formFields.confirmPassword}
                     autoComplete="new-password"
+                    error={InputErrors.confirmPassword}
                   />
                   <Button
                     className="icon"
@@ -196,11 +284,23 @@ const SignUp = () => {
                       <VisibilityOutlinedIcon />
                     )}
                   </Button>
+                  {InputErrors.confirmPassword && (
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "red", padding: "5px" }}
+                    >
+                      {InputErrors.confirmPassword}
+                    </Typography>
+                  )}
                 </div>
               </div>
 
               <div className="form-group mt-5 mb-4 w-100">
-                <Button className="btn btn-g btn-lg w-100" onClick={signUp}>
+                <Button
+                  disabled={isDisableSignupButton}
+                  className="btn btn-g btn-lg w-100"
+                  onClick={signUp}
+                >
                   Sign Up
                 </Button>
               </div>
