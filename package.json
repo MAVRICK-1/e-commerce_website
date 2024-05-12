@@ -65,7 +65,6 @@
     "@babel/eslint-parser": "^7.24.5",
     "@babel/plugin-transform-private-property-in-object": "^7.24.5",
     "@babel/preset-react": "^7.24.1",
-    "eslint": "8.48.0",
     "eslint-plugin-react": "^7.34.1",
     "prettier": "3.0.1"
   },
