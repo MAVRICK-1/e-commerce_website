@@ -6,6 +6,7 @@ import {getStorage} from "firebase/storage"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+// this is the firbase configuration of the project given by the project admin
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAk6hLddPbZ5R7j_LBsFDDSZT64MVHrQjI",
@@ -17,6 +18,8 @@ const firebaseConfig = {
   measurementId: "G-26EE7FZZZE"
 
 };
+
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
