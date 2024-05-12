@@ -98,9 +98,9 @@ const Product = (props) => {
             const user=localStorage.getItem('uid')
             const cartRef = doc(db, 'carts', user);
             const productRef = doc(cartRef, 'products', `${item.id}`);
-            await setDoc(productRef, {...item, quantity: 1});
+            await setDoc(productRef, {...item, quantity: 1})
             setIsadded(true)
-            context.setCartCount(context.cartCount+1);
+            context.fetchCartProducts();
         } catch (error) {
             console.error('Error adding item to cart:', error);
         }

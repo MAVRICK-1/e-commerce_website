@@ -38,7 +38,6 @@ const Home = (props) => {
     };
 
     const catArr = [];
-
     useEffect(() => {
 
         prodData.length !== 0 &&
@@ -55,7 +54,6 @@ const Home = (props) => {
         setactiveTab(list2[0])
 
         window.scrollTo(0,0);
-
     }, [])
 
 
