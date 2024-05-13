@@ -37,9 +37,11 @@
   },
   "scripts": {
     "start": "set PORT=3006 && react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js,.jsx",
+    "lint:fix": "eslint . --cache --quiet --fix --ext .js,.jsx"
   },
   "eslintConfig": {
     "extends": [
@@ -60,7 +62,11 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-transform-private-property-in-object": "^7.24.5"
+    "@babel/eslint-parser": "^7.24.5",
+    "@babel/plugin-transform-private-property-in-object": "^7.24.5",
+    "@babel/preset-react": "^7.24.1",
+    "eslint-plugin-react": "^7.34.1",
+    "prettier": "3.0.1"
   },
   "description": "<img src=\"./Images/WebsiteImg.png\">",
   "main": "index.js",
