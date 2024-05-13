@@ -208,7 +208,7 @@ const Header = (props) => {
                                         } */}
 
                   {windowWidth < 992 && (
-                    <div class="closeSearch" onClick={closeSearch}>
+                    <div className="closeSearch" onClick={closeSearch}>
                       <ArrowBackIosIcon />
                     </div>
                   )}

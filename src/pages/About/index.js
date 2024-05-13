@@ -29,25 +29,35 @@ function Tes() {
           <Grid item key={contributor.id}>
             <Card className="card">
               {window.innerWidth < 580 ? (
+                <div className="img">
+                  <a
+                    href={contributor.html_url}
+                    className="cardLink"
+                    target="_blank"
+                  >
+                    <CardMedia
+                      component="img"
+                      image={contributor.avatar_url}
+                      alt={contributor.login}
+                      className="img"
+                    />
+                  </a>
+                </div>
+              ) : (
+                <div className="img">
                 <a
                   href={contributor.html_url}
                   className="cardLink"
                   target="_blank"
                 >
-                  <CardMedia
-                    component="img"
-                    image={contributor.avatar_url}
-                    alt={contributor.login}
-                    className="img"
-                  />
-                </a>
-              ) : (
                 <CardMedia
                   component="img"
                   image={contributor.avatar_url}
                   alt={contributor.login}
                   className="img"
                 />
+                </a>
+                </div>
               )}
               <CardContent>
                 <Typography className="card-name" variant="h4">
