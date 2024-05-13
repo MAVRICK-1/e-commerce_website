@@ -21,7 +21,7 @@ import MapComponent from '../../components/map/ITEMmap';
 import { Email } from '@mui/icons-material';
 import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
 import { db } from '../../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
 
 
@@ -117,7 +117,6 @@ const DetailsPage = (props) => {
         setActiveSize(index);
     }
 
-
     const plus = () => {
         setinputValue(inputValue + 1)
     }
@@ -129,8 +128,6 @@ const DetailsPage = (props) => {
     }
 
 
-
-    
     useEffect(() => {
         window.scrollTo(0, 0)
         setIsLoading(true);
@@ -181,7 +178,7 @@ const DetailsPage = (props) => {
 
         showReviews();
 
-        getCartData("https://mavrick-1.github.io/DataApi/data.json");
+        fetchCartProducts()
 
         setIsLoading(false);
 
@@ -259,8 +256,6 @@ const DetailsPage = (props) => {
 
     const addToCart = async (item) => {
         try {
-            console.log("not global in comp prod index",item)
-            console.log(item.id)
             const user=localStorage.getItem('uid')
             const cartRef = doc(db, 'carts', user);
             const productRef = doc(cartRef, 'products', `${item.id}`);
@@ -272,24 +267,21 @@ const DetailsPage = (props) => {
         }
     };
 
-    const getCartData = async (url) => {
+    const fetchCartProducts = async () => {
         try {
-            await axios.get(url).then((response) => {
-            
-
-                response.data.cartItems.length!==0 && response.data.cartItems.map((item)=>{
-                    
-                    if(parseInt(item.id)===parseInt(id)){
-                        setisAlreadyAddedInCart(true);
-                    }
-                })
-            })
-
+          const cartRef = doc(db, 'carts', localStorage.getItem("uid"));
+          const productsCollectionRef = collection(cartRef, 'products');
+          const querySnapshot = await getDocs(productsCollectionRef);
+          querySnapshot.forEach((doc) => {
+            if(parseInt(doc.data()?.id)===parseInt(id)){
+                setisAlreadyAddedInCart(true);
+            }
+          });
         } catch (error) {
-            //console.log(error.message);
+          console.error('Error fetching cart products:', error);
         }
-    }
-
+      };
+    
     return (
         <>
          

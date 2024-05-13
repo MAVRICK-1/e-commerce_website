@@ -223,32 +223,39 @@ const Header = (props) => {
                     <ul className="list list-inline mb-0 headerTabs">
                       <li className="list-inline-item">
                         <span>
+                        <Link to={"/wishlist"} style={{ textDecoration: "none" }}>                      
+                            {" "}
                           <img src={IconCompare} />
                           <span className="badge bg-success rounded-circle">
                             3
                           </span>
                           Compare
+                        </Link>
                         </span>
                       </li>
                       <li className="list-inline-item">
                         <span>
+                        <Link to={"/wishlist"} style={{ textDecoration: "none" }}>                      
+                            {" "}
                           <img src={IconHeart} />
                           <span className="badge bg-success rounded-circle">
                             3
                           </span>
                           Wishlist
+                        </Link>
                         </span>
                       </li>
                       <li className="list-inline-item">
                         <span>
-                          <Link to={"/cart"}>
+                          <Link to={"/cart"} style={{ textDecoration: "none" }}>                      
                             {" "}
                             <img src={IconCart} />
                             <span className="badge bg-success rounded-circle">
-                              {cartCount}
+                              {cartCount}  
                             </span>
                             Cart
                           </Link>
+                          
                         </span>
                       </li>
 

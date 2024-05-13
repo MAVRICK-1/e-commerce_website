@@ -26,29 +26,43 @@ function Tes() {
       <h1 className="contributor-text">Our Contributors</h1>
       <Grid className="container-grid">
         {contributors.map((contributor) => (
-          <Grid  item key={contributor.id}>
+          <Grid item key={contributor.id}>
             <Card className="card">
               {window.innerWidth < 580 ? (
-                <a href={contributor.html_url} className="cardLink" target="_blank" rel="noreferrer">
-                  <CardMedia
-                    component="img"
-                    height="250"
-                    image={contributor.avatar_url}
-                    alt={contributor.login}
-                    className="img"
-                  />
-                </a>
+                <div className="img">
+                  <a
+                    href={contributor.html_url}
+                    className="cardLink"
+                    target="_blank"
+                  >
+                    <CardMedia
+                      component="img"
+                      image={contributor.avatar_url}
+                      alt={contributor.login}
+                      className="img"
+                    />
+                  </a>
+                </div>
               ) : (
+                <div className="img">
+                <a
+                  href={contributor.html_url}
+                  className="cardLink"
+                  target="_blank"
+                >
                 <CardMedia
                   component="img"
-                  height="250"
                   image={contributor.avatar_url}
                   alt={contributor.login}
                   className="img"
                 />
+                </a>
+                </div>
               )}
               <CardContent>
-                <Typography variant="h6">{contributor.login}</Typography>
+                <Typography className="card-name" variant="h4">
+                  {contributor.login}
+                </Typography>
               </CardContent>
               <CardContent>
                 <Typography className="card-bottom">
@@ -60,6 +74,7 @@ function Tes() {
                   >
                     View Git Profile
                   </a>
+                  <span className="temp"> | </span>
                   <a
                     href={contributor.html_url}
                     target="_blank"
