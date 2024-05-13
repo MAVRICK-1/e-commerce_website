@@ -44,8 +44,8 @@ const SignIn = () => {
   });
 
   
-  const checkInputs = (username, password) => {
-    if (username.trim() == '' && password.trim() == ''){
+  const checkInputs = (email, password) => {
+    if (email.trim() !== '' && password.trim() !== ''){
       setIsDisabled(false);
     }else {
       setIsDisabled(true);
@@ -88,14 +88,14 @@ const SignIn = () => {
       errors.password = !validatePassword(value) ? "Password is required" : "";
     }
 
+    setInputErrors(errors);
     setFormFields((prevFormFields) => ({
       ...prevFormFields,
       [name]: value,
     }));
-    checkInputs(formFields.email, formFields.password);
+    checkInputs(formFields.email, formFields.password,value);
 
 
-    setInputErrors(errors);
   };
 
   const signIn = () => {
@@ -215,7 +215,7 @@ const SignIn = () => {
                     type={showPassword === false ? "password" : "text"}
                     name="password"
                     placeholder="Password"
-                    className="w-[100%]"
+                    className="w-100"
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="current-password"

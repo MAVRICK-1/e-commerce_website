@@ -48,14 +48,14 @@ const SignUp = () => {
     confirmPassword: "",
   });
 
-  const checkInputs = (username, password) => {
-    if (username.trim() === '' && password.trim() === ''){
+  const checkInputs = (email, password, confirmPassword) => {
+    if (email.trim() !== '' && password.trim() !== '' && confirmPassword.trim() !== '') {
       setIsDisabled(false);
-    }else {
+    } else {
       setIsDisabled(true);
     }
   };
-
+  
 
   const signUp = () => {
     setShowLoader(true);
@@ -96,7 +96,7 @@ const SignUp = () => {
 
   //Password Validation
   const validatePassword = (password, error) => {
-    if (password.length < 8) {
+    if (password.length < 6) {
       error.password = "Password must be at least 6 characters long";
       return false;
     }
@@ -134,8 +134,7 @@ const SignUp = () => {
     const name = e.target.name;
     const value = e.target.value;
     let errors = { ...InputErrors };
-    checkInputs(e.target.value, password);
-    checkInputs(username, e.target.value);
+
 
 
 
@@ -153,10 +152,12 @@ const SignUp = () => {
     }
 
     setInputErrors(errors);
-    setFormFields(() => ({
-      ...formFields,
+    setFormFields((prevFormFields) => ({
+      ...prevFormFields,
       [name]: value,
     }));
+    checkInputs(formFields.email, formFields.password,value);
+
 
   };
 
@@ -226,7 +227,6 @@ const SignUp = () => {
                   onChange={onChangeField}
                   value={formFields.email}
                   autoComplete="email"
-                  error={InputErrors.email}
                 />
                 {InputErrors.email && (
                   <Typography
@@ -237,17 +237,17 @@ const SignUp = () => {
                   </Typography>
                 )}
               </div>
-              <div className="form-group mb-4 ">
+              <div className="form-group mb-4 w-100">
                 <div className="position-relative ">
                   <TextField
                     id="password"
                     type={showPassword === false ? "password" : "text"}
                     name="password"
                     placeholder="Password"
+                    className="w-100"
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="new-password"
-                    error={InputErrors.password}
                   />
                   <Button
                     className="icon"
@@ -270,13 +270,14 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <div className="form-group mb-4 ">
+              <div className="form-group mb-4 w-100">
                 <div className="position-relative">
                   <TextField
                     id="confirmPassword"
                     type={showPassword1 === false ? "password" : "text"}
                     name="confirmPassword"
                     placeholder="Confirm Password"
+                    className="w-100"
                     onChange={onChangeField}
                     value={formFields.confirmPassword}
                     autoComplete="new-password"
