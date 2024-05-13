@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./style.css";
+import "../SignIn/style.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -30,6 +30,8 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+
+
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
@@ -38,13 +40,22 @@ const SignUp = () => {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  const [isDisableSignupButton, setDisableSignUpButton] = useState(true);
   const [InputErrors, setInputErrors] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
+
+  const checkInputs = (username, password) => {
+    if (username.trim() === '' && password.trim() === ''){
+      setIsDisabled(false);
+    }else {
+      setIsDisabled(true);
+    }
+  };
+
 
   const signUp = () => {
     setShowLoader(true);
@@ -85,7 +96,7 @@ const SignUp = () => {
 
   //Password Validation
   const validatePassword = (password, error) => {
-    if (password.length < 6) {
+    if (password.length < 8) {
       error.password = "Password must be at least 6 characters long";
       return false;
     }
@@ -123,6 +134,10 @@ const SignUp = () => {
     const name = e.target.name;
     const value = e.target.value;
     let errors = { ...InputErrors };
+    checkInputs(e.target.value, password);
+    checkInputs(username, e.target.value);
+
+
 
     if (name == "email") {
       errors.email = !validateEmail(value) ? "Invalid email address" : "";
@@ -143,9 +158,6 @@ const SignUp = () => {
       [name]: value,
     }));
 
-    const hasErrors = Object.values(errors).some((error) => error !== "");
-    if (!hasErrors) setDisableSignUpButton(false);
-    else setDisableSignUpButton(true);
   };
 
   const handleCloseSnackbar = () => {
@@ -194,7 +206,7 @@ const SignUp = () => {
 
         <div className="loginWrapper">
           <div className="card shadow">
-            <Backdrop
+          <Backdrop
               sx={{ color: "#000", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={showLoader}
               className="formLoader"
@@ -202,15 +214,15 @@ const SignUp = () => {
               <CircularProgress color="inherit" />
             </Backdrop>
 
-            <h3>SignUp</h3>
-            <form className="mt-4">
+            <h3 className="text-center">SignUp</h3>
+            <form className="mt-4 w-100">
               <div className="form-group mb-4 w-100">
                 <TextField
                   id="email"
                   type="email"
                   name="email"
-                  label="Email"
                   className="w-100"
+                  placeholder="Email"
                   onChange={onChangeField}
                   value={formFields.email}
                   autoComplete="email"
@@ -225,14 +237,13 @@ const SignUp = () => {
                   </Typography>
                 )}
               </div>
-              <div className="form-group mb-4 w-100">
-                <div className="position-relative">
+              <div className="form-group mb-4 ">
+                <div className="position-relative ">
                   <TextField
                     id="password"
                     type={showPassword === false ? "password" : "text"}
                     name="password"
-                    label="Password"
-                    className="w-100"
+                    placeholder="Password"
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="new-password"
@@ -259,14 +270,13 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <div className="form-group mb-4 w-100">
+              <div className="form-group mb-4 ">
                 <div className="position-relative">
                   <TextField
                     id="confirmPassword"
                     type={showPassword1 === false ? "password" : "text"}
                     name="confirmPassword"
-                    label="Confirm Password"
-                    className="w-100"
+                    placeholder="Confirm Password"
                     onChange={onChangeField}
                     value={formFields.confirmPassword}
                     autoComplete="new-password"
@@ -295,7 +305,7 @@ const SignUp = () => {
 
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
-                  disabled={isDisableSignupButton}
+                  disabled={isDisabled}
                   className="btn btn-g btn-lg w-100"
                   onClick={signUp}
                 >

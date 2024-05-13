@@ -36,12 +36,21 @@ const SignIn = () => {
   const history = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [loggedInUserEmail, setLoggedInUseEmail] = useLoggedInUserEmail(); //get_email hook
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  const [isButtonDisable, setButtonDisable] = useState(true);
   const [inputErrors, setInputErrors] = useState({
     email: "",
     password: "",
   });
+
+  
+  const checkInputs = (username, password) => {
+    if (username.trim() == '' && password.trim() == ''){
+      setIsDisabled(false);
+    }else {
+      setIsDisabled(true);
+    }
+  };
 
   const dispatch = useDispatch()
 
@@ -83,12 +92,10 @@ const SignIn = () => {
       ...prevFormFields,
       [name]: value,
     }));
+    checkInputs(formFields.email, formFields.password);
+
 
     setInputErrors(errors);
-
-    const hasErrors = Object.values(errors).some((error) => error !== "");
-    if (!hasErrors) setButtonDisable(false);
-    else setButtonDisable(true);
   };
 
   const signIn = () => {
@@ -178,15 +185,15 @@ const SignIn = () => {
               <CircularProgress color="inherit" />
             </Backdrop>
 
-            <h3>Sign In</h3>
+            <h3 className="text-center">Sign In</h3>
             <form className="mt-4">
               <div className="form-group mb-4 w-100">
                 <TextField
                   id="email"
                   type="email"
                   name="email"
-                  label="Email"
-                  className="w-100"
+                  placeholder="Email"
+                  className="w-100 text-zinc-800"
                   onChange={onChangeField}
                   value={formFields.email}
                   autoComplete="email"
@@ -207,8 +214,8 @@ const SignIn = () => {
                     id="password"
                     type={showPassword === false ? "password" : "text"}
                     name="password"
-                    label="Password"
-                    className="w-100"
+                    placeholder="Password"
+                    className="w-[100%]"
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="current-password"
@@ -243,7 +250,7 @@ const SignIn = () => {
 
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
-                  disabled={isButtonDisable}
+                  disabled={isDisabled}
                   className="btn btn-g btn-lg w-100"
                   onClick={signIn}
                 >
