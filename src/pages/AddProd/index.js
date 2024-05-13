@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Typography, Container, Grid, TextField, Button } from "@mui/material";
-import { getDatabase, ref, push } from "firebase/database";
+import { addDoc, collection } from "firebase/firestore";
+import { db, storage } from "../../firebase";
+import {uploadBytes,getDownloadURL,ref} from "firebase/storage"
+
 
 export default function AddProductForm() {
   const [formData, setFormData] = useState({
@@ -13,45 +16,72 @@ export default function AddProductForm() {
     brand: '',
     quantityAvailable: '',
   });
-
+  const [isSubmit,setIsSubmit] = useState(false)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    const db = getDatabase();
-    const productRef = ref(db, `seller/${localStorage.getItem('user')}/product`);
+  const handleMainImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prevFields) => ({
+      ...prevFields,
+      mainImage: file,
+    }));
+  };
 
-    // Add email ID to the form data
-    // Send the form data to Firebase
-    const productData = {
-      productName: formData.productName,
-      price: formData.price,
-      discountPrice: formData.discountPrice,
-      weightsAvailable: formData.weightsAvailable,
-      mainImage: formData.mainImage,
-      subsidiaryImages: formData.subsidiaryImages,
-      brand: formData.brand,
-      quantityAvailable: formData.quantityAvailable,
-    };
-    push(productRef,productData)
-      .then(() => {
-        alert('Product added successfully!');
-        // Optionally, you can reset the form here
-        setFormData({
-          productName: '',
-          price: '',
-          discountPrice: '',
-          weightsAvailable: '',
-          mainImage: '',
-          subsidiaryImages: [],
-          brand: '',
-          quantityAvailable: '',
-        });
-      })
-      .catch((error) => {
-        console.error('Error adding product: ', error);
+  const handleSubImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prevFields) => ({
+      ...prevFields,
+      subsidiaryImages: file,
+    }));
+  };
+
+  const addProd = async (main,sub) => {  // funtion to add products data to firestore
+    try {
+      await addDoc(collection(db, 'sellers', localStorage.getItem("uid"), 'products'), {
+        productName: formData.productName,
+        price: formData.price,
+        discountPrice: formData.discountPrice,
+        weightsAvailable: formData.weightsAvailable,
+        mainImage: main,
+        subsidiaryImages: sub,
+        brand: formData.brand,
+        quantityAvailable: formData.quantityAvailable,
       });
+
+      console.log("product added successfully");
+      setFormData({
+        productName: "",
+        price: "",
+        discountPrice: "",
+        weightsAvailable: "",
+        mainImage: "",
+        subsidiaryImages: [],
+        brand: "",
+        quantityAvailable: "",
+      })
+      alert("Product Added successfully!")
+    } catch (error) {
+      console.error("Error adding user: ", error);
+    }
+  };
+
+  const handleSubmit = async () => { 
+    setIsSubmit(true)
+    //Upload the main image to firebase storage and get url
+    const imageRef = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/mainImage`);
+    await uploadBytes(imageRef, formData.mainImage);
+    const imageUrl = await getDownloadURL(imageRef);
+    
+    //Upload the subsidiary image to firebase storage and get url
+    const imageRef1 = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/subsidiaryImages`);
+    await uploadBytes(imageRef1, formData.subsidiaryImages);
+    const imageUrl1 = await getDownloadURL(imageRef1);
+    
+    //Adding products data to firebase firestore
+    addProd(imageUrl,imageUrl1)
+    setIsSubmit(false)
   };
 
   return (
@@ -121,6 +151,7 @@ export default function AddProductForm() {
             InputLabelProps={{ shrink: true }}
             label="Main Image"
             fullWidth
+            onChange={handleMainImageChange}
             type="file"
             color="success"
           />
@@ -131,6 +162,7 @@ export default function AddProductForm() {
             InputLabelProps={{ shrink: true }}
             label="Subsidiary Images"
             fullWidth
+            onChange={handleSubImageChange}
             multiple
             type="file"
             color="success"
@@ -162,8 +194,13 @@ export default function AddProductForm() {
         </Grid>
         <Grid item xs={12}>
           {/* onClick event handler added to trigger form submission */}
-          <Button variant="contained" color="success" fullWidth onClick={handleSubmit}>
-            Add Product
+          <Button
+            variant="contained"
+            color="success"
+            fullWidth
+            onClick={handleSubmit}
+          >
+            {isSubmit?"adding...":"Add Product"}
           </Button>
         </Grid>
       </Grid>

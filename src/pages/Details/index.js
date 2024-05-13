@@ -20,6 +20,8 @@ import { MyContext } from '../../App';
 import MapComponent from '../../components/map/ITEMmap';
 import { Email } from '@mui/icons-material';
 import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
+import { db } from '../../firebase';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
 
 
@@ -115,7 +117,6 @@ const DetailsPage = (props) => {
         setActiveSize(index);
     }
 
-
     const plus = () => {
         setinputValue(inputValue + 1)
     }
@@ -127,8 +128,6 @@ const DetailsPage = (props) => {
     }
 
 
-
-    
     useEffect(() => {
         window.scrollTo(0, 0)
         setIsLoading(true);
@@ -179,7 +178,7 @@ const DetailsPage = (props) => {
 
         showReviews();
 
-        getCartData("https://mavrick-1.github.io/DataApi/data.json");
+        fetchCartProducts()
 
         setIsLoading(false);
 
@@ -255,70 +254,34 @@ const DetailsPage = (props) => {
 
     }
 
-
-
-    // const addToCart = (item) => {
-    //     context.addToCart(item);
-
-    //     setIsadded(true);
-    // }
     const addToCart = async (item) => {
         try {
-            const user=localStorage.getItem('user')
-            // Initialize Firebase database with the provided database URL
-            const db = getDatabase();
-            const cartRef = ref(db,user );
-            // Generate a unique key using the user's email and item details
-            const uniqueKey =  user+item.id; // Modify as per your requirement
-            // Add item to the cart in Firebase
-            await set(child(cartRef, uniqueKey), { ...item, quantity: 1 });
+            const user=localStorage.getItem('uid')
+            const cartRef = doc(db, 'carts', user);
+            const productRef = doc(cartRef, 'products', `${item.id}`);
+            await setDoc(productRef, {...item, quantity: 1});
             setIsadded(true)
-            // Assuming setIsAdded updates the state to indicate the item is added
-            //console.log('Item added to cart successfully');
+            context.setCartCount(context.cartCount+1);
         } catch (error) {
             console.error('Error adding item to cart:', error);
         }
     };
-   // Fetch data from Firebase Realtime Database
-// const fetchDataFromFirebase = () => {
-//     try {
-//       // Get a reference to the database
-//       const db = getDatabase();
-  
-//       // Reference to the node or path you want to fetch data from
-//       const dataRef = ref(db, localStorage.getItem('user'));
-  
-//       // Fetch data from the specified path
-//       onValue(dataRef, (snapshot) => {
-//         const data = snapshot.val();
-//         //console.log("Data fetched successfully:", data);
-//       }, (error) => {
-//         console.error("Error fetching data:", error);
-//       });
-//     } catch (error) {
-//       console.error("Error:", error);
-//     }
-//   };
-  
 
-    const getCartData = async (url) => {
+    const fetchCartProducts = async () => {
         try {
-            await axios.get(url).then((response) => {
-            
-
-                response.data.cartItems.length!==0 && response.data.cartItems.map((item)=>{
-                    
-                    if(parseInt(item.id)===parseInt(id)){
-                        setisAlreadyAddedInCart(true);
-                    }
-                })
-            })
-
+          const cartRef = doc(db, 'carts', localStorage.getItem("uid"));
+          const productsCollectionRef = collection(cartRef, 'products');
+          const querySnapshot = await getDocs(productsCollectionRef);
+          querySnapshot.forEach((doc) => {
+            if(parseInt(doc.data()?.id)===parseInt(id)){
+                setisAlreadyAddedInCart(true);
+            }
+          });
         } catch (error) {
-            //console.log(error.message);
+          console.error('Error fetching cart products:', error);
         }
-    }
-
+      };
+    
     return (
         <>
          
@@ -555,86 +518,86 @@ const DetailsPage = (props) => {
                                     <div className='table-responsive'>
                                         <table className='table table-bordered'>
                                             <tbody>
-                                                <tr class="stand-up">
+                                                <tr className="stand-up">
                                                     <th>Stand Up</th>
                                                     <td>
                                                         <p>35″L x 24″W x 37-45″H(front to back wheel)</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="folded-wo-wheels">
+                                                <tr className="folded-wo-wheels">
                                                     <th>Folded (w/o wheels)</th>
                                                     <td>
                                                         <p>32.5″L x 18.5″W x 16.5″H</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="folded-w-wheels">
+                                                <tr className="folded-w-wheels">
                                                     <th>Folded (w/ wheels)</th>
                                                     <td>
                                                         <p>32.5″L x 24″W x 18.5″H</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="door-pass-through">
+                                                <tr className="door-pass-through">
                                                     <th>Door Pass Through</th>
                                                     <td>
                                                         <p>24</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="frame">
+                                                <tr className="frame">
                                                     <th>Frame</th>
                                                     <td>
                                                         <p>Aluminum</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="weight-wo-wheels">
+                                                <tr className="weight-wo-wheels">
                                                     <th>Weight (w/o wheels)</th>
                                                     <td>
                                                         <p>20 LBS</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="weight-capacity">
+                                                <tr className="weight-capacity">
                                                     <th>Weight Capacity</th>
                                                     <td>
                                                         <p>60 LBS</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="width">
+                                                <tr className="width">
                                                     <th>Width</th>
                                                     <td>
                                                         <p>24″</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="handle-height-ground-to-handle">
+                                                <tr className="handle-height-ground-to-handle">
                                                     <th>Handle height (ground to handle)</th>
                                                     <td>
                                                         <p>37-45″</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="wheels">
+                                                <tr className="wheels">
                                                     <th>Wheels</th>
                                                     <td>
                                                         <p>12″ air / wide track slick tread</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="seat-back-height">
+                                                <tr className="seat-back-height">
                                                     <th>Seat back height</th>
                                                     <td>
                                                         <p>21.5″</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="head-room-inside-canopy">
+                                                <tr className="head-room-inside-canopy">
                                                     <th>Head room (inside canopy)</th>
                                                     <td>
                                                        
                                                         <p>25″</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="pa_color">
+                                                <tr className="pa_color">
                                                     <th>Color</th>
                                                     <td>
                                                         <p>Black, Blue, Red, White</p>
                                                     </td>
                                                 </tr>
-                                                <tr class="pa_size">
+                                                <tr className="pa_size">
                                                     <th>Size</th>
                                                     <td>
                                                         <p>M, S</p>
@@ -761,16 +724,16 @@ const DetailsPage = (props) => {
 
                                             <div className="progressBarBox d-flex align-items-center">
                                                 <span className='mr-3'>5 star</span>
-                                                <div class="progress" style={{ width: '85%', height: '20px' }}>
-                                                    <div class="progress-bar bg-success" style={{ width: '75%', height: '20px' }}>75%</div>
+                                                <div className="progress" style={{ width: '85%', height: '20px' }}>
+                                                    <div className="progress-bar bg-success" style={{ width: '75%', height: '20px' }}>75%</div>
                                                 </div>
                                             </div>
 
 
                                             <div className="progressBarBox d-flex align-items-center">
                                                 <span className='mr-3'>4 star</span>
-                                                <div class="progress" style={{ width: '85%', height: '20px' }}>
-                                                    <div class="progress-bar bg-success" style={{ width: '50%', height: '20px' }}>50%</div>
+                                                <div className="progress" style={{ width: '85%', height: '20px' }}>
+                                                    <div className="progress-bar bg-success" style={{ width: '50%', height: '20px' }}>50%</div>
                                                 </div>
                                             </div>
 
@@ -778,8 +741,8 @@ const DetailsPage = (props) => {
 
                                             <div className="progressBarBox d-flex align-items-center">
                                                 <span className='mr-3'>3 star</span>
-                                                <div class="progress" style={{ width: '85%', height: '20px' }}>
-                                                    <div class="progress-bar bg-success" style={{ width: '55%', height: '20px' }}>55%</div>
+                                                <div className="progress" style={{ width: '85%', height: '20px' }}>
+                                                    <div className="progress-bar bg-success" style={{ width: '55%', height: '20px' }}>55%</div>
                                                 </div>
                                             </div>
 
@@ -787,8 +750,8 @@ const DetailsPage = (props) => {
 
                                             <div className="progressBarBox d-flex align-items-center">
                                                 <span className='mr-3'>2 star</span>
-                                                <div class="progress" style={{ width: '85%', height: '20px' }}>
-                                                    <div class="progress-bar bg-success" style={{ width: '35%', height: '20px' }}>35%</div>
+                                                <div className="progress" style={{ width: '85%', height: '20px' }}>
+                                                    <div className="progress-bar bg-success" style={{ width: '35%', height: '20px' }}>35%</div>
                                                 </div>
                                             </div>
 
@@ -796,8 +759,8 @@ const DetailsPage = (props) => {
 
                                             <div className="progressBarBox d-flex align-items-center">
                                                 <span className='mr-3'>1 star</span>
-                                                <div class="progress" style={{ width: '85%', height: '20px' }}>
-                                                    <div class="progress-bar bg-success" style={{ width: '25%', height: '20px' }}>25%</div>
+                                                <div className="progress" style={{ width: '85%', height: '20px' }}>
+                                                    <div className="progress-bar bg-success" style={{ width: '25%', height: '20px' }}>25%</div>
                                                 </div>
                                             </div>
 
@@ -823,7 +786,7 @@ const DetailsPage = (props) => {
                     <br />
 
                     <div className='relatedProducts homeProductsRow2  pt-5 pb-4'>
-                        <h2 class="hd mb-0 mt-0">Related products</h2>
+                        <h2 className="hd mb-0 mt-0">Related products</h2>
                         <br className='res-hide' />
                         <Slider {...related} className='prodSlider'>
 

@@ -7,9 +7,11 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import { useState } from 'react';
 import { MyContext } from '../../../App';
+import { useSelector } from 'react-redux';
 
 const Nav = (props) => {
 
+    const logged = useSelector((state)=>state.authReducer.value.isAuth)
 
     const [navData, setNavData] = useState([]);
     const [isOpenNav, setIsOpenNav] = useState(false);
@@ -23,7 +25,7 @@ const Nav = (props) => {
 
     useEffect(() => {
         setNavData(props.data);
-    }, [])
+    }, []);
 
     useEffect(() => {
         setIsOpenNav(props.openNav)
@@ -49,7 +51,8 @@ const Nav = (props) => {
                     <div className='row position-relative'>
                         <div className='col-sm-2 part1 d-flex align-items-center'>
                             <Button className='bg-g text-white catTab res-hide'>
-                                <GridViewIcon /> &nbsp;Browse All Categories <KeyboardArrowDownIcon /></Button>
+                                <GridViewIcon /> &nbsp;Browse All Categories <KeyboardArrowDownIcon />
+                            </Button>
                         </div>
 
                         <div className='col-sm-8 part2 position-static'>

@@ -22,33 +22,45 @@ function Tes() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="about-container">
       <h1 className="contributor-text">Our Contributors</h1>
       <Grid className="container-grid">
         {contributors.map((contributor) => (
-          <Grid item key={contributor.id} xs={12} sm={6} md={4} lg={3}>
+          <Grid item key={contributor.id}>
             <Card className="card">
               {window.innerWidth < 580 ? (
-                <a href={contributor.html_url} className="cardLink" target="_blank">
-                  <CardMedia
-                    component="img"
-                    height="250"
-                    image={contributor.avatar_url}
-                    alt={contributor.login}
-                    className="img"
-                  />
-                </a>
+                <div className="img">
+                  <a
+                    href={contributor.html_url}
+                    className="cardLink"
+                    target="_blank"
+                  >
+                    <CardMedia
+                      component="img"
+                      image={contributor.avatar_url}
+                      alt={contributor.login}
+                      className="img"
+                    />
+                  </a>
+                </div>
               ) : (
+                <div className="img">
+                <a
+                  href={contributor.html_url}
+                  className="cardLink"
+                  target="_blank"
+                >
                 <CardMedia
                   component="img"
-                  height="250"
                   image={contributor.avatar_url}
                   alt={contributor.login}
                   className="img"
                 />
               )}
               <CardContent>
-                <Typography variant="h6">{contributor.login}</Typography>
+                <Typography className="card-name" variant="h4">
+                  {contributor.login}
+                </Typography>
               </CardContent>
               <CardContent>
                 <Typography className="card-bottom">
@@ -60,6 +72,7 @@ function Tes() {
                   >
                     View Git Profile
                   </a>
+     <span className="temp"> | </span>
                   <a
                     href={contributor.html_url}
                     target="_blank"

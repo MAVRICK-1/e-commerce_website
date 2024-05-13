@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Button, Snackbar } from "@mui/material";
+
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 import Backdrop from "@mui/material/Backdrop";
@@ -21,8 +22,7 @@ const SignUp = () => {
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
-    conformPassword: "",
-  });
+    conformPassword: "",  });
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -63,17 +63,77 @@ const SignUp = () => {
         setSnackbarMessage(errorMessage);
         setSnackbarOpen(true);
       });
+  
+
+  // Email validation function
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  //Password Validation
+  const validatePassword = (password, error) => {
+    if (password.length < 6) {
+      error.password = "Password must be at least 6 characters long";
+      return false;
+    }
+
+    // Regular expressions for checking different conditions
+    const hasSpecialSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const hasUppercase = /[A-Z]+/;
+    const hasLowercase = /[a-z]+/;
+    const hasDigit = /[0-9]+/;
+
+    if (!hasSpecialSymbol.test(password)) {
+      error.password = "Password must contain at least one special symbol";
+      return false;
+    }
+
+    if (!hasUppercase.test(password)) {
+      error.password = "Password must contain at least one uppercase letter";
+      return false;
+    }
+
+    if (!hasLowercase.test(password)) {
+      error.password = "Password must contain at least one lowercase letter";
+      return false;
+    }
+
+    if (!hasDigit.test(password)) {
+      error.password = "Password must contain at least one digit";
+      return false;
+    }
+
+    error.password = "";
   };
 
   const onChangeField = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    let errors = { ...InputErrors };
 
+    if (name == "email") {
+      errors.email = !validateEmail(value) ? "Invalid email address" : "";
+    }
+
+    if (name === "password") {
+      validatePassword(value, errors);
+    }
+
+    if (name === "confirmPassword") {
+      errors.confirmPassword =
+        formFields.password !== value ? "Password Not Matched!" : "";
+    }
+
+    setInputErrors(errors);
     setFormFields(() => ({
       ...formFields,
       [name]: value,
     }));
     toggleSignInButton(formFields.email, formFields.password);
+
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+    if (!hasErrors) setDisableSignUpButton(false);
+    else setDisableSignUpButton(true);
   };
 
   const handleCloseSnackbar = () => {
@@ -82,6 +142,34 @@ const SignUp = () => {
 
   return (
     <>
+  const handleClose = () => {
+    setOpenDialog(false); // Close the dialog
+    navigate("/signIn"); // Redirect to sign-in page
+  };
+
+  return (
+    <>
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Account Created Successfully!"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Your account has been created successfully. You can now sign in.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Sign In
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <section className="signIn mb-5">
         <div className="breadcrumbWrapper res-hide">
           <div className="container-fluid">
@@ -116,7 +204,15 @@ const SignUp = () => {
                   onChange={onChangeField}
                   value={formFields.email}
                   autoComplete="email"
-                />
+                 />
+                {InputErrors.email && (
+                  <Typography
+                    variant="caption"
+                    sx={{ color: "red", padding: "5px" }}
+                  >
+                    {InputErrors.email}
+                  </Typography>
+                )}
               </div>
               <div className="form-group mb-4 w-100">
                 <div className="position-relative">
@@ -140,6 +236,14 @@ const SignUp = () => {
                       <VisibilityOutlinedIcon />
                     )}
                   </Button>
+                  {InputErrors.password && (
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "red", padding: "5px" }}
+                    >
+                      {InputErrors.password}
+                    </Typography>
+                  )}
                 </div>
               </div>
 
@@ -165,6 +269,14 @@ const SignUp = () => {
                       <VisibilityOutlinedIcon />
                     )}
                   </Button>
+                  {InputErrors.confirmPassword && (
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "red", padding: "5px" }}
+                    >
+                      {InputErrors.confirmPassword}
+                    </Typography>
+                  )}
                 </div>
               </div>
 
