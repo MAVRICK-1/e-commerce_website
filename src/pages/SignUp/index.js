@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./style.css";
+import "../SignIn/style.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -30,6 +30,8 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+
+
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
@@ -38,13 +40,22 @@ const SignUp = () => {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  const [isDisableSignupButton, setDisableSignUpButton] = useState(true);
   const [InputErrors, setInputErrors] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
+
+  const checkInputs = (email, password, confirmPassword) => {
+    if (email.trim() !== '' && password.trim() !== '' && confirmPassword.trim() !== '') {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
+  
 
   const signUp = () => {
     setShowLoader(true);
@@ -124,6 +135,9 @@ const SignUp = () => {
     const value = e.target.value;
     let errors = { ...InputErrors };
 
+
+
+
     if (name == "email") {
       errors.email = !validateEmail(value) ? "Invalid email address" : "";
     }
@@ -138,14 +152,13 @@ const SignUp = () => {
     }
 
     setInputErrors(errors);
-    setFormFields(() => ({
-      ...formFields,
+    setFormFields((prevFormFields) => ({
+      ...prevFormFields,
       [name]: value,
     }));
+    checkInputs(formFields.email, formFields.password,value);
 
-    const hasErrors = Object.values(errors).some((error) => error !== "");
-    if (!hasErrors) setDisableSignUpButton(false);
-    else setDisableSignUpButton(true);
+
   };
 
   const handleCloseSnackbar = () => {
@@ -194,7 +207,7 @@ const SignUp = () => {
 
         <div className="loginWrapper">
           <div className="card shadow">
-            <Backdrop
+          <Backdrop
               sx={{ color: "#000", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={showLoader}
               className="formLoader"
@@ -202,19 +215,18 @@ const SignUp = () => {
               <CircularProgress color="inherit" />
             </Backdrop>
 
-            <h3>SignUp</h3>
-            <form className="mt-4">
+            <h3 className="text-center">SignUp</h3>
+            <form className="mt-4 w-100">
               <div className="form-group mb-4 w-100">
                 <TextField
                   id="email"
                   type="email"
                   name="email"
-                  label="Email"
                   className="w-100"
+                  placeholder="Email"
                   onChange={onChangeField}
                   value={formFields.email}
                   autoComplete="email"
-                  error={InputErrors.email}
                 />
                 {InputErrors.email && (
                   <Typography
@@ -226,17 +238,16 @@ const SignUp = () => {
                 )}
               </div>
               <div className="form-group mb-4 w-100">
-                <div className="position-relative">
+                <div className="position-relative ">
                   <TextField
                     id="password"
                     type={showPassword === false ? "password" : "text"}
                     name="password"
-                    label="Password"
+                    placeholder="Password"
                     className="w-100"
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="new-password"
-                    error={InputErrors.password}
                   />
                   <Button
                     className="icon"
@@ -265,7 +276,7 @@ const SignUp = () => {
                     id="confirmPassword"
                     type={showPassword1 === false ? "password" : "text"}
                     name="confirmPassword"
-                    label="Confirm Password"
+                    placeholder="Confirm Password"
                     className="w-100"
                     onChange={onChangeField}
                     value={formFields.confirmPassword}
@@ -295,7 +306,7 @@ const SignUp = () => {
 
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
-                  disabled={isDisableSignupButton}
+                  disabled={isDisabled}
                   className="btn btn-g btn-lg w-100"
                   onClick={signUp}
                 >

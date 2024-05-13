@@ -34,6 +34,7 @@ function Tes() {
                     href={contributor.html_url}
                     className="cardLink"
                     target="_blank"
+                    rel="noreferrer"
                   >
                     <CardMedia
                       component="img"
@@ -49,6 +50,7 @@ function Tes() {
                   href={contributor.html_url}
                   className="cardLink"
                   target="_blank"
+                  rel="noreferrer"
                 >
                 <CardMedia
                   component="img"
