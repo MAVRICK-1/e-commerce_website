@@ -1,6 +1,8 @@
 * {
   text-decoration: none;
   list-style: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .about-container {
