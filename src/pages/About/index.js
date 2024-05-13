@@ -29,7 +29,7 @@ function Tes() {
           <Grid  item key={contributor.id}>
             <Card className="card">
               {window.innerWidth < 580 ? (
-                <a href={contributor.html_url} className="cardLink" target="_blank">
+                <a href={contributor.html_url} className="cardLink" target="_blank" rel="noreferrer">
                   <CardMedia
                     component="img"
                     height="250"
