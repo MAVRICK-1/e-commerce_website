@@ -5,7 +5,16 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { Button, Snackbar, Typography } from "@mui/material";
+import {
+  Button,
+  Snackbar,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  DialogActions,
+  Typography,
+} from "@mui/material";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase";
 import Backdrop from "@mui/material/Backdrop";
@@ -15,6 +24,9 @@ const auth = getAuth(app);
 
 const SignUp = () => {
   const naviagtor = useNavigate();
+  const navigate = useNavigate(); // Initialize useHistory
+  const [openDialog, setOpenDialog] = useState(false); // State for controlling dialog visibility
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -54,7 +66,7 @@ const SignUp = () => {
           password: "",
           confirmPassword: "",
         });
-        naviagtor("/signIn");
+        setOpenDialog(true);
       })
       .catch((error) => {
         setShowLoader(false);
@@ -140,8 +152,34 @@ const SignUp = () => {
     setSnackbarOpen(false);
   };
 
+  const handleClose = () => {
+    setOpenDialog(false); // Close the dialog
+    navigate("/signIn"); // Redirect to sign-in page
+  };
+
   return (
     <>
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Account Created Successfully!"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Your account has been created successfully. You can now sign in.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Sign In
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <section className="signIn mb-5">
         <div className="breadcrumbWrapper res-hide">
           <div className="container-fluid">
