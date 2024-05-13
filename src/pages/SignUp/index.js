@@ -48,7 +48,6 @@ const SignUp = () => {
     }
     createUserWithEmailAndPassword(auth, formFields.email, formFields.password)
       .then((userCredential) => {
-        //console.log("User signed up successfully:", userCredential.user);
         setShowLoader(false);
         setFormFields({
           email: "",

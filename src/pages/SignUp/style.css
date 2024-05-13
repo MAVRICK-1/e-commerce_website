@@ -5,9 +5,9 @@
 .loginWrapper .card {
   width: 650px;
   margin: auto;
+
   padding: 40px;
   border: 0px !important;
-  overflow: hidden;
 }
 .loginWrapper .card h3 {
   font-weight: 500;
@@ -62,14 +62,19 @@
   background: rgba(255, 255, 255, 0.5) !important;
 }
 
-
 @media (max-width: 586px) {
-    .loginWrapper .card {
-      width: 650px;
-      margin: auto;
-      height: auto;
-      padding: 40px;
-      border: 0px !important;
-    }
+  .loginWrapper .card {
+    width: 650px;
+    margin: auto;
+    height: auto;
+    padding: 40px;
+    border: 0px !important;
+  }
+  .loginWrapper .card .MuiFormLabel-root {
+    line-height: 43px !important;
+    color: #000 !important;
+    font-size: 18px !important;
+    margin-left: 4px;
   }
   
+}
