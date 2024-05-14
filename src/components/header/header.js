@@ -38,10 +38,12 @@ const Header = (props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
-  const {cartCount, setCartCount} = useContext(MyContext);
+  const { cartCount, setCartCount } = useContext(MyContext);
+  const { wishlistCount, setWishlistCount } = useContext(MyContext);
+
   const headerRef = useRef();
   const searchInput = useRef();
-  const [profile,setProfile] = useState("")
+  const [profile, setProfile] = useState("");
 
   const context = useContext(MyContext);
   const history = useNavigate();
@@ -69,9 +71,9 @@ const Header = (props) => {
     getCountry("https://countriesnow.space/api/v0.1/countries/");
   }, []);
 
-  useEffect(()=>{
-    setProfile(localStorage.getItem("userImage"))
-  },[context.isLogin])
+  useEffect(() => {
+    setProfile(localStorage.getItem("userImage"));
+  }, [context.isLogin]);
   const getCountry = async (url) => {
     try {
       await axios.get(url).then((res) => {
@@ -103,7 +105,7 @@ const Header = (props) => {
 
   const signOut = () => {
     context.signOut();
-    localStorage.setItem("userImage","")
+    localStorage.setItem("userImage", "");
     history("/");
   };
 
@@ -168,7 +170,29 @@ const Header = (props) => {
                       <div
                         onClick={() => setisOpenAccDropDown(!isOpenAccDropDown)}
                       >
-                        {profile!=""?<img src={profile} alt="" style={{width:"65%", height:"65%", borderRadius:"50%",marginLeft:"15%"}} />:<img src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png" alt="" style={{width:"50px", height:"50px", borderRadius:"50%",marginLeft:"13%"}} />}
+                        {profile != "" ? (
+                          <img
+                            src={profile}
+                            alt=""
+                            style={{
+                              width: "65%",
+                              height: "65%",
+                              borderRadius: "50%",
+                              marginLeft: "15%",
+                            }}
+                          />
+                        ) : (
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png"
+                            alt=""
+                            style={{
+                              width: "50px",
+                              height: "50px",
+                              borderRadius: "50%",
+                              marginLeft: "13%",
+                            }}
+                          />
+                        )}
                       </div>
                     )}
                   </div>
@@ -190,7 +214,7 @@ const Header = (props) => {
                                         } */}
 
                   {windowWidth < 992 && (
-                    <div class="closeSearch" onClick={closeSearch}>
+                    <div className="closeSearch" onClick={closeSearch}>
                       <ArrowBackIosIcon />
                     </div>
                   )}
@@ -229,39 +253,44 @@ const Header = (props) => {
                     <ul className="list list-inline mb-0 headerTabs">
                       <li className="list-inline-item">
                         <span>
-                        <Link to={"/wishlist"} style={{ textDecoration: "none" }}>                      
+                          <Link
+                            to={"/wishlist"}
+                            style={{ textDecoration: "none" }}
+                          >
                             {" "}
-                          <img src={IconCompare} />
-                          <span className="badge bg-success rounded-circle">
-                            3
-                          </span>
-                          Compare
-                        </Link>
+                            <img src={IconCompare} />
+                            <span className="badge bg-success rounded-circle">
+                              3
+                            </span>
+                            Compare
+                          </Link>
                         </span>
                       </li>
                       <li className="list-inline-item">
                         <span>
-                        <Link to={"/wishlist"} style={{ textDecoration: "none" }}>                      
+                          <Link
+                            to={"/wishlist"}
+                            style={{ textDecoration: "none" }}
+                          >
                             {" "}
-                          <img src={IconHeart} />
-                          <span className="badge bg-success rounded-circle">
-                            3
-                          </span>
-                          Wishlist
-                        </Link>
+                            <img src={IconHeart} />
+                            <span className="badge bg-success rounded-circle">
+                              {wishlistCount}
+                            </span>
+                            Wishlist
+                          </Link>
                         </span>
                       </li>
                       <li className="list-inline-item">
                         <span>
-                          <Link to={"/cart"} style={{ textDecoration: "none" }}>                      
+                          <Link to={"/cart"} style={{ textDecoration: "none" }}>
                             {" "}
                             <img src={IconCart} />
                             <span className="badge bg-success rounded-circle">
-                              {cartCount}  
+                              {cartCount}
                             </span>
                             Cart
                           </Link>
-                          
                         </span>
                       </li>
 
@@ -270,8 +299,29 @@ const Header = (props) => {
                           <span
                             onClick={() => setisOpenDropDown(!isOpenDropDown)}
                           >
-                            
-                            {profile!=""?<img src={profile} alt="" style={{width:"65%", height:"65%", borderRadius:"50%",marginLeft:"18%"}} />:<img src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png" alt="" style={{width:"50px", height:"50px", borderRadius:"50%",marginLeft:"18%"}} />}
+                            {profile != "" ? (
+                              <img
+                                src={profile}
+                                alt=""
+                                style={{
+                                  width: "65%",
+                                  height: "65%",
+                                  borderRadius: "50%",
+                                  marginLeft: "18%",
+                                }}
+                              />
+                            ) : (
+                              <img
+                                src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png"
+                                alt=""
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "50%",
+                                  marginLeft: "18%",
+                                }}
+                              />
+                            )}
                           </span>
 
                           {isOpenDropDown !== false && (

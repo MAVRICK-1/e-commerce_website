@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./style.css";
+import "./about.css";
 import axios from "axios";
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 
@@ -28,44 +28,26 @@ function Tes() {
         {contributors.map((contributor) => (
           <Grid item key={contributor.id}>
             <Card className="card">
-              {window.innerWidth < 580 ? (
-                <div className="img">
-                  <a
-                    href={contributor.html_url}
-                    className="cardLink"
-                    target="_blank"
-                  >
-                    <CardMedia
-                      component="img"
-                      image={contributor.avatar_url}
-                      alt={contributor.login}
-                      className="img"
-                    />
-                  </a>
-                </div>
-              ) : (
-                <div className="img">
-                <a
-                  href={contributor.html_url}
-                  className="cardLink"
-                  target="_blank"
-                >
+              <a
+                href={contributor.html_url}
+                className="cardLink"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <CardMedia
                   component="img"
                   image={contributor.avatar_url}
                   alt={contributor.login}
                   className="img"
                 />
-                </a>
-                </div>
-              )}
+              </a>
               <CardContent>
                 <Typography className="card-name" variant="h4">
                   {contributor.login}
                 </Typography>
               </CardContent>
-              <CardContent>
-                <Typography className="card-bottom">
+              <CardContent className="card-bottom">
+                <Typography className="text-color">
                   <a
                     href={contributor.html_url}
                     target="_blank"
@@ -81,7 +63,7 @@ function Tes() {
                     rel="noopener noreferrer"
                     className="text-color"
                   >
-                    Contributions : {contributor.contributions}
+                    Contributions: {contributor.contributions}
                   </a>
                 </Typography>
               </CardContent>
