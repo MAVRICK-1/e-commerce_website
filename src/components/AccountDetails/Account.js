@@ -4,7 +4,7 @@ import {CardBody, CardFooter, CardHeader, CardImg, CardText, CardTitle, Col, For
 import "./Account.css"
 import imageBackground from "../../assets/images/slider-1.png"
 import pfp from "../../assets/images/pfp.jpg"
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import { useNavigate} from "react-router-dom"
 import {
