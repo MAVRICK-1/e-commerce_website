@@ -21,6 +21,7 @@ import AddProductForm from './pages/AddProd';
 // import data from './data';
 import MapComponent from "./components/map/ITEMmap";
 import SellerForm from "./pages/SellerRegistration";
+import OrderTracking from "./pages/Track/ordertracking";
 
 const MyContext = createContext();
 
@@ -194,6 +195,11 @@ const signIn = () => {
               exact={true}
               path="/AboutUs"
               element={<About/>}
+            />
+            <Route
+              exact={true}
+              path="/order-tracking"
+              element={<OrderTracking/>}
             />
             <Route
               exact={true}

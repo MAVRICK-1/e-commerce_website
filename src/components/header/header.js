@@ -295,9 +295,12 @@ const Header = (props) => {
                                 </Button>
                               </li>
                               <li>
-                                <Button>
+                              <Link to={"/order-tracking"}>
+                            {" "}
+                                <Button className="align-items-center">
                                   <LocationOnOutlinedIcon /> Order Tracking
                                 </Button>
+                                </Link>
                               </li>
                               <li>
                                 <Button>
@@ -368,13 +371,6 @@ const Header = (props) => {
                   {" "}
                   <img src={IconCart} />
                   Cart
-                </Link>
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <Link to="">
-                  <LocationOnOutlinedIcon /> Order Tracking
                 </Link>
               </Button>
             </li>
