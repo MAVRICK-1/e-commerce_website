@@ -27,7 +27,6 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import MapComponent from "./components/map/ITEMmap";
 import { db } from "./firebase";
 
-import { collection, doc, getDocs } from "firebase/firestore";
 import {Account} from "./components/AccountDetails/Account";
 
 import SellerForm from "./pages/SellerRegistration";
