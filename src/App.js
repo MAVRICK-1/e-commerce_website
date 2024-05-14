@@ -31,6 +31,7 @@ import MapComponent from "./components/map/ITEMmap";
 import SellerForm from "./pages/SellerRegistration";
 import { db } from "./firebase";
 import { collection, doc, getDocs } from "firebase/firestore";
+import {Account} from "./components/AccountDetails/Account";
 
 const MyContext = createContext();
 
@@ -247,6 +248,9 @@ function App() {
             element={<DetailsPage data={data.productData} />}
           />
           <Route exact={true} path="/cart" element={<Cart />} />
+
+
+          <Route exact={true} path="/account" element={<Account/>}/>
 
           {/* sign in , signup Protection */}
           {isLogin === null && (
