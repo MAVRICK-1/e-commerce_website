@@ -6,9 +6,22 @@ import imageBackground from "../../assets/images/slider-1.png"
 import pfp from "../../assets/images/pfp.jpg"
 import {useEffect, useState} from "react";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
-import {addDoc, collection, doc, getDoc, onSnapshot, setDoc, updateDoc} from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    doc,
+    getDoc,
+    onSnapshot,
+    setDoc,
+    updateDoc,
+    query,
+    where,
+    documentId,
+    getDocs,
+} from "firebase/firestore";
 import {db, storage} from "../../firebase";
 import {nanoid} from "nanoid";
+import {useParams} from "react-router-dom";
 
 
 export function Account(){
@@ -22,9 +35,9 @@ export function Account(){
     let user_uid = localStorage.getItem("uid")
 
 
+
     useEffect(()=>{
         (async ()=>{
-            console.log(user_uid)
             const docref = doc(db,"users", `${user_uid? user_uid : nanoid()}`)
             const docSnap = await getDoc(docref)
             if(docSnap.exists()){
@@ -42,9 +55,18 @@ export function Account(){
 
     function Onsubmit(e){
         e.preventDefault()
-        console.log(name, email, file, address)
+        const collectionRef = collection(db, 'users');
 
-        addUser(name, email, address, file)
+        const querySnapshot = getDocs(collectionRef)
+
+        querySnapshot.then((doc)=>{
+            console.log(doc.docs.includes(user_uid))
+            if(doc.docs.includes(user_uid)){
+                return updateUser()
+            }else {
+                return addUser(name, email , address, file)
+            }
+        })
     }
 
     const addUser = async  (name, email , address, file) => {
@@ -59,7 +81,7 @@ export function Account(){
                 Address : address,
                 photo : imageUrl
             })
-
+            setFile(imageUrl)
 
         }catch (error){
             console.log(error)
@@ -67,19 +89,23 @@ export function Account(){
     }
 
 
-    // const updateUser = async () =>{
-    //     await updateDoc(doc(db,"users", docpath),{
-    //         Name : name,
-    //         Email : email,
-    //         Address : address,
-    //         photo : file
-    //     })
-    // }
+    const updateUser = async () =>{
+        try {
+            await updateDoc(doc(db,"users", user_uid),{
+                Name : name,
+                Email : email,
+                Address : address,
+                photo : file
+            })
+        }catch (err){
+            console.log(err)
+        }
+    }
 
 
     return(
         <>
-           <div className="container-fluid d-flex justify-content-center align-items-center p-5">
+            <div className="container-fluid d-flex justify-content-center align-items-center p-5">
                 <Card variant="outlined" className="cardwidth m-5 md:shrink-0 d-flex flex-column justify-content-center align-items-stretch">
                     <CardHeader className="d-flex flex-column justify-content-center align-items-center">
                         <div className="position-relative header-background  ">
@@ -160,11 +186,14 @@ export function Account(){
                         </CardText>
                     </CardBody>
                     <CardFooter className="d-flex justify-content-center align-items-center">
-                        <Button className="w-100  "   type="submit" form="addEditForm" disabled={isSubmitting}><h5 className="font-weight-bold">Save</h5></Button>
+                        <Button className="w-100  "   type="submit" form="addEditForm" disabled={isSubmitting}><h5 className="font-weight-bold">Save</h5>
+                        </Button>
+                        <Button className="w-100  "   type="submit" form="addEditForm" disabled={isSubmitting}><h5 className="font-weight-bold">Edit</h5>
+                        </Button>
                     </CardFooter>
                 </Card>
 
-           </div>
+            </div>
         </>
     )
 }
