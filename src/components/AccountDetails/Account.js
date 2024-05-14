@@ -6,6 +6,7 @@ import imageBackground from "../../assets/images/slider-1.png"
 import pfp from "../../assets/images/pfp.jpg"
 import {useEffect, useState} from "react";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import { useNavigate} from "react-router-dom"
 import {
     addDoc,
     collection,
@@ -22,6 +23,7 @@ import {
 import {db, storage} from "../../firebase";
 import {nanoid} from "nanoid";
 import {useParams} from "react-router-dom";
+import {FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 export function Account(){
@@ -33,6 +35,8 @@ export function Account(){
     const [file , setFile] = useState(pfp)
 
     let user_uid = localStorage.getItem("uid")
+
+
 
 
 
@@ -89,13 +93,20 @@ export function Account(){
     }
 
 
-    const updateUser = async () =>{
+    const updateUser = async (e) =>{
+        e.preventDefault()
+
         try {
+            const imageRef = ref(storage, `AccountImage/${localStorage.getItem("uid")}`);
+            await uploadBytes(imageRef, file);
+            const imageUrl = await getDownloadURL(imageRef);
+
+
             await updateDoc(doc(db,"users", user_uid),{
                 Name : name,
                 Email : email,
                 Address : address,
-                photo : file
+                photo : imageUrl
             })
         }catch (err){
             console.log(err)
@@ -105,7 +116,10 @@ export function Account(){
 
     return(
         <>
-            <div className="container-fluid d-flex justify-content-center align-items-center p-5">
+            <div className="container-fluid d-flex flex-column justify-content-center align-items-center p-5">
+                <h3 className="d-flex align-self-start ml-5">
+                    <span className="text-lg-center border border-dark font-weight-bold rounded-circle p-2 m-2 cursor">←</span>
+                    My Account</h3>
                 <Card variant="outlined" className="cardwidth m-5 md:shrink-0 d-flex flex-column justify-content-center align-items-stretch">
                     <CardHeader className="d-flex flex-column justify-content-center align-items-center">
                         <div className="position-relative header-background  ">
