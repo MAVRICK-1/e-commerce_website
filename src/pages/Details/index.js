@@ -1,18 +1,18 @@
-import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
-import Rating from "@mui/material/Rating";
-import InnerImageZoom from "react-inner-image-zoom";
-import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
-import Slider from "react-slick";
-import { useRef } from "react";
-import { useState } from "react";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useEffect } from "react";
-import { Button } from "@mui/material";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+import React, { useContext } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import Rating from '@mui/material/Rating';
+import InnerImageZoom from 'react-inner-image-zoom';
+import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
+import Slider from 'react-slick';
+import { useRef } from 'react';
+import { useState } from 'react';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useEffect } from 'react';
+import { Button } from '@mui/material';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import {
   getDatabase,
   ref,
@@ -20,26 +20,26 @@ import {
   set,
   push,
   child,
-  remove,
-} from "firebase/database";
-import Product from "../../components/product";
-import axios from "axios";
-import { MyContext } from "../../App";
-import MapComponent from "../../components/map/ITEMmap";
-import { Email } from "@mui/icons-material";
-import useLoggedInUserEmail from "../../Hooks/useLoggedInUserEmail";
-import { db } from "../../firebase";
+  remove
+} from 'firebase/database';
+import Product from '../../components/product';
+import axios from 'axios';
+import { MyContext } from '../../App';
+import MapComponent from '../../components/map/ITEMmap';
+import { Email } from '@mui/icons-material';
+import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
+import { db } from '../../firebase';
 import {
   collection,
   doc,
   getDocs,
   setDoc,
-  deleteDoc,
-} from "firebase/firestore";
+  deleteDoc
+} from 'firebase/firestore';
 
 const DetailsPage = (props) => {
   const [zoomInage, setZoomImage] = useState(
-    "https://www.jiomart.com/images/product/original/490000363/maggi-2-minute-masala-noodles-70-g-product-images-o490000363-p490000363-0-202305292130.jpg"
+    'https://www.jiomart.com/images/product/original/490000363/maggi-2-minute-masala-noodles-70-g-product-images-o490000363-p490000363-0-202305292130.jpg'
   );
 
   const [bigImageSize, setBigImageSize] = useState([1500, 1500]);
@@ -60,8 +60,8 @@ const DetailsPage = (props) => {
   const context = useContext(MyContext);
 
   const [prodCat, setProdCat] = useState({
-    parentCat: sessionStorage.getItem("parentCat"),
-    subCatName: sessionStorage.getItem("subCatName"),
+    parentCat: sessionStorage.getItem('parentCat'),
+    subCatName: sessionStorage.getItem('subCatName')
   });
 
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -75,11 +75,11 @@ const DetailsPage = (props) => {
     useState(false);
 
   const [reviewFields, setReviewFields] = useState({
-    review: "",
-    userName: "",
+    review: '',
+    userName: '',
     rating: 0.0,
     productId: 0,
-    date: "",
+    date: ''
   });
 
   const zoomSliderBig = useRef();
@@ -94,7 +94,7 @@ const DetailsPage = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     fade: false,
-    arrows: false,
+    arrows: false
   };
 
   var settings = {
@@ -104,7 +104,7 @@ const DetailsPage = (props) => {
     slidesToShow: 5,
     slidesToScroll: 1,
     fade: false,
-    arrows: context.windowWidth > 992 ? true : false,
+    arrows: context.windowWidth > 992 ? true : false
   };
 
   var related = {
@@ -114,7 +114,7 @@ const DetailsPage = (props) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     fade: false,
-    arrows: context.windowWidth > 992 ? true : false,
+    arrows: context.windowWidth > 992 ? true : false
   };
 
   const goto = (index) => {
@@ -194,14 +194,14 @@ const DetailsPage = (props) => {
   }, [currentProduct]);
 
   const changeInput = (name, value) => {
-    if (name === "rating") {
+    if (name === 'rating') {
       setRating(value);
     }
     setReviewFields(() => ({
       ...reviewFields,
       [name]: value,
       productId: id,
-      date: new Date().toLocaleString(),
+      date: new Date().toLocaleString()
     }));
   };
 
@@ -212,15 +212,15 @@ const DetailsPage = (props) => {
 
     try {
       await axios
-        .post("http://localhost:5000/productReviews", reviewFields)
+        .post('http://localhost:5000/productReviews', reviewFields)
         .then((response) => {
           reviews_Arr.push(response.data);
           setReviewFields(() => ({
-            review: "",
-            userName: "",
+            review: '',
+            userName: '',
             rating: 0.0,
             productId: 0,
-            date: "",
+            date: ''
           }));
         });
     } catch (error) {
@@ -234,7 +234,7 @@ const DetailsPage = (props) => {
   const showReviews = async () => {
     try {
       await axios
-        .get("https://mavrick-1.github.io/DataApi/data.json")
+        .get('https://mavrick-1.github.io/DataApi/data.json')
         .then((response) => {
           if (response.data.productReviews.length !== 0) {
             response.data.productReviews.map((item) => {
@@ -255,37 +255,37 @@ const DetailsPage = (props) => {
 
   const addToCart = async (item) => {
     try {
-      const user = localStorage.getItem("uid");
-      const cartRef = doc(db, "carts", user);
-      const productRef = doc(cartRef, "products", `${item.id}`);
+      const user = localStorage.getItem('uid');
+      const cartRef = doc(db, 'carts', user);
+      const productRef = doc(cartRef, 'products', `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });
       setIsadded(true);
       context.setCartCount(context.cartCount + 1);
     } catch (error) {
-      console.error("Error adding item to cart:", error);
+      console.error('Error adding item to cart:', error);
     }
   };
 
   const toggleWishlistItem = async (item) => {
-    console.log("addToWishlist");
+    console.log('addToWishlist');
 
     if (!isAlreadyAddedInWishlist) {
-      console.log("Not isAlreadyAddedInWishlist");
+      console.log('Not isAlreadyAddedInWishlist');
       try {
-        const user = localStorage.getItem("uid");
-        const wishlistRef = doc(db, "wishlists", user);
-        const productRef = doc(wishlistRef, "products", `${item.id}`);
+        const user = localStorage.getItem('uid');
+        const wishlistRef = doc(db, 'wishlists', user);
+        const productRef = doc(wishlistRef, 'products', `${item.id}`);
         await setDoc(productRef, { ...item, quantity: 1 });
         setIsWishlistItemAdded(true);
         setisAlreadyAddedInWishlist(true);
         context.setWishlistCount(context.wishlistCount + 1);
       } catch (error) {
-        console.error("Error adding item to wishlist:", error);
+        console.error('Error adding item to wishlist:', error);
       }
     } else {
-      console.log("isAlreadyAddedInWishlist");
+      console.log('isAlreadyAddedInWishlist');
 
-      const user = localStorage.getItem("uid");
+      const user = localStorage.getItem('uid');
 
       const wishlistItemRef = doc(db, `wishlists/${user}/products/${item.id}`);
 
@@ -293,17 +293,17 @@ const DetailsPage = (props) => {
         await deleteDoc(wishlistItemRef);
         setisAlreadyAddedInWishlist(false);
         context.setWishlistCount(context.wishlistCount - 1);
-        console.log("Wishlist item deleted successfully.");
+        console.log('Wishlist item deleted successfully.');
       } catch (error) {
-        console.error("Error deleting wishlist item:", error);
+        console.error('Error deleting wishlist item:', error);
       }
     }
   };
 
   const fetchCartProducts = async () => {
     try {
-      const cartRef = doc(db, "carts", localStorage.getItem("uid"));
-      const productsCollectionRef = collection(cartRef, "products");
+      const cartRef = doc(db, 'carts', localStorage.getItem('uid'));
+      const productsCollectionRef = collection(cartRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach((doc) => {
         if (parseInt(doc.data()?.id) === parseInt(id)) {
@@ -311,14 +311,14 @@ const DetailsPage = (props) => {
         }
       });
     } catch (error) {
-      console.error("Error fetching cart products:", error);
+      console.error('Error fetching cart products:', error);
     }
   };
 
   const fetchWishlistProducts = async () => {
     try {
-      const wishlistRef = doc(db, "wishlists", localStorage.getItem("uid"));
-      const productsCollectionRef = collection(wishlistRef, "products");
+      const wishlistRef = doc(db, 'wishlists', localStorage.getItem('uid'));
+      const productsCollectionRef = collection(wishlistRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach((doc) => {
         if (parseInt(doc.data()?.id) === parseInt(id)) {
@@ -326,25 +326,25 @@ const DetailsPage = (props) => {
         }
       });
     } catch (error) {
-      console.error("Error fetching wishlist products:", error);
+      console.error('Error fetching wishlist products:', error);
     }
   };
 
   const deleteWishlistItem = async (uid, wishlistItemId) => {
     const wishlistItemRef = doc(
       db,
-      "wishlists",
+      'wishlists',
       uid,
-      "products",
+      'products',
       wishlistItemId
     );
 
     try {
       await deleteDoc(wishlistItemRef);
       fetchWishlistProducts();
-      console.log("Wishlist item deleted successfully.");
+      console.log('Wishlist item deleted successfully.');
     } catch (error) {
-      console.error("Error deleting wishlist item:", error);
+      console.error('Error deleting wishlist item:', error);
     }
   };
 
@@ -357,8 +357,8 @@ const DetailsPage = (props) => {
         >
           <ShoppingCartOutlinedIcon />
           {isAdded === true || isAlreadyAddedInCart === true
-            ? "Added"
-            : "Add To Cart"}
+            ? 'Added'
+            : 'Add To Cart'}
         </Button>
       )}
       <div className="p-5">
@@ -371,41 +371,41 @@ const DetailsPage = (props) => {
             <div className="container-fluid">
               <ul className="breadcrumb breadcrumb2 mb-0">
                 <li>
-                  <Link>Home</Link>{" "}
+                  <Link>Home</Link>{' '}
                 </li>
                 <li>
                   <Link
                     to={`/cat/${prodCat?.parentCat
-                      ?.split(" ")
-                      ?.join("-")
+                      ?.split(' ')
+                      ?.join('-')
                       ?.toLowerCase()}`}
                     onClick={() =>
                       sessionStorage.setItem(
-                        "cat",
-                        prodCat.parentCat.split(" ").join("-").toLowerCase()
+                        'cat',
+                        prodCat.parentCat.split(' ').join('-').toLowerCase()
                       )
                     }
                     className="text-capitalize"
                   >
                     {prodCat.parentCat}
-                  </Link>{" "}
+                  </Link>{' '}
                 </li>
 
                 <li>
                   <Link
                     to={`/cat/${prodCat.parentCat.toLowerCase()}/${prodCat.subCatName
-                      .replace(/\s/g, "-")
+                      .replace(/\s/g, '-')
                       .toLowerCase()}`}
                     onClick={() =>
                       sessionStorage.setItem(
-                        "cat",
+                        'cat',
                         prodCat.subCatName.toLowerCase()
                       )
                     }
                     className="text-capitalize"
                   >
                     {prodCat.subCatName}
-                  </Link>{" "}
+                  </Link>{' '}
                 </li>
                 <li>{currentProduct.productName}</li>
               </ul>
@@ -494,7 +494,7 @@ const DetailsPage = (props) => {
                           <li className="list-inline-item">
                             <a
                               className={`tag ${
-                                activeSize === index ? "active" : ""
+                                activeSize === index ? 'active' : ''
                               }`}
                               onClick={() => isActive(index)}
                             >
@@ -517,7 +517,7 @@ const DetailsPage = (props) => {
                           <li className="list-inline-item">
                             <a
                               className={`tag ${
-                                activeSize === index ? "active" : ""
+                                activeSize === index ? 'active' : ''
                               }`}
                               onClick={() => isActive(index)}
                             >
@@ -540,7 +540,7 @@ const DetailsPage = (props) => {
                           <li className="list-inline-item">
                             <a
                               className={`tag ${
-                                activeSize === index ? "active" : ""
+                                activeSize === index ? 'active' : ''
                               }`}
                               onClick={() => isActive(index)}
                             >
@@ -558,25 +558,25 @@ const DetailsPage = (props) => {
                   {context.windowWidth > 992 && (
                     <Button
                       className={`btn-g btn-lg addtocartbtn ${
-                        isAlreadyAddedInCart === true && "no-click"
+                        isAlreadyAddedInCart === true && 'no-click'
                       }`}
                       onClick={() => addToCart(currentProduct)}
                     >
                       <ShoppingCartOutlinedIcon />
                       {isAdded === true || isAlreadyAddedInCart === true
-                        ? "Added"
-                        : "Add To Cart"}
+                        ? 'Added'
+                        : 'Add To Cart'}
                     </Button>
                   )}
                   <Button
                     className={`btn-lg addtocartbtn ml-3 wishlist  ${
                       isAlreadyAddedInWishlist === true
-                        ? "btn-borderWishlistAlreadyAdded"
-                        : "btn-border"
+                        ? 'btn-borderWishlistAlreadyAdded'
+                        : 'btn-border'
                     }`}
                     onClick={() => toggleWishlistItem(currentProduct)}
                   >
-                    <FavoriteBorderOutlinedIcon />{" "}
+                    <FavoriteBorderOutlinedIcon />{' '}
                   </Button>
                   <Button className=" btn-lg addtocartbtn ml-3 btn-border">
                     <CompareArrowsIcon />
@@ -592,7 +592,7 @@ const DetailsPage = (props) => {
               <ul className="list list-inline">
                 <li className="list-inline-item">
                   <Button
-                    className={`${activeTabs === 0 && "active"}`}
+                    className={`${activeTabs === 0 && 'active'}`}
                     onClick={() => {
                       setActiveTabs(0);
                     }}
@@ -602,7 +602,7 @@ const DetailsPage = (props) => {
                 </li>
                 <li className="list-inline-item">
                   <Button
-                    className={`${activeTabs === 1 && "active"}`}
+                    className={`${activeTabs === 1 && 'active'}`}
                     onClick={() => {
                       setActiveTabs(1);
                     }}
@@ -612,7 +612,7 @@ const DetailsPage = (props) => {
                 </li>
                 <li className="list-inline-item">
                   <Button
-                    className={`${activeTabs === 2 && "active"}`}
+                    className={`${activeTabs === 2 && 'active'}`}
                     onClick={() => {
                       setActiveTabs(2);
                       showReviews();
@@ -843,11 +843,11 @@ const DetailsPage = (props) => {
                         <span className="mr-3">5 star</span>
                         <div
                           class="progress"
-                          style={{ width: "85%", height: "20px" }}
+                          style={{ width: '85%', height: '20px' }}
                         >
                           <div
                             class="progress-bar bg-success"
-                            style={{ width: "75%", height: "20px" }}
+                            style={{ width: '75%', height: '20px' }}
                           >
                             75%
                           </div>
@@ -858,11 +858,11 @@ const DetailsPage = (props) => {
                         <span className="mr-3">4 star</span>
                         <div
                           class="progress"
-                          style={{ width: "85%", height: "20px" }}
+                          style={{ width: '85%', height: '20px' }}
                         >
                           <div
                             class="progress-bar bg-success"
-                            style={{ width: "50%", height: "20px" }}
+                            style={{ width: '50%', height: '20px' }}
                           >
                             50%
                           </div>
@@ -873,11 +873,11 @@ const DetailsPage = (props) => {
                         <span className="mr-3">3 star</span>
                         <div
                           class="progress"
-                          style={{ width: "85%", height: "20px" }}
+                          style={{ width: '85%', height: '20px' }}
                         >
                           <div
                             class="progress-bar bg-success"
-                            style={{ width: "55%", height: "20px" }}
+                            style={{ width: '55%', height: '20px' }}
                           >
                             55%
                           </div>
@@ -888,11 +888,11 @@ const DetailsPage = (props) => {
                         <span className="mr-3">2 star</span>
                         <div
                           class="progress"
-                          style={{ width: "85%", height: "20px" }}
+                          style={{ width: '85%', height: '20px' }}
                         >
                           <div
                             class="progress-bar bg-success"
-                            style={{ width: "35%", height: "20px" }}
+                            style={{ width: '35%', height: '20px' }}
                           >
                             35%
                           </div>
@@ -903,11 +903,11 @@ const DetailsPage = (props) => {
                         <span className="mr-3">1 star</span>
                         <div
                           class="progress"
-                          style={{ width: "85%", height: "20px" }}
+                          style={{ width: '85%', height: '20px' }}
                         >
                           <div
                             class="progress-bar bg-success"
-                            style={{ width: "25%", height: "20px" }}
+                            style={{ width: '25%', height: '20px' }}
                           >
                             25%
                           </div>

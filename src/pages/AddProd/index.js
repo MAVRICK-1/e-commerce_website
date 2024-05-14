@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Typography, Container, Grid, TextField, Button } from "@mui/material";
-import { addDoc, collection } from "firebase/firestore";
-import { db, storage } from "../../firebase";
-import {uploadBytes,getDownloadURL,ref} from "firebase/storage"
-
+import React, { useState } from 'react';
+import { Typography, Container, Grid, TextField, Button } from '@mui/material';
+import { addDoc, collection } from 'firebase/firestore';
+import { db, storage } from '../../firebase';
+import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 
 export default function AddProductForm() {
   const [formData, setFormData] = useState({
@@ -14,9 +13,9 @@ export default function AddProductForm() {
     mainImage: '',
     subsidiaryImages: [],
     brand: '',
-    quantityAvailable: '',
+    quantityAvailable: ''
   });
-  const [isSubmit,setIsSubmit] = useState(false)
+  const [isSubmit, setIsSubmit] = useState(false);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -25,7 +24,7 @@ export default function AddProductForm() {
     const file = e.target.files[0];
     setFormData((prevFields) => ({
       ...prevFields,
-      mainImage: file,
+      mainImage: file
     }));
   };
 
@@ -33,55 +32,69 @@ export default function AddProductForm() {
     const file = e.target.files[0];
     setFormData((prevFields) => ({
       ...prevFields,
-      subsidiaryImages: file,
+      subsidiaryImages: file
     }));
   };
 
-  const addProd = async (main,sub) => {  // funtion to add products data to firestore
+  const addProd = async (main, sub) => {
+    // funtion to add products data to firestore
     try {
-      await addDoc(collection(db, 'sellers', localStorage.getItem("uid"), 'products'), {
-        productName: formData.productName,
-        price: formData.price,
-        discountPrice: formData.discountPrice,
-        weightsAvailable: formData.weightsAvailable,
-        mainImage: main,
-        subsidiaryImages: sub,
-        brand: formData.brand,
-        quantityAvailable: formData.quantityAvailable,
-      });
+      await addDoc(
+        collection(db, 'sellers', localStorage.getItem('uid'), 'products'),
+        {
+          productName: formData.productName,
+          price: formData.price,
+          discountPrice: formData.discountPrice,
+          weightsAvailable: formData.weightsAvailable,
+          mainImage: main,
+          subsidiaryImages: sub,
+          brand: formData.brand,
+          quantityAvailable: formData.quantityAvailable
+        }
+      );
 
-      console.log("product added successfully");
+      console.log('product added successfully');
       setFormData({
-        productName: "",
-        price: "",
-        discountPrice: "",
-        weightsAvailable: "",
-        mainImage: "",
+        productName: '',
+        price: '',
+        discountPrice: '',
+        weightsAvailable: '',
+        mainImage: '',
         subsidiaryImages: [],
-        brand: "",
-        quantityAvailable: "",
-      })
-      alert("Product Added successfully!")
+        brand: '',
+        quantityAvailable: ''
+      });
+      alert('Product Added successfully!');
     } catch (error) {
-      console.error("Error adding user: ", error);
+      console.error('Error adding user: ', error);
     }
   };
 
-  const handleSubmit = async () => { 
-    setIsSubmit(true)
+  const handleSubmit = async () => {
+    setIsSubmit(true);
     //Upload the main image to firebase storage and get url
-    const imageRef = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/mainImage`);
+    const imageRef = ref(
+      storage,
+      `productImages/${localStorage.getItem('uid')}/${
+        formData.productName
+      }/mainImage`
+    );
     await uploadBytes(imageRef, formData.mainImage);
     const imageUrl = await getDownloadURL(imageRef);
-    
+
     //Upload the subsidiary image to firebase storage and get url
-    const imageRef1 = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/subsidiaryImages`);
+    const imageRef1 = ref(
+      storage,
+      `productImages/${localStorage.getItem('uid')}/${
+        formData.productName
+      }/subsidiaryImages`
+    );
     await uploadBytes(imageRef1, formData.subsidiaryImages);
     const imageUrl1 = await getDownloadURL(imageRef1);
-    
+
     //Adding products data to firebase firestore
-    addProd(imageUrl,imageUrl1)
-    setIsSubmit(false)
+    addProd(imageUrl, imageUrl1);
+    setIsSubmit(false);
   };
 
   return (
@@ -186,7 +199,7 @@ export default function AddProductForm() {
             fullWidth
             placeholder="Enter quantity available"
             type="number"
-            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
             color="success"
             value={formData.quantityAvailable}
             onChange={handleChange}
@@ -200,7 +213,7 @@ export default function AddProductForm() {
             fullWidth
             onClick={handleSubmit}
           >
-            {isSubmit?"adding...":"Add Product"}
+            {isSubmit ? 'adding...' : 'Add Product'}
           </Button>
         </Grid>
       </Grid>

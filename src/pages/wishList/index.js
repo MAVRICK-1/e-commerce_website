@@ -1,50 +1,50 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./style.css";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import Rating from "@mui/material/Rating";
+import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './style.css';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import Rating from '@mui/material/Rating';
 import {
   Button,
   Card,
   CardActions,
   CardContent,
-  Typography,
-} from "@mui/material";
-import QuantityBox from "../../components/quantityBox";
-import { MyContext } from "../../App";
-import { getDatabase, ref, onValue, remove } from "firebase/database";
-import { useNavigate } from "react-router-dom";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import MapComponent from "../../components/map/ITEMmap";
-import { db } from "../../firebase";
+  Typography
+} from '@mui/material';
+import QuantityBox from '../../components/quantityBox';
+import { MyContext } from '../../App';
+import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { useNavigate } from 'react-router-dom';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import MapComponent from '../../components/map/ITEMmap';
+import { db } from '../../firebase';
 import {
   collection,
   deleteDoc,
   doc,
   getDocs,
-  onSnapshot,
-} from "firebase/firestore";
+  onSnapshot
+} from 'firebase/firestore';
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const context = useContext(MyContext);
   const navigate = useNavigate();
-  const [uid, setUid] = useState(localStorage.getItem("uid"));
+  const [uid, setUid] = useState(localStorage.getItem('uid'));
 
   console.log(wishlistItems);
   useEffect(() => {
     try {
-      if (context.isLogin === "true") {
+      if (context.isLogin === 'true') {
         fetchWishlistProducts();
       } else {
-        navigate("/signIn"); // Navigate to About Us page if not logged in
+        navigate('/signIn'); // Navigate to About Us page if not logged in
       }
 
       window.scrollTo(0, 0);
     } catch (error) {
-      console.error("Error:", error);
-      setError("Failed to fetch data from the server"); // Set error state if there's an error with database connection
+      console.error('Error:', error);
+      setError('Failed to fetch data from the server'); // Set error state if there's an error with database connection
     }
   }, []);
 
@@ -54,8 +54,8 @@ const WishList = () => {
 
   const fetchWishlistProducts = async () => {
     try {
-      const wishlistsRef = doc(db, "wishlists", uid);
-      const productsCollectionRef = collection(wishlistsRef, "products");
+      const wishlistsRef = doc(db, 'wishlists', uid);
+      const productsCollectionRef = collection(wishlistsRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
       let products = [];
       let price = 0;
@@ -68,30 +68,30 @@ const WishList = () => {
       setWishlistItems(products);
       setTotalPrice(price);
     } catch (error) {
-      console.error("Error fetching wishlist products:", error);
+      console.error('Error fetching wishlist products:', error);
     }
   };
 
   const deleteWishlistItem = async (uid, wishlistItemId) => {
     const wishlistItemRef = doc(
       db,
-      "wishlists",
+      'wishlists',
       uid,
-      "products",
+      'products',
       wishlistItemId
     );
 
     try {
       await deleteDoc(wishlistItemRef);
       fetchWishlistProducts();
-      console.log("Wishlist item deleted successfully.");
+      console.log('Wishlist item deleted successfully.');
     } catch (error) {
-      console.error("Error deleting wishlist item:", error);
+      console.error('Error deleting wishlist item:', error);
     }
   };
 
   const deleteAllWishlistItems = async (uid) => {
-    const productsCollectionRef = collection(db, "wishlists", uid, "products");
+    const productsCollectionRef = collection(db, 'wishlists', uid, 'products');
 
     try {
       const querySnapshot = await getDocs(productsCollectionRef);
@@ -99,9 +99,9 @@ const WishList = () => {
         await deleteDoc(doc.ref);
       });
       await fetchWishlistProducts();
-      console.log("All wishlist items deleted successfully.");
+      console.log('All wishlist items deleted successfully.');
     } catch (error) {
-      console.error("Error deleting wishlist items:", error);
+      console.error('Error deleting wishlist items:', error);
     }
   };
 
@@ -119,7 +119,7 @@ const WishList = () => {
               <div className="container-fluid">
                 <ul className="breadcrumb breadcrumb2 mb-0">
                   <li>
-                    <Link to={"/"}>Home</Link>
+                    <Link to={'/'}>Home</Link>
                   </li>
                   <li>Shop</li>
                   <li>Wishlist</li>
@@ -129,14 +129,18 @@ const WishList = () => {
           )}
           <section className="cartSection mb-5">
             <div className="container-fluid">
-              <div className={context.windowWidth>770 && "row"}>
-                <div className={`${context.windowWidth<770? "col-md-full":"col-md-7"}`}>
+              <div className={context.windowWidth > 770 && 'row'}>
+                <div
+                  className={`${
+                    context.windowWidth < 770 ? 'col-md-full' : 'col-md-7'
+                  }`}
+                >
                   <div className="d-flex align-items-center w-100">
                     <div className="left">
                       <h1 className="hd mb-0">Your Wishlist</h1>
                       <p>
-                        There are{" "}
-                        <span className="text-g">{wishlistItems.length}</span>{" "}
+                        There are{' '}
+                        <span className="text-g">{wishlistItems.length}</span>{' '}
                         products in your Wishlist
                       </p>
                     </div>
@@ -167,14 +171,14 @@ const WishList = () => {
                             wishlistItems.map((item, index) => {
                               return (
                                 <tr>
-                                  <td width={"50%"}>
+                                  <td width={'50%'}>
                                     <div className="d-flex align-items-center">
                                       <div className="img">
                                         <Link to={`/product/${item.id}`}>
                                           <img
                                             src={
                                               item.catImg +
-                                              "?im=Resize=(100,100)"
+                                              '?im=Resize=(100,100)'
                                             }
                                             className="w-100"
                                           />
@@ -190,7 +194,7 @@ const WishList = () => {
                                           value={parseFloat(item.rating)}
                                           precision={0.5}
                                           readOnly
-                                        />{" "}
+                                        />{' '}
                                         <span className="text-light">
                                           ({parseFloat(item.rating)})
                                         </span>
@@ -200,8 +204,8 @@ const WishList = () => {
 
                                   <td width="20%">
                                     <span>
-                                      Rs:{" "}
-                                      {parseInt(item.price.split(",").join(""))}
+                                      Rs:{' '}
+                                      {parseInt(item.price.split(',').join(''))}
                                     </span>
                                   </td>
 
@@ -212,15 +216,15 @@ const WishList = () => {
                                       index={index}
                                       quantity={item?.quantity}
                                       updateInfo={updateWishlist}
-                                      name={"wishlists"}
+                                      name={'wishlists'}
                                     />
                                   </td>
 
                                   <td>
                                     <span className="text-g">
-                                      Rs.{" "}
+                                      Rs.{' '}
                                       {parseInt(
-                                        item.price.split(",").join("")
+                                        item.price.split(',').join('')
                                       ) * parseInt(item.quantity)}
                                     </span>
                                   </td>
@@ -266,7 +270,7 @@ const WishList = () => {
                             wishlistItems
                               .map(
                                 (item) =>
-                                  parseInt(item.price.split(",").join("")) *
+                                  parseInt(item.price.split(',').join('')) *
                                   item.quantity
                               )
                               .reduce((total, value) => total + value, 0)}
@@ -296,7 +300,7 @@ const WishList = () => {
                             wishlistItems
                               .map(
                                 (item) =>
-                                  parseInt(item.price.split(",").join("")) *
+                                  parseInt(item.price.split(',').join('')) *
                                   item.quantity
                               )
                               .reduce((total, value) => total + value, 0)}
@@ -312,7 +316,7 @@ const WishList = () => {
                 </div>
               </div>
             </div>
-          </section>{" "}
+          </section>{' '}
         </>
       ) : (
         // Render message indicating cart is empty if cartItems array is empty
