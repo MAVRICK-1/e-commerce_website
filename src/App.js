@@ -29,6 +29,7 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import MapComponent from "./components/map/ITEMmap";
 import { db } from "./firebase";
 import SellerForm from "./pages/SellerRegistration";
+import GoToTop from "./components/GoToTop/GoToTop";
 
 const MyContext = createContext();
 
@@ -280,7 +281,7 @@ function App() {
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />
           )}
-
+          
           <Route
             exact={true}
             path="/map"
@@ -290,6 +291,7 @@ function App() {
           <Route exact={true} path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <GoToTop/>
       </MyContext.Provider>
     </HashRouter>
   ) : (
