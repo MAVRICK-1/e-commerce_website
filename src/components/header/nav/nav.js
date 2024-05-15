@@ -20,11 +20,8 @@ const Nav = (props) => {
 
   const [openMegaMenu, setOpenMegaMenu] = useState(false);
 
-  const context = useContext(MyContext);
-
-  useEffect(() => {
-    setNavData(props.data);
-  }, []);
+  const [openMegaMenu, setOpenMegaMenu] = useState(false);
+    const context = useContext(MyContext);
 
   useEffect(() => {
     setIsOpenNav(props.openNav);
