@@ -18,7 +18,6 @@ import Listing from "./pages/Listing";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-
 import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/cart";
 import Wishlist from "./pages/wishList";
@@ -295,3 +294,4 @@ function App() {
 export default App;
 
 export { MyContext };
+
