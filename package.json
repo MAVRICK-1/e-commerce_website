@@ -46,20 +46,16 @@
   },
   "lint-staged": {
     "./**/*.js": [
-      "eslint",
-      "prettier --write ."
+      "eslint --fix"
     ],
     "./**/*.jsx": [
-      "eslint",
-      "prettier --write ."
+      "eslint --fix"
     ],
     "./**/*.ts": [
-      "eslint",
-      "prettier --write ."
+      "eslint --fix"
     ],
     "./**/*.tsx": [
-      "eslint",
-      "prettier --write ."
+      "eslint --fix"
     ]
   },
   "eslintConfig": {
