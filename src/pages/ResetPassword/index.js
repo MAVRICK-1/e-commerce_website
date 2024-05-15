@@ -112,7 +112,7 @@ setInputErrors(errors)
       const res=await  sendPasswordResetEmail( auth,email);
       console.log(res)
       setSnackbarOpen(true);
-      
+      formFields.email=""
       
         setmssg("Password reset mail has been sent!")
       
