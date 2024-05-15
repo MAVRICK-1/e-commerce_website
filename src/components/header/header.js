@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
-import "../header/header.css";
-import Logo from "../../assets/images/logo.svg";
-import SearchIcon from "@mui/icons-material/Search";
-import Select from "../selectDrop/select";
-import axios from "axios";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import IconCompare from "../../assets/images/icon-compare.svg";
-import IconHeart from "../../assets/images/icon-heart.svg";
-import IconCart from "../../assets/images/icon-cart.svg";
-import IconUser from "../../assets/images/icon-user.svg";
+import React, { useState, useEffect, useRef } from 'react';
+import '../header/header.css';
+import Logo from '../../assets/images/logo.svg';
+import SearchIcon from '@mui/icons-material/Search';
+import Select from '../selectDrop/select';
+import axios from 'axios';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import IconCompare from '../../assets/images/icon-compare.svg';
+import IconHeart from '../../assets/images/icon-heart.svg';
+import IconCart from '../../assets/images/icon-cart.svg';
+import IconUser from '../../assets/images/icon-user.svg';
 
-import Button from "@mui/material/Button";
-import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import Button from '@mui/material/Button';
+import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 
-import Nav from "./nav/nav";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
+import Nav from './nav/nav';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 
 import { MyContext } from "../../App";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +32,7 @@ import { Satellite } from "@mui/icons-material";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../Redux/auth-slice";
+
 
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
@@ -45,35 +46,35 @@ const Header = (props) => {
 
   const headerRef = useRef();
   const searchInput = useRef();
-  const [profile, setProfile] = useState("");
+  const [profile, setProfile] = useState('');
 
   const dispatch = useDispatch()
   const context = useContext(MyContext);
   const history = useNavigate();
 
   const [categories, setcategories] = useState([
-    "Clothing & beauty",
-    "Fresh Seafood",
-    "Pet Foods & Toy",
-    "Fast food",
-    "Baking material",
-    "Vegetables",
-    "Fresh Fruit",
-    "Bread and Juice",
-    "Milks and Dairies",
-    "Wines & Drinks",
-    "Clothing & beauty",
-    "Fresh Seafood",
+    'Clothing & beauty',
+    'Fresh Seafood',
+    'Pet Foods & Toy',
+    'Fast food',
+    'Baking material',
+    'Vegetables',
+    'Fresh Fruit',
+    'Bread and Juice',
+    'Milks and Dairies',
+    'Wines & Drinks',
+    'Clothing & beauty',
+    'Fresh Seafood'
   ]);
 
   const countryList = [];
 
   useEffect(() => {
-    getCountry("https://countriesnow.space/api/v0.1/countries/");
+    getCountry('https://countriesnow.space/api/v0.1/countries/');
   }, []);
 
   useEffect(() => {
-    setProfile(localStorage.getItem("userImage"));
+    setProfile(localStorage.getItem('userImage'));
   }, [context.isLogin]);
   const getCountry = async (url) => {
     try {
@@ -89,7 +90,7 @@ const Header = (props) => {
         }
       });
     } catch (error) {
-      //console.log(error.message);
+      console.log(error);
     }
   };
 
@@ -107,8 +108,8 @@ const Header = (props) => {
   const signOut = () => {
     dispatch(logOut());
     context.signOut();
-    localStorage.setItem("userImage", "");
-    history("/");
+    localStorage.setItem('userImage', '');
+    history('/');
   };
 
   const openSearch = () => {
@@ -119,7 +120,7 @@ const Header = (props) => {
   const closeSearch = () => {
     setOpenSearch(false);
     searchInput.current.blur();
-    searchInput.current.value = "";
+    searchInput.current.value = '';
   };
 
   const openNav = () => {
@@ -151,8 +152,8 @@ const Header = (props) => {
                     <ul className="list list-inline mb-0 headerTabs pl-0 mr-4">
                       <li className="list-inline-item">
                         <span>
-                          <Link to={"/cart"}>
-                            {" "}
+                          <Link to={'/cart'}>
+                            {' '}
                             <img src={IconCart} />
                             <span className="badge bg-success rounded-circle">
                               {cartCount}
@@ -164,19 +165,19 @@ const Header = (props) => {
                     <div className="navbarToggle mr-2" onClick={openNav}>
                       <MenuIcon />
                     </div>
-                    {context.isLogin === "true" && (
+                    {context.isLogin === 'true' && (
                       <div
                         onClick={() => setisOpenAccDropDown(!isOpenAccDropDown)}
                       >
-                        {profile != "" ? (
+                        {profile != '' ? (
                           <img
                             src={profile}
                             alt=""
                             style={{
-                              width: "65%",
-                              height: "65%",
-                              borderRadius: "50%",
-                              marginLeft: "15%",
+                              width: '65%',
+                              height: '65%',
+                              borderRadius: '50%',
+                              marginLeft: '15%'
                             }}
                           />
                         ) : (
@@ -184,10 +185,10 @@ const Header = (props) => {
                             src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png"
                             alt=""
                             style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "50%",
-                              marginLeft: "13%",
+                              width: '50px',
+                              height: '50px',
+                              borderRadius: '50%',
+                              marginLeft: '13%'
                             }}
                           />
                         )}
@@ -201,7 +202,7 @@ const Header = (props) => {
               <div className="col-sm-5 part2">
                 <div
                   className={`headerSearch d-flex align-items-center ${
-                    isopenSearch === true ? "open" : ""
+                    isopenSearch === true ? 'open' : ''
                   }`}
                 >
                   {/* {
@@ -218,7 +219,7 @@ const Header = (props) => {
                   )}
                   <Select
                     data={categories}
-                    placeholder={"All Categories"}
+                    placeholder={'All Categories'}
                     icon={false}
                   />
 
@@ -239,9 +240,9 @@ const Header = (props) => {
                   <div className="countryWrapper">
                     <Select
                       data={countryList}
-                      placeholder={"Your Location"}
+                      placeholder={'Your Location'}
                       icon={
-                        <LocationOnOutlinedIcon style={{ opacity: "0.5" }} />
+                        <LocationOnOutlinedIcon style={{ opacity: '0.5' }} />
                       }
                     />
                   </div>
@@ -252,10 +253,10 @@ const Header = (props) => {
                       <li className="list-inline-item">
                         <span>
                           <Link
-                            to={"/wishlist"}
-                            style={{ textDecoration: "none" }}
+                            to={'/wishlist'}
+                            style={{ textDecoration: 'none' }}
                           >
-                            {" "}
+                            {' '}
                             <img src={IconCompare} />
                             <span className="badge bg-success rounded-circle">
                               3
@@ -267,10 +268,10 @@ const Header = (props) => {
                       <li className="list-inline-item">
                         <span>
                           <Link
-                            to={"/wishlist"}
-                            style={{ textDecoration: "none" }}
+                            to={'/wishlist'}
+                            style={{ textDecoration: 'none' }}
                           >
-                            {" "}
+                            {' '}
                             <img src={IconHeart} />
                             <span className="badge bg-success rounded-circle">
                               {wishlistCount}
@@ -281,8 +282,8 @@ const Header = (props) => {
                       </li>
                       <li className="list-inline-item">
                         <span>
-                          <Link to={"/cart"} style={{ textDecoration: "none" }}>
-                            {" "}
+                          <Link to={'/cart'} style={{ textDecoration: 'none' }}>
+                            {' '}
                             <img src={IconCart} />
                             <span className="badge bg-success rounded-circle">
                               {cartCount}
@@ -297,15 +298,15 @@ const Header = (props) => {
                           <span
                             onClick={() => setisOpenDropDown(!isOpenDropDown)}
                           >
-                            {profile != "" ? (
+                            {profile != '' ? (
                               <img
                                 src={profile}
                                 alt=""
                                 style={{
-                                  width: "65%",
-                                  height: "65%",
-                                  borderRadius: "50%",
-                                  marginLeft: "18%",
+                                  width: '65%',
+                                  height: '65%',
+                                  borderRadius: '50%',
+                                  marginLeft: '18%'
                                 }}
                               />
                             ) : (
@@ -313,10 +314,10 @@ const Header = (props) => {
                                 src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png"
                                 alt=""
                                 style={{
-                                  width: "50px",
-                                  height: "50px",
-                                  borderRadius: "50%",
-                                  marginLeft: "18%",
+                                  width: '50px',
+                                  height: '50px',
+                                  borderRadius: '50%',
+                                  marginLeft: '18%'
                                 }}
                               />
                             )}
@@ -341,7 +342,7 @@ const Header = (props) => {
                               </li>
                               <li>
                                 <Button>
-                                  <Link to={"/seller"}> Sell items</Link>
+                                  <Link to={'/seller'}> Sell items</Link>
                                 </Button>
                               </li>
                               <li>
@@ -359,7 +360,7 @@ const Header = (props) => {
                         </li>
                       ) : (
                         <li className="list-inline-item">
-                          <Link to={"/signIn"}>
+                          <Link to={'/signIn'}>
                             <Button className="btn btn-g">Sign In</Button>
                           </Link>
                         </li>
@@ -391,7 +392,7 @@ const Header = (props) => {
             <li>
               <Button className="align-items-center">
                 <Link to="">
-                  {" "}
+                  {' '}
                   <img src={IconCompare} />
                   Compare
                 </Link>
@@ -400,7 +401,7 @@ const Header = (props) => {
             <li>
               <Button className="align-items-center">
                 <Link to="">
-                  {" "}
+                  {' '}
                   <img src={IconCart} />
                   Cart
                 </Link>
@@ -422,7 +423,7 @@ const Header = (props) => {
             </li>
             <li>
               <Button>
-                <Link to={"/seller"}> Sell items</Link>
+                <Link to={'/seller'}> Sell items</Link>
               </Button>
             </li>
             <li>

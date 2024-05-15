@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    value:{
-        isAuth:false,
-        email:"",
-    }
-}
+  value: {
+    isAuth: false,
+    email: ''
+  }
+};
 
 export const auth = createSlice({
     name:"auth",
@@ -18,8 +18,10 @@ export const auth = createSlice({
             state.value.isAuth = true;
             state.value.email = action.payload.email;
         }
+      };
     }
-})
+  }
+});
 
-export const {logIn,logOut} = auth.actions;
+export const { logIn, logOut } = auth.actions;
 export default auth.reducer;
