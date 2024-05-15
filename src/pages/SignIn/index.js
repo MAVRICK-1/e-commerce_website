@@ -26,6 +26,7 @@ const googleProvider = new GoogleAuthProvider();
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [mssg, setmssg] = useState();
   const [showLoader, setShowLoader] = useState(false);
   const [formFields, setFormFields] = useState({
     email: "",
@@ -147,15 +148,8 @@ const SignIn = () => {
       });
   };
 
-  const forgotPassword = () => {
-    const email = formFields.email;
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        setSnackbarOpen(true);
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
+  const forgotPassword = async () => {
+  history("/resetpassword")
   };
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -248,6 +242,12 @@ const SignIn = () => {
                 </div>
               )}
 
+              <div className="form-group mt-3 mb-4 w-100 d-flex justify-content-end">
+              <Button className="btn btn-link float-end" onClick={forgotPassword}>
+                Forgot Password?
+              </Button>
+            </div>
+
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
                   disabled={isDisabled}
@@ -269,11 +269,7 @@ const SignIn = () => {
                 </Button>
               </div>
 
-              <div className="form-group mt-3 mb-4 w-100">
-                <Button className="btn btn-link" onClick={forgotPassword}>
-                  Forgot Password?
-                </Button>
-              </div>
+             
 
               <p className="text-center">
                 Don't have an account?{" "}
@@ -289,7 +285,7 @@ const SignIn = () => {
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message="Password reset email sent!"
+        message={mssg}
       />
     </>
   );

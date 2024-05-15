@@ -18,6 +18,8 @@ import Listing from "./pages/Listing";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+
+import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/cart";
 import Wishlist from "./pages/wishList";
 import "./responsive.css";
@@ -271,6 +273,9 @@ function App() {
           {/* sign in , signup Protection */}
           {isLogin === null && (
             <Route exact={true} path="signIn" element={<SignIn />} />
+          )}
+          {isLogin === null && (
+            <Route exact={true} path="resetpassword" element={<ResetPassword />} />
           )}
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />

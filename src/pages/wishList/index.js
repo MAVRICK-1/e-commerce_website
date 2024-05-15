@@ -129,8 +129,8 @@ const WishList = () => {
           )}
           <section className="cartSection mb-5">
             <div className="container-fluid">
-              <div className="row">
-                <div className="col-md-8">
+              <div className={context.windowWidth>770 && "row"}>
+                <div className={`${context.windowWidth<770? "col-md-full":"col-md-7"}`}>
                   <div className="d-flex align-items-center w-100">
                     <div className="left">
                       <h1 className="hd mb-0">Your Wishlist</h1>
