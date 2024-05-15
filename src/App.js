@@ -18,6 +18,7 @@ import Listing from "./pages/Listing";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/cart";
 import Wishlist from "./pages/wishList";
 import "./responsive.css";
@@ -26,11 +27,7 @@ import "./responsive.css";
 import { collection, doc, getDocs } from "firebase/firestore";
 import MapComponent from "./components/map/ITEMmap";
 import { db } from "./firebase";
-
-import {Account} from "./components/AccountDetails/Account";
-
 import SellerForm from "./pages/SellerRegistration";
-
 
 const MyContext = createContext();
 
@@ -76,17 +73,14 @@ function App() {
   };
 
   const fetchWishlistProducts = async () => {
-    console.log("fetchWishlistProducts");
     try {
       const wishlistRef = doc(db, "wishlists", localStorage.getItem("uid"));
       const productsCollectionRef = collection(wishlistRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
-      console.log(querySnapshot);
       const products = [];
       querySnapshot.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() });
       });
-      console.log(products);
       setWishlistItems(products);
       setWishlistCount(products.length); // Set the product count
     } catch (error) {
@@ -104,7 +98,6 @@ function App() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        // //console.log("fetced data", data)
         setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -140,7 +133,6 @@ function App() {
         (snapshot) => {
           const data = snapshot.val();
           setCartItems(data);
-          //console.log("Data fetched successfully:", data);
         },
         (error) => {
           console.error("Error fetching data:", error);
@@ -165,7 +157,6 @@ function App() {
         (snapshot) => {
           const data = snapshot.val();
           setCartItems(data);
-          //console.log("Data fetched successfully:", data);
         },
         (error) => {
           console.error("Error fetching data:", error);
@@ -186,7 +177,6 @@ function App() {
       const uniqueKey = user + item.id; // Modify as per your requirement
       // Add item to the cart in Firebase
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      //console.log('Item added to cart successfully');
     } catch (error) {
       console.error("Error adding item to cart:", error);
     }
@@ -272,12 +262,12 @@ function App() {
           <Route exact={true} path="/cart" element={<Cart />} />
           <Route exact={true} path="/wishlist" element={<Wishlist />} />
 
-
-          <Route exact={true} path="/account" element={<Account/>}/>
-
           {/* sign in , signup Protection */}
           {isLogin === null && (
             <Route exact={true} path="signIn" element={<SignIn />} />
+          )}
+          {isLogin === null && (
+            <Route exact={true} path="resetpassword" element={<ResetPassword />} />
           )}
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />

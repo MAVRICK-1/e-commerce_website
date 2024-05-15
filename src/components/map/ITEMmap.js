@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import "./map.css";
-import Button from "@mui/material/Button";
-import { green } from "@mui/material/colors";
+import React, { useState, useEffect, useMemo } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import './map.css';
+import Button from '@mui/material/Button';
+import { green } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 
 const MapComponent = (props) => {
-    let navigate = useNavigate();
+  let navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
@@ -20,7 +20,7 @@ const MapComponent = (props) => {
         setUserLocation([position.coords.latitude, position.coords.longitude]);
       },
       (error) => {
-        console.error("Error getting user location:", error);
+        console.error('Error getting user location:', error);
         setLoading(false);
       }
     );
@@ -42,7 +42,7 @@ const MapComponent = (props) => {
         const data = await props.data;
         ////console.log(data.length , data)
         // only when there is one item or viewing the product details
-        if (typeof props.data === "object" && !Array.isArray(props.data)) {
+        if (typeof props.data === 'object' && !Array.isArray(props.data)) {
           // //console.log("one item")
           setProducts([props.data]); // Wrap the single object in an array
           setLoading(false);
@@ -52,9 +52,9 @@ const MapComponent = (props) => {
 
         const groceriesProducts = data.filter(
           (item) =>
-            item.parentCatName === "Electronics" ||
-            item.parentCatName === "groceries" ||
-            item.parentCatName === "Fashion"
+            item.parentCatName === 'Electronics' ||
+            item.parentCatName === 'groceries' ||
+            item.parentCatName === 'Fashion'
         );
 
         if (groceriesProducts.length > 0) {
@@ -80,11 +80,11 @@ const MapComponent = (props) => {
           setLoading(false);
           calculateBounds(top50Products);
         } else {
-          console.error("No groceries products found");
+          console.error('No groceries products found');
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
         setLoading(false);
       }
     };
@@ -105,7 +105,7 @@ const MapComponent = (props) => {
         scrollWheelZoom={false}
         key={key}
         zoom={4}
-        style={{ height: "100vh", width: "100%" }}
+        style={{ height: '100vh', width: '100%' }}
         center={userLocation}
         bounds={mapBounds}
       >
@@ -115,9 +115,9 @@ const MapComponent = (props) => {
             position={userLocation}
             icon={L.icon({
               iconUrl:
-                "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
+                'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
               iconSize: [25, 41],
-              iconAnchor: [12, 41],
+              iconAnchor: [12, 41]
             })}
           >
             <Popup>You are here</Popup>
@@ -125,41 +125,43 @@ const MapComponent = (props) => {
         )}
         {products.map((product) => {
           const [lat, lng] = product.coordinates;
-          const distance = L.latLng(lat, lng).distanceTo(L.latLng(userLocation));
+          const distance = L.latLng(lat, lng).distanceTo(
+            L.latLng(userLocation)
+          );
           const distanceInKm = (distance / 1000).toFixed(2);
-          return(
-          <Marker key={product.id} position={product.coordinates}>
-            <Popup>
-              <div>
-                <img
-                  src={product.catImg}
-                  alt="Product"
-                  style={{ width: "100px" }}
-                />
-                <h3>{product.productName}</h3>
-                <p>{product.address}</p>
-                <p>Shop: {product.shop_name}</p>
-                <p>Distance from you: {distanceInKm} km</p>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: green[500] }}
-                  onClick={() => handleViewProduct(product.id)}
-                >
-                  View Product
-                </Button>
-              </div>
-            </Popup>
-          </Marker>
-        )})}
+          return (
+            <Marker key={product.id} position={product.coordinates}>
+              <Popup>
+                <div>
+                  <img
+                    src={product.catImg}
+                    alt="Product"
+                    style={{ width: '100px' }}
+                  />
+                  <h3>{product.productName}</h3>
+                  <p>{product.address}</p>
+                  <p>Shop: {product.shop_name}</p>
+                  <p>Distance from you: {distanceInKm} km</p>
+                  <Button
+                    variant="contained"
+                    sx={{ bgcolor: green[500] }}
+                    onClick={() => handleViewProduct(product.id)}
+                  >
+                    View Product
+                  </Button>
+                </div>
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     ),
     [key, userLocation, mapBounds, products]
   );
 
-
-const handleViewProduct = (productId) => {
+  const handleViewProduct = (productId) => {
     navigate(`/product/${productId}`);
-};
+  };
 
   return (
     <div className="map-container">
