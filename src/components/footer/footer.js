@@ -138,19 +138,6 @@ const Footer = () => {
                                         </ul>
                                     </div>
 
-                                    <div className='col'>
-                                        <h3>Company</h3>
-                                        <ul className="footer-list mb-sm-5 mb-md-0">
-                                            <li><Link to="#">Account</Link></li>
-                                            <li><Link to="#">Delivery Information</Link></li>
-                                            <li><Link to="#">Privacy Policy</Link></li>
-                                            <li><Link to="#">Terms &amp; Conditions</Link></li>
-                                            <li><Link to="#">Contact Us</Link></li>
-                                            <li><Link to="#">Support Center</Link></li>
-                                            <li><Link to="#">Careers</Link></li>
-                                        </ul>
-                                    </div>
-
 
                                     <div className='col'>
                                         <h3>Corporate</h3>
@@ -207,8 +194,8 @@ const Footer = () => {
 
                         <div className='row lastStrip'>
                             <div className='col-md-3 part_1'>
-                                <p>© {currentYear}, Nest - HTML Ecommerce Template
-                                    All rights reserved</p>
+                                <p>© {currentYear}, Nest - HTML Ecommerce Template</p>
+                                <p>All rights reserved</p>
                             </div>
 
                             <div className='col-md-6 d-flex part_2'>
