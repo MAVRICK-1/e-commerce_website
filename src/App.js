@@ -1,38 +1,34 @@
-import React, { useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import "./responsive.css";
-import { Routes, Route, HashRouter } from "react-router-dom";
 import {
   getDatabase,
-  ref,
   onValue,
-  set,
-  push,
-  child,
-  remove,
+  ref
 } from "firebase/database";
-import Header from "./components/header/header";
+import React, { createContext, useEffect, useState } from "react";
+import { HashRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Loader from "./assets/images/loading.gif";
 import Footer from "./components/footer/footer";
+import Header from "./components/header/header";
+import About from "./pages/About";
+import AddProductForm from "./pages/AddProd";
+import DetailsPage from "./pages/Details";
 import Home from "./pages/Home/index";
-import About from "./pages/About/index";
 import Listing from "./pages/Listing";
 import NotFound from "./pages/NotFound";
-import DetailsPage from "./pages/Details";
-import axios from "axios";
-import Cart from "./pages/cart";
-import Wishlist from "./pages/wishList";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ResetPassword from "./pages/ResetPassword";
-import Loader from "./assets/images/loading.gif";
-import AddProductForm from "./pages/AddProd";
+import Cart from "./pages/cart";
+import Wishlist from "./pages/wishList";
+import "./responsive.css";
+
 
 // import data from './data';
-import MapComponent from "./components/map/ITEMmap";
-import SellerForm from "./pages/SellerRegistration";
-import { db } from "./firebase";
 import { collection, doc, getDocs } from "firebase/firestore";
+import MapComponent from "./components/map/ITEMmap";
+import { db } from "./firebase";
+import SellerForm from "./pages/SellerRegistration";
 
 const MyContext = createContext();
 
@@ -306,3 +302,4 @@ function App() {
 export default App;
 
 export { MyContext };
+

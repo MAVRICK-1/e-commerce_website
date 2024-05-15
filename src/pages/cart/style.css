@@ -2,6 +2,8 @@
   width: 100%;
   height: auto;
   padding: 10px 0px;
+  display: flex;
+  justify-content: center;
 }
 .cartSection .clearCart {
   font-weight: 600;
@@ -59,8 +61,13 @@
 
 .cartRightBox {
   padding-left: 100px;
+  padding-bottom: 30px;
+  height: auto;
 }
 .cartRightBox .card {
   position: sticky;
   top: 150px;
+  height: auto;
+  margin: auto;
+  max-width: 430px;
 }
