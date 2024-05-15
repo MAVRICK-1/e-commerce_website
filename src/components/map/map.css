@@ -1,0 +1,19 @@
+.map-container {
+    position: relative;
+}
+
+.loading-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #333;
+}
+
+/* Adjust map size for smaller screens */
+@media screen and (max-width: 768px) {
+    .map-container {
+        height: 90vh;
+    }
+}

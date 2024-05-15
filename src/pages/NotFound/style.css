@@ -1,0 +1,5 @@
+.notFound{width: 100%; height: auto; padding: 45px 0px;}
+.notFound .box{width: 50%; height: auto; padding: 100px 30px; text-align: center; margin: auto;}
+
+.notFound .box h1{font-size: 60px; font-weight: bold; color: #000; opacity: 0.7;}
+.notFound .box p{color: #000; font-size: 20px; margin-top: 25px;}

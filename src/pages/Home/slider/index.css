@@ -1,0 +1,24 @@
+
+.homeSlider{padding: 30px 0px;}
+.home_slider_Main{border-radius: 25px; overflow:hidden; position: relative;}
+
+.slick-arrow{ position: absolute; top: 47%; width: 60px !important; height: 60px !important; border-radius: 50% !important; background: #F2F3F4 !important; z-index: 10 !important; transition: all 0.2s ease-in-out; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);}
+.slick-arrow.slick-next{right: 2% !important;}
+.slick-arrow.slick-prev{left: 2% !important;}
+
+.slick-prev:before{content: "\f104" !important; font-family: FontAwesome !important; font-size: 30px !important; color: #000 !important;}
+.slick-next:before{content: "\f105" !important; font-family: FontAwesome !important; font-size: 30px !important; color: #000 !important;}
+
+.slick-arrow:hover{background: #3bb77e !important;}
+.slick-arrow:hover::before{color: #fff !important;}
+
+.home_slider_Main .slick-dots{position: absolute; bottom: 30px !important;}
+.home_slider_Main .slick-dots button::before{width: 10px !important; height: 10px !important; font-size: 18px !important;}
+.slick-active button::before{color: #3bb77e !important;}
+
+.home_slider_Main .item{position: relative;}
+.home_slider_Main .item .info{position: absolute; top: 15%; left: 7%; z-index: 100;}
+.home_slider_Main .item .info h2{font-size: 90px; font-weight: bolder; color: rgba(0,0,0,0.7);}
+
+.home_slider_Main .item .info p{font-size: 35px; font-weight: 500; color: #7E7E7E;}
+
