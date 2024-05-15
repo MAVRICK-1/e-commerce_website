@@ -30,11 +30,13 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Satellite } from "@mui/icons-material";
 import { getDatabase, ref, onValue } from "firebase/database";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../Redux/auth-slice";
 
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
   const [isOpenAccDropDown, setisOpenAccDropDown] = useState(false);
-
+  const logged = useSelector((state)=>state.authReducer.value.isAuth)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
@@ -45,6 +47,7 @@ const Header = (props) => {
   const searchInput = useRef();
   const [profile, setProfile] = useState("");
 
+  const dispatch = useDispatch()
   const context = useContext(MyContext);
   const history = useNavigate();
 
@@ -102,6 +105,7 @@ const Header = (props) => {
   // }, [])
 
   const signOut = () => {
+    dispatch(logOut());
     context.signOut();
     localStorage.setItem("userImage", "");
     history("/");
@@ -288,7 +292,7 @@ const Header = (props) => {
                         </span>
                       </li>
 
-                      {context.isLogin === "true" ? (
+                      {logged ? (
                         <li className="list-inline-item">
                           <span
                             onClick={() => setisOpenDropDown(!isOpenDropDown)}

@@ -15,12 +15,8 @@ export const auth = createSlice({
             return initialState
         },
         logIn:(state,action)=>{
-            return {
-                value : {
-                    isAuth:true,
-                    email:action.payload.email
-                }
-            }
+            state.value.isAuth = true;
+            state.value.email = action.payload.email;
         }
     }
 })
