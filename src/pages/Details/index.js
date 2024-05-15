@@ -224,7 +224,7 @@ const DetailsPage = (props) => {
           }));
         });
     } catch (error) {
-      //console.log(error.message);
+      console.log(error);
     }
 
     showReviews();
@@ -245,7 +245,7 @@ const DetailsPage = (props) => {
           }
         });
     } catch (error) {
-      //console.log(error.message);
+      console.log(error);
     }
 
     if (reviews_Arr2.length !== 0) {

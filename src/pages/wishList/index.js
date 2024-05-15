@@ -32,7 +32,7 @@ const WishList = () => {
   const navigate = useNavigate();
   const [uid, setUid] = useState(localStorage.getItem("uid"));
 
-  console.log(wishlistItems);
+
   useEffect(() => {
     try {
       if (context.isLogin === "true") {
@@ -64,7 +64,6 @@ const WishList = () => {
         price += parseInt(doc.data()?.price) * doc.data()?.quantity;
       });
       context.setWishlistCount(products.length);
-      console.log(products);
       setWishlistItems(products);
       setTotalPrice(price);
     } catch (error) {
