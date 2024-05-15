@@ -72,17 +72,14 @@ function App() {
   };
 
   const fetchWishlistProducts = async () => {
-    console.log("fetchWishlistProducts");
     try {
       const wishlistRef = doc(db, "wishlists", localStorage.getItem("uid"));
       const productsCollectionRef = collection(wishlistRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
-      console.log(querySnapshot);
       const products = [];
       querySnapshot.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() });
       });
-      console.log(products);
       setWishlistItems(products);
       setWishlistCount(products.length); // Set the product count
     } catch (error) {
@@ -100,7 +97,6 @@ function App() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        // //console.log("fetced data", data)
         setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -136,7 +132,6 @@ function App() {
         (snapshot) => {
           const data = snapshot.val();
           setCartItems(data);
-          //console.log("Data fetched successfully:", data);
         },
         (error) => {
           console.error("Error fetching data:", error);
@@ -161,7 +156,6 @@ function App() {
         (snapshot) => {
           const data = snapshot.val();
           setCartItems(data);
-          //console.log("Data fetched successfully:", data);
         },
         (error) => {
           console.error("Error fetching data:", error);
@@ -182,7 +176,6 @@ function App() {
       const uniqueKey = user + item.id; // Modify as per your requirement
       // Add item to the cart in Firebase
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      //console.log('Item added to cart successfully');
     } catch (error) {
       console.error("Error adding item to cart:", error);
     }
