@@ -1,27 +1,22 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  getDatabase,
-  onValue,
-  ref
-} from "firebase/database";
-import React, { createContext, useEffect, useState } from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Loader from "./assets/images/loading.gif";
-import Footer from "./components/footer/footer";
-import Header from "./components/header/header";
-import About from "./pages/About";
-import AddProductForm from "./pages/AddProd";
-import DetailsPage from "./pages/Details";
-import Home from "./pages/Home/index";
-import Listing from "./pages/Listing";
-import NotFound from "./pages/NotFound";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import ResetPassword from "./pages/ResetPassword";
-import Cart from "./pages/cart";
-import Wishlist from "./pages/wishList";
-import "./responsive.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { getDatabase, onValue, ref } from 'firebase/database';
+import React, { createContext, useEffect, useState } from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Loader from './assets/images/loading.gif';
+import Footer from './components/footer/footer';
+import Header from './components/header/header';
+import About from './pages/About';
+import AddProductForm from './pages/AddProd';
+import DetailsPage from './pages/Details';
+import Home from './pages/Home/index';
+import Listing from './pages/Listing';
+import NotFound from './pages/NotFound';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Cart from './pages/cart';
+import Wishlist from './pages/wishList';
+import './responsive.css';
 
 // import data from './data';
 import { collection, doc, getDocs } from 'firebase/firestore';
