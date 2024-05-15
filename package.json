@@ -41,7 +41,26 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx",
-    "lint:fix": "eslint . --cache --quiet --fix --ext .js,.jsx"
+    "lint:fix": "eslint . --cache --quiet --fix --ext .js,.jsx",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "./**/*.js": [
+      "eslint",
+      "prettier --write ."
+    ],
+    "./**/*.jsx": [
+      "eslint",
+      "prettier --write ."
+    ],
+    "./**/*.ts": [
+      "eslint",
+      "prettier --write ."
+    ],
+    "./**/*.tsx": [
+      "eslint",
+      "prettier --write ."
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +85,8 @@
     "@babel/plugin-transform-private-property-in-object": "^7.24.5",
     "@babel/preset-react": "^7.24.1",
     "eslint-plugin-react": "^7.34.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "3.0.1"
   },
   "description": "<img src=\"./Images/WebsiteImg.png\">",

@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Typography, Container, Grid, TextField, Button } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { Typography, Container, Grid, TextField, Button } from '@mui/material';
 //import { getDatabase, ref, push, set, child } from "firebase/database";
-import { useNavigate } from "react-router-dom";
-import { db, storage } from "../../firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import {uploadBytes,getDownloadURL, ref} from "firebase/storage"
+import { useNavigate } from 'react-router-dom';
+import { db, storage } from '../../firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
 
 const SellerForm = () => {
   const navigate = useNavigate();
 
   const [formFields, setFormFields] = useState({
-    ownerName: "",
-    phoneNumber: "",
-    location: "",
-    pincode: "",
-    shopName: "",
+    ownerName: '',
+    phoneNumber: '',
+    location: '',
+    pincode: '',
+    shopName: '',
     shopPhoto: null,
-    coordinate: [],
+    coordinate: []
   });
 
-  const [isSubmit,setIsSubmit] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const onChangeField = (e) => {
     const { name, value } = e.target;
     setFormFields((prevFields) => ({
       ...prevFields,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -33,7 +33,7 @@ const SellerForm = () => {
     const file = e.target.files[0];
     setFormFields((prevFields) => ({
       ...prevFields,
-      shopPhoto: file,
+      shopPhoto: file
     }));
   };
   let postion = [];
@@ -47,24 +47,25 @@ const SellerForm = () => {
           postion = [latitude, longitude];
           //console.log("Current latitude:", latitude);
           //console.log("Current longitude:", longitude);
-          
+
           // Optionally, you can set the latitude and longitude in the formFields state
           setFormFields((prevFields) => ({
             ...prevFields,
-            coordinate:postion
+            coordinate: postion
           }));
         },
         (error) => {
-          console.error("Error getting current location:", error.message);
+          console.error('Error getting current location:', error.message);
         }
       );
     } else {
-      console.error("Geolocation is not supported by this browser.");
+      console.error('Geolocation is not supported by this browser.');
     }
   };
-  const addUser = async (userId,photo) => { // funtion to add sellers data to firestore
+  const addUser = async (userId, photo) => {
+    // funtion to add sellers data to firestore
     try {
-      await setDoc(doc(db, "sellers", userId), {
+      await setDoc(doc(db, 'sellers', userId), {
         uid: userId,
         ownerName: formFields.ownerName,
         phoneNumber: formFields.phoneNumber,
@@ -72,22 +73,23 @@ const SellerForm = () => {
         pincode: formFields.pincode,
         shopName: formFields.shopName,
         shopPhoto: photo,
-        coordinate: formFields.coordinate , 
+        coordinate: formFields.coordinate
       });
-      console.log("User added successfully");
-      navigate("/addProduct");
+      console.log('User added successfully');
+      navigate('/addProduct');
     } catch (error) {
-      console.error("Error adding user: ", error);
+      console.error('Error adding user: ', error);
     }
   };
 
-  const checkUserInSellers = async (userId) => { // funtion to check seller is already exists or not in firestore
+  const checkUserInSellers = async (userId) => {
+    // funtion to check seller is already exists or not in firestore
     try {
       const sellerDocRef = doc(db, 'sellers', userId);
       const sellerDocSnapshot = await getDoc(sellerDocRef);
       if (sellerDocSnapshot.exists()) {
         console.log('User data exists in sellers collection');
-        navigate("/addProduct")
+        navigate('/addProduct');
       } else {
         console.log('User data does not exist in sellers collection');
       }
@@ -97,28 +99,31 @@ const SellerForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmit(true)
+    setIsSubmit(true);
     // Generate a unique key
-    const uniqueKey = localStorage.getItem("uid");
-    
+    const uniqueKey = localStorage.getItem('uid');
+
     //Upload the shop photo image to firebase storage and get url
-    const imageRef = ref(storage, `sellerImages/${localStorage.getItem("uid")}/shopPhoto`);
+    const imageRef = ref(
+      storage,
+      `sellerImages/${localStorage.getItem('uid')}/shopPhoto`
+    );
     await uploadBytes(imageRef, formFields.shopPhoto);
     const imageUrl = await getDownloadURL(imageRef);
 
     //Adding seller data to firebase firestore
-    addUser(uniqueKey,imageUrl);
+    addUser(uniqueKey, imageUrl);
 
-    setIsSubmit(false)
+    setIsSubmit(false);
   };
 
-  useEffect(()=>{
-    checkUserInSellers(localStorage.getItem("uid"))
-  },[])
+  useEffect(() => {
+    checkUserInSellers(localStorage.getItem('uid'));
+  }, []);
 
   return (
     <Container
-      style={{ marginTop: "90px", padding: "20px", marginBottom: "50px" }}
+      style={{ marginTop: '90px', padding: '20px', marginBottom: '50px' }}
     >
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -203,7 +208,7 @@ const SellerForm = () => {
                   color="success" // Change color to success
                   fullWidth
                 >
-                  {isSubmit?"Registering...":"Register"}
+                  {isSubmit ? 'Registering...' : 'Register'}
                 </Button>
               </Grid>
             </Grid>

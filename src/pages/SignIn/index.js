@@ -1,26 +1,26 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./style.css";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { Button, Snackbar, Typography } from "@mui/material";
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './style.css';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { Button, Snackbar, Typography } from '@mui/material';
 import {
   getAuth,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { app } from "../../firebase";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import { MyContext } from "../../App";
-import GoogleImg from "../../assets/images/google.png";
-import useLoggedInUserEmail from "../../Hooks/useLoggedInUserEmail";
-import { useDispatch } from "react-redux";
-import { logIn } from "../../Redux/auth-slice";
+  sendPasswordResetEmail
+} from 'firebase/auth';
+import { app } from '../../firebase';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import { MyContext } from '../../App';
+import GoogleImg from '../../assets/images/google.png';
+import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
+import { useDispatch } from 'react-redux';
+import { logIn } from '../../Redux/auth-slice';
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -29,10 +29,10 @@ const SignIn = () => {
   const [mssg, setmssg] = useState();
   const [showLoader, setShowLoader] = useState(false);
   const [formFields, setFormFields] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: ''
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const context = useContext(MyContext);
   const history = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -40,25 +40,23 @@ const SignIn = () => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [inputErrors, setInputErrors] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: ''
   });
 
-  
   const checkInputs = (email, password) => {
-    if (email.trim() !== '' && password.trim() !== ''){
+    if (email.trim() !== '' && password.trim() !== '') {
       setIsDisabled(false);
-    }else {
+    } else {
       setIsDisabled(true);
     }
   };
 
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   function replaceSpecialCharacters(inputString) {
     // Use a regular expression to replace special characters with underscore _
-    const replacedString = inputString.replace(/[#$\[\].]/g, "_");
+    const replacedString = inputString.replace(/[#$\[\].]/g, '_');
 
     return replacedString;
   }
@@ -80,23 +78,21 @@ const SignIn = () => {
     let errors = { ...inputErrors };
 
     // Validate email
-    if (name === "email") {
-      errors.email = !validateEmail(value) ? "Invalid email address" : "";
+    if (name === 'email') {
+      errors.email = !validateEmail(value) ? 'Invalid email address' : '';
     }
 
     // Validate password
-    if (name === "password") {
-      errors.password = !validatePassword(value) ? "Password is required" : "";
+    if (name === 'password') {
+      errors.password = !validatePassword(value) ? 'Password is required' : '';
     }
 
     setInputErrors(errors);
     setFormFields((prevFormFields) => ({
       ...prevFormFields,
-      [name]: value,
+      [name]: value
     }));
-    checkInputs(formFields.email, formFields.password,value);
-
-
+    checkInputs(formFields.email, formFields.password, value);
   };
 
   const signIn = () => {
@@ -106,19 +102,19 @@ const SignIn = () => {
         const user = userCredential.user;
         setShowLoader(false);
         setFormFields({
-          email: "",
-          password: "",
+          email: '',
+          password: ''
         });
-        localStorage.setItem("isLogin", true);
+        localStorage.setItem('isLogin', true);
         const udata = replaceSpecialCharacters(user.email);
-        localStorage.setItem("user", udata);
+        localStorage.setItem('user', udata);
         context.signIn();
-        dispatch(logIn({email:user.email}))
+        dispatch(logIn({ email: user.email }));
         setLoggedInUseEmail(user.email);
-        localStorage.setItem("uid", userCredential.user.uid);
-        localStorage.setItem("userImage","")
+        localStorage.setItem('uid', userCredential.user.uid);
+        localStorage.setItem('userImage', '');
         //console.log(loggedInUserEmail);
-        history("/");
+        history('/');
       })
       .catch((error) => {
         setShowLoader(false);
@@ -132,15 +128,15 @@ const SignIn = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setShowLoader(false);
-        localStorage.setItem("isLogin", true);
+        localStorage.setItem('isLogin', true);
         const udata = replaceSpecialCharacters(result.user.email);
-        localStorage.setItem("user", udata);
-        localStorage.setItem("uid", result.user.uid);
+        localStorage.setItem('user', udata);
+        localStorage.setItem('uid', result.user.uid);
         context.signIn();
         setLoggedInUseEmail(udata);
-        localStorage.setItem("userImage",result.user.photoURL)
+        localStorage.setItem('userImage', result.user.photoURL);
         //console.log(loggedInUserEmail);
-        history("/");
+        history('/');
       })
       .catch((error) => {
         setShowLoader(false);
@@ -172,7 +168,7 @@ const SignIn = () => {
         <div className="loginWrapper">
           <div className="card shadow">
             <Backdrop
-              sx={{ color: "#000", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              sx={{ color: '#000', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={showLoader}
               className="formLoader"
             >
@@ -196,7 +192,7 @@ const SignIn = () => {
                 {inputErrors.email && (
                   <Typography
                     variant="caption"
-                    sx={{ color: "red", padding: "5px" }}
+                    sx={{ color: 'red', padding: '5px' }}
                   >
                     {inputErrors.email}
                   </Typography>
@@ -206,7 +202,7 @@ const SignIn = () => {
                 <div className="position-relative">
                   <TextField
                     id="password"
-                    type={showPassword === false ? "password" : "text"}
+                    type={showPassword === false ? 'password' : 'text'}
                     name="password"
                     placeholder="Password"
                     className="w-100"
@@ -228,7 +224,7 @@ const SignIn = () => {
                   {inputErrors.password && (
                     <Typography
                       variant="caption"
-                      sx={{ color: "red", padding: "5px" }}
+                      sx={{ color: 'red', padding: '5px' }}
                     >
                       {inputErrors.password}
                     </Typography>
@@ -272,7 +268,7 @@ const SignIn = () => {
              
 
               <p className="text-center">
-                Don't have an account?{" "}
+                Don't have an account?{' '}
                 <b>
                   <Link to="/signup">Sign Up</Link>
                 </b>
