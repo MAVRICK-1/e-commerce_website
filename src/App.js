@@ -18,11 +18,11 @@ import Listing from "./pages/Listing";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+
 import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/cart";
 import Wishlist from "./pages/wishList";
 import "./responsive.css";
-
 
 // import data from './data';
 import { collection, doc, getDocs } from "firebase/firestore";
