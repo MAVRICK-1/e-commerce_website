@@ -116,8 +116,8 @@ const Footer = () => {
                                 <br />
 
                                 <p><LocationOnOutlinedIcon /> <strong>Address</strong>: 5171 W Campbell Ave undefined Kent, Utah 53127 United States</p>
-                                <p><HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) - 540-025-124553 </p>
-                                <p><EmailOutlinedIcon /> <strong>Email:</strong> sale@Nest.com</p>
+                                <p className='mail-tel' onClick={() => window.location = 'tel: +91 540-025-124553'} ><HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) - 540-025-124553 </p>
+                                <p className='mail-tel' onClick={() => window.location = 'mailto:sale@Nest.com'}><EmailOutlinedIcon /> <strong>Email:</strong> sale@Nest.com</p>
                                 <p><WatchLaterOutlinedIcon /> <strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
 
                             </div>
@@ -171,7 +171,7 @@ const Footer = () => {
 
                             <div className='col-md-3 part3'>
                                 <h3>Install App</h3>
-                                <br className='res-hide'/>
+                                <br className='res-hide' />
                                 <p>From App Store or Google Play</p>
 
                                 <div className='d-flex'>
@@ -202,7 +202,7 @@ const Footer = () => {
                                 <div className='m-auto d-flex align-items-center phWrap'>
                                     <div className='phNo d-flex align-items-center mx-5'>
                                         <span><HeadphonesOutlinedIcon /></span>
-                                        <div className='info ml-3'>
+                                        <div className='mail-tel info ml-3' onClick={() => window.location = 'tel: 1900 - 888'}>
                                             <h3 className='text-g mb-0'>1900 - 888</h3>
                                             <p className='mb-0'>24/7 Support Center</p>
                                         </div>
@@ -210,8 +210,8 @@ const Footer = () => {
 
                                     <div className='phNo d-flex align-items-center  mx-5'>
                                         <span><HeadphonesOutlinedIcon /></span>
-                                        <div className='info ml-3'>
-                                            <h3 className='text-g mb-0'>1900 - 888</h3>
+                                        <div className='info ml-3' onClick={() => window.location = 'tel: 1900 - 888'}>
+                                            <h3 className='mail-tel text-g mb-0'>1900 - 888</h3>
                                             <p className='mb-0'>24/7 Support Center</p>
                                         </div>
                                     </div>
