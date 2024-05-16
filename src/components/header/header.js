@@ -63,7 +63,7 @@ const Header = (props) => {
     'Fresh Seafood'
   ]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const countryList = [];
 
@@ -132,8 +132,8 @@ const Header = (props) => {
   };
 
   const handleAccountClick = () => {
-    navigate("/account")
-  }
+    navigate('/account');
+  };
 
   return (
     <>
@@ -327,7 +327,10 @@ const Header = (props) => {
                           {isOpenDropDown !== false && (
                             <ul className="dropdownMenu">
                               <li>
-                                <Button onClick={handleAccountClick} className="align-items-center">
+                                <Button
+                                  onClick={handleAccountClick}
+                                  className="align-items-center"
+                                >
                                   <Person2OutlinedIcon /> My Account
                                 </Button>
                               </li>

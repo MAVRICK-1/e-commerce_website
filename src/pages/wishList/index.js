@@ -32,7 +32,6 @@ const WishList = () => {
   const navigate = useNavigate();
   const [uid, setUid] = useState(localStorage.getItem('uid'));
 
-
   useEffect(() => {
     try {
       if (context.isLogin === 'true') {
