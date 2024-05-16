@@ -1,3 +1,4 @@
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import React, { createContext, useEffect, useState } from 'react';
@@ -18,6 +19,7 @@ import ResetPassword from './pages/ResetPassword';
 import Cart from './pages/cart';
 import Wishlist from './pages/wishList';
 import './responsive.css';
+
 
 // import data from './data';
 import { collection, doc, getDocs } from 'firebase/firestore';
@@ -265,11 +267,15 @@ function App() {
             <Route exact={true} path="signIn" element={<SignIn />} />
           )}
           {isLogin === null && (
+
             <Route
               exact={true}
               path="resetpassword"
               element={<ResetPassword />}
             />
+
+
+
           )}
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />
