@@ -24,17 +24,19 @@ import {
   getDocs,
   onSnapshot
 } from 'firebase/firestore';
-const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+const WishList = () => {
+  const [wishlistItems, setWishlistItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const context = useContext(MyContext);
   const navigate = useNavigate();
   const [uid, setUid] = useState(localStorage.getItem('uid'));
+
+
   useEffect(() => {
     try {
       if (context.isLogin === 'true') {
-        fetchCartProducts();
+        fetchWishlistProducts();
       } else {
         navigate('/signIn'); // Navigate to About Us page if not logged in
       }
@@ -47,13 +49,13 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    fetchCartProducts();
+    fetchWishlistProducts();
   }, [db, uid]);
 
-  const fetchCartProducts = async () => {
+  const fetchWishlistProducts = async () => {
     try {
-      const cartRef = doc(db, 'carts', uid);
-      const productsCollectionRef = collection(cartRef, 'products');
+      const wishlistsRef = doc(db, 'wishlists', uid);
+      const productsCollectionRef = collection(wishlistsRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
       let products = [];
       let price = 0;
@@ -61,48 +63,54 @@ const Cart = () => {
         products.push({ id: doc.id, ...doc.data() });
         price += parseInt(doc.data()?.price) * doc.data()?.quantity;
       });
-      context.setCartCount(products.length);
-      setCartItems(products);
+      context.setWishlistCount(products.length);
+      setWishlistItems(products);
       setTotalPrice(price);
     } catch (error) {
-      console.error('Error fetching cart products:', error);
+      console.error('Error fetching wishlist products:', error);
     }
   };
 
-  const deleteCartItem = async (uid, cartItemId) => {
-    const cartItemRef = doc(db, 'carts', uid, 'products', cartItemId);
+  const deleteWishlistItem = async (uid, wishlistItemId) => {
+    const wishlistItemRef = doc(
+      db,
+      'wishlists',
+      uid,
+      'products',
+      wishlistItemId
+    );
 
     try {
-      await deleteDoc(cartItemRef);
-      fetchCartProducts();
-      console.log('Cart item deleted successfully.');
+      await deleteDoc(wishlistItemRef);
+      fetchWishlistProducts();
+      console.log('Wishlist item deleted successfully.');
     } catch (error) {
-      console.error('Error deleting cart item:', error);
+      console.error('Error deleting wishlist item:', error);
     }
   };
 
-  const deleteAllCartItems = async (uid) => {
-    const productsCollectionRef = collection(db, 'carts', uid, 'products');
+  const deleteAllWishlistItems = async (uid) => {
+    const productsCollectionRef = collection(db, 'wishlists', uid, 'products');
 
     try {
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach(async (doc) => {
         await deleteDoc(doc.ref);
       });
-      await fetchCartProducts();
-      console.log('All cart items deleted successfully.');
+      await fetchWishlistProducts();
+      console.log('All wishlist items deleted successfully.');
     } catch (error) {
-      console.error('Error deleting cart items:', error);
+      console.error('Error deleting wishlist items:', error);
     }
   };
 
-  const updateCart = (items) => {
-    setCartItems(items);
+  const updateWishlist = (items) => {
+    setWishlistItems(items);
   };
 
   return (
     <>
-      {cartItems.length > 0 ? (
+      {wishlistItems.length > 0 ? (
         // Render cart section if cartItems array is not empty
         <>
           {context.windowWidth > 992 && (
@@ -113,7 +121,7 @@ const Cart = () => {
                     <Link to={'/'}>Home</Link>
                   </li>
                   <li>Shop</li>
-                  <li>Cart</li>
+                  <li>Wishlist</li>
                 </ul>
               </div>
             </div>
@@ -128,22 +136,22 @@ const Cart = () => {
                 >
                   <div className="d-flex align-items-center w-100">
                     <div className="left">
-                      <h1 className="hd mb-0">Your Cart</h1>
+                      <h1 className="hd mb-0">Your Wishlist</h1>
                       <p>
                         There are{' '}
-                        <span className="text-g">{cartItems.length}</span>{' '}
-                        products in your cart
+                        <span className="text-g">{wishlistItems.length}</span>{' '}
+                        products in your Wishlist
                       </p>
                     </div>
 
                     <span
                       className="ml-auto clearCart d-flex align-items-center cursor "
-                      onClick={() => deleteAllCartItems(uid)}
+                      onClick={() => deleteAllWishlistItems(uid)}
                     >
-                      <DeleteOutlineOutlinedIcon /> Clear Cart
+                      <DeleteOutlineOutlinedIcon /> Clear Wishlist
                     </span>
                   </div>
-                  <MapComponent data={cartItems} />
+                  <MapComponent data={wishlistItems} />
                   <div className="cartWrapper mt-4">
                     <div className="table-responsive">
                       <table className="table">
@@ -158,8 +166,8 @@ const Cart = () => {
                         </thead>
 
                         <tbody>
-                          {cartItems.length !== 0 &&
-                            cartItems.map((item, index) => {
+                          {wishlistItems.length !== 0 &&
+                            wishlistItems.map((item, index) => {
                               return (
                                 <tr>
                                   <td width={'50%'}>
@@ -203,19 +211,12 @@ const Cart = () => {
                                   <td>
                                     <QuantityBox
                                       item={item}
-                                      inputItems={cartItems}
+                                      inputItems={wishlistItems}
                                       index={index}
                                       quantity={item?.quantity}
-                                      updateInfo={updateCart}
-                                      name={'carts'}
+                                      updateInfo={updateWishlist}
+                                      name={'wishlists'}
                                     />
-                                    {/* <QuantityBox
-                                      item={item}
-                                      cartItems={cartItems}
-                                      index={index}
-                                      quantity={item?.quantity}
-                                      updateCart={updateCart}
-                                    /> */}
                                   </td>
 
                                   <td>
@@ -231,7 +232,7 @@ const Cart = () => {
                                     <span
                                       className="cursor"
                                       onClick={() =>
-                                        deleteCartItem(uid, `${item?.id}`)
+                                        deleteWishlistItem(uid, `${item?.id}`)
                                       }
                                     >
                                       <DeleteOutlineOutlinedIcon />
@@ -264,8 +265,8 @@ const Cart = () => {
                       <h5 className="mb-0 text-light">Subtotal</h5>
                       <h3 className="ml-auto mb-0 font-weight-bold">
                         <span className="text-g">
-                          {cartItems.length !== 0 &&
-                            cartItems
+                          {wishlistItems.length !== 0 &&
+                            wishlistItems
                               .map(
                                 (item) =>
                                   parseInt(item.price.split(',').join('')) *
@@ -294,8 +295,8 @@ const Cart = () => {
                       <h5 className="mb-0 text-light">Total</h5>
                       <h3 className="ml-auto mb-0 font-weight-bold">
                         <span className="text-g">
-                          {cartItems.length !== 0 &&
-                            cartItems
+                          {wishlistItems.length !== 0 &&
+                            wishlistItems
                               .map(
                                 (item) =>
                                   parseInt(item.price.split(',').join('')) *
@@ -322,8 +323,8 @@ const Cart = () => {
           <div className="row">
             <div className="col d-flex align-items-center justify-content-center mt-4 mb-4">
               <div className="text-center">
-                <h2>Your Cart is Empty</h2>
-                <p>Please add some products to your cart</p>
+                <h2>Your Wishlist is Empty</h2>
+                <p>Please add some products to your wishlist</p>
                 <Link to="/">
                   <Button className="btn-g">
                     <KeyboardBackspaceIcon /> Start Shopping
@@ -338,4 +339,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default WishList;

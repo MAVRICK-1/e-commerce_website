@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./style.css";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../SignIn/style.css';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
   Button,
   Snackbar,
@@ -13,12 +13,12 @@ import {
   DialogContentText,
   DialogTitle,
   DialogActions,
-  Typography,
-} from "@mui/material";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { app } from "../../firebase";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+  Typography
+} from '@mui/material';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { app } from '../../firebase';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const auth = getAuth(app);
 
@@ -30,21 +30,34 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+
   const [formFields, setFormFields] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  const [isDisableSignupButton, setDisableSignUpButton] = useState(true);
   const [InputErrors, setInputErrors] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
+
+  const checkInputs = (email, password, confirmPassword) => {
+    if (
+      email.trim() !== '' &&
+      password.trim() !== '' &&
+      confirmPassword.trim() !== ''
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
 
   const signUp = () => {
     setShowLoader(true);
@@ -52,7 +65,7 @@ const SignUp = () => {
     if (formFields.password.length < 6) {
       setShowLoader(false);
       setSnackbarMessage(
-        "Password is too weak. It must be at least 6 characters long."
+        'Password is too weak. It must be at least 6 characters long.'
       );
       setSnackbarOpen(true);
       return;
@@ -62,9 +75,9 @@ const SignUp = () => {
         //console.log("User signed up successfully:", userCredential.user);
         setShowLoader(false);
         setFormFields({
-          email: "",
-          password: "",
-          confirmPassword: "",
+          email: '',
+          password: '',
+          confirmPassword: ''
         });
         setOpenDialog(true);
       })
@@ -72,7 +85,7 @@ const SignUp = () => {
         setShowLoader(false);
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.error("Error signing up:", errorMessage);
+        console.error('Error signing up:', errorMessage);
         setSnackbarMessage(errorMessage);
         setSnackbarOpen(true);
       });
@@ -86,7 +99,7 @@ const SignUp = () => {
   //Password Validation
   const validatePassword = (password, error) => {
     if (password.length < 6) {
-      error.password = "Password must be at least 6 characters long";
+      error.password = 'Password must be at least 6 characters long';
       return false;
     }
 
@@ -97,26 +110,26 @@ const SignUp = () => {
     const hasDigit = /[0-9]+/;
 
     if (!hasSpecialSymbol.test(password)) {
-      error.password = "Password must contain at least one special symbol";
+      error.password = 'Password must contain at least one special symbol';
       return false;
     }
 
     if (!hasUppercase.test(password)) {
-      error.password = "Password must contain at least one uppercase letter";
+      error.password = 'Password must contain at least one uppercase letter';
       return false;
     }
 
     if (!hasLowercase.test(password)) {
-      error.password = "Password must contain at least one lowercase letter";
+      error.password = 'Password must contain at least one lowercase letter';
       return false;
     }
 
     if (!hasDigit.test(password)) {
-      error.password = "Password must contain at least one digit";
+      error.password = 'Password must contain at least one digit';
       return false;
     }
 
-    error.password = "";
+    error.password = '';
   };
 
   const onChangeField = (e) => {
@@ -124,28 +137,25 @@ const SignUp = () => {
     const value = e.target.value;
     let errors = { ...InputErrors };
 
-    if (name == "email") {
-      errors.email = !validateEmail(value) ? "Invalid email address" : "";
+    if (name == 'email') {
+      errors.email = !validateEmail(value) ? 'Invalid email address' : '';
     }
 
-    if (name === "password") {
+    if (name === 'password') {
       validatePassword(value, errors);
     }
 
-    if (name === "confirmPassword") {
+    if (name === 'confirmPassword') {
       errors.confirmPassword =
-        formFields.password !== value ? "Password Not Matched!" : "";
+        formFields.password !== value ? 'Password Not Matched!' : '';
     }
 
     setInputErrors(errors);
-    setFormFields(() => ({
-      ...formFields,
-      [name]: value,
+    setFormFields((prevFormFields) => ({
+      ...prevFormFields,
+      [name]: value
     }));
-
-    const hasErrors = Object.values(errors).some((error) => error !== "");
-    if (!hasErrors) setDisableSignUpButton(false);
-    else setDisableSignUpButton(true);
+    checkInputs(formFields.email, formFields.password, value);
   };
 
   const handleCloseSnackbar = () => {
@@ -154,7 +164,7 @@ const SignUp = () => {
 
   const handleClose = () => {
     setOpenDialog(false); // Close the dialog
-    navigate("/signIn"); // Redirect to sign-in page
+    navigate('/signIn'); // Redirect to sign-in page
   };
 
   return (
@@ -166,7 +176,7 @@ const SignUp = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Account Created Successfully!"}
+          {'Account Created Successfully!'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -195,48 +205,46 @@ const SignUp = () => {
         <div className="loginWrapper">
           <div className="card shadow">
             <Backdrop
-              sx={{ color: "#000", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              sx={{ color: '#000', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={showLoader}
               className="formLoader"
             >
               <CircularProgress color="inherit" />
             </Backdrop>
 
-            <h3>SignUp</h3>
-            <form className="mt-4">
+            <h3 className="text-center">SignUp</h3>
+            <form className="mt-4 w-100">
               <div className="form-group mb-4 w-100">
                 <TextField
                   id="email"
                   type="email"
                   name="email"
-                  label="Email"
                   className="w-100"
+                  placeholder="Email"
                   onChange={onChangeField}
                   value={formFields.email}
                   autoComplete="email"
-                  error={InputErrors.email}
                 />
                 {InputErrors.email && (
                   <Typography
                     variant="caption"
-                    sx={{ color: "red", padding: "5px" }}
+                    sx={{ color: 'red', padding: '5px' }}
                   >
                     {InputErrors.email}
                   </Typography>
                 )}
               </div>
               <div className="form-group mb-4 w-100">
-                <div className="position-relative">
+                <div className="position-relative ">
                   <TextField
                     id="password"
-                    type={showPassword === false ? "password" : "text"}
+                    type={showPassword === false ? 'password' : 'text'}
                     name="password"
-                    label="Password"
+                    placeholder="Password"
                     className="w-100"
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="new-password"
-                    error={InputErrors.password}
                   />
                   <Button
                     className="icon"
@@ -251,7 +259,7 @@ const SignUp = () => {
                   {InputErrors.password && (
                     <Typography
                       variant="caption"
-                      sx={{ color: "red", padding: "5px" }}
+                      sx={{ color: 'red', padding: '5px' }}
                     >
                       {InputErrors.password}
                     </Typography>
@@ -263,9 +271,9 @@ const SignUp = () => {
                 <div className="position-relative">
                   <TextField
                     id="confirmPassword"
-                    type={showPassword1 === false ? "password" : "text"}
+                    type={showPassword1 === false ? 'password' : 'text'}
                     name="confirmPassword"
-                    label="Confirm Password"
+                    placeholder="Confirm Password"
                     className="w-100"
                     onChange={onChangeField}
                     value={formFields.confirmPassword}
@@ -285,7 +293,7 @@ const SignUp = () => {
                   {InputErrors.confirmPassword && (
                     <Typography
                       variant="caption"
-                      sx={{ color: "red", padding: "5px" }}
+                      sx={{ color: 'red', padding: '5px' }}
                     >
                       {InputErrors.confirmPassword}
                     </Typography>
@@ -295,7 +303,7 @@ const SignUp = () => {
 
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
-                  disabled={isDisableSignupButton}
+                  disabled={isDisabled}
                   className="btn btn-g btn-lg w-100"
                   onClick={signUp}
                 >
@@ -315,8 +323,8 @@ const SignUp = () => {
       </section>
       <Snackbar
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left'
         }}
         open={snackbarOpen}
         autoHideDuration={6000}

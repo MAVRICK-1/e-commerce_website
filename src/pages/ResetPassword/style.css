@@ -1,4 +1,4 @@
-* {
+*{
   box-sizing: border-box;
 }
 .loginWrapper {
@@ -66,17 +66,17 @@
 }
 
 @media (max-width: 586px) {
-  .loginWrapper {
-    padding: 75px 0px;
-    background: #f1f1f1;
-    height: auto;
-  }
-  .loginWrapper .card {
-    width: 650px;
-    margin: auto;
-    height: auto;
-    padding: 40px;
-    border: 0px !important;
-    height: auto;
-  }
+    .loginWrapper {
+        padding: 75px 0px;
+        background: #f1f1f1;
+        height: auto;
+      }
+      .loginWrapper .card {
+        width: 650px;
+        margin: auto;
+        height: auto;
+        padding: 40px;
+        border: 0px !important;
+        height: auto;
+      }
 }
