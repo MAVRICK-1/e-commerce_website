@@ -145,7 +145,7 @@ const SignIn = () => {
   };
 
   const forgotPassword = async () => {
-  history("/resetpassword")
+    history('/resetpassword');
   };
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -239,10 +239,13 @@ const SignIn = () => {
               )}
 
               <div className="form-group mt-3 mb-4 w-100 d-flex justify-content-end">
-              <Button className="btn btn-link float-end" onClick={forgotPassword}>
-                Forgot Password?
-              </Button>
-            </div>
+                <Button
+                  className="btn btn-link float-end"
+                  onClick={forgotPassword}
+                >
+                  Forgot Password?
+                </Button>
+              </div>
 
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
@@ -264,8 +267,6 @@ const SignIn = () => {
                   <img src={GoogleImg} alt="Google Logo" /> Sign In with Google
                 </Button>
               </div>
-
-             
 
               <p className="text-center">
                 Don't have an account?{' '}
