@@ -58,25 +58,43 @@
   object-fit: cover !important;
 }
 
-.container-grid > .MuiGrid-item-root > .card > .MuiCardContent-root > .card-name {
+.container-grid
+  > .MuiGrid-item-root
+  > .card
+  > .MuiCardContent-root
+  > .card-name {
   font-size: 20px;
   color: #008080;
   text-align: center;
 }
 
-.container-grid > .MuiGrid-item-root > .card > .MuiCardContent-root > .card-bottom {
+.container-grid
+  > .MuiGrid-item-root
+  > .card
+  > .MuiCardContent-root
+  > .card-bottom {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 5px;
 }
 
-.container-grid > .MuiGrid-item-root > .card > .MuiCardContent-root > .card-bottom > .text-color {
+.container-grid
+  > .MuiGrid-item-root
+  > .card
+  > .MuiCardContent-root
+  > .card-bottom
+  > .text-color {
   font-size: 1.2vw;
   color: #008080;
 }
 
-.container-grid > .MuiGrid-item-root > .card > .MuiCardContent-root > .card-bottom > .temp {
+.container-grid
+  > .MuiGrid-item-root
+  > .card
+  > .MuiCardContent-root
+  > .card-bottom
+  > .temp {
   margin-left: 5px;
   margin-right: 5px;
   font-size: 30px;
@@ -96,7 +114,12 @@
     margin: auto;
   }
 
-  .container-grid > .MuiGrid-item-root > .card > .MuiCardContent-root > .card-bottom > .text-color {
+  .container-grid
+    > .MuiGrid-item-root
+    > .card
+    > .MuiCardContent-root
+    > .card-bottom
+    > .text-color {
     font-size: 20px;
   }
 
@@ -124,7 +147,12 @@
     font-size: 50px;
   }
 
-  .container-grid > .MuiGrid-item-root > .card > .MuiCardContent-root > .card-bottom > .text-color {
+  .container-grid
+    > .MuiGrid-item-root
+    > .card
+    > .MuiCardContent-root
+    > .card-bottom
+    > .text-color {
     font-size: 24px;
   }
 
@@ -150,7 +178,12 @@
     font-size: 40px;
   }
 
-  .container-grid > .MuiGrid-item-root > .card > .MuiCardContent-root > .card-bottom > .text-color {
+  .container-grid
+    > .MuiGrid-item-root
+    > .card
+    > .MuiCardContent-root
+    > .card-bottom
+    > .text-color {
     font-size: 20px;
   }
 

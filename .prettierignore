@@ -1,0 +1,13 @@
+.env
+.eslintrc.js
+.gitignore
+.prettierignore
+.prettierrc
+*.md
+*.json
+*.lock
+*.yaml
+*.html
+.husky
+.github
+node_modules
