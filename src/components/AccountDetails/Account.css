@@ -1,10 +1,14 @@
 .cardwidth{
-    width: 50%;
+    width: 75%;
     height: auto;
 }
 
 .negmargin{
-    margin-top: -30%;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
 .profileImageP{
@@ -14,18 +18,13 @@
 }
 
 .imgbackground{
-    height: 400px;
+    height: 600px;
     width: 100vw;
-    opacity: 0.2;
-    filter: blur(3px);
+    opacity: 0.5;
+    filter: blur(2px);
 }
 
-@media only screen and (max-width: 600px) {
-    negmargin{
-        margin-top: -60%;
-        position: relative;
-    }
-}
+
 
 
 
