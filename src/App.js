@@ -20,11 +20,14 @@ import Wishlist from './pages/wishList';
 import './responsive.css';
 
 // import data from './data';
-import { collection, doc, getDocs } from 'firebase/firestore';
-import MapComponent from './components/map/ITEMmap';
-import { db } from './firebase';
-import SellerForm from './pages/SellerRegistration';
+
+import { collection, doc, getDocs } from "firebase/firestore";
+import MapComponent from "./components/map/ITEMmap";
+import { db } from "./firebase";
+import SellerForm from "./pages/SellerRegistration";
+import GoToTop from "./components/GoToTop/GoToTop";
 import { Account } from './components/AccountDetails/Account';
+
 
 const MyContext = createContext();
 
@@ -274,7 +277,7 @@ function App() {
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />
           )}
-
+          
           <Route
             exact={true}
             path="/map"
@@ -284,6 +287,7 @@ function App() {
           <Route exact={true} path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <GoToTop/>
       </MyContext.Provider>
     </HashRouter>
   ) : (
