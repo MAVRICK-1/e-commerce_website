@@ -444,6 +444,14 @@ const SignIn = () => {
         localStorage.setItem('isLogin', true);
         const udata = replaceSpecialCharacters(result.user.email);
         localStorage.setItem('user', udata);
+<<<<<<< HEAD
+=======
+
+        localStorage.setItem('uname', result.user.displayName);
+        localStorage.setItem('uemail', result.user.email);
+
+
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
         localStorage.setItem('uid', result.user.uid);
         context.signIn();
         setLoggedInUseEmail(udata);
@@ -458,7 +466,15 @@ const SignIn = () => {
   };
 
   const forgotPassword = async () => {
+<<<<<<< HEAD
     history('/resetpassword');
+=======
+
+    history('/resetpassword');
+
+  
+
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
   };
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -552,13 +568,26 @@ const SignIn = () => {
               )}
 
               <div className="form-group mt-3 mb-4 w-100 d-flex justify-content-end">
+<<<<<<< HEAD
                 <Button
+=======
+
+             Forgot Password?
+              </Button>
+            </div>   <Button
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
                   className="btn btn-link float-end"
                   onClick={forgotPassword}
                 >
                   Forgot Password?
                 </Button>
               </div>
+<<<<<<< HEAD
+=======
+
+              
+
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
 
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
@@ -581,6 +610,10 @@ const SignIn = () => {
                 </Button>
               </div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
               <p className="text-center">
                 Don't have an account?{' '}
                 <b>

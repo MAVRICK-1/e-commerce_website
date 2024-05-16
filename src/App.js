@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // <<<<<<< HEAD
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import { getDatabase, onValue, ref } from 'firebase/database';
@@ -327,6 +328,8 @@
 // export default App;
 //
 // export { MyContext };
+=======
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getDatabase, onValue, ref } from 'firebase/database';
@@ -348,6 +351,10 @@ import ResetPassword from './pages/ResetPassword';
 import Cart from './pages/cart';
 import Wishlist from './pages/wishList';
 import './responsive.css';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
 
 // import data from './data';
 import { collection, doc, getDocs } from 'firebase/firestore';
@@ -595,11 +602,21 @@ function App() {
             <Route exact={true} path="signIn" element={<SignIn />} />
           )}
           {isLogin === null && (
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
             <Route
               exact={true}
               path="resetpassword"
               element={<ResetPassword />}
             />
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 3a8a5522ed5850f7a4393702a5e984fc72e28251
           )}
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />
