@@ -12,8 +12,8 @@ import {
   Row
 } from 'react-bootstrap';
 import './Account.css';
-import imageBackground from '../../assets/images/slider-1.png';
-import pfp from '../../assets/images/pfp.jpg';
+import imageBackground from '../../assets/images/slider-1.webp';
+import pfp from '../../assets/images/pfp.webp';
 import React, { useEffect, useState } from 'react';
 import {
   getDownloadURL,

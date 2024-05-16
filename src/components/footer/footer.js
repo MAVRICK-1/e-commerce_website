@@ -12,16 +12,16 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
-import paymentImage from '../../assets/images/payment-method.png';
+import paymentImage from '../../assets/images/payment-method.webp';
 
-import appStore from '../../assets/images/app-store.jpg';
-import googlePlay from '../../assets/images/google-play.jpg';
+import appStore from '../../assets/images/app-store.webp';
+import googlePlay from '../../assets/images/google-play.webp';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import Newsletter from '../../components/newsletter/index';
-import NewsletterImg from '../../assets/images/newsletter.png';
+import NewsletterImg from '../../assets/images/newsletter.webp';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
