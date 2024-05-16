@@ -20,7 +20,7 @@ import { app, db } from '../../firebase';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { MyContext } from '../../App';
-import GoogleImg from '../../assets/images/google.png';
+import GoogleImg from '../../assets/images/google.webp';
 import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../../Redux/auth-slice';

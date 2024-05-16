@@ -6,7 +6,7 @@ import Banners from '../../components/banners';
 
 import './style.css';
 import Product from '../../components/product';
-import Banner4 from '../../assets/images/banner4.jpg';
+import Banner4 from '../../assets/images/banner4.webp';
 
 import Slider from 'react-slick';
 import TopProducts from './TopProducts';
