@@ -1,32 +1,32 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  getDatabase,
-  onValue,
-  ref
-} from "firebase/database";
-import React, { createContext, useEffect, useState } from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Loader from "./assets/images/loading.gif";
-import Footer from "./components/footer/footer";
-import Header from "./components/header/header";
-import About from "./pages/About";
-import AddProductForm from "./pages/AddProd";
-import DetailsPage from "./pages/Details";
-import Home from "./pages/Home/index";
-import Listing from "./pages/Listing";
-import NotFound from "./pages/NotFound";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import Cart from "./pages/cart";
-import Wishlist from "./pages/wishList";
-import "./responsive.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { getDatabase, onValue, ref } from 'firebase/database';
+import React, { createContext, useEffect, useState } from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Loader from './assets/images/loading.gif';
+import Footer from './components/footer/footer';
+import Header from './components/header/header';
+import About from './pages/About';
+import AddProductForm from './pages/AddProd';
+import DetailsPage from './pages/Details';
+import Home from './pages/Home/index';
+import Listing from './pages/Listing';
+import NotFound from './pages/NotFound';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import ResetPassword from './pages/ResetPassword';
+import Cart from './pages/cart';
+import Wishlist from './pages/wishList';
+import './responsive.css';
 
 // import data from './data';
-import { collection, doc, getDocs } from "firebase/firestore";
-import MapComponent from "./components/map/ITEMmap";
-import { db } from "./firebase";
-import SellerForm from "./pages/SellerRegistration";
+
+import { collection, doc, getDocs } from 'firebase/firestore';
+import MapComponent from './components/map/ITEMmap';
+import { db } from './firebase';
+import SellerForm from './pages/SellerRegistration';
+import GoToTop from './components/GoToTop/GoToTop';
+import { Account } from './components/AccountDetails/Account';
 
 const MyContext = createContext();
 
@@ -57,8 +57,8 @@ function App() {
 
   const fetchCartProducts = async () => {
     try {
-      const cartRef = doc(db, "carts", localStorage.getItem("uid"));
-      const productsCollectionRef = collection(cartRef, "products");
+      const cartRef = doc(db, 'carts', localStorage.getItem('uid'));
+      const productsCollectionRef = collection(cartRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
       const products = [];
       querySnapshot.forEach((doc) => {
@@ -67,26 +67,23 @@ function App() {
       setCartItems(products);
       setCartCount(products.length); // Set the product count
     } catch (error) {
-      console.error("Error fetching cart products:", error);
+      console.error('Error fetching cart products:', error);
     }
   };
 
   const fetchWishlistProducts = async () => {
-    console.log("fetchWishlistProducts");
     try {
-      const wishlistRef = doc(db, "wishlists", localStorage.getItem("uid"));
-      const productsCollectionRef = collection(wishlistRef, "products");
+      const wishlistRef = doc(db, 'wishlists', localStorage.getItem('uid'));
+      const productsCollectionRef = collection(wishlistRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
-      console.log(querySnapshot);
       const products = [];
       querySnapshot.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() });
       });
-      console.log(products);
       setWishlistItems(products);
       setWishlistCount(products.length); // Set the product count
     } catch (error) {
-      console.error("Error fetching wishlist products:", error);
+      console.error('Error fetching wishlist products:', error);
     }
   };
 
@@ -94,16 +91,15 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://mavrick-1.github.io/DataApi/data.json"
+          'https://mavrick-1.github.io/DataApi/data.json'
         );
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        // //console.log("fetced data", data)
         setData(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -113,7 +109,7 @@ function App() {
   useEffect(() => {
     getData();
 
-    const is_Login = localStorage.getItem("isLogin");
+    const is_Login = localStorage.getItem('isLogin');
     setIsLogin(is_Login);
 
     setTimeout(() => {
@@ -128,7 +124,7 @@ function App() {
       const db = getDatabase();
 
       // Reference to the node or path you want to fetch data from
-      const dataRef = ref(db, localStorage.getItem("user"));
+      const dataRef = ref(db, localStorage.getItem('user'));
 
       // Fetch data from the specified path
       onValue(
@@ -136,14 +132,13 @@ function App() {
         (snapshot) => {
           const data = snapshot.val();
           setCartItems(data);
-          //console.log("Data fetched successfully:", data);
         },
         (error) => {
-          console.error("Error fetching data:", error);
+          console.error('Error fetching data:', error);
         }
       );
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -153,7 +148,7 @@ function App() {
       const db = getDatabase();
 
       // Reference to the node or path you want to fetch data from
-      const dataRef = ref(db, localStorage.getItem("user"));
+      const dataRef = ref(db, localStorage.getItem('user'));
 
       // Fetch data from the specified path
       onValue(
@@ -161,20 +156,19 @@ function App() {
         (snapshot) => {
           const data = snapshot.val();
           setCartItems(data);
-          //console.log("Data fetched successfully:", data);
         },
         (error) => {
-          console.error("Error fetching data:", error);
+          console.error('Error fetching data:', error);
         }
       );
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
   const addToCart = async (item) => {
     try {
-      const user = localStorage.getItem("user");
+      const user = localStorage.getItem('user');
       // Initialize Firebase database with the provided database URL
       const db = getDatabase();
       const cartRef = ref(db, user);
@@ -182,9 +176,8 @@ function App() {
       const uniqueKey = user + item.id; // Modify as per your requirement
       // Add item to the cart in Firebase
       setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      //console.log('Item added to cart successfully');
     } catch (error) {
-      console.error("Error adding item to cart:", error);
+      console.error('Error adding item to cart:', error);
     }
   };
 
@@ -198,12 +191,12 @@ function App() {
   };
 
   const signIn = () => {
-    const is_Login = localStorage.getItem("isLogin");
+    const is_Login = localStorage.getItem('isLogin');
     setIsLogin(is_Login);
   };
 
   const signOut = () => {
-    localStorage.removeItem("isLogin");
+    localStorage.removeItem('isLogin');
     setIsLogin(false);
   };
 
@@ -229,7 +222,7 @@ function App() {
     wishlistCount,
     setWishlistCount,
     fetchCartProducts,
-    fetchWishlistProducts,
+    fetchWishlistProducts
   };
 
   return data && data.productData ? (
@@ -267,10 +260,18 @@ function App() {
           />
           <Route exact={true} path="/cart" element={<Cart />} />
           <Route exact={true} path="/wishlist" element={<Wishlist />} />
+          <Route exact={true} path="/account" element={<Account />} />
 
           {/* sign in , signup Protection */}
           {isLogin === null && (
             <Route exact={true} path="signIn" element={<SignIn />} />
+          )}
+          {isLogin === null && (
+            <Route
+              exact={true}
+              path="resetpassword"
+              element={<ResetPassword />}
+            />
           )}
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />
@@ -285,6 +286,7 @@ function App() {
           <Route exact={true} path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <GoToTop />
       </MyContext.Provider>
     </HashRouter>
   ) : (
@@ -297,4 +299,3 @@ function App() {
 export default App;
 
 export { MyContext };
-
