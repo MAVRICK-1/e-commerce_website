@@ -40,7 +40,7 @@ const Header = (props) => {
   const [isOpenNav, setIsOpenNav] = useState(false);
   const { cartCount, setCartCount } = useContext(MyContext);
   const { wishlistCount, setWishlistCount } = useContext(MyContext);
-
+  const { compareCount } = useContext(MyContext)
   const headerRef = useRef();
   const searchInput = useRef();
   const [profile, setProfile] = useState('');
@@ -254,13 +254,13 @@ const Header = (props) => {
                       <li className="list-inline-item">
                         <span>
                           <Link
-                            to={'/wishlist'}
+                            to={'/compare'}
                             style={{ textDecoration: 'none' }}
                           >
                             {' '}
                             <img src={IconCompare} />
                             <span className="badge bg-success rounded-circle">
-                              3
+                              {compareCount}
                             </span>
                             Compare
                           </Link>
@@ -395,7 +395,7 @@ const Header = (props) => {
             </li>
             <li>
               <Button className="align-items-center">
-                <Link to="">
+                <Link to="/compare">
                   {' '}
                   <img src={IconCompare} />
                   Compare
