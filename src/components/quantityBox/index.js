@@ -4,11 +4,13 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import {useSelector} from "react-redux"
 
 const QuantityBox = (props) => {
   const [inputValue, setinputValue] = useState(props.quantity);
   const [inputItems, setInputItems] = useState([]);
-  const uid = localStorage.getItem("uid");
+  const uid = useSelector((state)=>state.authReducer.uid);
+
   useEffect(() => {
     setInputItems(props.inputItems);
     //setinputValue(props.item.quantity)

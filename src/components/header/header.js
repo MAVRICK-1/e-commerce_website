@@ -45,11 +45,11 @@ const Header = (props) => {
 
   const headerRef = useRef();
   const searchInput = useRef();
-  const [profile, setProfile] = useState("");
-
+  const profile = useSelector((state)=>state.authReducer.photoURL)
   const dispatch = useDispatch()
   const context = useContext(MyContext);
   const history = useNavigate();
+
 
   const [categories, setcategories] = useState([
     "Clothing & beauty",
@@ -72,9 +72,6 @@ const Header = (props) => {
     getCountry("https://countriesnow.space/api/v0.1/countries/");
   }, []);
 
-  useEffect(() => {
-    setProfile(localStorage.getItem("userImage"));
-  }, [context.isLogin]);
   const getCountry = async (url) => {
     try {
       await axios.get(url).then((res) => {
@@ -164,7 +161,7 @@ const Header = (props) => {
                     <div className="navbarToggle mr-2" onClick={openNav}>
                       <MenuIcon />
                     </div>
-                    {context.isLogin === "true" && (
+                    {logged === true && (
                       <div
                         onClick={() => setisOpenAccDropDown(!isOpenAccDropDown)}
                       >

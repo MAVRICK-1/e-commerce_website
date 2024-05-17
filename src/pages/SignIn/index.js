@@ -108,14 +108,17 @@ const SignIn = () => {
           email: "",
           password: "",
         });
-        localStorage.setItem("isLogin", true);
         const udata = replaceSpecialCharacters(user.email);
-        localStorage.setItem("user", udata);
         context.signIn();
-        dispatch(logIn({email:user.email}))
+        dispatch(logIn({
+          phoneNumber:user.phoneNumber,
+          photoURL:user.photoURL,
+          uid:user.uid,
+          displayName:user.displayName,
+          email:user.email,
+          emailVerified:user.emailVerified
+        }))
         setLoggedInUseEmail(user.email);
-        localStorage.setItem("uid", userCredential.user.uid);
-        localStorage.setItem("userImage","")
         //console.log(loggedInUserEmail);
         history("/");
       })
@@ -131,10 +134,7 @@ const SignIn = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setShowLoader(false);
-        localStorage.setItem("isLogin", true);
         const udata = replaceSpecialCharacters(result.user.email);
-        localStorage.setItem("user", udata);
-        localStorage.setItem("uid", result.user.uid);
         dispatch(logIn({
           phoneNumber:result.user.phoneNumber,
           photoURL:result.user.photoURL,
@@ -145,8 +145,6 @@ const SignIn = () => {
         }))
         context.signIn();
         setLoggedInUseEmail(udata);
-        localStorage.setItem("userImage",result.user.photoURL)
-        //console.log(loggedInUserEmail);
         history("/");
       })
       .catch((error) => {

@@ -3,6 +3,7 @@ import { Typography, Container, Grid, TextField, Button } from "@mui/material";
 import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import {uploadBytes,getDownloadURL,ref} from "firebase/storage"
+import { useSelector } from "react-redux";
 
 
 export default function AddProductForm() {
@@ -20,6 +21,7 @@ export default function AddProductForm() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+  const uid = useSelector((state)=>state.authReducer.uid)
 
   const handleMainImageChange = (e) => {
     const file = e.target.files[0];
@@ -70,12 +72,12 @@ export default function AddProductForm() {
   const handleSubmit = async () => { 
     setIsSubmit(true)
     //Upload the main image to firebase storage and get url
-    const imageRef = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/mainImage`);
+    const imageRef = ref(storage, `productImages/${uid}/${formData.productName}/mainImage`);
     await uploadBytes(imageRef, formData.mainImage);
     const imageUrl = await getDownloadURL(imageRef);
     
     //Upload the subsidiary image to firebase storage and get url
-    const imageRef1 = ref(storage, `productImages/${localStorage.getItem("uid")}/${formData.productName}/subsidiaryImages`);
+    const imageRef1 = ref(storage, `productImages/${uid}/${formData.productName}/subsidiaryImages`);
     await uploadBytes(imageRef1, formData.subsidiaryImages);
     const imageUrl1 = await getDownloadURL(imageRef1);
     

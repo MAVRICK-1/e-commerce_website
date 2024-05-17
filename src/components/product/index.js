@@ -20,6 +20,7 @@ import {
 import { MyContext } from "../../App";
 import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import {useSelector} from "react-redux"
 
 const Product = (props) => {
   const [productData, setProductData] = useState();
@@ -28,6 +29,8 @@ const Product = (props) => {
   const [loading, setLoading] = useState(true);
   const [drivingDistance, setDrivingDistance] = useState(null);
   const context = useContext(MyContext);
+  const logged = useSelector((state)=>state.authReducer.isAuth);
+  const uid = useSelector((state)=>state.authReducer.uid);
 
   useEffect(() => {
     setProductData(props.item);
@@ -49,7 +52,7 @@ const Product = (props) => {
         console.error("Error getting user location:", error);
       }
     );
-  }, [context.isLogin]);
+  }, [logged]);
 
   // const getDrivingDistance = async (start, end) => {
   //     const response = await fetch(`https://router.project-osrm.org/route/v1/driving/${start.longitude},${start.latitude};${end.longitude},${end.latitude}`);
@@ -100,7 +103,7 @@ const Product = (props) => {
 
   const addToCart = async (item) => {
     try {
-      const user = localStorage.getItem("uid");
+      const user = uid;
       const cartRef = doc(db, "carts", user);
       const productRef = doc(cartRef, "products", `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });
@@ -114,7 +117,7 @@ const Product = (props) => {
   const addToWishlist = async (item) => {
     console.log("addToWishlist");
     try {
-      const user = localStorage.getItem("uid");
+      const user = uid;
       const wishlistRef = doc(db, "wishlists", user);
       const productRef = doc(wishlistRef, "products", `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });

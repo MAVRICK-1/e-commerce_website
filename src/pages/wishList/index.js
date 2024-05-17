@@ -24,18 +24,21 @@ import {
   getDocs,
   onSnapshot,
 } from "firebase/firestore";
+import {useSelector} from "react-redux"
+
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const context = useContext(MyContext);
   const navigate = useNavigate();
-  const [uid, setUid] = useState(localStorage.getItem("uid"));
+  const uid = useSelector((state)=>state.authReducer.uid);
+  const logged = useSelector((state)=>state.authReducer.isAuth);
 
   console.log(wishlistItems);
   useEffect(() => {
     try {
-      if (context.isLogin === "true") {
+      if (logged === true) {
         fetchWishlistProducts();
       } else {
         navigate("/signIn"); // Navigate to About Us page if not logged in

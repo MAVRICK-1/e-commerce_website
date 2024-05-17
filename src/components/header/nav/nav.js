@@ -6,7 +6,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import GridViewIcon from '@mui/icons-material/GridView';
 import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import { useState } from 'react';
-import { MyContext } from '../../../App';
 import { useSelector } from 'react-redux';
 
 const Nav = (props) => {
@@ -19,7 +18,7 @@ const Nav = (props) => {
 
     const [openMegaMenu, setOpenMegaMenu] = useState(false);
 
-    const context = useContext(MyContext);
+    const logged = useSelector((state)=>state.authReducer.isAuth)
 
     useEffect(() => {
         setNavData(props.data);
@@ -173,7 +172,7 @@ const Nav = (props) => {
                                     windowWidth < 992 &&
                                     <>
                                     {
-                                        context.isLogin!=="true" &&
+                                        logged!==true &&
                                          <div className='pl-3 pr-3'>
                                             <br />
                                             <Link to={'/signIn'}>

@@ -3,14 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 
     isAuth:false,
-    user:{
         phoneNumber:null,
         photoURL:"",
         uid:"",
         displayName:"",
         email:"",
         emailVerified:""
-    },
 }
 
 export const auth = createSlice({
@@ -22,12 +20,12 @@ export const auth = createSlice({
         },
         logIn:(state,action)=>{
             state.isAuth = true;
-            state.user.phoneNumber = action.payload.phoneNumber;
-            state.user.photoURL = action.payload.photoURL;
-            state.user.uid = action.payload.uid;
-            state.user.displayName = action.payload.dispalyName;
-            state.user.email = action.payload.email;
-            state.user.emailVerified = action.payload.emailVerified;
+            state.phoneNumber = action.payload.phoneNumber;
+            state.photoURL = action.payload.photoURL;
+            state.uid = action.payload.uid;
+            state.displayName = action.payload.dispalyName;
+            state.email = action.payload.email;
+            state.emailVerified = action.payload.emailVerified;
         }
     }
 })

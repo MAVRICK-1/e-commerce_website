@@ -36,6 +36,7 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
+import {useSelector} from "react-redux"
 
 const DetailsPage = (props) => {
   const [zoomInage, setZoomImage] = useState(
@@ -86,6 +87,8 @@ const DetailsPage = (props) => {
   const zoomSlider = useRef();
 
   let { id } = useParams();
+
+  const uid = useSelector((state)=>state.authReducer.uid);
 
   var settings2 = {
     dots: false,
@@ -255,7 +258,7 @@ const DetailsPage = (props) => {
 
   const addToCart = async (item) => {
     try {
-      const user = localStorage.getItem("uid");
+      const user = uid;
       const cartRef = doc(db, "carts", user);
       const productRef = doc(cartRef, "products", `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });
@@ -272,7 +275,7 @@ const DetailsPage = (props) => {
     if (!isAlreadyAddedInWishlist) {
       console.log("Not isAlreadyAddedInWishlist");
       try {
-        const user = localStorage.getItem("uid");
+        const user = uid;
         const wishlistRef = doc(db, "wishlists", user);
         const productRef = doc(wishlistRef, "products", `${item.id}`);
         await setDoc(productRef, { ...item, quantity: 1 });
@@ -285,7 +288,7 @@ const DetailsPage = (props) => {
     } else {
       console.log("isAlreadyAddedInWishlist");
 
-      const user = localStorage.getItem("uid");
+      const user = uid;
 
       const wishlistItemRef = doc(db, `wishlists/${user}/products/${item.id}`);
 
@@ -302,7 +305,7 @@ const DetailsPage = (props) => {
 
   const fetchCartProducts = async () => {
     try {
-      const cartRef = doc(db, "carts", localStorage.getItem("uid"));
+      const cartRef = doc(db, "carts", uid);
       const productsCollectionRef = collection(cartRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach((doc) => {
@@ -317,7 +320,7 @@ const DetailsPage = (props) => {
 
   const fetchWishlistProducts = async () => {
     try {
-      const wishlistRef = doc(db, "wishlists", localStorage.getItem("uid"));
+      const wishlistRef = doc(db, "wishlists", uid);
       const productsCollectionRef = collection(wishlistRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach((doc) => {
