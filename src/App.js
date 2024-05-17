@@ -27,6 +27,7 @@ import { db } from './firebase';
 import SellerForm from './pages/SellerRegistration';
 import GoToTop from './components/GoToTop/GoToTop';
 import { Account } from './components/AccountDetails/Account';
+import Compare from './pages/Compare';
 
 const MyContext = createContext();
 
@@ -49,10 +50,12 @@ function App() {
   const [data, setData] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [compareCount, setCompareCount] = useState(0);
 
   useEffect(() => {
     fetchCartProducts();
     fetchWishlistProducts();
+    fetchCompareProducts();
   }, [isLogin]);
 
   const fetchCartProducts = async () => {
@@ -111,12 +114,26 @@ function App() {
 
     const is_Login = localStorage.getItem('isLogin');
     setIsLogin(is_Login);
-
+    
     setTimeout(() => {
       setProductData(data[1]);
       setIsloading(false);
     }, 3000);
   }, [isLogin]);
+  const fetchCompareProducts = async () => {
+    try {
+      const compareRef = doc(db, 'compare', uid);
+      const productsCollectionRef = collection(compareRef, 'products');
+      const querySnapshot = await getDocs(productsCollectionRef);
+      let products = [];
+      querySnapshot.forEach((doc) => {
+        products.push({ id: doc.id, ...doc.data() });
+      });
+      setCompareCount(products.length);
+    } catch (error) {
+      console.error('Error fetching compare products:', error);
+    }
+  };
 
   const getData = async (url) => {
     try {
@@ -222,7 +239,10 @@ function App() {
     wishlistCount,
     setWishlistCount,
     fetchCartProducts,
-    fetchWishlistProducts
+    fetchWishlistProducts,
+    fetchCompareProducts,
+    compareCount,
+    setCompareCount
   };
 
   return data && data.productData ? (
@@ -260,6 +280,7 @@ function App() {
           />
           <Route exact={true} path="/cart" element={<Cart />} />
           <Route exact={true} path="/wishlist" element={<Wishlist />} />
+          <Route exact={true} path="/compare" element={<Compare data={data} />} />
           <Route exact={true} path="/account" element={<Account />} />
 
           {/* sign in , signup Protection */}
