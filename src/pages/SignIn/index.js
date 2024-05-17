@@ -135,7 +135,14 @@ const SignIn = () => {
         const udata = replaceSpecialCharacters(result.user.email);
         localStorage.setItem("user", udata);
         localStorage.setItem("uid", result.user.uid);
-        dispatch(logIn({email:result.user.email}))
+        dispatch(logIn({
+          phoneNumber:result.user.phoneNumber,
+          photoURL:result.user.photoURL,
+          uid:result.user.uid,
+          displayName:result.user.displayName,
+          email:result.user.email,
+          emailVerified:result.user.emailVerified
+        }))
         context.signIn();
         setLoggedInUseEmail(udata);
         localStorage.setItem("userImage",result.user.photoURL)

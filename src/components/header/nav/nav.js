@@ -11,8 +11,6 @@ import { useSelector } from 'react-redux';
 
 const Nav = (props) => {
 
-    const logged = useSelector((state)=>state.authReducer.value.isAuth)
-
     const [navData, setNavData] = useState([]);
     const [isOpenNav, setIsOpenNav] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);

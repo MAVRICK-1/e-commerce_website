@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    value:{
-        isAuth:false,
+
+    isAuth:false,
+    user:{
+        phoneNumber:null,
+        photoURL:"",
+        uid:"",
+        displayName:"",
         email:"",
-    }
+        emailVerified:""
+    },
 }
 
 export const auth = createSlice({
@@ -15,8 +21,13 @@ export const auth = createSlice({
             return initialState
         },
         logIn:(state,action)=>{
-            state.value.isAuth = true;
-            state.value.email = action.payload.email;
+            state.isAuth = true;
+            state.user.phoneNumber = action.payload.phoneNumber;
+            state.user.photoURL = action.payload.photoURL;
+            state.user.uid = action.payload.uid;
+            state.user.displayName = action.payload.dispalyName;
+            state.user.email = action.payload.email;
+            state.user.emailVerified = action.payload.emailVerified;
         }
     }
 })

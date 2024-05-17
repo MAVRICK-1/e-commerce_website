@@ -36,7 +36,7 @@ import { logOut } from "../../Redux/auth-slice";
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
   const [isOpenAccDropDown, setisOpenAccDropDown] = useState(false);
-  const logged = useSelector((state)=>state.authReducer.value.isAuth)
+  const logged = useSelector((state)=>state.authReducer.isAuth)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
