@@ -1,0 +1,40 @@
+/* src/components/buttons.css */
+.button-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .buy-now-button, .add-to-cart-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .buy-now-button {
+    background-color: #ff5722;
+    color: white;
+  }
+  
+  .buy-now-button:hover {
+    background-color: #e64a19;
+  }
+  
+  .add-to-cart-button {
+    background-color: #009688;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #00796b;
+  }
+  
+  .cart-icon {
+    font-size: 18px;
+  }
+  
