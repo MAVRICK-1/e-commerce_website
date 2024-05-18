@@ -166,12 +166,12 @@ const Nav = (props) => {
                               <div className="col">
                                 <a href={`/cat/${item.cat_name.toLowerCase()}`}>
                                   {' '}
-                                  <h4 className="text-g text-capitalize">
+                                  <h2 className="text-g text-capitalize">
                                     {item.cat_name}
-                                  </h4>
+                                  </h2>
                                 </a>
                                 {item.items.length !== 0 && (
-                                  <ul className="mt-4 mb-0">
+                                  <ul className="mt-4 mb-0 text-g text-capitalize font-weight-bold">
                                     {item.items.map((item_, index) => {
                                       return (
                                         <li>
