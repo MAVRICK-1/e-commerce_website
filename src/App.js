@@ -114,7 +114,7 @@ function App() {
 
     const is_Login = localStorage.getItem('isLogin');
     setIsLogin(is_Login);
-    
+
     setTimeout(() => {
       setProductData(data[1]);
       setIsloading(false);
@@ -280,7 +280,11 @@ function App() {
           />
           <Route exact={true} path="/cart" element={<Cart />} />
           <Route exact={true} path="/wishlist" element={<Wishlist />} />
-          <Route exact={true} path="/compare" element={<Compare data={data} />} />
+          <Route
+            exact={true}
+            path="/compare"
+            element={<Compare data={data} />}
+          />
           <Route exact={true} path="/account" element={<Account />} />
 
           {/* sign in , signup Protection */}

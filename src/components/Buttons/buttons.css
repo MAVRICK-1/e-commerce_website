@@ -1,10 +1,10 @@
-/* src/components/buttons.css */
 .button-container {
     display: flex;
     gap: 10px;
   }
   
-  .buy-now-button, .add-to-cart-button {
+  .buy-now-button,
+  .add-to-cart-button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
