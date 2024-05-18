@@ -1,115 +1,98 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./style.css";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import Rating from "@mui/material/Rating";
+import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './style.css';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import Rating from '@mui/material/Rating';
 import {
   Button,
   Card,
   CardActions,
   CardContent,
-  Typography,
-} from "@mui/material";
-import QuantityBox from "../../components/quantityBox";
-import { MyContext } from "../../App";
-import { getDatabase, ref, onValue, remove } from "firebase/database";
-import { useNavigate } from "react-router-dom";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import MapComponent from "../../components/map/ITEMmap";
+  Typography
+} from '@mui/material';
+import QuantityBox from '../../components/quantityBox';
+import { MyContext } from '../../App';
+import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { useNavigate } from 'react-router-dom';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import MapComponent from '../../components/map/ITEMmap';
+import { db } from '../../firebase';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot
+} from 'firebase/firestore';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const context = useContext(MyContext);
   const navigate = useNavigate();
-
+  const [uid, setUid] = useState(localStorage.getItem('uid'));
   useEffect(() => {
     try {
-      if (context.isLogin === "true") {
-        getCartData();
+      if (context.isLogin === 'true') {
+        fetchCartProducts();
       } else {
-        navigate("/aboutus"); // Navigate to About Us page if not logged in
+        navigate('/signIn'); // Navigate to About Us page if not logged in
       }
 
       window.scrollTo(0, 0);
     } catch (error) {
-      console.error("Error:", error);
-      setError("Failed to fetch data from the server"); // Set error state if there's an error with database connection
+      console.error('Error:', error);
+      setError('Failed to fetch data from the server'); // Set error state if there's an error with database connection
     }
   }, []);
 
-  const getCartData = async () => {
+  useEffect(() => {
+    fetchCartProducts();
+  }, [db, uid]);
+
+  const fetchCartProducts = async () => {
     try {
-      const db = getDatabase();
-      const dataRef = ref(db, `${localStorage.getItem("user")}`);
-      onValue(
-        dataRef,
-        (snapshot) => {
-          const data = snapshot.val();
-          //console.log("Data fetched successfully:", data);
-          if (data) {
-            setCartItems(Object.values(data));
-            //console.log(Object.values(data).length);
-            // Calculate total price
-            const totalPrice = Object.values(data).reduce((acc, item) => {
-              const itemPrice = parseInt(item.price.split(",").join(""));
-              return acc + itemPrice * item.quantity;
-            }, 0);
-            setTotalPrice(totalPrice);
-          } else {
-            setCartItems([]);
-            // If data is null, set cartItems to an empty array
-          }
-          setError(null); // Reset error state if data fetch is successful
-        },
-        (error) => {
-          console.error("Error fetching data:", error);
-          setError(error.message); // Set error state if there's an error fetching data
-        }
-      );
+      const cartRef = doc(db, 'carts', uid);
+      const productsCollectionRef = collection(cartRef, 'products');
+      const querySnapshot = await getDocs(productsCollectionRef);
+      let products = [];
+      let price = 0;
+      querySnapshot.forEach((doc) => {
+        products.push({ id: doc.id, ...doc.data() });
+        price += parseInt(doc.data()?.price) * doc.data()?.quantity;
+      });
+      context.setCartCount(products.length);
+      setCartItems(products);
+      setTotalPrice(price);
     } catch (error) {
-      console.error("Error:", error);
-      setError("Failed to fetch data from the server"); // Set error state if there's an error with database connection
+      console.error('Error fetching cart products:', error);
     }
   };
 
-  const deleteItem = async (id) => {
+  const deleteCartItem = async (uid, cartItemId) => {
+    const cartItemRef = doc(db, 'carts', uid, 'products', cartItemId);
+
     try {
-      const db = getDatabase();
-      const itemRef = ref(
-        db,
-        `${localStorage.getItem("user")}/${localStorage.getItem("user")}${id}`
-      );
-      remove(itemRef)
-        .then(() => {
-          //console.log("Item deleted successfully");
-          context.removeItemsFromCart(id);
-        })
-        .catch((error) => {
-          console.error("Error deleting item:", error);
-        });
+      await deleteDoc(cartItemRef);
+      fetchCartProducts();
+      console.log('Cart item deleted successfully.');
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error deleting cart item:', error);
     }
   };
 
-  const emptyCart = () => {
+  const deleteAllCartItems = async (uid) => {
+    const productsCollectionRef = collection(db, 'carts', uid, 'products');
+
     try {
-      const db = getDatabase();
-      const itemRef = ref(db, `${localStorage.getItem("user")}`);
-      remove(itemRef)
-        .then(() => {
-          context.emptyCart();
-          //console.log("Item deleted successfully");
-          setCartItems([]);
-          // Reset cartItems to an empty array after emptying the cart
-          setTotalPrice(0); // Reset total price
-        })
-        .catch((error) => {
-          console.error("Error deleting item:", error);
-        });
+      const querySnapshot = await getDocs(productsCollectionRef);
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+      });
+      await fetchCartProducts();
+      console.log('All cart items deleted successfully.');
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error deleting cart items:', error);
     }
   };
 
@@ -127,7 +110,7 @@ const Cart = () => {
               <div className="container-fluid">
                 <ul className="breadcrumb breadcrumb2 mb-0">
                   <li>
-                    <Link to={"/"}>Home</Link>
+                    <Link to={'/'}>Home</Link>
                   </li>
                   <li>Shop</li>
                   <li>Cart</li>
@@ -137,21 +120,25 @@ const Cart = () => {
           )}
           <section className="cartSection mb-5">
             <div className="container-fluid">
-              <div className="row">
-                <div className="col-md-8">
+              <div className={context.windowWidth > 770 && 'row'}>
+                <div
+                  className={`${
+                    context.windowWidth < 770 ? 'col-md-full' : 'col-md-7'
+                  }`}
+                >
                   <div className="d-flex align-items-center w-100">
                     <div className="left">
                       <h1 className="hd mb-0">Your Cart</h1>
                       <p>
-                        There are{" "}
-                        <span className="text-g">{cartItems.length}</span>{" "}
+                        There are{' '}
+                        <span className="text-g">{cartItems.length}</span>{' '}
                         products in your cart
                       </p>
                     </div>
 
                     <span
                       className="ml-auto clearCart d-flex align-items-center cursor "
-                      onClick={() => emptyCart()}
+                      onClick={() => deleteAllCartItems(uid)}
                     >
                       <DeleteOutlineOutlinedIcon /> Clear Cart
                     </span>
@@ -175,14 +162,14 @@ const Cart = () => {
                             cartItems.map((item, index) => {
                               return (
                                 <tr>
-                                  <td width={"50%"}>
+                                  <td width={'50%'}>
                                     <div className="d-flex align-items-center">
                                       <div className="img">
                                         <Link to={`/product/${item.id}`}>
                                           <img
                                             src={
                                               item.catImg +
-                                              "?im=Resize=(100,100)"
+                                              '?im=Resize=(100,100)'
                                             }
                                             className="w-100"
                                           />
@@ -198,7 +185,7 @@ const Cart = () => {
                                           value={parseFloat(item.rating)}
                                           precision={0.5}
                                           readOnly
-                                        />{" "}
+                                        />{' '}
                                         <span className="text-light">
                                           ({parseFloat(item.rating)})
                                         </span>
@@ -208,25 +195,34 @@ const Cart = () => {
 
                                   <td width="20%">
                                     <span>
-                                      Rs:{" "}
-                                      {parseInt(item.price.split(",").join(""))}
+                                      Rs:{' '}
+                                      {parseInt(item.price.split(',').join(''))}
                                     </span>
                                   </td>
 
                                   <td>
                                     <QuantityBox
                                       item={item}
+                                      inputItems={cartItems}
+                                      index={index}
+                                      quantity={item?.quantity}
+                                      updateInfo={updateCart}
+                                      name={'carts'}
+                                    />
+                                    {/* <QuantityBox
+                                      item={item}
                                       cartItems={cartItems}
                                       index={index}
+                                      quantity={item?.quantity}
                                       updateCart={updateCart}
-                                    />
+                                    /> */}
                                   </td>
 
                                   <td>
                                     <span className="text-g">
-                                      Rs.{" "}
+                                      Rs.{' '}
                                       {parseInt(
-                                        item.price.split(",").join("")
+                                        item.price.split(',').join('')
                                       ) * parseInt(item.quantity)}
                                     </span>
                                   </td>
@@ -234,7 +230,9 @@ const Cart = () => {
                                   <td align="center">
                                     <span
                                       className="cursor"
-                                      onClick={() => deleteItem(item.id)}
+                                      onClick={() =>
+                                        deleteCartItem(uid, `${item?.id}`)
+                                      }
                                     >
                                       <DeleteOutlineOutlinedIcon />
                                     </span>
@@ -270,7 +268,7 @@ const Cart = () => {
                             cartItems
                               .map(
                                 (item) =>
-                                  parseInt(item.price.split(",").join("")) *
+                                  parseInt(item.price.split(',').join('')) *
                                   item.quantity
                               )
                               .reduce((total, value) => total + value, 0)}
@@ -300,7 +298,7 @@ const Cart = () => {
                             cartItems
                               .map(
                                 (item) =>
-                                  parseInt(item.price.split(",").join("")) *
+                                  parseInt(item.price.split(',').join('')) *
                                   item.quantity
                               )
                               .reduce((total, value) => total + value, 0)}
@@ -316,7 +314,7 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-          </section>{" "}
+          </section>{' '}
         </>
       ) : (
         // Render message indicating cart is empty if cartItems array is empty
@@ -326,11 +324,11 @@ const Cart = () => {
               <div className="text-center">
                 <h2>Your Cart is Empty</h2>
                 <p>Please add some products to your cart</p>
-              <Link to="/">
-                <Button className="btn-g">
-                  <KeyboardBackspaceIcon /> Start Shopping
-                </Button>
-              </Link>
+                <Link to="/">
+                  <Button className="btn-g">
+                    <KeyboardBackspaceIcon /> Start Shopping
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

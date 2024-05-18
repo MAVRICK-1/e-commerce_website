@@ -38,10 +38,11 @@ const Header = (props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
+  const { cartCount, setCartCount } = useContext(MyContext);
+  const { wishlistCount, setWishlistCount } = useContext(MyContext);
 
   const headerRef = useRef();
-  const searchInput = useRef();
+  const [profile, setProfile] = useState("");
 
   const context = useContext(MyContext);
   const history = useNavigate();
@@ -62,11 +63,29 @@ const Header = (props) => {
   ]);
 
   const countryList = [];
+  // search
+  const [query, setQuery] = useState("");
+  const searchInput = useRef(null);
+  const navigate = useNavigate();
 
+  const handleSearch = () => {
+    if (query.trim() !== "") {
+      navigate(`/search?query=${query}`);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
   useEffect(() => {
     getCountry("https://countriesnow.space/api/v0.1/countries/");
   }, []);
 
+  useEffect(() => {
+    setProfile(localStorage.getItem("userImage"));
+  }, [context.isLogin]);
   const getCountry = async (url) => {
     try {
       await axios.get(url).then((res) => {
@@ -96,37 +115,9 @@ const Header = (props) => {
   //     })
   // }, [])
 
-  const getCartCount = () => {
-    try {
-      const db = getDatabase();
-      const dataRef = ref(db, `${localStorage.getItem("user")}`);
-
-      onValue(
-        dataRef,
-        (snapshot) => {
-          const data = snapshot.val();
-          if (data) {
-            const itemCount = Object.values(data).length;
-            setCartCount(itemCount);
-          } else {
-            setCartCount(0);
-          }
-        },
-        (error) => {
-          console.error("Error fetching data:", error);
-        }
-      );
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    getCartCount();
-  }, []);
-
   const signOut = () => {
     context.signOut();
+    localStorage.setItem("userImage", "");
     history("/");
   };
 
@@ -185,10 +176,31 @@ const Header = (props) => {
                     </div>
                     {context.isLogin === "true" && (
                       <div
-                        className="myAccDrop"
                         onClick={() => setisOpenAccDropDown(!isOpenAccDropDown)}
                       >
-                        <PersonOutlineOutlinedIcon />
+                        {profile != "" ? (
+                          <img
+                            src={profile}
+                            alt=""
+                            style={{
+                              width: "65%",
+                              height: "65%",
+                              borderRadius: "50%",
+                              marginLeft: "15%",
+                            }}
+                          />
+                        ) : (
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png"
+                            alt=""
+                            style={{
+                              width: "50px",
+                              height: "50px",
+                              borderRadius: "50%",
+                              marginLeft: "13%",
+                            }}
+                          />
+                        )}
                       </div>
                     )}
                   </div>
@@ -210,7 +222,7 @@ const Header = (props) => {
                                         } */}
 
                   {windowWidth < 992 && (
-                    <div class="closeSearch" onClick={closeSearch}>
+                    <div className="closeSearch" onClick={closeSearch}>
                       <ArrowBackIosIcon />
                     </div>
                   )}
@@ -224,9 +236,15 @@ const Header = (props) => {
                     <input
                       type="text"
                       placeholder="Search for items..."
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      onKeyPress={handleKeyPress}
                       ref={searchInput}
                     />
-                    <SearchIcon className="searchIcon cursor" />
+                    <SearchIcon
+                      className="searchIcon cursor"
+                      onClick={handleSearch}
+                    />
                   </div>
                 </div>
               </div>
@@ -249,25 +267,37 @@ const Header = (props) => {
                     <ul className="list list-inline mb-0 headerTabs">
                       <li className="list-inline-item">
                         <span>
-                          <img src={IconCompare} />
-                          <span className="badge bg-success rounded-circle">
-                            3
-                          </span>
-                          Compare
+                          <Link
+                            to={"/wishlist"}
+                            style={{ textDecoration: "none" }}
+                          >
+                            {" "}
+                            <img src={IconCompare} />
+                            <span className="badge bg-success rounded-circle">
+                              3
+                            </span>
+                            Compare
+                          </Link>
                         </span>
                       </li>
                       <li className="list-inline-item">
                         <span>
-                          <img src={IconHeart} />
-                          <span className="badge bg-success rounded-circle">
-                            3
-                          </span>
-                          Wishlist
+                          <Link
+                            to={"/wishlist"}
+                            style={{ textDecoration: "none" }}
+                          >
+                            {" "}
+                            <img src={IconHeart} />
+                            <span className="badge bg-success rounded-circle">
+                              {wishlistCount}
+                            </span>
+                            Wishlist
+                          </Link>
                         </span>
                       </li>
                       <li className="list-inline-item">
                         <span>
-                          <Link to={"/cart"}>
+                          <Link to={"/cart"} style={{ textDecoration: "none" }}>
                             {" "}
                             <img src={IconCart} />
                             <span className="badge bg-success rounded-circle">
@@ -283,8 +313,29 @@ const Header = (props) => {
                           <span
                             onClick={() => setisOpenDropDown(!isOpenDropDown)}
                           >
-                            <img src={IconUser} />
-                            Account
+                            {profile != "" ? (
+                              <img
+                                src={profile}
+                                alt=""
+                                style={{
+                                  width: "65%",
+                                  height: "65%",
+                                  borderRadius: "50%",
+                                  marginLeft: "18%",
+                                }}
+                              />
+                            ) : (
+                              <img
+                                src="https://cdn-icons-png.flaticon.com/512/5323/5323352.png"
+                                alt=""
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "50%",
+                                  marginLeft: "18%",
+                                }}
+                              />
+                            )}
                           </span>
 
                           {isOpenDropDown !== false && (
