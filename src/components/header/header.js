@@ -352,7 +352,9 @@ const Header = (props) => {
                               </li>
                               <li>
                                 <Button>
-                                  <FavoriteBorderOutlinedIcon /> My Wishlist
+                                  <Link to={"/wishlist"}>
+                                    <FavoriteBorderOutlinedIcon /> My Wishlist
+                                  </Link>
                                 </Button>
                               </li>
                               <li>
