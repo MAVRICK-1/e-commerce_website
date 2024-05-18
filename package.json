@@ -18,9 +18,12 @@
     "custom-react-inner-image-zoom": "^3.0.6",
     "firebase": "^10.8.0",
     "leaflet": "^1.9.4",
+    "nanoid": "^5.0.7",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.2.1",
+    "react-hook-form": "^7.51.4",
     "react-image-zoom": "^1.3.1",
     "react-inner-image-zoom": "^3.0.2",
     "react-lazy-load-image-component": "^1.6.0",
@@ -33,6 +36,7 @@
     "reactjs-image-zoom": "^1.0.8",
     "rn-range-slider": "^2.2.2",
     "styled-components": "^5.3.11",
+    "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -41,7 +45,26 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx",
-    "lint:fix": "eslint . --cache --quiet --fix --ext .js,.jsx"
+    "lint:fix": "eslint . --cache --quiet --fix --ext .js,.jsx",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "./**/*.js": [
+      "eslint",
+      "prettier --write ."
+    ],
+    "./**/*.jsx": [
+      "eslint",
+      "prettier --write ."
+    ],
+    "./**/*.ts": [
+      "eslint",
+      "prettier --write ."
+    ],
+    "./**/*.tsx": [
+      "eslint",
+      "prettier --write ."
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +89,8 @@
     "@babel/plugin-transform-private-property-in-object": "^7.24.5",
     "@babel/preset-react": "^7.24.1",
     "eslint-plugin-react": "^7.34.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "3.0.1"
   },
   "description": "<img src=\"./Images/WebsiteImg.png\">",
