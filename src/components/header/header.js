@@ -42,7 +42,6 @@ const Header = (props) => {
   const { wishlistCount, setWishlistCount } = useContext(MyContext);
 
   const headerRef = useRef();
-  const searchInput = useRef();
   const [profile, setProfile] = useState("");
 
   const context = useContext(MyContext);
@@ -64,7 +63,22 @@ const Header = (props) => {
   ]);
 
   const countryList = [];
+  // search
+  const [query, setQuery] = useState("");
+  const searchInput = useRef(null);
+  const navigate = useNavigate();
 
+  const handleSearch = () => {
+    if (query.trim() !== "") {
+      navigate(`/search?query=${query}`);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
   useEffect(() => {
     getCountry("https://countriesnow.space/api/v0.1/countries/");
   }, []);
@@ -222,9 +236,15 @@ const Header = (props) => {
                     <input
                       type="text"
                       placeholder="Search for items..."
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      onKeyPress={handleKeyPress}
                       ref={searchInput}
                     />
-                    <SearchIcon className="searchIcon cursor" />
+                    <SearchIcon
+                      className="searchIcon cursor"
+                      onClick={handleSearch}
+                    />
                   </div>
                 </div>
               </div>
