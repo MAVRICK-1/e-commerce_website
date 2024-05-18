@@ -40,7 +40,7 @@ const Header = (props) => {
   const [isOpenNav, setIsOpenNav] = useState(false);
   const { cartCount, setCartCount } = useContext(MyContext);
   const { wishlistCount, setWishlistCount } = useContext(MyContext);
-  const { compareCount } = useContext(MyContext)
+  const { compareCount } = useContext(MyContext);
   const headerRef = useRef();
   const searchInput = useRef();
   const [profile, setProfile] = useState('');
