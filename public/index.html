@@ -25,10 +25,31 @@
       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
-    -->
+    -->    
     <title>Nest ONDC</title>
   </head>
   <body>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+<script>
+  window.botpressWebChat.init({
+      "composerPlaceholder": "Chat with NestBot",
+      "botConversationDescription": "This chatbot was built surprisingly fast with Botpress",
+      "botId": "41bcf48e-b15e-4c9e-8d0e-c9e9055742eb",
+      "hostUrl": "https://cdn.botpress.cloud/webchat/v1",
+      "messagingUrl": "https://messaging.botpress.cloud",
+      "clientId": "41bcf48e-b15e-4c9e-8d0e-c9e9055742eb",
+      "webhookId": "666d6b28-a7dc-436b-9a9d-d09fbd8c7975",
+      "lazySocket": true,
+      "themeName": "prism",
+      "botName": "NestBot",
+      "stylesheet": "https://webchat-styler-css.botpress.app/prod/b4613e82-834b-4bd1-bba4-e1ab38435331/v25211/style.css",
+      "frontendVersion": "v1",
+      "showPoweredBy": true,
+      "theme": "prism",
+      "themeColor": "#2563eb",
+      "allowedOrigins": []
+  });
+</script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
