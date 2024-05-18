@@ -27,6 +27,7 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import MapComponent from "./components/map/ITEMmap";
 import { db } from "./firebase";
 import SellerForm from "./pages/SellerRegistration";
+import SearchResults from "./components/search/SearchResults";
 
 const MyContext = createContext();
 
@@ -283,6 +284,8 @@ function App() {
           />
           <Route exact={true} path="/addProduct" element={<AddProductForm />} />
           <Route exact={true} path="*" element={<NotFound />} />
+          {/* search route */}
+          <Route exact={true} path="/search" element={<SearchResults />} />
         </Routes>
         <Footer />
       </MyContext.Provider>
