@@ -4,6 +4,12 @@
   align-items: center;
   justify-content: center;
 }
+.card{
+  height: 350px;
+  width: 400px;
+  border: 2.5px solid #008080;
+  border-radius: 5px;
+}
 
 .about-container {
   width: 100%;
@@ -43,26 +49,22 @@
   transition: box-shadow 1s;
 }
 
-.container-grid > .MuiGrid-item-root > .card:hover {
+.card:hover {
   box-shadow: 10px 10px #008080;
 }
 
-.container-grid > .MuiGrid-item-root > .card > .cardLink > .img {
+.img {
   padding: 10px;
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 180px; 
+  height: 180px; 
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   object-fit: cover !important;
 }
 
-.container-grid
-  > .MuiGrid-item-root
-  > .card
-  > .MuiCardContent-root
-  > .card-name {
+.card-name {
   font-size: 20px;
   color: #008080;
   text-align: center;
@@ -79,12 +81,7 @@
   gap: 5px;
 }
 
-.container-grid
-  > .MuiGrid-item-root
-  > .card
-  > .MuiCardContent-root
-  > .card-bottom
-  > .text-color {
+.text-color {
   font-size: 1.2vw;
   color: #008080;
 }
