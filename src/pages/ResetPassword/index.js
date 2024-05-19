@@ -131,6 +131,9 @@ const SignIn = () => {
               <li>
                 <Link to="/">Home</Link>
               </li>
+              <li>
+                <Link to="/signIn">SignIn</Link>
+              </li>
               <li>Forgot Password</li>
             </ul>
           </div>
@@ -145,6 +148,11 @@ const SignIn = () => {
             >
               <CircularProgress color="inherit" />
             </Backdrop>
+            <p className="text-left">
+              <b>
+                <Link to="/signIn">Go to Signin</Link>
+              </b>
+            </p>
 
             <h3 className="text-center">Forget Password</h3>
             <form className="mt-4">
