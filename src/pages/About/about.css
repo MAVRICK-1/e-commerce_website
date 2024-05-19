@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px; 
+  width: 400px;
   height: 350px;
   border: 0.5px solid #008080;
   transition: box-shadow 1s;
