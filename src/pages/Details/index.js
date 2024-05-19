@@ -73,6 +73,8 @@ const DetailsPage = (props) => {
   const [isAlreadyAddedInCart, setisAlreadyAddedInCart] = useState(false);
   const [isAlreadyAddedInWishlist, setisAlreadyAddedInWishlist] =
     useState(false);
+    const [isAlreadyAddedInCompare, setIsAlreadyAddedInCompare] =
+    useState(false);
 
   const [reviewFields, setReviewFields] = useState({
     review: '',
@@ -185,6 +187,8 @@ const DetailsPage = (props) => {
 
     fetchWishlistProducts();
 
+    fetchCompareProducts();
+
     setIsLoading(false);
   }, []);
 
@@ -267,10 +271,8 @@ const DetailsPage = (props) => {
   };
 
   const toggleWishlistItem = async (item) => {
-    console.log('addToWishlist');
 
     if (!isAlreadyAddedInWishlist) {
-      console.log('Not isAlreadyAddedInWishlist');
       try {
         const user = localStorage.getItem('uid');
         const wishlistRef = doc(db, 'wishlists', user);
@@ -296,6 +298,34 @@ const DetailsPage = (props) => {
         console.log('Wishlist item deleted successfully.');
       } catch (error) {
         console.error('Error deleting wishlist item:', error);
+      }
+    }
+  };
+
+  const toggleCompareItem = async (item) => {
+    if (!isAlreadyAddedInCompare) {
+      try {
+        const user = localStorage.getItem('uid');
+        const compareRef = doc(db, 'compare', user);
+        const productRef = doc(compareRef, 'products', `${item.id}`);
+        await setDoc(productRef, item);
+        setIsAlreadyAddedInCompare(true);
+        context.setCompareCount(context.compareCount + 1);
+      } catch (error) {
+        console.error('Error adding item to compare:', error);
+      }
+    } else {
+      const user = localStorage.getItem('uid');
+
+      const compareItemRef = doc(db, `compare/${user}/products/${item.id}`);
+
+      try {
+        await deleteDoc(compareItemRef);
+        setIsAlreadyAddedInCompare(false);
+        context.setCompareCount(context.compareCount - 1);
+        console.log('compare item deleted successfully.');
+      } catch (error) {
+        console.error('Error deleting compare item:', error);
       }
     }
   };
@@ -330,23 +360,21 @@ const DetailsPage = (props) => {
     }
   };
 
-  const deleteWishlistItem = async (uid, wishlistItemId) => {
-    const wishlistItemRef = doc(
-      db,
-      'wishlists',
-      uid,
-      'products',
-      wishlistItemId
-    );
-
+  const fetchCompareProducts = async () => {
     try {
-      await deleteDoc(wishlistItemRef);
-      fetchWishlistProducts();
-      console.log('Wishlist item deleted successfully.');
+      const compareRef = doc(db, 'compare', localStorage.getItem('uid'));
+      const productsCollectionRef = collection(compareRef, 'products');
+      const querySnapshot = await getDocs(productsCollectionRef);
+      querySnapshot.forEach((doc) => {
+        if (parseInt(doc.data()?.id) === parseInt(id)) {
+          setIsAlreadyAddedInCompare(true);
+        }
+      });
     } catch (error) {
-      console.error('Error deleting wishlist item:', error);
+      console.error('Error fetching compare products:', error);
     }
   };
+
 
   return (
     <>
@@ -578,7 +606,11 @@ const DetailsPage = (props) => {
                   >
                     <FavoriteBorderOutlinedIcon />{' '}
                   </Button>
-                  <Button className=" btn-lg addtocartbtn ml-3 btn-border">
+                  <Button onClick={() => toggleCompareItem(currentProduct)}  className={`btn-lg addtocartbtn ml-3 ${
+                      isAlreadyAddedInCompare === true
+                        ? 'btn-borderWishlistAlreadyAdded'
+                        : 'btn-border'
+                    }`}>
                     <CompareArrowsIcon />
                   </Button>
                 </div>

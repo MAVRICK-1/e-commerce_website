@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.css';
-import NotFoundImg from '../../assets/images/page-404.png';
+import NotFoundImg from '../../assets/images/page-404.webp';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 

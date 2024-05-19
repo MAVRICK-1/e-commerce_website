@@ -30,6 +30,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { Satellite } from '@mui/icons-material';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import { cities } from './cities';
 
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
@@ -42,7 +43,6 @@ const Header = (props) => {
   const { wishlistCount, setWishlistCount } = useContext(MyContext);
 
   const headerRef = useRef();
-  const searchInput = useRef();
   const [profile, setProfile] = useState('');
 
   const context = useContext(MyContext);
@@ -63,32 +63,47 @@ const Header = (props) => {
     'Fresh Seafood'
   ]);
 
-  const countryList = [];
+  const countryList = cities;
+  // search
+  const [query, setQuery] = useState('');
+  const searchInput = useRef(null);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    getCountry('https://countriesnow.space/api/v0.1/countries/');
-  }, []);
+  const handleSearch = () => {
+    if (query.trim() !== '') {
+      navigate(`/search?query=${query}`);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+  // useEffect(() => {
+  //   getCountry("https://countriesnow.space/api/v0.1/countries/");
+  // }, []);
 
   useEffect(() => {
     setProfile(localStorage.getItem('userImage'));
   }, [context.isLogin]);
-  const getCountry = async (url) => {
-    try {
-      await axios.get(url).then((res) => {
-        if (res !== null) {
-          ////console.log(res.data.data);
-          res.data.data.map((item, index) => {
-            countryList.push(item.country);
-            ////console.log(item.country)
-          });
+  // const getCountry = async (url) => {
+  //   try {
+  //     await axios.get(url).then((res) => {
+  //       if (res !== null) {
+  //         ////console.log(res.data.data);
+  //         res.data.data.map((item, index) => {
+  //           countryList.push(item.country);
+  //           ////console.log(item.country)
+  //         });
 
-          ////console.log(res.data.data[0].country)
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //         ////console.log(res.data.data[0].country)
+  //       }
+  //     });
+  //   } catch (error) {
+  //     //console.log(error.message);
+  //   }
+  // };
 
   // useEffect(() => {
   //     window.addEventListener("scroll", () => {
@@ -222,9 +237,15 @@ const Header = (props) => {
                     <input
                       type="text"
                       placeholder="Search for items..."
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      onKeyPress={handleKeyPress}
                       ref={searchInput}
                     />
-                    <SearchIcon className="searchIcon cursor" />
+                    <SearchIcon
+                      className="searchIcon cursor"
+                      onClick={handleSearch}
+                    />
                   </div>
                 </div>
               </div>
@@ -332,7 +353,9 @@ const Header = (props) => {
                               </li>
                               <li>
                                 <Button>
-                                  <FavoriteBorderOutlinedIcon /> My Wishlist
+                                  <Link to={'/wishlist'}>
+                                    <FavoriteBorderOutlinedIcon /> My Wishlist
+                                  </Link>
                                 </Button>
                               </li>
                               <li>

@@ -1,9 +1,9 @@
 import React from 'react';
 import './style.css';
 
-import img1 from '../../../assets/images/thumbnail-1.jpg';
-import img2 from '../../../assets/images/thumbnail-1.jpg';
-import img3 from '../../../assets/images/thumbnail-1.jpg';
+import img1 from '../../../assets/images/thumbnail-1.webp';
+import img2 from '../../../assets/images/thumbnail-1.webp';
+import img3 from '../../../assets/images/thumbnail-1.webp';
 import { Link } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 

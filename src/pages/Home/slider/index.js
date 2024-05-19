@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import Slider from 'react-slick';
 import './index.css';
 
-import Slide1 from '../../../assets/images/slider-1.png';
-import Slide2 from '../../../assets/images/slider-2.png';
+import Slide1 from '../../../assets/images/slider-1.webp';
+import Slide2 from '../../../assets/images/slider-2.webp';
 import Button from '@mui/material/Button';
 
 import Newsletter from '../../../components/newsletter';

@@ -24,18 +24,16 @@ import {
   getDocs,
   onSnapshot
 } from 'firebase/firestore';
-const WishList = () => {
-  const [wishlistItems, setWishlistItems] = useState([]);
+const Compare = ({data}) => {
+  const [compareItems, setCompareItems] = useState([]);
   const [error, setError] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0);
   const context = useContext(MyContext);
   const navigate = useNavigate();
   const [uid, setUid] = useState(localStorage.getItem('uid'));
-
   useEffect(() => {
     try {
       if (context.isLogin === 'true') {
-        fetchWishlistProducts();
+        fetchCompareProducts();
       } else {
         navigate('/signIn'); // Navigate to About Us page if not logged in
       }
@@ -48,68 +46,60 @@ const WishList = () => {
   }, []);
 
   useEffect(() => {
-    fetchWishlistProducts();
+    fetchCompareProducts();
   }, [db, uid]);
 
-  const fetchWishlistProducts = async () => {
+  const fetchCompareProducts = async () => {
     try {
-      const wishlistsRef = doc(db, 'wishlists', uid);
-      const productsCollectionRef = collection(wishlistsRef, 'products');
+      const compareRef = doc(db, 'compare', uid);
+      const productsCollectionRef = collection(compareRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
       let products = [];
-      let price = 0;
       querySnapshot.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() });
-        price += parseInt(doc.data()?.price) * doc.data()?.quantity;
       });
-      context.setWishlistCount(products.length);
-      setWishlistItems(products);
-      setTotalPrice(price);
+      context.setCompareCount(products.length);
+      setCompareItems(products);
     } catch (error) {
-      console.error('Error fetching wishlist products:', error);
+      console.error('Error fetching compare products:', error);
     }
   };
-
-  const deleteWishlistItem = async (uid, wishlistItemId) => {
-    const wishlistItemRef = doc(
+  const deleteCompareItem = async (uid, compareItemId) => {
+    const compareItemRef = doc(
       db,
-      'wishlists',
+      'compare',
       uid,
       'products',
-      wishlistItemId
+      compareItemId
     );
 
     try {
-      await deleteDoc(wishlistItemRef);
-      fetchWishlistProducts();
-      console.log('Wishlist item deleted successfully.');
+      await deleteDoc(compareItemRef);
+      fetchCompareProducts();
+      console.log('Compare item deleted successfully.');
     } catch (error) {
-      console.error('Error deleting wishlist item:', error);
+      console.error('Error deleting Compare item:', error);
     }
   };
 
-  const deleteAllWishlistItems = async (uid) => {
-    const productsCollectionRef = collection(db, 'wishlists', uid, 'products');
+  const deleteAllCompareItems = async (uid) => {
+    const productsCollectionRef = collection(db, 'compare', uid, 'products');
 
     try {
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach(async (doc) => {
         await deleteDoc(doc.ref);
       });
-      await fetchWishlistProducts();
-      console.log('All wishlist items deleted successfully.');
+      await fetchCompareProducts();
+      console.log('All compare items deleted successfully.');
     } catch (error) {
-      console.error('Error deleting wishlist items:', error);
+      console.error('Error deleting compare items:', error);
     }
-  };
-
-  const updateWishlist = (items) => {
-    setWishlistItems(items);
   };
 
   return (
     <>
-      {wishlistItems.length > 0 ? (
+      {compareItems.length > 0 ? (
         // Render cart section if cartItems array is not empty
         <>
           {context.windowWidth > 992 && (
@@ -120,7 +110,7 @@ const WishList = () => {
                     <Link to={'/'}>Home</Link>
                   </li>
                   <li>Shop</li>
-                  <li>Wishlist</li>
+                  <li>Compare</li>
                 </ul>
               </div>
             </div>
@@ -135,22 +125,22 @@ const WishList = () => {
                 >
                   <div className="d-flex align-items-center w-100">
                     <div className="left">
-                      <h1 className="hd mb-0">Your Wishlist</h1>
+                      <h1 className="hd mb-0">Your Compare Items</h1>
                       <p>
                         There are{' '}
-                        <span className="text-g">{wishlistItems.length}</span>{' '}
-                        products in your Wishlist
+                        <span className="text-g">{compareItems.length}</span>{' '}
+                        products in your Compare List
                       </p>
                     </div>
 
                     <span
                       className="ml-auto clearCart d-flex align-items-center cursor "
-                      onClick={() => deleteAllWishlistItems(uid)}
+                      onClick={() => deleteAllCompareItems(uid)}
                     >
-                      <DeleteOutlineOutlinedIcon /> Clear Wishlist
+                      <DeleteOutlineOutlinedIcon /> Clear Compare
                     </span>
                   </div>
-                  <MapComponent data={wishlistItems} />
+                  <MapComponent data={compareItems} />
                   <div className="cartWrapper mt-4">
                     <div className="table-responsive">
                       <table className="table">
@@ -158,16 +148,17 @@ const WishList = () => {
                           <tr>
                             <th>Product</th>
                             <th>Unit Price</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
+                            <th>Brand</th>
+                            <th>Shop</th>
                             <th>Remove</th>
                           </tr>
                         </thead>
 
                         <tbody>
-                          {wishlistItems.length !== 0 &&
-                            wishlistItems.map((item, index) => {
+                          {compareItems.length !== 0 &&
+                            compareItems.map((item, index) => {
                               return (
+                                <>
                                 <tr>
                                   <td width={'50%'}>
                                     <div className="d-flex align-items-center">
@@ -207,23 +198,13 @@ const WishList = () => {
                                     </span>
                                   </td>
 
-                                  <td>
-                                    <QuantityBox
-                                      item={item}
-                                      inputItems={wishlistItems}
-                                      index={index}
-                                      quantity={item?.quantity}
-                                      updateInfo={updateWishlist}
-                                      name={'wishlists'}
-                                    />
+                                  <td width="20%">
+                                    <span>{item.brand}</span>
                                   </td>
 
                                   <td>
-                                    <span className="text-g">
-                                      Rs.{' '}
-                                      {parseInt(
-                                        item.price.split(',').join('')
-                                      ) * parseInt(item.quantity)}
+                                    <span width="20%">
+                                      {item.shop_name}
                                     </span>
                                   </td>
 
@@ -231,13 +212,19 @@ const WishList = () => {
                                     <span
                                       className="cursor"
                                       onClick={() =>
-                                        deleteWishlistItem(uid, `${item?.id}`)
+                                        deleteCompareItem(uid, `${item?.id}`)
                                       }
                                     >
                                       <DeleteOutlineOutlinedIcon />
                                     </span>
                                   </td>
                                 </tr>
+                                <tr>
+                                  <div style={{display:"flex"}}>
+
+                                  </div>
+                                </tr>
+                                </>
                               );
                             })}
                         </tbody>
@@ -258,60 +245,6 @@ const WishList = () => {
                   </div>
                 </div>
 
-                <div className="col-md-4 cartRightBox">
-                  <div className="card p-4 ">
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Subtotal</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        <span className="text-g">
-                          {wishlistItems.length !== 0 &&
-                            wishlistItems
-                              .map(
-                                (item) =>
-                                  parseInt(item.price.split(',').join('')) *
-                                  item.quantity
-                              )
-                              .reduce((total, value) => total + value, 0)}
-                        </span>
-                      </h3>
-                    </div>
-
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Shipping</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        <span>Free</span>
-                      </h3>
-                    </div>
-
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Estimate for</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        United Kingdom
-                      </h3>
-                    </div>
-
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Total</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        <span className="text-g">
-                          {wishlistItems.length !== 0 &&
-                            wishlistItems
-                              .map(
-                                (item) =>
-                                  parseInt(item.price.split(',').join('')) *
-                                  item.quantity
-                              )
-                              .reduce((total, value) => total + value, 0)}
-                        </span>
-                      </h3>
-                    </div>
-
-                    <br />
-                    <Button className="btn-g btn-lg">
-                      Proceed To CheckOut
-                    </Button>
-                  </div>
-                </div>
               </div>
             </div>
           </section>{' '}
@@ -322,11 +255,11 @@ const WishList = () => {
           <div className="row">
             <div className="col d-flex align-items-center justify-content-center mt-4 mb-4">
               <div className="text-center">
-                <h2>Your Wishlist is Empty</h2>
-                <p>Please add some products to your wishlist</p>
+                <h2>Nothing to Compare</h2>
+                <p>Please add some products to Compare</p>
                 <Link to="/">
                   <Button className="btn-g">
-                    <KeyboardBackspaceIcon /> Start Shopping
+                    <KeyboardBackspaceIcon /> Start Comparing
                   </Button>
                 </Link>
               </div>
@@ -338,4 +271,4 @@ const WishList = () => {
   );
 };
 
-export default WishList;
+export default Compare;
