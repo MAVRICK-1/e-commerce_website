@@ -13,6 +13,7 @@ import Home from './pages/Home/index';
 import Listing from './pages/Listing';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/SignIn';
+import ResetPassword from './pages/ResetPassword';
 import SignUp from './pages/SignUp';
 import Cart from './pages/cart';
 import Wishlist from './pages/wishList';
@@ -278,6 +279,15 @@ function App() {
           {isLogin === null && (
             <Route exact={true} path="signIn" element={<SignIn />} />
           )}
+
+          {isLogin === null && (
+            <Route
+              exact={true}
+              path="resetpassword"
+              element={<ResetPassword />}
+            />
+          )}
+
           {isLogin === null && (
             <Route exact={true} path="signUp" element={<SignUp />} />
           )}
