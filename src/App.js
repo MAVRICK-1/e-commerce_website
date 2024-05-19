@@ -24,7 +24,6 @@ import MapComponent from './components/map/ITEMmap';
 import { db } from './firebase';
 import SellerForm from './pages/SellerRegistration';
 import SearchResults from './components/search/SearchResults';
-import GoToTop from './components/GoToTop/GoToTop';
 
 const MyContext = createContext();
 
@@ -294,7 +293,6 @@ function App() {
           <Route exact={true} path="/search" element={<SearchResults />} />
         </Routes>
         <Footer />
-        <GoToTop />
       </MyContext.Provider>
     </HashRouter>
   ) : (
