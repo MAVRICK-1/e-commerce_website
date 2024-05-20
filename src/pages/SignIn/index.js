@@ -34,7 +34,8 @@ const SignIn = () => {
   });
   const [error, setError] = useState('');
   const context = useContext(MyContext);
-  const history = useNavigate();
+  const navigate = useNavigate();
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [loggedInUserEmail, setLoggedInUseEmail] = useLoggedInUserEmail(); //get_email hook
   const [isDisabled, setIsDisabled] = useState(true);
@@ -239,12 +240,16 @@ const SignIn = () => {
               )}
 
               <div className="form-group mt-3 mb-4 w-100 d-flex justify-content-end">
-                <Button
+                {/* <Button
                   className="btn btn-link float-end"
+                  
                   onClick={forgotPassword}
                 >
                   Forgot Password?
-                </Button>
+                </Button> */}
+                <b>
+                  <Link to="/forgetpassword">Forget Password?</Link>
+                </b>
               </div>
 
               <div className="form-group mt-5 mb-4 w-100">

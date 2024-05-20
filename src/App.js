@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound';
 import SignIn from './pages/SignIn';
 import ResetPassword from './pages/ResetPassword';
 import SignUp from './pages/SignUp';
+import ForgetPassword from './pages/ForgetPassword';
 import Cart from './pages/cart';
 import Wishlist from './pages/wishList';
 import './responsive.css';
@@ -302,6 +303,11 @@ function App() {
           <Route exact={true} path="*" element={<NotFound />} />
           {/* search route */}
           <Route exact={true} path="/search" element={<SearchResults />} />
+          <Route
+            exact={true}
+            path="/forgetPassword"
+            element={<ForgetPassword />}
+          />
         </Routes>
         <Footer />
         <GoToTop />
