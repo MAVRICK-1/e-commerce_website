@@ -20,6 +20,7 @@ import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedinIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import XIcon from '@mui/icons-material/X';
 import Newsletter from '../../components/newsletter/index';
 import NewsletterImg from '../../assets/images/newsletter.webp';
 
@@ -310,6 +311,11 @@ const Footer = () => {
                         to={'https://www.instagram.com/realmavrick_1/?hl=en'}
                       >
                         <InstagramIcon />
+                      </Link>
+                    </li>
+                    <li className="list-inline-item">
+                      <Link to={''}>
+                        <XIcon />
                       </Link>
                     </li>
                   </ul>
