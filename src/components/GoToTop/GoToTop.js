@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaArrowUpLong } from 'react-icons/fa6';
+import { FaChevronUp } from 'react-icons/fa6';
 import './GoToTop.css';
 
 const GoToTop = () => {
@@ -11,7 +11,8 @@ const GoToTop = () => {
 
   const listentoscroll = () => {
     const heightToShow = 150;
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop;
 
     if (winScroll >= heightToShow) {
       setIsVisible(true);
@@ -31,7 +32,7 @@ const GoToTop = () => {
     <div>
       {isVisible && (
         <div className="back-to-top-button" onClick={gotoBtn}>
-          <FaArrowUpLong />
+          <FaChevronUp />
         </div>
       )}
     </div>
@@ -39,3 +40,30 @@ const GoToTop = () => {
 };
 
 export default GoToTop;
+
+document.addEventListener('DOMContentLoaded', function () {
+  const scrollToTopButton = document.querySelector('.back-to-top-button');
+
+  if (scrollToTopButton) {
+    document.addEventListener('scroll', function () {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+
+      // Show button when near the bottom of the page
+      if (scrollPosition >= pageHeight / 2) {
+        scrollToTopButton.classList.add('show');
+      } else {
+        scrollToTopButton.classList.remove('show');
+      }
+    });
+
+    scrollToTopButton.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  } else {
+    console.error('Back-to-top button not found in the DOM');
+  }
+});

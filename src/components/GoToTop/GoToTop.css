@@ -1,9 +1,9 @@
 .back-to-top-button {
-  color: #047481;
+  color: #ffffff;
   font-size: 1.875rem;
   width: 3rem;
   height: 3rem;
-  background-color: #8decb4;
+  background-color: #3bb77e;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   position: fixed;
@@ -13,5 +13,19 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  /* visibility: hidden;  */
+  box-shadow: 0px 2px 4px 1px rgba(154, 154, 154, 0.25);
+  z-index: 99;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+.back-to-top-button.show {
+  visibility: visible;
+}
+
+.back-to-top-button:hover{
+  scale:1.2;
+  box-shadow: 0px 2px 4px 1px rgb(167, 253, 130);
 
 }
