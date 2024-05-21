@@ -24,7 +24,8 @@ import {
   getDocs,
   onSnapshot,
 } from "firebase/firestore";
-import {useSelector} from "react-redux"
+import {useSelector,useDispatch} from "react-redux"
+import { getDeleteAllCartItem, getDeleteCartItem } from "../../Redux/cart-slice";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -34,7 +35,8 @@ const Cart = () => {
   const navigate = useNavigate();
   const uid = useSelector((state)=>state.authReducer.uid)
   const logged = useSelector((state)=>state.authReducer.isAuth)
-
+  const dispatch = useDispatch();
+  const isDeleteing = useSelector((state)=>state.cart.isRemoving)
 
   useEffect(() => {
     try {
@@ -52,8 +54,10 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    fetchCartProducts();
-  }, [db, uid]);
+    if(!isDeleteing){
+      fetchCartProducts();
+    }
+  }, [db, uid, isDeleteing]);
 
   const fetchCartProducts = async () => {
     try {
@@ -61,6 +65,7 @@ const Cart = () => {
       const productsCollectionRef = collection(cartRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
       let products = [];
+      
       let price = 0;
       querySnapshot.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() });
@@ -74,11 +79,9 @@ const Cart = () => {
     }
   };
 
-  const deleteCartItem = async (uid, cartItemId) => {
-    const cartItemRef = doc(db, "carts", uid, "products", cartItemId);
-
+  const deleteCartItem = async (cartItemId,price) => {
     try {
-      await deleteDoc(cartItemRef);
+      dispatch(getDeleteCartItem({itemId:cartItemId,uid}))
       fetchCartProducts();
       console.log("Cart item deleted successfully.");
     } catch (error) {
@@ -86,15 +89,9 @@ const Cart = () => {
     }
   };
 
-  const deleteAllCartItems = async (uid) => {
-    const productsCollectionRef = collection(db, "carts", uid, "products");
-
+  const deleteAllCartItems = () => {
     try {
-      const querySnapshot = await getDocs(productsCollectionRef);
-      querySnapshot.forEach(async (doc) => {
-        await deleteDoc(doc.ref);
-      });
-      await fetchCartProducts();
+      dispatch(getDeleteAllCartItem({uid}));
       console.log("All cart items deleted successfully.");
     } catch (error) {
       console.error("Error deleting cart items:", error);
@@ -139,7 +136,7 @@ const Cart = () => {
 
                     <span
                       className="ml-auto clearCart d-flex align-items-center cursor "
-                      onClick={() => deleteAllCartItems(uid)}
+                      onClick={() => deleteAllCartItems()}
                     >
                       <DeleteOutlineOutlinedIcon /> Clear Cart
                     </span>
@@ -232,7 +229,7 @@ const Cart = () => {
                                     <span
                                       className="cursor"
                                       onClick={() =>
-                                        deleteCartItem(uid, `${item?.id}`)
+                                        deleteCartItem(`${item?.id}`)
                                       }
                                     >
                                       <DeleteOutlineOutlinedIcon />

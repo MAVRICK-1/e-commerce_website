@@ -40,12 +40,15 @@ const Header = (props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
-  const { cartCount, setCartCount } = useContext(MyContext);
+  // const { cartCount, setCartCount } = useContext(MyContext);
   const { wishlistCount, setWishlistCount } = useContext(MyContext);
 
   const headerRef = useRef();
   const searchInput = useRef();
   const profile = useSelector((state)=>state.authReducer.photoURL)
+  const cartCount = useSelector((state)=>state.cart.items.length);
+  const items = useSelector((state)=>state.cart.items);
+  console.log(items)
   const dispatch = useDispatch()
   const context = useContext(MyContext);
   const history = useNavigate();
@@ -104,7 +107,6 @@ const Header = (props) => {
   const signOut = () => {
     dispatch(logOut());
     context.signOut();
-    localStorage.setItem("userImage", "");
     history("/");
   };
 

@@ -20,7 +20,8 @@ import {
 import { MyContext } from "../../App";
 import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import { checkIsItemInCart, getAddToCart } from "../../Redux/cart-slice";
 
 const Product = (props) => {
   const [productData, setProductData] = useState();
@@ -30,7 +31,10 @@ const Product = (props) => {
   const [drivingDistance, setDrivingDistance] = useState(null);
   const context = useContext(MyContext);
   const logged = useSelector((state)=>state.authReducer.isAuth);
+  const dispatch = useDispatch()
   const uid = useSelector((state)=>state.authReducer.uid);
+  const {item} = props;
+  const isItemInCart = useSelector((state)=> checkIsItemInCart(state,item.id))
 
   useEffect(() => {
     setProductData(props.item);
@@ -101,18 +105,18 @@ const Product = (props) => {
     }
   }, [userLocation, productData]);
 
-  const addToCart = async (item) => {
-    try {
-      const user = uid;
-      const cartRef = doc(db, "carts", user);
-      const productRef = doc(cartRef, "products", `${item.id}`);
-      await setDoc(productRef, { ...item, quantity: 1 });
-      setIsadded(true);
-      context.fetchCartProducts();
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-    }
-  };
+  // const addToCart = async (item) => {
+  //   try {
+  //     const user = uid;
+  //     const cartRef = doc(db, "carts", user);
+  //     const productRef = doc(cartRef, "products", `${item.id}`);
+  //     await setDoc(productRef, { ...item, quantity: 1 });
+  //     setIsadded(true);
+  //     context.fetchCartProducts();
+  //   } catch (error) {
+  //     console.error("Error adding item to cart:", error);
+  //   }
+  // };
 
   const addToWishlist = async (item) => {
     console.log("addToWishlist");
@@ -203,11 +207,12 @@ const Product = (props) => {
             </div>
 
             <Button
+              disabled={isItemInCart}
               className="w-100 transition mt-3"
-              onClick={() => addToCart(productData)}
+              onClick={() => dispatch(getAddToCart({item:productData,uid}))}
             >
               <ShoppingCartOutlinedIcon />
-              {isAdded === true ? "Added" : "Add"}
+              {isItemInCart === true ? "Added" : "Add"}
             </Button>
           </div>
         </>

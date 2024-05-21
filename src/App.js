@@ -21,7 +21,7 @@ import SignUp from "./pages/SignUp";
 import Cart from "./pages/cart";
 import Wishlist from "./pages/wishList";
 import "./responsive.css";
-
+import {useSelector} from "react-redux"
 // import data from './data';
 import { collection, doc, getDocs } from "firebase/firestore";
 import MapComponent from "./components/map/ITEMmap";
@@ -49,6 +49,8 @@ function App() {
   const [data, setData] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const uid = useSelector((state)=>state.authReducer.uid)
+  const logged = useSelector((state)=>state.authReducer.isAuth)
 
   useEffect(() => {
     fetchCartProducts();
@@ -57,7 +59,7 @@ function App() {
 
   const fetchCartProducts = async () => {
     try {
-      const cartRef = doc(db, "carts", localStorage.getItem("uid"));
+      const cartRef = doc(db, "carts", uid);
       const productsCollectionRef = collection(cartRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
       const products = [];
@@ -74,7 +76,7 @@ function App() {
   const fetchWishlistProducts = async () => {
     console.log("fetchWishlistProducts");
     try {
-      const wishlistRef = doc(db, "wishlists", localStorage.getItem("uid"));
+      const wishlistRef = doc(db, "wishlists", uid);
       const productsCollectionRef = collection(wishlistRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
       console.log(querySnapshot);
@@ -112,9 +114,8 @@ function App() {
 
   useEffect(() => {
     getData();
-
-    const is_Login = localStorage.getItem("isLogin");
-    setIsLogin(is_Login);
+    
+    setIsLogin(logged);
 
     setTimeout(() => {
       setProductData(data[1]);
@@ -269,10 +270,10 @@ function App() {
           <Route exact={true} path="/wishlist" element={<Wishlist />} />
 
           {/* sign in , signup Protection */}
-          {isLogin === null && (
+          {(isLogin === null || isLogin === false) && (
             <Route exact={true} path="signIn" element={<SignIn />} />
           )}
-          {isLogin === null && (
+          {(isLogin === null || isLogin === false) && (
             <Route exact={true} path="signUp" element={<SignUp />} />
           )}
 

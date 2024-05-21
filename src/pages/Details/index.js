@@ -36,7 +36,8 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import { checkIsItemInCart, getAddToCart } from "../../Redux/cart-slice";
 
 const DetailsPage = (props) => {
   const [zoomInage, setZoomImage] = useState(
@@ -86,9 +87,10 @@ const DetailsPage = (props) => {
   const zoomSliderBig = useRef();
   const zoomSlider = useRef();
 
-  let { id } = useParams();
-
+  let { id} = useParams();
+  const isItemInCart = useSelector((state)=> checkIsItemInCart(state,parseInt(id)))
   const uid = useSelector((state)=>state.authReducer.uid);
+  const dispatch = useDispatch()
 
   var settings2 = {
     dots: false,
@@ -256,18 +258,18 @@ const DetailsPage = (props) => {
     }
   };
 
-  const addToCart = async (item) => {
-    try {
-      const user = uid;
-      const cartRef = doc(db, "carts", user);
-      const productRef = doc(cartRef, "products", `${item.id}`);
-      await setDoc(productRef, { ...item, quantity: 1 });
-      setIsadded(true);
-      context.setCartCount(context.cartCount + 1);
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-    }
-  };
+  // const addToCart = async (item) => {
+  //   try {
+  //     const user = uid;
+  //     const cartRef = doc(db, "carts", user);
+  //     const productRef = doc(cartRef, "products", `${item.id}`);
+  //     await setDoc(productRef, { ...item, quantity: 1 });
+  //     setIsadded(true);
+  //     context.setCartCount(context.cartCount + 1);
+  //   } catch (error) {
+  //     console.error("Error adding item to cart:", error);
+  //   }
+  // };
 
   const toggleWishlistItem = async (item) => {
     console.log("addToWishlist");
@@ -356,10 +358,10 @@ const DetailsPage = (props) => {
       {context.windowWidth < 992 && (
         <Button
           className={`btn-g btn-lg w-100 filterBtn {isAlreadyAddedInCart===true && 'no-click'}`}
-          onClick={() => addToCart(currentProduct)}
+          onClick={() => dispatch(getAddToCart({item:currentProduct,uid}))}
         >
           <ShoppingCartOutlinedIcon />
-          {isAdded === true || isAlreadyAddedInCart === true
+          {isItemInCart
             ? "Added"
             : "Add To Cart"}
         </Button>
@@ -563,10 +565,10 @@ const DetailsPage = (props) => {
                       className={`btn-g btn-lg addtocartbtn ${
                         isAlreadyAddedInCart === true && "no-click"
                       }`}
-                      onClick={() => addToCart(currentProduct)}
+                      onClick={() => dispatch(getAddToCart({item:currentProduct,uid}))}
                     >
                       <ShoppingCartOutlinedIcon />
-                      {isAdded === true || isAlreadyAddedInCart === true
+                      {isItemInCart
                         ? "Added"
                         : "Add To Cart"}
                     </Button>

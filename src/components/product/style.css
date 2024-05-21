@@ -37,4 +37,8 @@ border-bottom-right-radius: 50px; border-top-left-radius: 5px; text-transform: c
 .productThumb button{font-size: 20px !important; color: #3bb77e !important; padding: 5px 25px !important; background: #def9ec !important; text-transform: capitalize !important;}
 .productThumb button:hover{background: #3bb77e !important;
      color: #fff !important;}
+.productThumb button:disabled{
+     opacity: 0.6;
+     cursor: not-allowed;
+}
 
