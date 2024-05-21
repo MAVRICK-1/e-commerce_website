@@ -132,11 +132,17 @@ const Footer = () => {
                   <LocationOnOutlinedIcon /> <strong>Address</strong>: 5171 W
                   Campbell Ave undefined Kent, Utah 53127 United States
                 </p>
-                <p>
+                <p
+                  className="mail-tel"
+                  onClick={() => (window.location = 'tel: +91 540-025-124553')}
+                >
                   <HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) -
                   540-025-124553{' '}
                 </p>
-                <p>
+                <p
+                  className="mail-tel"
+                  onClick={() => (window.location = 'mailto:sale@Nest.com')}
+                >
                   <EmailOutlinedIcon /> <strong>Email:</strong> sale@Nest.com
                 </p>
                 <p>
@@ -265,7 +271,10 @@ const Footer = () => {
                     <span>
                       <HeadphonesOutlinedIcon />
                     </span>
-                    <div className="info ml-3">
+                    <div
+                      className="mail-tel info ml-3"
+                      onClick={() => (window.location = 'tel: 1900 - 888')}
+                    >
                       <h3 className="text-g mb-0">1900 - 888</h3>
                       <p className="mb-0">24/7 Support Center</p>
                     </div>
@@ -275,7 +284,10 @@ const Footer = () => {
                     <span>
                       <HeadphonesOutlinedIcon />
                     </span>
-                    <div className="info ml-3">
+                    <div
+                      className="mail-tel info ml-3"
+                      onClick={() => (window.location = 'tel: 1900 - 888')}
+                    >
                       <h3 className="text-g mb-0">1900 - 888</h3>
                       <p className="mb-0">24/7 Support Center</p>
                     </div>
