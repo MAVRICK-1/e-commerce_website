@@ -114,7 +114,8 @@ function App() {
 
   useEffect(() => {
     getData();
-    
+
+    const is_Login = localStorage.getItem("isLogin");
     setIsLogin(logged);
 
     setTimeout(() => {
@@ -173,31 +174,6 @@ function App() {
     }
   };
 
-  const addToCart = async (item) => {
-    try {
-      const user = localStorage.getItem("user");
-      // Initialize Firebase database with the provided database URL
-      const db = getDatabase();
-      const cartRef = ref(db, user);
-      // Generate a unique key using the user's email and item details
-      const uniqueKey = user + item.id; // Modify as per your requirement
-      // Add item to the cart in Firebase
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      //console.log('Item added to cart successfully');
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-    }
-  };
-
-  const removeItemsFromCart = (id) => {
-    const arr = cartItems.filter((obj) => obj.id !== id);
-    setCartItems(arr);
-  };
-
-  const emptyCart = () => {
-    setCartItems([]);
-  };
-
   const signIn = () => {
     const is_Login = localStorage.getItem("isLogin");
     setIsLogin(is_Login);
@@ -217,9 +193,6 @@ function App() {
     isLogin,
     windowWidth,
     isOpenFilters,
-    addToCart,
-    removeItemsFromCart,
-    emptyCart,
     signOut,
     signIn,
     openFilters,

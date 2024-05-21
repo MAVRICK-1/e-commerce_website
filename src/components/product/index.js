@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import Rating from "@mui/material/Rating";
 import { Button } from "@mui/material";
@@ -17,7 +17,6 @@ import {
   remove,
 } from "firebase/database";
 
-import { MyContext } from "../../App";
 import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import {useDispatch, useSelector} from "react-redux"
@@ -29,7 +28,6 @@ const Product = (props) => {
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [drivingDistance, setDrivingDistance] = useState(null);
-  const context = useContext(MyContext);
   const logged = useSelector((state)=>state.authReducer.isAuth);
   const dispatch = useDispatch()
   const uid = useSelector((state)=>state.authReducer.uid);
@@ -105,19 +103,6 @@ const Product = (props) => {
     }
   }, [userLocation, productData]);
 
-  // const addToCart = async (item) => {
-  //   try {
-  //     const user = uid;
-  //     const cartRef = doc(db, "carts", user);
-  //     const productRef = doc(cartRef, "products", `${item.id}`);
-  //     await setDoc(productRef, { ...item, quantity: 1 });
-  //     setIsadded(true);
-  //     context.fetchCartProducts();
-  //   } catch (error) {
-  //     console.error("Error adding item to cart:", error);
-  //   }
-  // };
-
   const addToWishlist = async (item) => {
     console.log("addToWishlist");
     try {
@@ -126,7 +111,6 @@ const Product = (props) => {
       const productRef = doc(wishlistRef, "products", `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });
       setIsadded(true);
-      context.fetchWishlistProducts();
     } catch (error) {
       console.error("Error adding item to wishlist:", error);
     }

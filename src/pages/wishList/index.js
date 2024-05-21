@@ -34,6 +34,7 @@ const WishList = () => {
   const navigate = useNavigate();
   const uid = useSelector((state)=>state.authReducer.uid);
   const logged = useSelector((state)=>state.authReducer.isAuth);
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
 
   console.log(wishlistItems);
   useEffect(() => {
@@ -117,7 +118,7 @@ const WishList = () => {
       {wishlistItems.length > 0 ? (
         // Render cart section if cartItems array is not empty
         <>
-          {context.windowWidth > 992 && (
+          {windowWidth > 992 && (
             <div className="breadcrumbWrapper mb-4">
               <div className="container-fluid">
                 <ul className="breadcrumb breadcrumb2 mb-0">

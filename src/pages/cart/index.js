@@ -37,6 +37,7 @@ const Cart = () => {
   const logged = useSelector((state)=>state.authReducer.isAuth)
   const dispatch = useDispatch();
   const isDeleteing = useSelector((state)=>state.cart.isRemoving)
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
 
   useEffect(() => {
     try {
@@ -71,7 +72,7 @@ const Cart = () => {
         products.push({ id: doc.id, ...doc.data() });
         price += parseInt(doc.data()?.price) * doc.data()?.quantity;
       });
-      context.setCartCount(products.length);
+      // context.setCartCount(products.length);
       setCartItems(products);
       setTotalPrice(price);
     } catch (error) {
@@ -107,7 +108,7 @@ const Cart = () => {
       {cartItems.length > 0 ? (
         // Render cart section if cartItems array is not empty
         <>
-          {context.windowWidth > 992 && (
+          {windowWidth > 992 && (
             <div className="breadcrumbWrapper mb-4">
               <div className="container-fluid">
                 <ul className="breadcrumb breadcrumb2 mb-0">

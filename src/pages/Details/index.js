@@ -89,6 +89,7 @@ const DetailsPage = (props) => {
 
   let { id} = useParams();
   const isItemInCart = useSelector((state)=> checkIsItemInCart(state,parseInt(id)))
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
   const uid = useSelector((state)=>state.authReducer.uid);
   const dispatch = useDispatch()
 
@@ -109,7 +110,7 @@ const DetailsPage = (props) => {
     slidesToShow: 5,
     slidesToScroll: 1,
     fade: false,
-    arrows: context.windowWidth > 992 ? true : false,
+    arrows: windowWidth > 992 ? true : false,
   };
 
   var related = {
@@ -119,7 +120,7 @@ const DetailsPage = (props) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     fade: false,
-    arrows: context.windowWidth > 992 ? true : false,
+    arrows: windowWidth > 992 ? true : false,
   };
 
   const goto = (index) => {
@@ -355,7 +356,7 @@ const DetailsPage = (props) => {
 
   return (
     <>
-      {context.windowWidth < 992 && (
+      {windowWidth < 992 && (
         <Button
           className={`btn-g btn-lg w-100 filterBtn {isAlreadyAddedInCart===true && 'no-click'}`}
           onClick={() => dispatch(getAddToCart({item:currentProduct,uid}))}
@@ -371,7 +372,7 @@ const DetailsPage = (props) => {
       </div>
 
       <section className="detailsPage mb-5">
-        {context.windowWidth > 992 && (
+        {windowWidth > 992 && (
           <div className="breadcrumbWrapper mb-4">
             <div className="container-fluid">
               <ul className="breadcrumb breadcrumb2 mb-0">
@@ -560,7 +561,7 @@ const DetailsPage = (props) => {
 
               <div className="d-flex align-items-center">
                 <div className="d-flex align-items-center">
-                  {context.windowWidth > 992 && (
+                  {windowWidth > 992 && (
                     <Button
                       className={`btn-g btn-lg addtocartbtn ${
                         isAlreadyAddedInCart === true && "no-click"

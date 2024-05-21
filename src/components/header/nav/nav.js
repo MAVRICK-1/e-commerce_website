@@ -12,12 +12,12 @@ const Nav = (props) => {
 
     const [navData, setNavData] = useState([]);
     const [isOpenNav, setIsOpenNav] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [openDropdownMenu, setDropdownMenu] = useState(false);
     const [openDropdownMenuIndex, setDropdownMenuIndex] = useState(null);
-
+    
     const [openMegaMenu, setOpenMegaMenu] = useState(false);
-
+    
+    const windowWidth = useSelector((state)=>state.filter.windowWidth);
     const logged = useSelector((state)=>state.authReducer.isAuth)
 
     useEffect(() => {

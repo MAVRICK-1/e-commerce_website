@@ -15,6 +15,8 @@ import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 
 import { MyContext } from '../../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpenFilters } from '../../Redux/filter-slice';
 
 function valuetext(value) {
     return `${value}°C`;
@@ -28,7 +30,8 @@ const Sidebar = (props) => {
     const [ratingsArr, setRatings] = React.useState([]);
     const [totalLength, setTotalLength] = useState([]);
 
-    const context = useContext(MyContext);
+    const isOpenFilters = useSelector((state)=>state.filter.openFilters);
+    const dispatch = useDispatch();
 
     let { id } = useParams();
 
@@ -118,7 +121,7 @@ const Sidebar = (props) => {
 
     return (
         <>
-            <div className={`sidebar ${context.isOpenFilters===true && 'open'}`}>
+            <div className={`sidebar ${isOpenFilters===true && 'open'}`}>
                 <div className='card border-0 shadow res-hide'>
                     <h3>Category</h3>
                     <div className='catList'>
@@ -201,7 +204,7 @@ const Sidebar = (props) => {
 
 
                     <div className='d-flex filterWrapper'>
-                        <Button className='btn btn-g w-100'  onClick={() => context.openFilters()}><FilterAltOutlinedIcon /> Filter</Button>
+                        <Button className='btn btn-g w-100'  onClick={() => dispatch(setOpenFilters())}><FilterAltOutlinedIcon /> Filter</Button>
                     </div>
 
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext} from 'react';
+import React from 'react';
 import Slider from "react-slick";
 import './index.css';
 
@@ -8,11 +8,12 @@ import Button from '@mui/material/Button';
 
 import Newsletter from '../../../components/newsletter';
 
-import { MyContext } from '../../../App';
+
+import { useSelector } from 'react-redux';
 
 const HomeSlider = () => {
 
-    const context = useContext(MyContext);
+    const windowWidth = useSelector((state)=>state.filter.windowWidth);
 
     var settings = {
         dots: true,
@@ -21,7 +22,7 @@ const HomeSlider = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         fade: true,
-        arrows: context.windowWidth>992 ? true : false,
+        arrows: windowWidth>992 ? true : false,
         autoplay:true
     };
 
@@ -54,7 +55,7 @@ const HomeSlider = () => {
                 </Slider>
 
                 {
-                    context.windowWidth>992 && <Newsletter/>
+                    windowWidth>992 && <Newsletter/>
                 }
                 
 

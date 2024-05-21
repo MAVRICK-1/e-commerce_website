@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Product from '../../components/product';
@@ -7,7 +7,8 @@ import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined';
 import MapComponent from '../../components/map/ITEMmap';
 
-import { MyContext } from '../../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpenFilters } from '../../Redux/filter-slice';
 
 const Listing = (props) => {
     const [isOpenDropDown, setisOpenDropDown] = useState(false);
@@ -16,7 +17,11 @@ const Listing = (props) => {
 
     const [data, setData] = useState([]);
 
-    const context = useContext(MyContext);
+    const windowWidth = useSelector((state)=>state.filter.windowWidth);
+    const isOpenNavigation = useSelector((state)=>state.filter.openNavigation);
+    const isOpenFilters = useSelector((state)=>state.filter.openFilters);
+
+    const dispatch = useDispatch()
 
     const [currentId, setCurrentId] = useState()
 
@@ -251,11 +256,11 @@ const Listing = (props) => {
     return (
         <>
             {
-                context.windowWidth < 992 &&
+                windowWidth < 992 &&
                 <>
                     {
-                        context.isopenNavigation===false &&
-                        <Button className='btn-g btn-lg w-100 filterBtn' onClick={() => context.openFilters()}>Filters</Button>
+                        isOpenNavigation===false &&
+                        <Button className='btn-g btn-lg w-100 filterBtn' onClick={() => dispatch(setOpenFilters())}>Filters</Button>
                     }
                 </>
               
@@ -290,7 +295,7 @@ const Listing = (props) => {
 
                     <div className='listingData'>
                         <div className='row'>
-                            <div className={`col-md-3 sidebarWrapper ${context.isOpenFilters===true && 'click'}`}>
+                            <div className={`col-md-3 sidebarWrapper ${isOpenFilters===true && 'click'}`}>
 
                                 {
                                     data.length !== 0 && <Sidebar data={props.data} currentCatData={data} filterByBrand={filterByBrand} filterByPrice={filterByPrice} filterByRating={filterByRating} />

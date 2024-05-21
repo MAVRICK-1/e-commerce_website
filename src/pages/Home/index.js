@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SliderBanner from './slider/index';
 import CatSlider from '../../components/catSlider';
 
@@ -10,8 +10,7 @@ import Banner4 from '../../assets/images/banner4.jpg';
 
 import Slider from "react-slick";
 import TopProducts from './TopProducts';
-import axios from 'axios';
-import { MyContext } from '../../App';
+import { useSelector } from 'react-redux';
 
 const Home = (props) => {
 
@@ -25,19 +24,20 @@ const Home = (props) => {
     const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 
     const productRow=useRef();
-    const context = useContext(MyContext);
+    const windowWidth = useSelector((state)=>state.filter.windowWidth);
 
     var settings = {
         dots: false,
-        infinite: context.windowWidth<992 ? false : true,
+        infinite: windowWidth<992 ? false : true,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
         fade: false,
-        arrows: context.windowWidth<992 ? false : true,
+        arrows: windowWidth<992 ? false : true,
     };
 
     const catArr = [];
+
     useEffect(() => {
 
         prodData.length !== 0 &&
@@ -55,7 +55,6 @@ const Home = (props) => {
 
         window.scrollTo(0,0);
     }, [])
-
 
 
 

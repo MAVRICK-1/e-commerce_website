@@ -6,6 +6,7 @@ const initialState = {
   items: [],
   isAdding: false,
   isRemoving: false,
+  isLoading: false,
 };
 
 export const checkIsItemInCart = (state, itemId) => {

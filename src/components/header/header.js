@@ -32,23 +32,23 @@ import { Satellite } from "@mui/icons-material";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../Redux/auth-slice";
+import { setOpenNavigation } from "../../Redux/filter-slice";
 
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
   const [isOpenAccDropDown, setisOpenAccDropDown] = useState(false);
   const logged = useSelector((state)=>state.authReducer.isAuth)
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
   // const { cartCount, setCartCount } = useContext(MyContext);
-  const { wishlistCount, setWishlistCount } = useContext(MyContext);
+  let wishlistCount = 0;
 
   const headerRef = useRef();
   const searchInput = useRef();
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
   const profile = useSelector((state)=>state.authReducer.photoURL)
   const cartCount = useSelector((state)=>state.cart.items.length);
   const items = useSelector((state)=>state.cart.items);
-  console.log(items)
   const dispatch = useDispatch()
   const context = useContext(MyContext);
   const history = useNavigate();
@@ -124,12 +124,14 @@ const Header = (props) => {
   const openNav = () => {
     setIsOpenNav(true);
     context.setIsopenNavigation(true);
+    dispatch(setOpenNavigation(true));
   };
 
   const closeNav = () => {
     setIsOpenNav(false);
     setisOpenAccDropDown(false);
     context.setIsopenNavigation(false);
+    dispatch(setOpenNavigation(false));
   };
 
   return (
