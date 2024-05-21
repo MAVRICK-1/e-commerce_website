@@ -16,16 +16,15 @@
   /* visibility: hidden;  */
   box-shadow: 0px 2px 4px 1px rgba(154, 154, 154, 0.25);
   z-index: 99;
-  -webkit-transition: all .2s ease-in-out;
-  transition: all .2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .back-to-top-button.show {
   visibility: visible;
 }
 
-.back-to-top-button:hover{
-  scale:1.2;
+.back-to-top-button:hover {
+  scale: 1.2;
   box-shadow: 0px 2px 4px 1px rgb(167, 253, 130);
-
 }
