@@ -34,63 +34,61 @@ function App() {
   const [productData, setProductData] = useState([]);
 
   const [cartItems, setCartItems] = useState([]);
-  const [wishlistItems, setWishlistItems] = useState([]);
 
   const [isLoading, setIsloading] = useState(true);
 
-  const [loading, setLoading] = useState(true);
-
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  const [isopenNavigation, setIsopenNavigation] = useState(false);
-
   const [isLogin, setIsLogin] = useState();
-  const [isOpenFilters, setIsopenFilters] = useState(false);
   const [data, setData] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
-  const [wishlistCount, setWishlistCount] = useState(0);
   const uid = useSelector((state)=>state.authReducer.uid)
   const logged = useSelector((state)=>state.authReducer.isAuth)
 
-  useEffect(() => {
-    fetchCartProducts();
-    fetchWishlistProducts();
-  }, [isLogin]);
+  function replaceSpecialCharacters(inputString) {
+    // Use a regular expression to replace special characters with underscore _
+    const replacedString = inputString.replace(/[#$\[\].]/g, "_");
 
-  const fetchCartProducts = async () => {
-    try {
-      const cartRef = doc(db, "carts", uid);
-      const productsCollectionRef = collection(cartRef, "products");
-      const querySnapshot = await getDocs(productsCollectionRef);
-      const products = [];
-      querySnapshot.forEach((doc) => {
-        products.push({ id: doc.id, ...doc.data() });
-      });
-      setCartItems(products);
-      setCartCount(products.length); // Set the product count
-    } catch (error) {
-      console.error("Error fetching cart products:", error);
-    }
-  };
+    return replacedString;
+  }
+  const email = replaceSpecialCharacters(useSelector((state)=>state.authReducer.email))
 
-  const fetchWishlistProducts = async () => {
-    console.log("fetchWishlistProducts");
-    try {
-      const wishlistRef = doc(db, "wishlists", uid);
-      const productsCollectionRef = collection(wishlistRef, "products");
-      const querySnapshot = await getDocs(productsCollectionRef);
-      console.log(querySnapshot);
-      const products = [];
-      querySnapshot.forEach((doc) => {
-        products.push({ id: doc.id, ...doc.data() });
-      });
-      console.log(products);
-      setWishlistItems(products);
-      setWishlistCount(products.length); // Set the product count
-    } catch (error) {
-      console.error("Error fetching wishlist products:", error);
-    }
-  };
+  // useEffect(() => {
+  //   fetchCartProducts();
+  //   fetchWishlistProducts();
+  // }, [logged]);
+
+  // const fetchCartProducts = async () => {
+  //   try {
+  //     const cartRef = doc(db, "carts", uid);
+  //     const productsCollectionRef = collection(cartRef, "products");
+  //     const querySnapshot = await getDocs(productsCollectionRef);
+  //     const products = [];
+  //     querySnapshot.forEach((doc) => {
+  //       products.push({ id: doc.id, ...doc.data() });
+  //     });
+  //     setCartItems(products);
+  //     setCartCount(products.length); // Set the product count
+  //   } catch (error) {
+  //     console.error("Error fetching cart products:", error);
+  //   }
+  // };
+
+  // const fetchWishlistProducts = async () => {
+  //   console.log("fetchWishlistProducts");
+  //   try {
+  //     const wishlistRef = doc(db, "wishlists", uid);
+  //     const productsCollectionRef = collection(wishlistRef, "products");
+  //     const querySnapshot = await getDocs(productsCollectionRef);
+  //     console.log(querySnapshot);
+  //     const products = [];
+  //     querySnapshot.forEach((doc) => {
+  //       products.push({ id: doc.id, ...doc.data() });
+  //     });
+  //     console.log(products);
+  //     setWishlistItems(products);
+  //     setWishlistCount(products.length); // Set the product count
+  //   } catch (error) {
+  //     console.error("Error fetching wishlist products:", error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,7 +113,6 @@ function App() {
   useEffect(() => {
     getData();
 
-    const is_Login = localStorage.getItem("isLogin");
     setIsLogin(logged);
 
     setTimeout(() => {
@@ -130,7 +127,7 @@ function App() {
       const db = getDatabase();
 
       // Reference to the node or path you want to fetch data from
-      const dataRef = ref(db, localStorage.getItem("user"));
+      const dataRef = ref(db, email);
 
       // Fetch data from the specified path
       onValue(
@@ -174,41 +171,11 @@ function App() {
     }
   };
 
-  const signIn = () => {
-    const is_Login = localStorage.getItem("isLogin");
-    setIsLogin(is_Login);
-  };
 
-  const signOut = () => {
-    localStorage.removeItem("isLogin");
-    setIsLogin(false);
-  };
 
-  const openFilters = () => {
-    setIsopenFilters(!isOpenFilters);
-  };
-
-  const value = {
-    cartItems,
-    isLogin,
-    windowWidth,
-    isOpenFilters,
-    signOut,
-    signIn,
-    openFilters,
-    isopenNavigation,
-    setIsopenNavigation,
-    cartCount,
-    setCartCount,
-    wishlistCount,
-    setWishlistCount,
-    fetchCartProducts,
-    fetchWishlistProducts,
-  };
 
   return data && data.productData ? (
     <HashRouter>
-      <MyContext.Provider value={value}>
         {isLoading === true && (
           <div className="loader">
             <img src={Loader} />
@@ -259,7 +226,6 @@ function App() {
           <Route exact={true} path="*" element={<NotFound />} />
         </Routes>
         <Footer />
-      </MyContext.Provider>
     </HashRouter>
   ) : (
     <div className="loader">

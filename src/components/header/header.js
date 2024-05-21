@@ -20,9 +20,6 @@ import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 import Nav from "./nav/nav";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-
-import { MyContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
@@ -50,7 +47,6 @@ const Header = (props) => {
   const cartCount = useSelector((state)=>state.cart.items.length);
   const items = useSelector((state)=>state.cart.items);
   const dispatch = useDispatch()
-  const context = useContext(MyContext);
   const history = useNavigate();
 
 
@@ -106,7 +102,6 @@ const Header = (props) => {
 
   const signOut = () => {
     dispatch(logOut());
-    context.signOut();
     history("/");
   };
 
@@ -123,14 +118,12 @@ const Header = (props) => {
 
   const openNav = () => {
     setIsOpenNav(true);
-    context.setIsopenNavigation(true);
     dispatch(setOpenNavigation(true));
   };
 
   const closeNav = () => {
     setIsOpenNav(false);
     setisOpenAccDropDown(false);
-    context.setIsopenNavigation(false);
     dispatch(setOpenNavigation(false));
   };
 

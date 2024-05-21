@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from '@mui/material/Slider';
 import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
@@ -13,8 +13,6 @@ import FormLabel from '@mui/material/FormLabel';
 
 import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
-
-import { MyContext } from '../../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOpenFilters } from '../../Redux/filter-slice';
 

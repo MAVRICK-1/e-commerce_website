@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import Box from "@mui/material/Box";
@@ -16,7 +16,6 @@ import {
 import { app } from "../../firebase";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { MyContext } from "../../App";
 import GoogleImg from "../../assets/images/google.png";
 import useLoggedInUserEmail from "../../Hooks/useLoggedInUserEmail";
 import { useDispatch } from "react-redux";
@@ -32,7 +31,6 @@ const SignIn = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const context = useContext(MyContext);
   const history = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [loggedInUserEmail, setLoggedInUseEmail] = useLoggedInUserEmail(); //get_email hook
@@ -109,7 +107,6 @@ const SignIn = () => {
           password: "",
         });
         const udata = replaceSpecialCharacters(user.email);
-        context.signIn();
         dispatch(logIn({
           phoneNumber:user.phoneNumber,
           photoURL:user.photoURL,
@@ -143,7 +140,6 @@ const SignIn = () => {
           email:result.user.email,
           emailVerified:result.user.emailVerified
         }))
-        context.signIn();
         setLoggedInUseEmail(udata);
         history("/");
       })

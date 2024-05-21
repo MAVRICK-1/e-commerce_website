@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import InnerImageZoom from "react-inner-image-zoom";
@@ -24,7 +24,6 @@ import {
 } from "firebase/database";
 import Product from "../../components/product";
 import axios from "axios";
-import { MyContext } from "../../App";
 import MapComponent from "../../components/map/ITEMmap";
 import { Email } from "@mui/icons-material";
 import useLoggedInUserEmail from "../../Hooks/useLoggedInUserEmail";
@@ -58,8 +57,6 @@ const DetailsPage = (props) => {
   const [isAdded, setIsadded] = useState(false);
   const [isWishlistItemAdded, setIsWishlistItemAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const context = useContext(MyContext);
 
   const [prodCat, setProdCat] = useState({
     parentCat: sessionStorage.getItem("parentCat"),
@@ -284,7 +281,6 @@ const DetailsPage = (props) => {
         await setDoc(productRef, { ...item, quantity: 1 });
         setIsWishlistItemAdded(true);
         setisAlreadyAddedInWishlist(true);
-        context.setWishlistCount(context.wishlistCount + 1);
       } catch (error) {
         console.error("Error adding item to wishlist:", error);
       }
@@ -298,7 +294,6 @@ const DetailsPage = (props) => {
       try {
         await deleteDoc(wishlistItemRef);
         setisAlreadyAddedInWishlist(false);
-        context.setWishlistCount(context.wishlistCount - 1);
         console.log("Wishlist item deleted successfully.");
       } catch (error) {
         console.error("Error deleting wishlist item:", error);

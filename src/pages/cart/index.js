@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import QuantityBox from "../../components/quantityBox";
-import { MyContext } from "../../App";
 import { getDatabase, ref, onValue, remove } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -31,7 +30,6 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
-  const context = useContext(MyContext);
   const navigate = useNavigate();
   const uid = useSelector((state)=>state.authReducer.uid)
   const logged = useSelector((state)=>state.authReducer.isAuth)
