@@ -24,6 +24,8 @@ import MapComponent from './components/map/ITEMmap';
 import { db } from './firebase';
 import SellerForm from './pages/SellerRegistration';
 import SearchResults from './components/search/SearchResults';
+import Shipping from './components/ShippingAddress/ShippingForm';
+import { Account } from './components/AccountDetails/Account';
 
 const MyContext = createContext();
 
@@ -291,6 +293,18 @@ function App() {
           <Route exact={true} path="*" element={<NotFound />} />
           {/* search route */}
           <Route exact={true} path="/search" element={<SearchResults />} />
+
+          <Route
+            exact={true}
+            path="/update-shipping-address/:addressId"
+            element={<Shipping />}
+          />
+          <Route
+            exact={true}
+            path="/add-shipping-address"
+            element={<Shipping />}
+          />
+          <Route exact={true} path="/my-account" element={<Account />} />
         </Routes>
         <Footer />
       </MyContext.Provider>
