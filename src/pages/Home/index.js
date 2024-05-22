@@ -6,9 +6,9 @@ import Banners from '../../components/banners';
 
 import './style.css';
 import Product from '../../components/product';
-import Banner4 from '../../assets/images/banner4.jpg';
+import Banner4 from '../../assets/images/banner4.webp';
 
-import Slider from "react-slick";
+import Slider from 'react-slick';
 import TopProducts from './TopProducts';
 import { useSelector } from 'react-redux';
 
@@ -102,149 +102,119 @@ const Home = (props) => {
                                 })
                         })
                 }
-
             });
+        }
+      });
 
+    setBestSells(bestSellsArr);
+  }, []);
 
-        setBestSells(bestSellsArr);
+  return (
+    <div style={{ display: 'block' }}>
+      <SliderBanner />
+      <CatSlider data={prodData} />
 
-    }, [])
+      <Banners />
 
+      <section className="homeProducts homeProductWrapper">
+        <div className="container-fluid">
+          <div className="d-flex align-items-center homeProductsTitleWrap">
+            <h2 className="hd mb-0 mt-0 res-full">Popular Products</h2>
+            <ul className="list list-inline ml-auto filterTab mb-0 res-full">
+              {catArray.length !== 0 &&
+                catArray.map((cat, index) => {
+                  return (
+                    <li className="list list-inline-item">
+                      <a
+                        className={`cursor text-capitalize 
+                                                ${
+                                                  activeTabIndex === index
+                                                    ? 'act'
+                                                    : ''
+                                                }`}
+                        onClick={() => {
+                          setactiveTab(cat);
+                          setactiveTabIndex(index);
+                          productRow.current.scrollLeft = 0;
+                          setIsLoadingProducts(true);
+                        }}
+                      >
+                        {cat}
+                      </a>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
 
-
-
-    return (
-        <div style={{display:'block'}}>
-            <SliderBanner />
-            <CatSlider data={prodData} />
-
-            <Banners />
-
-
-            <section className='homeProducts homeProductWrapper'>
-                <div className='container-fluid'>
-                    <div className='d-flex align-items-center homeProductsTitleWrap'>
-                        <h2 className='hd mb-0 mt-0 res-full' >Popular Products</h2>
-                        <ul className='list list-inline ml-auto filterTab mb-0 res-full'>
-
-                            {
-                                catArray.length !== 0 &&
-                                catArray.map((cat, index) => {
-                                    return (
-                                        <li className="list list-inline-item">
-                                            <a className={`cursor text-capitalize 
-                                                ${activeTabIndex === index ? 'act' : ''}`}
-                                                onClick={() => {
-                                                    setactiveTab(cat)
-                                                    setactiveTabIndex(index);
-                                                    productRow.current.scrollLeft=0;
-                                                    setIsLoadingProducts(true);
-                                                }}
-                                            >
-                                                {cat}
-                                            </a>
-                                        </li>
-                                    )
-                                })
-                            }
-
-                        </ul>
-                    </div>
-
-
-                    <div className={`productRow ${isLoadingProducts===true && 'loading'}`} ref={productRow}>
-
-                        {
-                            activeTabData.length !== 0 &&
-                            activeTabData.map((item, index) => {
-                                return (
-                                    <div className='item' key={index}>
-
-                                        <Product tag={item.type} item={item} />
-                                    </div>
-                                )
-                            })
-                        }
-
-                    </div>
-
-                </div>
-            </section>
-
-
-
-
-
-
-            <section className='homeProducts homeProductsRow2 pt-0'>
-                <div className='container-fluid'>
-                    <div className='d-flex align-items-center'>
-                        <h2 className='hd mb-0 mt-0'>Daily Best Sells</h2>
-
-                    </div>
-
-                    <br className='res-hide' /><br  className='res-hide'/>
-                    <div className='row'>
-                        <div className='col-md-3 pr-5 res-hide'>
-                            <img src={Banner4} className='w-100' />
-                        </div>
-
-                        <div className='col-md-9'>
-                            <Slider {...settings} className='prodSlider'>
-
-                                {
-                                    bestSells.length !== 0 &&
-                                    bestSells.map((item, index) => {
-                                        return (
-                                            <div className='item' key={index}>
-                                                <Product tag={item.type} item={item} />
-                                            </div>
-                                        )
-                                    })
-                                }
-
-                            </Slider>
-                        </div>
-                    </div>
-
-
-                </div>
-            </section>
-
-
-
-            <section className='topProductsSection'>
-                <div className='container-fluid'>
-                    <div className='row'>
-                        <div className='col'>
-                            <TopProducts title="Top Selling" />
-                        </div>
-
-                        <div className='col'>
-                            <TopProducts title="Trending Products" />
-                        </div>
-
-                        <div className='col'>
-                            <TopProducts title="Recently added" />
-                        </div>
-
-                        <div className='col'>
-                            <TopProducts title="Top Rated" />
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-
+          <div
+            className={`productRow ${isLoadingProducts === true && 'loading'}`}
+            ref={productRow}
+          >
+            {activeTabData.length !== 0 &&
+              activeTabData.map((item, index) => {
+                return (
+                  <div className="item" key={index}>
+                    <Product tag={item.type} item={item} />
+                  </div>
+                );
+              })}
+          </div>
         </div>
-    )
-}
+      </section>
+
+      <section className="homeProducts homeProductsRow2 pt-0">
+        <div className="container-fluid">
+          <div className="d-flex align-items-center">
+            <h2 className="hd mb-0 mt-0">Daily Best Sells</h2>
+          </div>
+
+          <br className="res-hide" />
+          <br className="res-hide" />
+          <div className="row">
+            <div className="col-md-3 pr-5 res-hide">
+              <img src={Banner4} className="w-100" />
+            </div>
+
+            <div className="col-md-9">
+              <Slider {...settings} className="prodSlider">
+                {bestSells.length !== 0 &&
+                  bestSells.map((item, index) => {
+                    return (
+                      <div className="item" key={index}>
+                        <Product tag={item.type} item={item} />
+                      </div>
+                    );
+                  })}
+              </Slider>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="topProductsSection">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col">
+              <TopProducts title="Top Selling" />
+            </div>
+
+            <div className="col">
+              <TopProducts title="Trending Products" />
+            </div>
+
+            <div className="col">
+              <TopProducts title="Recently added" />
+            </div>
+
+            <div className="col">
+              <TopProducts title="Top Rated" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
 
 export default Home;
-
-
-
-
-
-

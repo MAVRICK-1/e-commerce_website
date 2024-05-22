@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
 import { Button } from '@mui/material';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import bannerImg from '../../assets/images/banner1.jpg';
+import bannerImg from '../../assets/images/banner1.webp';
 import { Link, useParams } from 'react-router-dom';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOpenFilters } from '../../Redux/filter-slice';
 
 function valuetext(value) {
-    return `${value}°C`;
+  return `${value}°C`;
 }
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 

@@ -22,11 +22,14 @@ import Cart from "./pages/cart";
 import Wishlist from "./pages/wishList";
 import "./responsive.css";
 import {useSelector} from "react-redux"
+import ResetPassword from './pages/ResetPassword';
 // import data from './data';
-import { collection, doc, getDocs } from "firebase/firestore";
-import MapComponent from "./components/map/ITEMmap";
-import { db } from "./firebase";
-import SellerForm from "./pages/SellerRegistration";
+import { collection, doc, getDocs } from 'firebase/firestore';
+import MapComponent from './components/map/ITEMmap';
+import { db } from './firebase';
+import SellerForm from './pages/SellerRegistration';
+import SearchResults from './components/search/SearchResults';
+import GoToTop from './components/GoToTop/GoToTop';
 
 const MyContext = createContext();
 
@@ -39,6 +42,7 @@ function App() {
 
   const [isLogin, setIsLogin] = useState();
   const [data, setData] = useState([]);
+
   const uid = useSelector((state)=>state.authReducer.uid)
   const logged = useSelector((state)=>state.authReducer.isAuth)
 
@@ -94,16 +98,16 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://mavrick-1.github.io/DataApi/data.json"
+          'https://mavrick-1.github.io/DataApi/data.json'
         );
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
         // //console.log("fetced data", data)
         setData(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -127,6 +131,7 @@ function App() {
       const db = getDatabase();
 
       // Reference to the node or path you want to fetch data from
+
       const dataRef = ref(db, email);
 
       // Fetch data from the specified path
@@ -138,11 +143,11 @@ function App() {
           //console.log("Data fetched successfully:", data);
         },
         (error) => {
-          console.error("Error fetching data:", error);
+          console.error('Error fetching data:', error);
         }
       );
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -152,7 +157,7 @@ function App() {
       const db = getDatabase();
 
       // Reference to the node or path you want to fetch data from
-      const dataRef = ref(db, localStorage.getItem("user"));
+      const dataRef = ref(db, localStorage.getItem('user'));
 
       // Fetch data from the specified path
       onValue(
@@ -163,16 +168,22 @@ function App() {
           //console.log("Data fetched successfully:", data);
         },
         (error) => {
-          console.error("Error fetching data:", error);
+          console.error('Error fetching data:', error);
         }
       );
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
-
-
+  useEffect(() => {
+    if (window.botpressWebChat) {
+      window.botpressWebChat.init({
+        botId: '41bcf48e-b15e-4c9e-8d0e-c9e9055742eb', // Replace with your Botpress bot ID
+        host: 'https://cdn.botpress.cloud/webchat/v1' // Replace with your Botpress server URL
+      });
+    }
+  }, []);
 
   return data && data.productData ? (
     <HashRouter>
@@ -213,7 +224,14 @@ function App() {
           {(isLogin === null || isLogin === false) && (
             <Route exact={true} path="signIn" element={<SignIn />} />
           )}
-          {(isLogin === null || isLogin === false) && (
+           {(isLogin === null || isLogin === false) && (
+            <Route
+              exact={true}
+              path="resetpassword"
+              element={<ResetPassword />}
+            />
+          )}
+           {(isLogin === null || isLogin === false) && (
             <Route exact={true} path="signUp" element={<SignUp />} />
           )}
 
@@ -224,8 +242,12 @@ function App() {
           />
           <Route exact={true} path="/addProduct" element={<AddProductForm />} />
           <Route exact={true} path="*" element={<NotFound />} />
+          {/* search route */}
+          <Route exact={true} path="/search" element={<SearchResults />} />
         </Routes>
         <Footer />
+
+        <GoToTop />
     </HashRouter>
   ) : (
     <div className="loader">
@@ -237,4 +259,3 @@ function App() {
 export default App;
 
 export { MyContext };
-

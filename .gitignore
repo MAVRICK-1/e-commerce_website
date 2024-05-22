@@ -3,3 +3,4 @@ node_modules/
 build
 BOSS
 .eslintcache
+yarn.lock

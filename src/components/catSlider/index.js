@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const CatSlider = (props) => {
-
     const [allData, setAllData] = useState(props.data);
     const [totalLength, setTotalLength] = useState([]);
     const windowWidth = useSelector((state)=>state.filter.windowWidth);
@@ -228,16 +227,11 @@ const CatSlider = (props) => {
                                 <p>26 items</p>
                             </div>
                         </div> */}
-
-
-                    </Slider>
-                </div >
-            </div >
-
-
-
-        </>
-    )
-}
+          </Slider>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default CatSlider;

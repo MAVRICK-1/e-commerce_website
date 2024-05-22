@@ -83,6 +83,9 @@ Our project is an ONDC (Open Network for Digital Commerce) site integrated with 
     ```bash
     npm install
     ```
+    ```bash
+    npm run prepare
+    ```
 4. **Run the development server:** 
     ```bash
     npm start
