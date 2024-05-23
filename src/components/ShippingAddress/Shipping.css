@@ -1,0 +1,113 @@
+.shippingContainer {
+  width: 100%;
+  padding: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.shippingBox {
+  background-color: white;
+  width: 30%;
+  /* height: 90vh; */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.shippingHeading {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.664);
+  font: 400 3vmax 'Roboto';
+  padding: 1.3vmax;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.205);
+  width: 70%;
+  font-weight: 700;
+  margin: auto;
+}
+
+.shippingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  gap: 20px;
+  padding: 2vmax;
+  justify-content: space-evenly;
+  height: 100%;
+  transition: all 0.5s;
+}
+
+.shippingForm > div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.shippingForm > div > input,
+.shippingForm > div > select {
+  padding: 1vmax 4vmax;
+  padding-right: 1vmax;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 300 2vmax cursive;
+  outline: none;
+}
+
+.shippingForm > div > svg {
+  position: absolute;
+  transform: translateX(1vmax);
+  font-size: 2vmax;
+  color: rgba(0, 0, 0, 0.623);
+}
+
+.shippingBtn {
+  border: none;
+  background-color: rgb(0, 150, 57);
+  color: rgb(255, 255, 255);
+  font: 300 1.6vmax 'Roboto';
+  padding: 1vmax;
+  cursor: pointer;
+  transition: all 0.5s;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 2vmax;
+}
+
+@media screen and (max-width: 600px) {
+  .shippingBox {
+    width: 100vw;
+    /* height: 100vh; */
+  }
+
+  .shippingHeading {
+    font: 400 6vw 'Roboto';
+    padding: 5vw;
+  }
+
+  .shippingForm {
+    display: flex;
+    gap: 20px;
+    padding: 11vw 14vw;
+  }
+
+  .shippingForm > div > input,
+  .shippingForm > div > select {
+    padding: 3vw 6vw;
+    font: 300 5vw cursive;
+    padding-left: 50px;
+  }
+
+  .shippingForm > div > svg {
+    font-size: 4vw;
+    transform: translateX(3vw);
+  }
+
+  .shippingBtn {
+    font: 300 4vw 'Roboto';
+    padding: 4vw;
+  }
+}

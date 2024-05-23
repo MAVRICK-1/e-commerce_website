@@ -21,23 +21,20 @@ import {
   uploadBytes,
   updateMetadata
 } from 'firebase/storage';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
-  addDoc,
   collection,
   doc,
   getDoc,
-  onSnapshot,
   setDoc,
   updateDoc,
-  query,
-  where,
-  documentId,
-  getDocs
+  getDocs,
+  deleteDoc
 } from 'firebase/firestore';
 import { db, storage } from '../../firebase';
 import { nanoid } from 'nanoid';
-
+import AddressData from '../ShippingAddress/AddressData';
+import Loader from '../../assets/images/loading.gif';
 export function Account() {
   const {
     register,
@@ -49,27 +46,48 @@ export function Account() {
   const userImage = localStorage.getItem('userImage');
   const userName = localStorage.getItem('uname');
   const userEmail = localStorage.getItem('uemail');
-
+  const [loading, setLoadding] = useState(false);
   const [name, setName] = useState(userName);
   const [email, setEmail] = useState(userEmail);
   const [address, setAddress] = useState('');
   const [file, setFile] = useState(pfp);
   const navigate = useNavigate();
+  const [shippingAddresses, setShippingAddresses] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      const docref = doc(db, 'users', `${user_uid ? user_uid : nanoid()}`);
-      const docSnap = await getDoc(docref);
-      if (docSnap.exists()) {
-        setName(docSnap.data().Name);
-        setEmail(docSnap.data().Email);
-        setAddress(docSnap.data().Address);
-        setFile(docSnap.data().photo);
-      } else {
-        console.log(null);
-      }
-    })();
-  }, []);
+  async function FetchTheData() {
+    setLoadding(true);
+    const docref = doc(db, 'users', `${user_uid ? user_uid : nanoid()}`);
+    const docSnap = await getDoc(docref);
+    if (docSnap.exists()) {
+      setName(docSnap.data().Name);
+      setEmail(docSnap.data().Email);
+      setAddress(docSnap.data().Address);
+      setFile(docSnap.data().photo);
+
+      // Fetch the shipping address subcollection
+      const shippingAddressCollectionRef = collection(
+        docref,
+        'shippingaddress'
+      );
+      const shippingAddressQuerySnapshot = await getDocs(
+        shippingAddressCollectionRef
+      );
+
+      const shippingAddresses = shippingAddressQuerySnapshot.docs.map(
+        (doc) => ({
+          id: doc.id,
+          ...doc.data()
+        })
+      );
+
+      // Print the array of shipping address documents
+      console.log('Shipping Address Documents:', shippingAddresses);
+      setShippingAddresses(shippingAddresses);
+    } else {
+      console.log(null);
+    }
+    setLoadding(false);
+  }
 
   function handlehistory() {
     navigate('/');
@@ -138,6 +156,38 @@ export function Account() {
       console.log(err);
     }
   };
+
+  // shipping Address delete
+  const deleteShippingAddress = async (id) => {
+    try {
+      const userId = user_uid ? user_uid : nanoid();
+      const userDocRef = doc(db, 'users', userId);
+      const shippingAddressDocRef = doc(userDocRef, 'shippingaddress', id);
+
+      // Delete the shipping address document
+      await deleteDoc(shippingAddressDocRef);
+
+      // Update the local state to remove the deleted address
+      setShippingAddresses((prevAddresses) =>
+        prevAddresses.filter((address) => address.id !== id)
+      );
+
+      console.log('Shipping address deleted successfully');
+    } catch (error) {
+      console.error('Error deleting shipping address: ', error);
+    }
+  };
+  useEffect(() => {
+    FetchTheData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loader">
+        <img src={Loader} />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -273,6 +323,47 @@ export function Account() {
             </Button>
           </CardFooter>
         </Card>
+      </div>
+      <div className="container-fluid d-flex flex-column justify-content-center align-items-center ">
+        <h1 class="h1 font-weight-bold mt-0 mb-4">Manage Addresses</h1>
+
+        <div className="container-fluid d-flex justify-content-center align-items-stretch flex-wrap p-2  ">
+          {shippingAddresses.length > 0 ? (
+            <>
+              {shippingAddresses.map((add, i) => {
+                return (
+                  <AddressData
+                    key={i}
+                    address={add}
+                    deleteShippingAddress={deleteShippingAddress}
+                  />
+                );
+              })}
+              <Link to={'/add-shipping-address'} className="align-self-center">
+                <button
+                  type="button"
+                  class="btn btn-success py-4 px-5 mx-5 font-weight-bold btn-lg text-uppercase "
+                >
+                  Add New Address
+                </button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <div className="my-5 d-flex flex-column align-items-center justify-content-center">
+                <h3 className="text-capitalize">No Any Address Found </h3>
+                <Link to={'/add-shipping-address'}>
+                  <button
+                    type="button"
+                    class="btn btn-success py-4 px-5 my-5 font-weight-bold btn-lg text-uppercase"
+                  >
+                    Add New Address
+                  </button>
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </>
   );
