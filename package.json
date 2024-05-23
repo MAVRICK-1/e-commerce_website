@@ -15,7 +15,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.1",
     "bootstrap": "^4.6.2",
-    "country-state-city": "^3.2.1",
     "custom-react-inner-image-zoom": "^3.0.6",
     "firebase": "^10.8.0",
     "leaflet": "^1.9.4",

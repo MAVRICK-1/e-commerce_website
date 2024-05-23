@@ -73,7 +73,8 @@ const DetailsPage = (props) => {
   const [isAlreadyAddedInCart, setisAlreadyAddedInCart] = useState(false);
   const [isAlreadyAddedInWishlist, setisAlreadyAddedInWishlist] =
     useState(false);
-  const [isAlreadyAddedInCompare, setIsAlreadyAddedInCompare] = useState(false);
+    const [isAlreadyAddedInCompare, setIsAlreadyAddedInCompare] =
+    useState(false);
 
   const [reviewFields, setReviewFields] = useState({
     review: '',
@@ -270,6 +271,7 @@ const DetailsPage = (props) => {
   };
 
   const toggleWishlistItem = async (item) => {
+
     if (!isAlreadyAddedInWishlist) {
       try {
         const user = localStorage.getItem('uid');
@@ -372,6 +374,7 @@ const DetailsPage = (props) => {
       console.error('Error fetching compare products:', error);
     }
   };
+
 
   return (
     <>
@@ -603,14 +606,11 @@ const DetailsPage = (props) => {
                   >
                     <FavoriteBorderOutlinedIcon />{' '}
                   </Button>
-                  <Button
-                    onClick={() => toggleCompareItem(currentProduct)}
-                    className={`btn-lg addtocartbtn ml-3 ${
+                  <Button onClick={() => toggleCompareItem(currentProduct)}  className={`btn-lg addtocartbtn ml-3 ${
                       isAlreadyAddedInCompare === true
                         ? 'btn-borderWishlistAlreadyAdded'
                         : 'btn-border'
-                    }`}
-                  >
+                    }`}>
                     <CompareArrowsIcon />
                   </Button>
                 </div>

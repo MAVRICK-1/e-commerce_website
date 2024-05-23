@@ -342,11 +342,9 @@ const Header = (props) => {
                           {isOpenDropDown !== false && (
                             <ul className="dropdownMenu">
                               <li>
-                               <Link to={'/my-account'}>
-                                  <Button className="align-items-center">
-                                    <Person2OutlinedIcon /> My Account
-                                  </Button>
-                                </Link>
+                                <Button className="align-items-center">
+                                  <Person2OutlinedIcon /> My Account
+                                </Button>
                               </li>
                               <li>
                                 <Button>
