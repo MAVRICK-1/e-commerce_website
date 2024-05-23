@@ -24,7 +24,7 @@ import {
   getDocs,
   onSnapshot
 } from 'firebase/firestore';
-const Compare = ({ data }) => {
+const Compare = ({data}) => {
   const [compareItems, setCompareItems] = useState([]);
   const [error, setError] = useState(null);
   const context = useContext(MyContext);
@@ -65,7 +65,13 @@ const Compare = ({ data }) => {
     }
   };
   const deleteCompareItem = async (uid, compareItemId) => {
-    const compareItemRef = doc(db, 'compare', uid, 'products', compareItemId);
+    const compareItemRef = doc(
+      db,
+      'compare',
+      uid,
+      'products',
+      compareItemId
+    );
 
     try {
       await deleteDoc(compareItemRef);
@@ -153,69 +159,71 @@ const Compare = ({ data }) => {
                             compareItems.map((item, index) => {
                               return (
                                 <>
-                                  <tr>
-                                    <td width={'50%'}>
-                                      <div className="d-flex align-items-center">
-                                        <div className="img">
-                                          <Link to={`/product/${item.id}`}>
-                                            <img
-                                              src={
-                                                item.catImg +
-                                                '?im=Resize=(100,100)'
-                                              }
-                                              className="w-100"
-                                            />
-                                          </Link>
-                                        </div>
-
-                                        <div className="info pl-4">
-                                          <Link to={`/product/${item.id}`}>
-                                            <h4>{item.productName}</h4>
-                                          </Link>
-                                          <Rating
-                                            name="half-rating-read"
-                                            value={parseFloat(item.rating)}
-                                            precision={0.5}
-                                            readOnly
-                                          />{' '}
-                                          <span className="text-light">
-                                            ({parseFloat(item.rating)})
-                                          </span>
-                                        </div>
+                                <tr>
+                                  <td width={'50%'}>
+                                    <div className="d-flex align-items-center">
+                                      <div className="img">
+                                        <Link to={`/product/${item.id}`}>
+                                          <img
+                                            src={
+                                              item.catImg +
+                                              '?im=Resize=(100,100)'
+                                            }
+                                            className="w-100"
+                                          />
+                                        </Link>
                                       </div>
-                                    </td>
 
-                                    <td width="20%">
-                                      <span>
-                                        Rs:{' '}
-                                        {parseInt(
-                                          item.price.split(',').join('')
-                                        )}
-                                      </span>
-                                    </td>
+                                      <div className="info pl-4">
+                                        <Link to={`/product/${item.id}`}>
+                                          <h4>{item.productName}</h4>
+                                        </Link>
+                                        <Rating
+                                          name="half-rating-read"
+                                          value={parseFloat(item.rating)}
+                                          precision={0.5}
+                                          readOnly
+                                        />{' '}
+                                        <span className="text-light">
+                                          ({parseFloat(item.rating)})
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </td>
 
-                                    <td width="20%">
-                                      <span>{item.brand}</span>
-                                    </td>
+                                  <td width="20%">
+                                    <span>
+                                      Rs:{' '}
+                                      {parseInt(item.price.split(',').join(''))}
+                                    </span>
+                                  </td>
 
-                                    <td>
-                                      <span width="20%">{item.shop_name}</span>
-                                    </td>
+                                  <td width="20%">
+                                    <span>{item.brand}</span>
+                                  </td>
 
-                                    <td align="center">
-                                      <span
-                                        className="cursor"
-                                        onClick={() =>
-                                          deleteCompareItem(uid, `${item?.id}`)
-                                        }
-                                      >
-                                        <DeleteOutlineOutlinedIcon />
-                                      </span>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <div style={{ display: 'flex' }}></div>
-                                  </tr>
+                                  <td>
+                                    <span width="20%">
+                                      {item.shop_name}
+                                    </span>
+                                  </td>
+
+                                  <td align="center">
+                                    <span
+                                      className="cursor"
+                                      onClick={() =>
+                                        deleteCompareItem(uid, `${item?.id}`)
+                                      }
+                                    >
+                                      <DeleteOutlineOutlinedIcon />
+                                    </span>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <div style={{display:"flex"}}>
+
+                                  </div>
+                                </tr>
                                 </>
                               );
                             })}
@@ -236,6 +244,7 @@ const Compare = ({ data }) => {
                     <RefreshIcon /> Update Cart</Button> */}
                   </div>
                 </div>
+
               </div>
             </div>
           </section>{' '}
