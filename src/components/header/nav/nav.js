@@ -182,7 +182,7 @@ const Nav = (props) => {
                           <a
                             href={`${
                               windowWidth > 992
-                                ? `#/cat/${item.cat_name.toLowerCase()}`
+                                ? `/cat/${item.cat_name.toLowerCase()}`
                                 : '#'
                             }`}
                             onClick={() =>
@@ -221,7 +221,7 @@ const Nav = (props) => {
                                     }}
                                   >
                                     <a
-                                      href={`#/cat/${item.cat_name.toLowerCase()}/${item_.cat_name
+                                      href={`/cat/${item.cat_name.toLowerCase()}/${item_.cat_name
                                         .replace(/\s/g, '-')
                                         .toLowerCase()}`}
                                       onClick={() =>
