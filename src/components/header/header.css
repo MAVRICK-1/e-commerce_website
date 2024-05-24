@@ -154,3 +154,23 @@ header .headerTabs li span.badge {
 .dropdownMenu li button:hover {
   background: #f1f1f1 !important;
 }
+
+/* General hover effect for list items */
+.list-inline-item a:hover {
+  color: #3BB77E; /* Change text color on hover to white */
+  
+}
+
+.list-inline-item a:hover img {
+  filter: brightness(3); /* Brighten the icon on hover */
+}
+
+/* Hover effect for the badges */
+.list-inline-item a .badge:hover  {
+  background-color: #007bff;
+}
+
+/* Smooth transition for all hover effects */
+.list-inline-item a, .list-inline-item a img, .list-inline-item a .badge, .list-inline-item a .btn {
+  transition: all 0.3s ease;
+}
