@@ -105,7 +105,7 @@ const Home = (props) => {
 
   return (
     <div style={{ display: 'block' }}>
-      <DealofDay />
+      <DealofDay productData={prodData} />
       <SliderBanner />
       <CatSlider data={prodData} />
 

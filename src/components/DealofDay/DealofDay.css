@@ -1,5 +1,5 @@
-/* In your CSS file */
-.Deal-container {
+/* Main container for the deal */
+.deal-container {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -11,7 +11,8 @@
   backdrop-filter: blur(5px);
 }
 
-.Deal-card {
+/* Card container */
+.deal-container .deal-card {
   width: 50%;
   height: 60%;
   display: flex;
@@ -21,18 +22,20 @@
   border-radius: 1em;
 }
 
-.image-container {
+/* Image container */
+.deal-container .deal-card .image-container {
   width: 50%;
   height: 100%;
 }
 
-.image-container img {
+.deal-container .deal-card .image-container img {
   width: 100%;
   height: 100%;
   border-radius: 1em 0 0 1em;
 }
 
-.text-container {
+/* Text container */
+.deal-container .deal-card .text-container {
   width: 50%;
   height: 100%;
   display: flex;
@@ -42,48 +45,41 @@
   align-items: center;
 }
 
-.deal-heading {
+/* Deal heading */
+.deal-container .deal-card .text-container .deal-heading {
   display: flex;
   color: rgb(59, 183, 126);
 }
 
-.deal-heading h1 {
+.deal-container .deal-card .text-container .deal-heading h1 {
   font-size: 3em;
   font-weight: 600;
 }
 
-.deal-heading button {
-  background-color: white;
-  border: none;
-  width: 50px;
-  height: 50px;
-}
-
-.offer-details {
+.deal-container .deal-card .text-container .offer-details {
   width: 80%;
 }
 
-.offer-details h1 {
+.deal-container .deal-card .text-container .offer-details h1 {
   font-size: 2em;
   font-weight: 600;
 }
 
-span {
+.deal-container .deal-card .text-container .offer-details span {
   font-size: 1.5em;
   font-weight: bold;
   color: rgb(59, 183, 126);
 }
 
-.shop-buttons {
+.deal-container .deal-card .text-container .shop-buttons {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2%;
   justify-content: center;
   align-items: center;
 }
 
-.shop-buttons button {
+.deal-container .deal-card .text-container .shop-buttons button {
   width: 80%;
   display: flex;
   justify-content: center;
@@ -91,19 +87,21 @@ span {
   gap: 10px;
   padding: 1em;
   border-radius: 0.5em;
+  margin-bottom: 3%;
 }
 
-.buy-now {
+.deal-container .deal-card .text-container .shop-buttons .view-product {
   color: white;
   border: none;
   background-color: rgb(59, 183, 126);
 }
 
-.close {
+.deal-container .deal-card .text-container .shop-buttons .close {
   background-color: white;
+  border: 1px solid rgb(59, 183, 126);
 }
 
-.shop-buttons img {
+.deal-container .deal-card .text-container .shop-buttons img {
   width: 30px;
   height: 25px;
 }

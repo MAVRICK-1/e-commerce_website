@@ -1,15 +1,16 @@
-// In your component
 import React, { useState, useEffect } from 'react';
 import arrowIcon from '../../assets/images/icons-arrow.png';
-import strawberryBottle from '../../assets/images/strawberryBottle.webp';
 import './DealofDay.css';
 
-const DealofDay = () => {
+const DealofDay = ({ productData }) => {
+  const [product, setProduct] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const modalDisplayed = sessionStorage.getItem('modalDisplayed');
     if (!modalDisplayed) {
+      const randomProduct = getRandomProduct();
+      setProduct(randomProduct);
       setModalVisible(true);
       sessionStorage.setItem('modalDisplayed', true);
     }
@@ -20,39 +21,57 @@ const DealofDay = () => {
     sessionStorage.setItem('modalDisplayed', true);
   };
 
+  const getRandomProduct = () => {
+    if (!productData || productData.length === 0) return null;
+    const categories = productData[0].items;
+    if (!categories || categories.length === 0) return null;
+    const selectedCategory =
+      categories[Math.floor(Math.random() * categories.length)];
+    const products = selectedCategory.products;
+    if (!products || products.length === 0) return null;
+    return products[Math.floor(Math.random() * products.length)];
+  };
+
+  const truncateDescription = (description) => {
+    const index = description.indexOf('.');
+    return index !== -1 ? description.substring(0, index + 1) : description;
+  };
+
+  if (!product) return null;
+
   return (
     <>
       {modalVisible && (
-        <div className="Deal-container">
-          <div className="Deal-card">
+        <div className="deal-container">
+          <div className="deal-card">
             <div className="image-container">
               <img
-                src={strawberryBottle}
+                src={product.catImg || 'https://via.placeholder.com/150'}
                 className="img-fluid transition"
-                alt="Strawberry Bottle"
+                alt={product.productName || 'Product Image'}
               />
             </div>
             <div className="text-container">
               <div className="deal-heading">
-                <h1>Deal of Day</h1>
+                <h1>Deal of the Day</h1>
               </div>
               <div className="offer-details">
-                <h1>50% off</h1>
+                <h1>
+                  {product.discount ? `${product.discount}% off` : '50% off'}
+                </h1>
+                <p>{truncateDescription(product.description)}</p>
                 <p>
-                  Bursting with the sweet tanginess of ripe strawberries, this
-                  refreshing beverage is the perfect blend of health and
-                  indulgence.{' '}
-                </p>
-                <p>
-                  <s>$22.17</s> <span>$11.08</span>
+                  <s>{`$${product.oldPrice}`}</s>{' '}
+                  <span>{`$${product.price}`}</span>
                 </p>
               </div>
               <div className="shop-buttons">
-                <button className="buy-now">
-                  Buy Now<img src={arrowIcon}></img>
+                <button className="view-product">
+                  View Product
+                  <img src={arrowIcon} alt="Arrow Icon" />
                 </button>
                 <button className="close" onClick={closeModal}>
-                  close
+                  Close
                 </button>
               </div>
             </div>
