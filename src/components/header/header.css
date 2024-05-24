@@ -105,6 +105,15 @@ header .headerTabs li span * {
 header .headerTabs li span img {
   margin-right: 10px;
 }
+
+header .headerTabs li span a:hover {
+  color: #3BB77E;
+}
+
+header .headerTabs li span a:hover img {
+  filter: brightness(3);
+}
+
 header .headerTabs li span.badge {
   width: 28px;
   height: 28px;
@@ -118,6 +127,19 @@ header .headerTabs li span.badge {
   justify-content: center;
   font-size: 12px !important;
 }
+
+header .headerTabs li span.badge:hover {
+  background-color: #007bff;
+}
+
+/* Smooth transition for all hover effects */
+header .headerTabs li a,
+header .headerTabs li a img,
+header .headerTabs li a .badge,
+header .headerTabs li a .btn {
+  transition: all 0.3s ease;
+}
+
 
 .dropdownMenu {
   position: absolute;
