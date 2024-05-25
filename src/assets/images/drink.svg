@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Drink</title>
+  <g id="drink" data-name="drink">
+    <rect id="_99---Drink" x="0" y="0" width="64" height="64" fill="none" />
+    <path d="M52.459,23.177l-2.953,-6.067c-4.963,-1.073 -13.3,-2.874 -18.263,-3.946l-5.194,4.308c0,0 -5.123,23.714 -6.724,31.125l3.189,4.144c4.963,1.072 13.299,2.873 18.263,3.946l4.957,-2.385c1.601,-7.411 5.123,-23.714 6.725,-31.125Z" fill="none" stroke="#444f58" stroke-width="2px" />
+    <path d="M38.432,14.717c-0.222,-0.933 -0.426,-1.79 -0.607,-2.553l-5.28,-4.201c-4.941,1.173 -13.239,3.144 -18.179,4.317l-2.828,6.127c0,0 3.209,13.513 5.53,23.286" fill="none" stroke="#444f58" stroke-width="2px" />
+    <path d="M28.585,12.59l23.579,5.094" fill="none" stroke="#444f58" stroke-width="2px" />
+    <path d="M11.72,12.909l23.471,-5.575" fill="none" stroke="#444f58" stroke-width="2px" />
+    <path d="M52.357,23.649l-26.41,-5.706" fill="none" stroke="#444f58" stroke-width="2px" />
+    <path d="M29.454,14.647l-17.805,4.229" fill="none" stroke="#444f58" stroke-width="2px" />
+    <path d="M45.836,53.831l-26.409,-5.706" fill="none" stroke="#444f58" stroke-width="2px" />
+    <path d="M37.114,30.228c3.124,0.675 5.112,3.758 4.437,6.882c-0.675,3.123 -3.759,5.111 -6.882,4.436c-3.123,-0.675 -5.111,-3.758 -4.436,-6.882c0.674,-3.123 3.758,-5.111 6.881,-4.436Z" fill="none" stroke="#444f58" stroke-width="2px" />
+  </g>
+</svg>
