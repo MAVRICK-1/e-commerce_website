@@ -50,7 +50,10 @@ const Cart = () => {
     fetchCartProducts();
   }, [db, uid]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const fetchCartProducts = async () => {
+    setIsLoading(true);
     try {
       const cartRef = doc(db, 'carts', uid);
       const productsCollectionRef = collection(cartRef, 'products');
@@ -66,6 +69,8 @@ const Cart = () => {
       setTotalPrice(price);
     } catch (error) {
       console.error('Error fetching cart products:', error);
+    } finally{
+      setIsLoading(false);
     }
   };
 
@@ -74,7 +79,8 @@ const Cart = () => {
 
     try {
       await deleteDoc(cartItemRef);
-      fetchCartProducts();
+      // Update local state
+      setCartItems(cartItems.filter(item => item.id !== cartItemId));
       console.log('Cart item deleted successfully.');
     } catch (error) {
       console.error('Error deleting cart item:', error);
