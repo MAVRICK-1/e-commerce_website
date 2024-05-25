@@ -20,7 +20,7 @@
     "leaflet": "^1.9.4",
     "nanoid": "^5.0.7",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.10.0",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
     "react-icons": "^5.2.1",
