@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import arrowIcon from '../../assets/images/icons-arrow.png';
 import './DealofDay.css';
 
@@ -43,39 +44,41 @@ const DealofDay = ({ productData }) => {
     <>
       {modalVisible && (
         <div className="deal-container">
-          <div className="deal-card">
-            <div className="image-container">
-              <img
-                src={product.catImg || 'https://via.placeholder.com/150'}
-                className="img-fluid transition"
-                alt={product.productName || 'Product Image'}
-              />
-            </div>
-            <div className="text-container">
-              <div className="deal-heading">
-                <h1>Deal of the Day</h1>
-              </div>
-              <div className="offer-details">
-                <h1>
-                  {product.discount ? `${product.discount}% off` : '50% off'}
-                </h1>
-                <p>{truncateDescription(product.description)}</p>
-                <p>
-                  <s>{`$${product.oldPrice}`}</s>{' '}
-                  <span>{`$${product.price}`}</span>
-                </p>
-              </div>
-              <div className="shop-buttons">
-                <button className="view-product">
-                  View Product
-                  <img src={arrowIcon} alt="Arrow Icon" />
-                </button>
-                <button className="close" onClick={closeModal}>
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
+          <Container className="deal-card">
+            <Row>
+              <Col xs={12} md={6} className="image-container">
+                <img
+                  src={product.catImg || 'https://via.placeholder.com/150'}
+                  className="img-fluid transition"
+                  alt={product.productName || 'Product Image'}
+                />
+              </Col>
+              <Col xs={12} md={6} className="text-container">
+                <div className="deal-heading">
+                  <h1>Deal of the Day</h1>
+                </div>
+                <div className="offer-details">
+                  <h1>
+                    {product.discount ? `${product.discount}% off` : '50% off'}
+                  </h1>
+                  <p>{truncateDescription(product.description)}</p>
+                  <p>
+                    <s>{`$${product.oldPrice}`}</s>{' '}
+                    <span>{`$${product.price}`}</span>
+                  </p>
+                </div>
+                <div className="shop-buttons">
+                  <Button className="view-product">
+                    View Product
+                    <img src={arrowIcon} alt="Arrow Icon" />
+                  </Button>
+                  <Button className="close" onClick={closeModal}>
+                    Close
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </div>
       )}
     </>
