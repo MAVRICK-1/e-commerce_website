@@ -22,9 +22,9 @@
 
 .text-container {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
-  gap:1em;
+  gap: 1em;
 }
 
 .deal-heading h1 {
@@ -45,7 +45,7 @@
 }
 
 .shop-buttons {
-  width:100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
@@ -59,7 +59,7 @@
   border: none;
   width: 100%;
   padding: 1em;
-  gap:0.7em;
+  gap: 0.7em;
   border-radius: 0.5em;
   font-size: 1.2em;
 }
@@ -67,7 +67,7 @@
 .shop-buttons .close {
   background-color: white;
   border: 1px solid rgb(59, 183, 126);
-  width:100%;
+  width: 100%;
   padding: 1em;
   border-radius: 0.5em;
 }
@@ -81,7 +81,8 @@
     width: 100%;
   }
 
-  .shop-buttons .view-product, .shop-buttons .close {
+  .shop-buttons .view-product,
+  .shop-buttons .close {
     width: 100%;
   }
 }
