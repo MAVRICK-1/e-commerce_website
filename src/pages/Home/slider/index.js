@@ -42,8 +42,8 @@ const HomeSlider = () => {
               <p>Sign up for the daily newsletter</p>
             </div>
           </div>
-          <div className="item w-n">
-            <img src={Slide2} />
+          <div className="item">
+            <img src={Slide2} className="item w-n" />
             <div className="info">
               <h2 className="mb-3">
                 Fresh Vegetables
