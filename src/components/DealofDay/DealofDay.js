@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import arrowIcon from '../../assets/images/icons-arrow.png';
+import CloseButton from 'react-bootstrap/CloseButton';
 import './DealofDay.css';
 
 const DealofDay = ({ productData }) => {
@@ -54,6 +55,12 @@ const DealofDay = ({ productData }) => {
                 />
               </Col>
               <Col xs={12} md={6} className="text-container">
+                {/* Close button */}
+                <div className="close-btn" onClick={closeModal}>
+                  <div className="cross" alt="Close">
+                    &times;
+                  </div>
+                </div>
                 <div className="deal-heading">
                   <h1>Deal of the Day</h1>
                 </div>
@@ -69,11 +76,13 @@ const DealofDay = ({ productData }) => {
                 </div>
                 <div className="shop-buttons">
                   <Button className="view-product">
-                    View Product
-                    <img src={arrowIcon} alt="Arrow Icon" />
+                    <a href="#">
+                      View Product
+                      <img src={arrowIcon} alt="Arrow Icon" />
+                    </a>
                   </Button>
-                  <Button className="close" onClick={closeModal}>
-                    Close
+                  <Button className="buy">
+                    <a href="#">Buy Now</a>
                   </Button>
                 </div>
               </Col>
