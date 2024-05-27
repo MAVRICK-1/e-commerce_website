@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../SignIn/style.css';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
+  Box,
+  TextField,
   Button,
   Snackbar,
   Dialog,
@@ -13,55 +10,112 @@ import {
   DialogContentText,
   DialogTitle,
   DialogActions,
-  Typography
+  Typography,
+  Backdrop,
+  CircularProgress
 } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { app } from '../../firebase';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import {
+  auth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  createUserWithEmailAndPassword
+} from '../../firebase'; // Adjust the import path according to your setup
 
-const auth = getAuth(app);
+const OTP_LIMIT = 10;
 
 const SignUp = () => {
-  const naviagtor = useNavigate();
-  const navigate = useNavigate(); // Initialize useHistory
-  const [openDialog, setOpenDialog] = useState(false); // State for controlling dialog visibility
-
+  const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    phoneNumber: '',
+    otp: ''
   });
-
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
-
-  const [InputErrors, setInputErrors] = useState({
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [otpCount, setOtpCount] = useState(0);
+  const [inputErrors, setInputErrors] = useState({
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    phoneNumber: '',
+    otp: ''
   });
 
-  const checkInputs = (email, password, confirmPassword) => {
-    if (
-      email.trim() !== '' &&
-      password.trim() !== '' &&
-      confirmPassword.trim() !== ''
-    ) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    const otpData = JSON.parse(localStorage.getItem('otpData')) || {};
+
+    if (otpData.date !== today) {
+      otpData.date = today;
+      otpData.count = 0;
+      localStorage.setItem('otpData', JSON.stringify(otpData));
     }
-  };
+    setOtpCount(otpData.count);
+  }, []);
+
+  useEffect(() => {
+    const loadRecaptcha = () => {
+      if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+          'recaptcha-container',
+          {
+            size: 'invisible',
+            callback: (response) => {
+              // reCAPTCHA solved, allow user to proceed with phone authentication
+            },
+            'expired-callback': () => {
+              // Response expired. Ask user to solve reCAPTCHA again.
+            }
+          },
+          auth
+        );
+        window.recaptchaVerifier
+          .render()
+          .then((widgetId) => {
+            window.recaptchaWidgetId = widgetId;
+          })
+          .catch((error) => {
+            console.error('Recaptcha render error:', error);
+          });
+      }
+    };
+
+    if (document.getElementById('recaptcha-container')) {
+      loadRecaptcha();
+    } else {
+      console.error('Recaptcha container not found');
+    }
+  }, []);
+
+  useEffect(() => {
+    const checkInputs = () => {
+      const { email, password, confirmPassword, phoneNumber } = formFields;
+      setIsDisabled(
+        !(
+          email.trim() &&
+          password.trim() &&
+          confirmPassword.trim() &&
+          phoneNumber.trim() &&
+          isOtpVerified
+        )
+      );
+    };
+    checkInputs();
+  }, [formFields, isOtpVerified]);
 
   const signUp = () => {
     setShowLoader(true);
-    // Check for password strength
     if (formFields.password.length < 6) {
       setShowLoader(false);
       setSnackbarMessage(
@@ -72,72 +126,62 @@ const SignUp = () => {
     }
     createUserWithEmailAndPassword(auth, formFields.email, formFields.password)
       .then((userCredential) => {
-        //console.log("User signed up successfully:", userCredential.user);
         setShowLoader(false);
         setFormFields({
           email: '',
           password: '',
-          confirmPassword: ''
+          confirmPassword: '',
+          phoneNumber: '',
+          otp: ''
         });
         setOpenDialog(true);
       })
       .catch((error) => {
         setShowLoader(false);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error signing up:', errorMessage);
-        setSnackbarMessage(errorMessage);
+        setSnackbarMessage(error.message);
         setSnackbarOpen(true);
       });
   };
 
-  // Email validation function
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  //Password Validation
-  const validatePassword = (password, error) => {
+  const validatePassword = (password, errors) => {
     if (password.length < 6) {
-      error.password = 'Password must be at least 6 characters long';
+      errors.password = 'Password must be at least 6 characters long';
       return false;
     }
-
-    // Regular expressions for checking different conditions
     const hasSpecialSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
     const hasUppercase = /[A-Z]+/;
     const hasLowercase = /[a-z]+/;
     const hasDigit = /[0-9]+/;
-
     if (!hasSpecialSymbol.test(password)) {
-      error.password = 'Password must contain at least one special symbol';
+      errors.password = 'Password must contain at least one special symbol';
       return false;
     }
-
     if (!hasUppercase.test(password)) {
-      error.password = 'Password must contain at least one uppercase letter';
+      errors.password = 'Password must contain at least one uppercase letter';
       return false;
     }
-
     if (!hasLowercase.test(password)) {
-      error.password = 'Password must contain at least one lowercase letter';
+      errors.password = 'Password must contain at least one lowercase letter';
       return false;
     }
-
     if (!hasDigit.test(password)) {
-      error.password = 'Password must contain at least one digit';
+      errors.password = 'Password must contain at least one digit';
       return false;
     }
-
-    error.password = '';
+    errors.password = '';
+    return true;
   };
 
-  const onChangeField = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    let errors = { ...InputErrors };
+  const validatePhoneNumber = (phoneNumber) =>
+    /^\+?[1-9]\d{1,14}$/.test(phoneNumber);
 
-    if (name == 'email') {
+  const onChangeField = (e) => {
+    const { name, value } = e.target;
+    let errors = { ...inputErrors };
+
+    if (name === 'email') {
       errors.email = !validateEmail(value) ? 'Invalid email address' : '';
     }
 
@@ -150,12 +194,82 @@ const SignUp = () => {
         formFields.password !== value ? 'Password Not Matched!' : '';
     }
 
+    if (name === 'phoneNumber') {
+      errors.phoneNumber = !validatePhoneNumber(value)
+        ? 'Invalid phone number'
+        : '';
+    }
+
     setInputErrors(errors);
     setFormFields((prevFormFields) => ({
       ...prevFormFields,
       [name]: value
     }));
-    checkInputs(formFields.email, formFields.password, value);
+  };
+
+  const handleSendOtp = () => {
+    if (!validatePhoneNumber(formFields.phoneNumber)) {
+      setSnackbarMessage('Invalid phone number');
+      setSnackbarOpen(true);
+      return;
+    }
+
+    const otpData = JSON.parse(localStorage.getItem('otpData'));
+    if (otpData.count >= OTP_LIMIT) {
+      setSnackbarMessage(
+        'OTP limit reached for today. You can sign up without phone verification.'
+      );
+      setSnackbarOpen(true);
+      return;
+    }
+
+    setShowLoader(true);
+
+    signInWithPhoneNumber(
+      auth,
+      formFields.phoneNumber,
+      window.recaptchaVerifier
+    )
+      .then((confirmationResult) => {
+        setShowLoader(false);
+        window.confirmationResult = confirmationResult;
+        setIsOtpSent(true);
+
+        otpData.count += 1;
+        localStorage.setItem('otpData', JSON.stringify(otpData));
+        setOtpCount(otpData.count);
+      })
+      .catch((error) => {
+        setShowLoader(false);
+        setSnackbarMessage(error.message);
+        setSnackbarOpen(true);
+      });
+  };
+
+  const handleVerifyOtp = () => {
+    const { otp } = formFields;
+
+    if (!otp.trim()) {
+      setSnackbarMessage('Please enter the OTP');
+      setSnackbarOpen(true);
+      return;
+    }
+
+    setShowLoader(true);
+
+    window.confirmationResult
+      .confirm(otp)
+      .then((result) => {
+        setShowLoader(false);
+        setIsOtpVerified(true);
+        setSnackbarMessage('Phone number verified successfully');
+        setSnackbarOpen(true);
+      })
+      .catch((error) => {
+        setShowLoader(false);
+        setSnackbarMessage('Invalid OTP. Please try again.');
+        setSnackbarOpen(true);
+      });
   };
 
   const handleCloseSnackbar = () => {
@@ -163,8 +277,8 @@ const SignUp = () => {
   };
 
   const handleClose = () => {
-    setOpenDialog(false); // Close the dialog
-    navigate('/signIn'); // Redirect to sign-in page
+    setOpenDialog(false);
+    navigate('/signIn');
   };
 
   return (
@@ -225,17 +339,17 @@ const SignUp = () => {
                   value={formFields.email}
                   autoComplete="email"
                 />
-                {InputErrors.email && (
+                {inputErrors.email && (
                   <Typography
                     variant="caption"
                     sx={{ color: 'red', padding: '5px' }}
                   >
-                    {InputErrors.email}
+                    {inputErrors.email}
                   </Typography>
                 )}
               </div>
               <div className="form-group mb-4 w-100">
-                <div className="position-relative ">
+                <div className="position-relative">
                   <TextField
                     id="password"
                     type={showPassword === false ? 'password' : 'text'}
@@ -256,12 +370,12 @@ const SignUp = () => {
                       <VisibilityOutlinedIcon />
                     )}
                   </Button>
-                  {InputErrors.password && (
+                  {inputErrors.password && (
                     <Typography
                       variant="caption"
                       sx={{ color: 'red', padding: '5px' }}
                     >
-                      {InputErrors.password}
+                      {inputErrors.password}
                     </Typography>
                   )}
                 </div>
@@ -278,7 +392,7 @@ const SignUp = () => {
                     onChange={onChangeField}
                     value={formFields.confirmPassword}
                     autoComplete="new-password"
-                    error={InputErrors.confirmPassword}
+                    error={inputErrors.confirmPassword}
                   />
                   <Button
                     className="icon"
@@ -290,16 +404,69 @@ const SignUp = () => {
                       <VisibilityOutlinedIcon />
                     )}
                   </Button>
-                  {InputErrors.confirmPassword && (
+                  {inputErrors.confirmPassword && (
                     <Typography
                       variant="caption"
                       sx={{ color: 'red', padding: '5px' }}
                     >
-                      {InputErrors.confirmPassword}
+                      {inputErrors.confirmPassword}
                     </Typography>
                   )}
                 </div>
               </div>
+
+              {otpCount < OTP_LIMIT && (
+                <div className="form-group mb-4 w-100">
+                  <TextField
+                    id="phoneNumber"
+                    type="tel"
+                    name="phoneNumber"
+                    className="w-100"
+                    placeholder="Phone Number"
+                    onChange={onChangeField}
+                    value={formFields.phoneNumber}
+                    autoComplete="tel"
+                  />
+                  {inputErrors.phoneNumber && (
+                    <Typography
+                      variant="caption"
+                      sx={{ color: 'red', padding: '5px' }}
+                    >
+                      {inputErrors.phoneNumber}
+                    </Typography>
+                  )}
+                  <Button
+                    onClick={handleSendOtp}
+                    disabled={!validatePhoneNumber(formFields.phoneNumber)}
+                  >
+                    Send OTP
+                  </Button>
+                </div>
+              )}
+
+              {isOtpSent && (
+                <div className="form-group mb-4 w-100">
+                  <TextField
+                    id="otp"
+                    type="text"
+                    name="otp"
+                    className="w-100"
+                    placeholder="Enter OTP"
+                    onChange={onChangeField}
+                    value={formFields.otp}
+                    autoComplete="one-time-code"
+                  />
+                  <Button onClick={handleVerifyOtp}>Verify OTP</Button>
+                  {inputErrors.otp && (
+                    <Typography
+                      variant="caption"
+                      sx={{ color: 'red', padding: '5px' }}
+                    >
+                      {inputErrors.otp}
+                    </Typography>
+                  )}
+                </div>
+              )}
 
               <div className="form-group mt-5 mb-4 w-100">
                 <Button
@@ -318,6 +485,7 @@ const SignUp = () => {
                 </b>
               </p>
             </form>
+            <div id="recaptcha-container"></div>
           </div>
         </div>
       </section>
