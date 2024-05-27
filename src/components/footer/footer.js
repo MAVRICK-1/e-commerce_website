@@ -16,10 +16,11 @@ import paymentImage from '../../assets/images/payment-method.webp';
 
 import appStore from '../../assets/images/app-store.webp';
 import googlePlay from '../../assets/images/google-play.webp';
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedinIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
+import XIcon from '@mui/icons-material/X';
 import Newsletter from '../../components/newsletter/index';
 import NewsletterImg from '../../assets/images/newsletter.webp';
 
@@ -260,16 +261,6 @@ const Footer = () => {
 
               <div className="col-md-6 d-flex part_2">
                 <div className="m-auto d-flex align-items-center phWrap">
-                  <div className="phNo d-flex align-items-center mx-5">
-                    <span>
-                      <HeadphonesOutlinedIcon />
-                    </span>
-                    <div className="info ml-3">
-                      <h3 className="text-g mb-0">1900 - 888</h3>
-                      <p className="mb-0">24/7 Support Center</p>
-                    </div>
-                  </div>
-
                   <div className="phNo d-flex align-items-center  mx-5">
                     <span>
                       <HeadphonesOutlinedIcon />
@@ -287,23 +278,34 @@ const Footer = () => {
                   <h5>Follow Us</h5>
                   <ul className="list list-inline">
                     <li className="list-inline-item">
-                      <Link to={''}>
-                        <FacebookOutlinedIcon />
+                      <Link
+                        to={
+                          'https://www.linkedin.com/in/rishi-mondal-5238b2282/'
+                        }
+                      >
+                        <LinkedinIcon />
                       </Link>
                     </li>
                     <li className="list-inline-item">
-                      <Link to={''}>
-                        <TwitterIcon />
+                      <Link to={'https://github.com/MAVRICK-1#'}>
+                        <GitHubIcon />
                       </Link>
                     </li>
                     <li className="list-inline-item">
-                      <Link to={''}>
+                      <Link to={'https://mavrick-portfolio.vercel.app/'}>
+                        <DeveloperBoardIcon />
+                      </Link>
+                    </li>
+                    <li className="list-inline-item">
+                      <Link
+                        to={'https://www.instagram.com/realmavrick_1/?hl=en'}
+                      >
                         <InstagramIcon />
                       </Link>
                     </li>
                     <li className="list-inline-item">
                       <Link to={''}>
-                        <YouTubeIcon />
+                        <XIcon />
                       </Link>
                     </li>
                   </ul>

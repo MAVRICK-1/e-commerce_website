@@ -1,0 +1,145 @@
+.deal-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.deal-card {
+  background-color: white;
+  border-radius: 1em;
+  padding: 1em;
+  box-shadow: 0 0 20px grey;
+}
+col{
+  align-items: center;
+}
+.image-container img {
+  border-radius: 1em 0 0 1em;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.deal-heading h1 {
+  color: rgb(59, 183, 126);
+  font-size: 2em;
+  font-weight: 600;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.offer-details h1 {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.offer-details span {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: rgb(59, 183, 126);
+}
+
+.shop-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction:row;
+  padding: 1em;
+  gap: 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+.shop-buttons button{
+  background-color: rgb(59, 183, 126);
+  :hover{
+    transition: 0.3s;
+  }
+}
+
+.shop-buttons .view-product a{
+  color:white;
+}
+
+.shop-buttons .view-product {
+  color: white;
+  border: none;
+  width: 50%;
+  padding: 0.85em 0;
+  /* gap: 0.7em; */
+  border-radius: 0.5em;
+  font-size: 1.2em; 
+}
+
+.shop-buttons .buy {
+  background-color: white;
+  border: 1px solid rgb(59, 183, 126);
+  color:rgb(59, 183, 126);
+  width: 50%;
+  padding: 1em 0;
+  border-radius: 0.5em;
+  font-size: 1.2em;
+}
+
+.close-btn{
+  top:20px;
+  right:30px;
+  position: absolute;
+  border: 0;
+  background-color: transparent;
+}
+.cross{
+  color:red;
+  scale: 1.5;
+  cursor: pointer;
+}
+
+.cross:hover {
+  color: brown;
+  text-decoration: underline;
+}
+button:hover{
+  background-color: rgb(2, 98, 79) !important;
+  color:white !important;
+  box-shadow: 0 0 10px  yellowgreen;
+}
+.shop-buttons .buy a{
+  color:inherit !important;
+}
+
+@media (max-width: 768px) {
+  .deal-card {
+    width: 90%;
+  }
+
+  .image-container img {
+    width: 100%;
+  }
+
+  .shop-buttons .view-product,
+  .shop-buttons .close {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .deal-heading h1 {
+    font-size: 1.5em;
+  }
+
+  .offer-details h1 {
+    font-size: 1.2em;
+  }
+
+  .offer-details span {
+    font-size: 1em;
+  }
+}
