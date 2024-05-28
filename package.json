@@ -16,7 +16,7 @@
     "axios": "^1.5.1",
     "bootstrap": "^4.6.2",
     "custom-react-inner-image-zoom": "^3.0.6",
-    "firebase": "^9.4.1",
+    "firebase": "^9.23.0",
     "leaflet": "^1.9.4",
     "nanoid": "^5.0.7",
     "otp-input-react": "^0.3.0",
