@@ -26,6 +26,7 @@ import NewsletterImg from '../../assets/images/newsletter.webp';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = `5171 W Campbell Ave undefined Kent, Utah 53127 United States`;
   return (
     <>
       <section className="newsLetterSection">
@@ -128,9 +129,17 @@ const Footer = () => {
                 <p>Awesome grocery store website template</p>
                 <br />
 
-                <p>
-                  <LocationOnOutlinedIcon /> <strong>Address</strong>: 5171 W
-                  Campbell Ave undefined Kent, Utah 53127 United States
+                <p
+                  style={{ cursor: 'pointer' }}
+                  onClick={() =>
+                    window.open(
+                      `https://www.google.com/maps/search/?api=1&query=${location}`,
+                      '_blank'
+                    )
+                  }
+                >
+                  <LocationOnOutlinedIcon /> <strong>Address</strong>:{' '}
+                  {location}
                 </p>
                 <p>
                   <HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) -
