@@ -13,6 +13,14 @@
   text-transform: capitalize !important;
 }
 
+@media (min-width: 1000px) and (max-width: 1400px) {
+.browBtn {
+    padding: auto !important;
+    height: 79px !important;
+  }
+}
+
+
 .catTab .MuiSvgIcon-root {
   fill: #fff !important; /* Set icon color */
   width: 24px; /* Adjust icon size as needed */
@@ -47,7 +55,7 @@
 }
 
 .nav nav ul li button:hover {
-  color: #fff; /* Change text color on hover */
+  color: #fff; 
 }
 
 .nav nav ul li button a {
@@ -108,13 +116,17 @@ nav .dropdown_menu li {
   font-weight: 400 !important;
 }
 
-nav .dropdown_menu li button:hover {
-  background: #f1f1f1 !important;
+.part2 ul li button:hover{
+  background-color: inherit !important;
+  box-shadow: none !important;
 }
 
-.nav nav li:hover .dropdown_menu {
+.part2 ul li button:hover a{
+  color: #3BB77E !important;
+}
+.nav nav li:hover .open {
   top: 100%;
-  opacity: 1;
+  opacity: 1 !important;
   visibility: inherit;
 }
 
@@ -241,9 +253,3 @@ nav .all_menu li {
   text-decoration: none;
 }
 
-/* .part3{
-    width: 20px;
-    height: 20px;
-} */
-@media (max-width: 586px) {
-}
