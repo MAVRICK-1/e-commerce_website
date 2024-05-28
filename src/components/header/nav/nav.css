@@ -55,7 +55,7 @@
 }
 
 .nav nav ul li button:hover {
-  color: #fff; /* Change text color on hover */
+  color: #fff; 
 }
 
 .nav nav ul li button a {
@@ -116,10 +116,14 @@ nav .dropdown_menu li {
   font-weight: 400 !important;
 }
 
-nav .dropdown_menu li button:hover {
-  background: #f1f1f1 !important;
+.part2 ul li button:hover{
+  background-color: inherit !important;
+  box-shadow: none !important;
 }
 
+.part2 ul li button:hover a{
+  color: #3BB77E !important;
+}
 .nav nav li:hover .open {
   top: 100%;
   opacity: 1 !important;
