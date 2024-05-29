@@ -34,6 +34,7 @@ import { db } from './firebase';
 import SellerForm from './pages/SellerRegistration';
 import SearchResults from './components/search/SearchResults';
 import GoToTop from './components/GoToTop/GoToTop';
+import Contributors from './pages/Contributors/Contributors';
 
 const MyContext = createContext();
 
@@ -321,6 +322,10 @@ function App() {
         {
           path: '/search',
           element: <SearchResults />
+        },
+        {
+          path: '/contributors',
+          element: <Contributors />
         },
         {
           path: '*',
