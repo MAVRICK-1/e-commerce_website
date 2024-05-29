@@ -8,11 +8,36 @@
 .about-container {
   width: 100%;
   height: 100%;
-  margin-bottom: 2vw;
-  padding-top: 2vw;
+  margin-bottom: 1.5vw;
+  padding-top: 30px;
   overflow: hidden;
 }
 
+.background{
+ background-color: beige;
+ background-image: url(/src/assets/images/bg2.jpg);
+ transition: all 0.3s;
+ transform: translateY(2px);
+ margin: auto;
+ padding: 30px;
+ width:92% !important;
+ border-radius: 5px;
+}
+
+.about-container hr{
+  border: 0;
+  height: 1px;
+  width:50%;
+  margin: auto;
+  margin-bottom: 30px;
+  background: #72857c88;
+  border-radius: 5px;
+}
+.desc{
+  font-size: 26px;
+  text-align: center;
+  color: grey;
+}
 .about-container > .contributor-text {
   text-transform: capitalize;
   font-size: 40px;
