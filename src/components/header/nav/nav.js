@@ -333,6 +333,11 @@ const Nav = (props) => {
                       <Link>Contact</Link>
                     </Button>
                   </li>
+                  <li className="list-inline-item">
+                    <Button>
+                      <Link to={"/contributors"}>Contributors</Link>
+                    </Button>
+                  </li>
                 </ul>
 
                 {windowWidth < 992 && (

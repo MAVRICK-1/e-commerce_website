@@ -22,7 +22,7 @@ function Tes() {
   }, []);
 
   return (
-    <div>
+    <div style={{margin:"10px auto 10px auto"}}>
       <div className="about-container background">
         <h1 className="contributor-text">About Us</h1>
         <hr></hr>
@@ -43,56 +43,6 @@ function Tes() {
           upgrading your gadgets, or refreshing your wardrobe, you'll find
           everything you need in one website.
         </p>
-      </div>
-      <div className="about-container">
-        <h1 className="contributor-text">Our Contributors</h1>
-        <Grid className="container-grid">
-          {contributors.map((contributor) => (
-            <Grid item key={contributor.id}>
-              <Card className="card">
-                <a
-                  href={contributor.html_url}
-                  className="cardLink"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <CardMedia
-                    component="img"
-                    image={contributor.avatar_url}
-                    alt={contributor.login}
-                    className="img"
-                  />
-                </a>
-                <CardContent>
-                  <Typography className="card-name" variant="h4">
-                    {contributor.login}
-                  </Typography>
-                </CardContent>
-                <CardContent className="card-bottom">
-                  <Typography className="text-color">
-                    <a
-                      href={contributor.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-color"
-                    >
-                      View Git Profile
-                    </a>
-                    <span className="temp"> | </span>
-                    <a
-                      href={contributor.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-color"
-                    >
-                      Contributions: {contributor.contributions}
-                    </a>
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
       </div>
     </div>
   );
