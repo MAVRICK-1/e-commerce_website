@@ -1,26 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './about.css';
-import axios from 'axios';
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 function Tes() {
-  const [contributors, setContributors] = useState([]);
-
-  useEffect(() => {
-    async function fetchContributors() {
-      try {
-        const response = await axios.get(
-          'https://api.github.com/repos/MAVRICK-1/e-commerce_website/contributors'
-        );
-        setContributors(response.data);
-      } catch (error) {
-        console.error('Error fetching contributors:', error);
-      }
-    }
-
-    fetchContributors();
-  }, []);
-
   return (
     <div style={{margin:"10px auto 10px auto"}}>
       <div className="about-container background">
