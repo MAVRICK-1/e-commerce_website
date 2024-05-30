@@ -180,6 +180,9 @@ const Footer = () => {
                       <li>
                         <Link to="#">Careers</Link>
                       </li>
+                      <li>
+                        <Link to="#">Contributors</Link>
+                      </li>
                     </ul>
                   </div>
 
@@ -207,6 +210,9 @@ const Footer = () => {
                       <li>
                         <Link to="#">Careers</Link>
                       </li>
+                      <li>
+                        <Link to="#">Contributors</Link>
+                      </li>
                     </ul>
                   </div>
 
@@ -233,6 +239,9 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link to="#">Careers</Link>
+                      </li>
+                      <li>
+                        <Link to="#">Contributors</Link>
                       </li>
                     </ul>
                   </div>

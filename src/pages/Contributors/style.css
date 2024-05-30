@@ -1,0 +1,188 @@
+.contributor-container * {
+    text-decoration: none;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .contributor-container {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 2vw;
+    padding-top: 2vw;
+    overflow: hidden;
+  }
+  
+  .contributor-container > .contributor-text {
+    text-transform: capitalize;
+    font-size: 40px;
+    color: #008080;
+    font-weight: 500;
+    margin-bottom: 30px;
+  }
+  
+  .contributor-container > .container-grid {
+    padding-top: 1vw;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .container-grid > .MuiGrid-item-root {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .contributor-container .container-grid .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    height: 350px;
+    border: 0.5px solid #008080;
+    transition: box-shadow 1s;
+  }
+  
+  .contributor-container .container-grid .card:hover {
+    box-shadow: 10px 10px #008080;
+  }
+  
+  .contributor-container .container-grid .card .cardLink .img {
+    padding: 10px;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    object-fit: cover !important;
+  }
+  
+  .contributor-container .container-grid .card .card-name {
+    font-size: 28px;
+    color: #008080;
+    text-align: center;
+  }
+  
+  .container-grid .card .card-bottom {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .container-grid .card .card-bottom .text-color {
+    font-size: 1.2vw;
+    color: #008080;
+  }
+  
+  .container-grid
+    > .MuiGrid-item-root
+    > .card
+    > .MuiCardContent-root
+    > .card-bottom
+    > .temp {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 30px;
+    color: #008080;
+  }
+  
+  @media (max-width: 586px) {
+    .contributor-container {
+      width: 100%;
+      height: 100%;
+      padding: 5vw;
+    }
+  
+    .contributor-container > .contributor-text {
+      text-align: center;
+      justify-content: center;
+      margin: auto;
+    }
+  
+    .container-grid
+      > .MuiGrid-item-root
+      > .card
+      > .MuiCardContent-root
+      > .card-bottom
+      > .text-color {
+      font-size: 20px;
+    }
+  
+    .container-grid > .MuiGrid-item-root > .card {
+      width: 100%;
+    }
+  
+    .container-grid > .MuiGrid-item-root > .card > .cardLink > .img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  
+  @media (min-width: 600px) {
+    .contributor-container {
+      width: 100%;
+      height: 50%;
+      padding: 5vw;
+    }
+  
+    .contributor-container > .contributor-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+    }
+  
+    .container-grid
+      > .MuiGrid-item-root
+      > .card
+      > .MuiCardContent-root
+      > .card-bottom
+      > .text-color {
+      font-size: 24px;
+    }
+  
+    .container-grid > .MuiGrid-item-root > .card {
+      width: 300px;
+    }
+  
+    .container-grid > .MuiGrid-item-root > .card > .cardLink > .img {
+      width: 150px;
+      height: 150px;
+    }
+  }
+  
+  @media (min-width: 600px) and (max-width: 1024px) {
+    .contributor-container {
+      width: 100%;
+      height: 100%;
+      padding: 3vw;
+      margin-top: 3.5vw;
+    }
+  
+    .contributor-container > .contributor-text {
+      font-size: 40px;
+    }
+  
+    .container-grid
+      > .MuiGrid-item-root
+      > .card
+      > .MuiCardContent-root
+      > .card-bottom
+      > .text-color {
+      font-size: 20px;
+    }
+  
+    .container-grid > .MuiGrid-item-root > .card {
+      width: 300px;
+      height: 50%;
+    }
+  
+    .container-grid > .MuiGrid-item-root > .card > .cardLink > .img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+  
