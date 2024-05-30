@@ -723,3 +723,133 @@
     padding-top: 50px !important;
   }
 }
+
+/* Media queries for different screen sizes */
+@media only screen and (min-width: 992px) and (max-width: 1292px) {
+  .newsLetterBanner {
+    top:77%;
+    width: 20%;
+    bottom: 300px;
+    left: 9%;
+    height:60px;
+  }
+
+  .newsLetterBanner input {
+    font-size: 16px;
+    padding-left: 3.5em;
+  }
+
+  .newsLetterBanner button {
+    padding: 0 1.5em;
+    font-size: 15px;
+  }
+
+  .newsLetterBanner svg {
+    left: 1.2em;
+    font-size: 2.5vh;
+  }
+}
+@media only screen and (min-width: 767px) and (max-width: 992px) {
+  .newsLetterBanner {
+    top:70%;
+    width: 20%;
+    padding-right: 20%;
+    bottom: 300px;
+    left: 7%;
+    height:60px
+  }
+
+  .newsLetterBanner input {
+    font-size: 15px;
+    padding-left: 3.5em;
+  }
+
+  .newsLetterBanner button {
+    padding: 0 1.5em;
+    font-size: 14px;
+  }
+
+  .newsLetterBanner svg {
+    left: 1.2em;
+    font-size: 2.5vh;
+  }
+}
+
+@media only screen and (min-width: 575px) and (max-width: 767px) {
+  .newsLetterBanner {
+    top:76%;
+    width: 20%;
+    padding-right: 20%;
+    bottom: 300px;
+    left: 7%;
+    height:50px;
+  }
+
+  .newsLetterBanner input {
+    font-size: 1.8vh;
+    padding-left: 3em;
+  }
+
+  .newsLetterBanner button {
+    padding: 0 1em;
+    font-size: 1.6vh;
+  }
+
+  .newsLetterBanner svg {
+    left: 1em;
+    font-size: 2vh;
+  }
+}
+
+@media only screen and (min-width: 446px) and (max-width: 575px) {
+  .newsLetterBanner {
+    top:60%;
+    width: 20%;
+    padding-right: 20%;
+    bottom: 300px;
+    left: 7%;
+    height:60px;
+  }
+
+  .newsLetterBanner input {
+    font-size: 15px;
+    padding-left: 2.5em;
+  }
+
+  .newsLetterBanner button {
+    padding: 0 0.8em;
+    font-size: 12px;
+  }
+
+  .newsLetterBanner svg {
+    left: 0.8em;
+    font-size: 1.8vh;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 446px) {
+  .newsLetterBanner {
+    top:60%;
+    width: 20%;
+    padding-right: 25%;
+    bottom: 300px;
+    left: 7%;
+    height: 60px;
+  }
+
+  .newsLetterBanner input {
+    font-size: 14px;
+    padding-left: 2.5em;
+  }
+
+  .newsLetterBanner button {
+    padding: 0 0.8em;
+    font-size: 10px;
+  }
+
+  .newsLetterBanner svg {
+    left: 0.8em;
+    font-size: 1.8vh;
+  }
+}
+
