@@ -1,43 +1,52 @@
 .newsLetterBanner {
-  width: 600px;
-  height: 80px;
+  width: 80%; /* Reduced width to avoid overlap */
+  max-width: 600px; /* Ensures it doesn't get too wide on large screens */
+  height: 80px; /* Relative to viewport height for better responsiveness */
   position: absolute;
-  bottom: 150px;
-  left: 9%;
+  bottom: 35%; /* Adjust as needed based on design */
+  left: 8%; /* Adjusted to avoid overlapping with neighboring divs */
   z-index: 10;
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  box-sizing: border-box;
 }
+
 
 .newsLetterBanner input {
   width: 100%;
   height: 100%;
   background: #fff;
   border-radius: 60px;
-  border: 0px;
+  border: 0;
   outline: none !important;
-  padding-left: 80px;
-  font-size: 20px;
-  padding-right: 200px;
+  font-size: 18px; /* Adjust font size relative to viewport height */
+  padding-left: 4em; /* Adjust padding to accommodate the icon */
+  box-sizing: border-box; /* Ensure padding is included in width */
+  position: relative;
+  flex: 1; /* Allow input to grow and fill available space */
 }
 
 .newsLetterBanner button {
-  padding: 10px 50px !important;
-  border-radius: 50px !important;
-  color: #fff !important;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 80px !important;
-  font-size: 20px !important;
-  text-transform: capitalize !important;
-  font-weight: 400 !important;
+  padding: 0 2em; /* Adjusted padding for better responsiveness */
+  border-radius: 50px;
+  color: #fff;
+  background: #000; /* Add background color for the button */
+  height: 100%; /* Ensures it scales with the parent height */
+  font-size: 14px; /* Adjusted font size relative to viewport height */
+  text-transform: capitalize;
+  font-weight: 400;
+  border: none; /* Remove border */
+  outline: none; /* Remove outline */
+  margin-left: -4em; /* Overlap button with input field */
+  z-index: 1; /* Ensure button is on top */
 }
 
 .newsLetterBanner svg {
   position: absolute;
-  top: 27px;
-  left: 35px;
+  top: 50%;
+  left: 1.5em;
+  transform: translateY(-50%) rotate(-21deg);
   z-index: 10;
-  font-size: 30px !important;
-  transform: rotate(-21deg);
+  font-size: 3vh; /* Adjusted font size for better scaling */
   opacity: 0.5;
 }
