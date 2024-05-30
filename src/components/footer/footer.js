@@ -141,11 +141,17 @@ const Footer = () => {
                   <LocationOnOutlinedIcon /> <strong>Address</strong>:{' '}
                   {location}
                 </p>
-                <p>
+                <p
+                  className="mail-tel"
+                  onClick={() => (window.location = 'tel: +91 540-025-124553')}
+                >
                   <HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) -
                   540-025-124553{' '}
                 </p>
-                <p>
+                <p
+                  className="mail-tel"
+                  onClick={() => (window.location = 'mailto:sale@Nest.com')}
+                >
                   <EmailOutlinedIcon /> <strong>Email:</strong> sale@Nest.com
                 </p>
                 <p>
@@ -278,17 +284,18 @@ const Footer = () => {
               </div>
 
               <div className="col-md-6 d-flex part_2">
-                <div className="m-auto d-flex align-items-center phWrap">
+           
                   <div className="phNo d-flex align-items-center  mx-5">
                     <span>
                       <HeadphonesOutlinedIcon />
                     </span>
-                    <div className="info ml-3">
+                    <div
+                      className="mail-tel info ml-3"
+                      onClick={() => (window.location = 'tel: 1900 - 888')}
+                    >
                       <h3 className="text-g mb-0">1900 - 888</h3>
                       <p className="mb-0">24/7 Support Center</p>
                     </div>
-                  </div>
-                </div>
               </div>
 
               <div className="col-md-3 part3  part_3">
@@ -330,6 +337,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </footer>
       </div>
