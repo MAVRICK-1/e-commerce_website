@@ -1,3 +1,4 @@
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   getDatabase,
@@ -5,7 +6,15 @@ import {
   ref
 } from "firebase/database";
 import React, { createContext, useEffect, useState } from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import {
+  createBrowserRouter,
+  HashRouter,
+  Navigate,
+  Outlet,
+  Route,
+  RouterProvider,
+  Routes
+} from 'react-router-dom';
 import "./App.css";
 import Loader from "./assets/images/loading.gif";
 import Footer from "./components/footer/footer";
@@ -30,8 +39,9 @@ import { db } from './firebase';
 import SellerForm from './pages/SellerRegistration';
 import SearchResults from './components/search/SearchResults';
 import GoToTop from './components/GoToTop/GoToTop';
+import Contributors from './pages/Contributors/Contributors';
 
-const MyContext = createContext();
+
 
 function App() {
   const [productData, setProductData] = useState([]);
@@ -54,45 +64,7 @@ function App() {
   }
   const email = replaceSpecialCharacters(useSelector((state)=>state.authReducer.email))
 
-  // useEffect(() => {
-  //   fetchCartProducts();
-  //   fetchWishlistProducts();
-  // }, [logged]);
 
-  // const fetchCartProducts = async () => {
-  //   try {
-  //     const cartRef = doc(db, "carts", uid);
-  //     const productsCollectionRef = collection(cartRef, "products");
-  //     const querySnapshot = await getDocs(productsCollectionRef);
-  //     const products = [];
-  //     querySnapshot.forEach((doc) => {
-  //       products.push({ id: doc.id, ...doc.data() });
-  //     });
-  //     setCartItems(products);
-  //     setCartCount(products.length); // Set the product count
-  //   } catch (error) {
-  //     console.error("Error fetching cart products:", error);
-  //   }
-  // };
-
-  // const fetchWishlistProducts = async () => {
-  //   console.log("fetchWishlistProducts");
-  //   try {
-  //     const wishlistRef = doc(db, "wishlists", uid);
-  //     const productsCollectionRef = collection(wishlistRef, "products");
-  //     const querySnapshot = await getDocs(productsCollectionRef);
-  //     console.log(querySnapshot);
-  //     const products = [];
-  //     querySnapshot.forEach((doc) => {
-  //       products.push({ id: doc.id, ...doc.data() });
-  //     });
-  //     console.log(products);
-  //     setWishlistItems(products);
-  //     setWishlistCount(products.length); // Set the product count
-  //   } catch (error) {
-  //     console.error("Error fetching wishlist products:", error);
-  //   }
-  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -185,77 +157,100 @@ function App() {
     }
   }, []);
 
+const router = createBrowserRouter([
+    {
+      path: '/',
+      element: (
+        <>
+          {isLoading === true && (
+            <div className="loader">
+              <img src={Loader} />
+            </div>
+          )}
+          <Header data={data.productData} />
+          <Outlet />
+          <Footer />
+          <GoToTop />
+        </>
+      ),
+      children: [
+        {
+          index: true,
+          element: <Home data={data.productData} />
+        },
+        {
+          path: '/AboutUs',
+          element: <About />
+        },
+        {
+          path: '/cat/:id',
+          element: <Listing data={data.productData} single={true} />
+        },
+        {
+          path: '/cat/:id/:id',
+          element: <Listing data={data.productData} single={false} />
+        },
+        {
+          path: '/seller',
+          element: <SellerForm />
+        },
+        {
+          path: '/product/:id',
+          element: <DetailsPage data={data.productData} />
+        },
+        {
+          path: '/cart',
+          element: <Cart />
+        },
+        {
+          path: '/wishlist',
+          element: <Wishlist />
+        },
+        {
+          path: '/signIn',
+          element: isLogin === null ? <SignIn /> : <Navigate to="/" replace />
+        },
+        {
+          path: '/resetpassword',
+          element:
+            isLogin === null ? <ResetPassword /> : <Navigate to="/" replace />
+        },
+        {
+          path: '/signUp',
+          element: isLogin === null ? <SignUp /> : <Navigate to="/" replace />
+        },
+        {
+          path: '/map',
+          element: <MapComponent data={data} />
+        },
+        {
+          path: '/addProduct',
+          element: <AddProductForm />
+        },
+        {
+          path: '/search',
+          element: <SearchResults />
+        },
+        {
+          path: '/contributors',
+          element: <Contributors />
+        },
+        {
+          path: '*',
+          element: <NotFound />
+        }
+      ]
+    }
+  ]);
+
   return data && data.productData ? (
-    <HashRouter>
-        {isLoading === true && (
-          <div className="loader">
-            <img src={Loader} />
-          </div>
-        )}
-
-        <Header data={data.productData} />
-        <Routes>
-          <Route
-            exact={true}
-            path="/"
-            element={<Home data={data.productData} />}
-          />
-          <Route exact={true} path="/AboutUs" element={<About />} />
-          <Route
-            exact={true}
-            path="/cat/:id"
-            element={<Listing data={data.productData} single={true} />}
-          />
-          <Route
-            exact={true}
-            path="/cat/:id/:id"
-            element={<Listing data={data.productData} single={false} />}
-          />
-          <Route exact={true} path="/seller" element={<SellerForm />} />
-          <Route
-            exact={true}
-            path="/product/:id"
-            element={<DetailsPage data={data.productData} />}
-          />
-          <Route exact={true} path="/cart" element={<Cart />} />
-          <Route exact={true} path="/wishlist" element={<Wishlist />} />
-
-          {/* sign in , signup Protection */}
-          {(isLogin === null || isLogin === false) && (
-            <Route exact={true} path="signIn" element={<SignIn />} />
-          )}
-           {(isLogin === null || isLogin === false) && (
-            <Route
-              exact={true}
-              path="resetpassword"
-              element={<ResetPassword />}
-            />
-          )}
-           {(isLogin === null || isLogin === false) && (
-            <Route exact={true} path="signUp" element={<SignUp />} />
-          )}
-
-          <Route
-            exact={true}
-            path="/map"
-            element={<MapComponent data={data} />}
-          />
-          <Route exact={true} path="/addProduct" element={<AddProductForm />} />
-          <Route exact={true} path="*" element={<NotFound />} />
-          {/* search route */}
-          <Route exact={true} path="/search" element={<SearchResults />} />
-        </Routes>
-        <Footer />
-
-        <GoToTop />
-    </HashRouter>
+      <RouterProvider router={router} />
   ) : (
     <div className="loader">
       <img src={Loader} />
     </div>
   );
 }
-
+          
 export default App;
 
-export { MyContext };

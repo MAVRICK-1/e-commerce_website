@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SliderBanner from './slider/index';
 import CatSlider from '../../components/catSlider';
+import DealofDay from '../../components/DealofDay/DealofDay';
 
 import Banners from '../../components/banners';
 
@@ -111,6 +112,7 @@ const Home = (props) => {
 
   return (
     <div style={{ display: 'block' }}>
+      <DealofDay productData={prodData} />
       <SliderBanner />
       <CatSlider data={prodData} />
 

@@ -18,17 +18,24 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import MapComponent from "../../components/map/ITEMmap";
 import { db } from "../../firebase";
 
+import Snackbar from '@mui/material/Snackbar';
+
 import {
   collection,
   deleteDoc,
   doc,
   getDocs,
+  setDoc,
+  updateDoc,
+  onSnapshot
   onSnapshot,
 } from "firebase/firestore";
 import {useSelector} from "react-redux"
 
+
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
+  const [buttonStatus, setButtonStatus] = useState({});
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
@@ -43,13 +50,13 @@ const WishList = () => {
 
         fetchWishlistProducts();
       } else {
-        navigate('/signIn'); // Navigate to About Us page if not logged in
+        navigate('/signIn');
       }
 
       window.scrollTo(0, 0);
     } catch (error) {
       console.error('Error:', error);
-      setError('Failed to fetch data from the server'); // Set error state if there's an error with database connection
+      setError('Failed to fetch data from the server');
     }
   }, []);
 
@@ -72,6 +79,37 @@ const WishList = () => {
       setTotalPrice(price);
     } catch (error) {
       console.error('Error fetching wishlist products:', error);
+    }
+  };
+
+  const moveToCart = async (item) => {
+    try {
+      const user = localStorage.getItem('uid');
+      const cartRef = doc(db, 'carts', user);
+      const productRef = doc(cartRef, 'products', `${item.id}`);
+
+      const productSnapshot = await getDoc(productRef);
+
+      if (productSnapshot.exists()) {
+        const existingQuantity = productSnapshot.data().quantity || 0;
+        await updateDoc(productRef, {
+          quantity: existingQuantity + item?.quantity
+        });
+      } else {
+        await setDoc(productRef, { ...item, quantity: item?.quantity });
+      }
+
+      context.fetchCartProducts();
+      setButtonStatus((prevState) => ({
+        ...prevState,
+        [item.id]: 'Item moved to cart'
+      }));
+
+      setTimeout(() => {
+        deleteWishlistItem(user, `${item.id}`);
+      }, 2000);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
     }
   };
 
@@ -115,7 +153,6 @@ const WishList = () => {
   return (
     <>
       {wishlistItems.length > 0 ? (
-        // Render cart section if cartItems array is not empty
         <>
           {windowWidth > 992 && (
             <div className="breadcrumbWrapper mb-4">
@@ -130,14 +167,11 @@ const WishList = () => {
               </div>
             </div>
           )}
+
           <section className="cartSection mb-5">
             <div className="container-fluid">
-              <div className={context.windowWidth > 770 && 'row'}>
-                <div
-                  className={`${
-                    context.windowWidth < 770 ? 'col-md-full' : 'col-md-7'
-                  }`}
-                >
+              <div className="row">
+                <div className={`col-md-12`}>
                   <div className="d-flex align-items-center w-100">
                     <div className="left">
                       <h1 className="hd mb-0">Your Wishlist</h1>
@@ -166,6 +200,7 @@ const WishList = () => {
                             <th>Quantity</th>
                             <th>Subtotal</th>
                             <th>Remove</th>
+                            <th></th>
                           </tr>
                         </thead>
 
@@ -173,7 +208,7 @@ const WishList = () => {
                           {wishlistItems.length !== 0 &&
                             wishlistItems.map((item, index) => {
                               return (
-                                <tr>
+                                <tr key={item.id}>
                                   <td width={'50%'}>
                                     <div className="d-flex align-items-center">
                                       <div className="img">
@@ -205,7 +240,7 @@ const WishList = () => {
                                     </div>
                                   </td>
 
-                                  <td width="20%">
+                                  <td width="15%">
                                     <span>
                                       Rs:{' '}
                                       {parseInt(item.price.split(',').join(''))}
@@ -242,6 +277,25 @@ const WishList = () => {
                                       <DeleteOutlineOutlinedIcon />
                                     </span>
                                   </td>
+
+                                  <td width="15%" align="center">
+                                    <Button
+                                      //  className="btn-g mt-3 "
+                                      className={
+                                        buttonStatus[item.id] ===
+                                        'Item moved to cart'
+                                          ? 'blue'
+                                          : 'green'
+                                      }
+                                      onClick={() => moveToCart(item)}
+                                      disabled={
+                                        buttonStatus[item.id] ==
+                                        'Item moved to cart'
+                                      }
+                                    >
+                                      {buttonStatus[item.id] || 'Move to cart'}
+                                    </Button>
+                                  </td>
                                 </tr>
                               );
                             })}
@@ -249,80 +303,12 @@ const WishList = () => {
                       </table>
                     </div>
                   </div>
-
-                  <br />
-
-                  <div className="d-flex align-items-center">
-                    <Link to="/">
-                      <Button className="btn-g">
-                        <KeyboardBackspaceIcon /> Continue Shopping
-                      </Button>
-                    </Link>
-                    {/* <Button className='btn-g ml-auto' onClick={updateCartData}>
-                    <RefreshIcon /> Update Cart</Button> */}
-                  </div>
-                </div>
-
-                <div className="col-md-4 cartRightBox">
-                  <div className="card p-4 ">
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Subtotal</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        <span className="text-g">
-                          {wishlistItems.length !== 0 &&
-                            wishlistItems
-                              .map(
-                                (item) =>
-                                  parseInt(item.price.split(',').join('')) *
-                                  item.quantity
-                              )
-                              .reduce((total, value) => total + value, 0)}
-                        </span>
-                      </h3>
-                    </div>
-
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Shipping</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        <span>Free</span>
-                      </h3>
-                    </div>
-
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Estimate for</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        United Kingdom
-                      </h3>
-                    </div>
-
-                    <div className="d-flex align-items-center mb-4">
-                      <h5 className="mb-0 text-light">Total</h5>
-                      <h3 className="ml-auto mb-0 font-weight-bold">
-                        <span className="text-g">
-                          {wishlistItems.length !== 0 &&
-                            wishlistItems
-                              .map(
-                                (item) =>
-                                  parseInt(item.price.split(',').join('')) *
-                                  item.quantity
-                              )
-                              .reduce((total, value) => total + value, 0)}
-                        </span>
-                      </h3>
-                    </div>
-
-                    <br />
-                    <Button className="btn-g btn-lg">
-                      Proceed To CheckOut
-                    </Button>
-                  </div>
                 </div>
               </div>
             </div>
-          </section>{' '}
+          </section>
         </>
       ) : (
-        // Render message indicating cart is empty if cartItems array is empty
         <div className="container-fluid">
           <div className="row">
             <div className="col d-flex align-items-center justify-content-center mt-4 mb-4">

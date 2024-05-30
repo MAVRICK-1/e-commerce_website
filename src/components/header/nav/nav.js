@@ -116,7 +116,7 @@ const Nav = (props) => {
         <div className="container-fluid">
           <div className="row position-relative">
             {/*BROWSE ALL CATEGORY CODE */}
-            <div className="col-sm-2 part1 d-flex align-items-center justify-content-center">
+            <div className="col-sm-2 browBtn d-flex align-items-center justify-content-center">
               <nav>
                 <ul className="list list-inline">
                   <li className="list-inline-item position-static">
@@ -181,11 +181,7 @@ const Nav = (props) => {
                       <li className="list-inline-item" key={index}>
                         <Button onClick={() => openDropdownFun(index)}>
                           <a
-                            href={`${
-                              windowWidth > 992
-                                ? `#/cat/${item.cat_name.toLowerCase()}`
-                                : '#'
-                            }`}
+                            href={`${windowWidth > 992 ? `#` : '#'}`}
                             onClick={() =>
                               sessionStorage.setItem(
                                 'cat',
@@ -222,7 +218,7 @@ const Nav = (props) => {
                                     }}
                                   >
                                     <a
-                                      href={`#/cat/${item.cat_name.toLowerCase()}/${item_.cat_name
+                                      href={`/cat/${item.cat_name.toLowerCase()}/${item_.cat_name
                                         .replace(/\s/g, '-')
                                         .toLowerCase()}`}
                                       onClick={() =>
@@ -353,6 +349,11 @@ const Nav = (props) => {
                   <li className="list-inline-item">
                     <Button>
                       <Link>Contact</Link>
+                    </Button>
+                  </li>
+                  <li className="list-inline-item">
+                    <Button>
+                      <Link to={"/contributors"}>Contributors</Link>
                     </Button>
                   </li>
                 </ul>

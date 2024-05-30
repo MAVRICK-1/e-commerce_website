@@ -26,6 +26,7 @@ import NewsletterImg from '../../assets/images/newsletter.webp';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = `5171 W Campbell Ave undefined Kent, Utah 53127 United States`;
   return (
     <>
       <section className="newsLetterSection">
@@ -128,15 +129,29 @@ const Footer = () => {
                 <p>Awesome grocery store website template</p>
                 <br />
 
-                <p>
-                  <LocationOnOutlinedIcon /> <strong>Address</strong>: 5171 W
-                  Campbell Ave undefined Kent, Utah 53127 United States
+                <p
+                  style={{ cursor: 'pointer' }}
+                  onClick={() =>
+                    window.open(
+                      `https://www.google.com/maps/search/?api=1&query=${location}`,
+                      '_blank'
+                    )
+                  }
+                >
+                  <LocationOnOutlinedIcon /> <strong>Address</strong>:{' '}
+                  {location}
                 </p>
-                <p>
+                <p
+                  className="mail-tel"
+                  onClick={() => (window.location = 'tel: +91 540-025-124553')}
+                >
                   <HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) -
                   540-025-124553{' '}
                 </p>
-                <p>
+                <p
+                  className="mail-tel"
+                  onClick={() => (window.location = 'mailto:sale@Nest.com')}
+                >
                   <EmailOutlinedIcon /> <strong>Email:</strong> sale@Nest.com
                 </p>
                 <p>
@@ -171,6 +186,9 @@ const Footer = () => {
                       <li>
                         <Link to="#">Careers</Link>
                       </li>
+                      <li>
+                        <Link to="#">Contributors</Link>
+                      </li>
                     </ul>
                   </div>
 
@@ -198,6 +216,9 @@ const Footer = () => {
                       <li>
                         <Link to="#">Careers</Link>
                       </li>
+                      <li>
+                        <Link to="#">Contributors</Link>
+                      </li>
                     </ul>
                   </div>
 
@@ -224,6 +245,9 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link to="#">Careers</Link>
+                      </li>
+                      <li>
+                        <Link to="#">Contributors</Link>
                       </li>
                     </ul>
                   </div>
@@ -260,17 +284,18 @@ const Footer = () => {
               </div>
 
               <div className="col-md-6 d-flex part_2">
-                <div className="m-auto d-flex align-items-center phWrap">
+           
                   <div className="phNo d-flex align-items-center  mx-5">
                     <span>
                       <HeadphonesOutlinedIcon />
                     </span>
-                    <div className="info ml-3">
+                    <div
+                      className="mail-tel info ml-3"
+                      onClick={() => (window.location = 'tel: 1900 - 888')}
+                    >
                       <h3 className="text-g mb-0">1900 - 888</h3>
                       <p className="mb-0">24/7 Support Center</p>
                     </div>
-                  </div>
-                </div>
               </div>
 
               <div className="col-md-3 part3  part_3">
@@ -312,6 +337,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </footer>
       </div>
