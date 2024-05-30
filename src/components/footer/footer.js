@@ -278,8 +278,6 @@ const Footer = () => {
                       <h3 className="text-g mb-0">1900 - 888</h3>
                       <p className="mb-0">24/7 Support Center</p>
                     </div>
-                  </div>
-                </div>
               </div>
 
               <div className="col-md-3 part3  part_3">
@@ -321,6 +319,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </footer>
       </div>
