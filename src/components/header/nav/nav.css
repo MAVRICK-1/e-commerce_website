@@ -18,6 +18,16 @@
     padding: auto !important;
     height: 79px !important;
   }
+  .nav nav ul li button a {
+    font-size: 15px !important;
+  }
+  .browHead {
+    color: white;
+    z-index: 10;
+    opacity: 1;
+    font-size: 18px !important;
+    margin-top: 10px;
+  }
 }
 
 
