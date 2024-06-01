@@ -122,3 +122,8 @@ footer .lastStrip .part3 ul li a:hover {
 .mail-tel {
   cursor: pointer;
 }
+@media (min-width:700px) and (max-width:1200px) {
+  footer .lastStrip .part_2 .part_3 .list{
+    display: flex;
+  }
+}
