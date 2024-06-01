@@ -18,34 +18,38 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 
-import Nav from './nav/nav';
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-
-import { MyContext } from '../../App';
-import { useNavigate } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
-import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { Satellite } from '@mui/icons-material';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import Nav from "./nav/nav";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { Satellite } from "@mui/icons-material";
+import { getDatabase, ref, onValue } from "firebase/database";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../Redux/auth-slice";
+import { setOpenNavigation } from "../../Redux/filter-slice";
 import { cities } from './cities';
+
 
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
   const [isOpenAccDropDown, setisOpenAccDropDown] = useState(false);
-
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const logged = useSelector((state)=>state.authReducer.isAuth)
   const [isopenSearch, setOpenSearch] = useState(false);
   const [isOpenNav, setIsOpenNav] = useState(false);
-  const { cartCount, setCartCount } = useContext(MyContext);
-  const { wishlistCount, setWishlistCount } = useContext(MyContext);
+  // const { cartCount, setCartCount } = useContext(MyContext);
+  let wishlistCount = 0;
 
   const headerRef = useRef();
-  const [profile, setProfile] = useState('');
+  const searchInput = useRef();
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
+  const profile = useSelector((state)=>state.authReducer.photoURL)
+  const cartCount = useSelector((state)=>state.cart.items.length);
+  const items = useSelector((state)=>state.cart.items);
+  const dispatch = useDispatch()
 
-  const context = useContext(MyContext);
   const history = useNavigate();
 
   const [categories, setcategories] = useState([
@@ -84,19 +88,15 @@ const Header = (props) => {
   //   getCountry("https://countriesnow.space/api/v0.1/countries/");
   // }, []);
 
-  useEffect(() => {
-    setProfile(localStorage.getItem('userImage'));
-  }, [context.isLogin]);
-  // const getCountry = async (url) => {
-  //   try {
-  //     await axios.get(url).then((res) => {
-  //       if (res !== null) {
-  //         ////console.log(res.data.data);
-  //         res.data.data.map((item, index) => {
-  //           countryList.push(item.country);
-  //           ////console.log(item.country)
-  //         });
-
+ // const getCountry = async (url) => {
+ //   try {
+ //     await axios.get(url).then((res) => {
+ //       if (res !== null) {
+ //         ////console.log(res.data.data);
+ //         res.data.data.map((item, index) => {
+ //           countryList.push(item.country);
+ //           ////console.log(item.country)
+ //        });
   //         ////console.log(res.data.data[0].country)
   //       }
   //     });
@@ -117,9 +117,8 @@ const Header = (props) => {
   // }, [])
 
   const signOut = () => {
-    context.signOut();
-    localStorage.setItem('userImage', '');
-    history('/');
+    dispatch(logOut());
+    history("/");
   };
 
   const openSearch = () => {
@@ -135,13 +134,13 @@ const Header = (props) => {
 
   const openNav = () => {
     setIsOpenNav(true);
-    context.setIsopenNavigation(true);
+    dispatch(setOpenNavigation(true));
   };
 
   const closeNav = () => {
     setIsOpenNav(false);
     setisOpenAccDropDown(false);
-    context.setIsopenNavigation(false);
+    dispatch(setOpenNavigation(false));
   };
 
   return (
@@ -175,7 +174,7 @@ const Header = (props) => {
                     <div className="navbarToggle mr-2" onClick={openNav}>
                       <MenuIcon />
                     </div>
-                    {context.isLogin === 'true' && (
+                    {logged === true && (
                       <div
                         onClick={() => setisOpenAccDropDown(!isOpenAccDropDown)}
                       >
@@ -308,8 +307,7 @@ const Header = (props) => {
                           </Link>
                         </span>
                       </li>
-
-                      {context.isLogin === 'true' ? (
+                      {logged ? (
                         <li className="list-inline-item">
                           <span
                             onClick={() => setisOpenDropDown(!isOpenDropDown)}

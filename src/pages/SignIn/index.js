@@ -1,26 +1,25 @@
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './style.css';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { Button, Snackbar, Typography } from '@mui/material';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./style.css";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { Button, Snackbar, Typography } from "@mui/material";
 import {
   getAuth,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  sendPasswordResetEmail
-} from 'firebase/auth';
-import { app } from '../../firebase';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import { MyContext } from '../../App';
-import GoogleImg from '../../assets/images/google.webp';
-import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
-import { useDispatch } from 'react-redux';
-import { logIn } from '../../Redux/auth-slice';
+  sendPasswordResetEmail,
+} from "firebase/auth";
+import { app } from "../../firebase";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import GoogleImg from "../../assets/images/google.png";
+import useLoggedInUserEmail from "../../Hooks/useLoggedInUserEmail";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../Redux/auth-slice";
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -32,8 +31,9 @@ const SignIn = () => {
     email: '',
     password: ''
   });
-  const [error, setError] = useState('');
-  const context = useContext(MyContext);
+
+  const [error, setError] = useState("");
+
   const history = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [loggedInUserEmail, setLoggedInUseEmail] = useLoggedInUserEmail(); //get_email hook
@@ -105,14 +105,17 @@ const SignIn = () => {
           email: '',
           password: ''
         });
-        localStorage.setItem('isLogin', true);
         const udata = replaceSpecialCharacters(user.email);
-        localStorage.setItem('user', udata);
-        context.signIn();
-        dispatch(logIn({ email: user.email }));
+        dispatch(logIn({
+          phoneNumber:user.phoneNumber,
+          photoURL:user.photoURL,
+          uid:user.uid,
+          displayName:user.displayName,
+          email:user.email,
+          emailVerified:user.emailVerified
+        }))
         setLoggedInUseEmail(user.email);
-        localStorage.setItem('uid', userCredential.user.uid);
-        localStorage.setItem('userImage', '');
+
         //console.log(loggedInUserEmail);
         history('/');
       })
@@ -128,15 +131,19 @@ const SignIn = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setShowLoader(false);
-        localStorage.setItem('isLogin', true);
+
         const udata = replaceSpecialCharacters(result.user.email);
-        localStorage.setItem('user', udata);
-        localStorage.setItem('uid', result.user.uid);
-        context.signIn();
+        dispatch(logIn({
+          phoneNumber:result.user.phoneNumber,
+          photoURL:result.user.photoURL,
+          uid:result.user.uid,
+          displayName:result.user.displayName,
+          email:result.user.email,
+          emailVerified:result.user.emailVerified
+        }))
         setLoggedInUseEmail(udata);
-        localStorage.setItem('userImage', result.user.photoURL);
-        //console.log(loggedInUserEmail);
-        history('/');
+        history("/");
+
       })
       .catch((error) => {
         setShowLoader(false);

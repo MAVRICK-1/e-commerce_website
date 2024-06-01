@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
-import './style.css';
-import Rating from '@mui/material/Rating';
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import React, { useEffect, useState } from "react";
+import "./style.css";
+import Rating from "@mui/material/Rating";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import CompareArrowsOutlinedIcon from "@mui/icons-material/CompareArrowsOutlined";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+
 import {
   getDatabase,
   ref,
@@ -17,9 +18,10 @@ import {
   remove
 } from 'firebase/database';
 
-import { MyContext } from '../../App';
-import { db } from '../../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { db } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
+import {useDispatch, useSelector} from "react-redux"
+import { checkIsItemInCart, getAddToCart } from "../../Redux/cart-slice";
 
 const Product = (props) => {
   const [productData, setProductData] = useState();
@@ -27,7 +29,11 @@ const Product = (props) => {
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [drivingDistance, setDrivingDistance] = useState(null);
-  const context = useContext(MyContext);
+  const logged = useSelector((state)=>state.authReducer.isAuth);
+  const dispatch = useDispatch()
+  const uid = useSelector((state)=>state.authReducer.uid);
+  const {item} = props;
+  const isItemInCart = useSelector((state)=> checkIsItemInCart(state,item.id))
 
   useEffect(() => {
     setProductData(props.item);
@@ -49,7 +55,7 @@ const Product = (props) => {
         console.error('Error getting user location:', error);
       }
     );
-  }, [context.isLogin]);
+  }, [logged]);
 
   // const getDrivingDistance = async (start, end) => {
   //     const response = await fetch(`https://router.project-osrm.org/route/v1/driving/${start.longitude},${start.latitude};${end.longitude},${end.latitude}`);
@@ -98,28 +104,15 @@ const Product = (props) => {
     }
   }, [userLocation, productData]);
 
-  const addToCart = async (item) => {
-    try {
-      const user = localStorage.getItem('uid');
-      const cartRef = doc(db, 'carts', user);
-      const productRef = doc(cartRef, 'products', `${item.id}`);
-      await setDoc(productRef, { ...item, quantity: 1 });
-      setIsadded(true);
-      context.fetchCartProducts();
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-    }
-  };
 
   const addToWishlist = async (item) => {
     console.log('addToWishlist');
     try {
-      const user = localStorage.getItem('uid');
-      const wishlistRef = doc(db, 'wishlists', user);
-      const productRef = doc(wishlistRef, 'products', `${item.id}`);
+      const user = uid;
+      const wishlistRef = doc(db, "wishlists", user);
+      const productRef = doc(wishlistRef, "products", `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });
       setIsadded(true);
-      context.fetchWishlistProducts();
     } catch (error) {
       console.error('Error adding item to wishlist:', error);
     }
@@ -200,11 +193,12 @@ const Product = (props) => {
             </div>
 
             <Button
+              disabled={isItemInCart}
               className="w-100 transition mt-3"
-              onClick={() => addToCart(productData)}
+              onClick={() => dispatch(getAddToCart({item:productData,uid}))}
             >
               <ShoppingCartOutlinedIcon />
-              {isAdded === true ? 'Added' : 'Add'}
+              {isItemInCart === true ? "Added" : "Add"}
             </Button>
           </div>
         </>

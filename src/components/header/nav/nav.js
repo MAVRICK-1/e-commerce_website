@@ -1,11 +1,11 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect } from 'react';
 import './nav.css';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import GridViewIcon from '@mui/icons-material/GridView';
 import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
-import { MyContext } from '../../../App';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 //BROWSE ALL CATEGORY ICONS
@@ -32,15 +32,15 @@ import rice from '../../../assets/images/rice.svg';
 //END OF BROWSE ALL CATEGORY ICONS
 
 const Nav = (props) => {
-  const logged = useSelector((state) => state.authReducer.value.isAuth);
-
-  const [navData, setNavData] = useState([]);
-  const [isOpenNav, setIsOpenNav] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [openDropdownMenu, setDropdownMenu] = useState(false);
-  const [openDropdownMenuIndex, setDropdownMenuIndex] = useState(null);
-  const [openMegaMenu, setOpenMegaMenu] = useState(false);
-  const context = useContext(MyContext);
+    const [navData, setNavData] = useState([]);
+    const [isOpenNav, setIsOpenNav] = useState(false);
+    const [openDropdownMenu, setDropdownMenu] = useState(false);
+    const [openDropdownMenuIndex, setDropdownMenuIndex] = useState(null);
+    
+    const [openMegaMenu, setOpenMegaMenu] = useState(false);
+    
+    const windowWidth = useSelector((state)=>state.filter.windowWidth);
+    const logged = useSelector((state)=>state.authReducer.isAuth)
 
   //BROWSE ALL CATEGORY CONTENT
   const initialItems = [
@@ -77,6 +77,7 @@ const Nav = (props) => {
 
   const [items, setItems] = useState(initialItems);
   const [expanded, setExpanded] = useState(false);
+
 
   const handleShowMore = () => {
     setItems([...initialItems, ...moreItems]);
@@ -323,10 +324,27 @@ const Nav = (props) => {
                                         </div>
 
                                     </li> */}
-                    <Button>
-                      <Link>Blog</Link>
-                    </Button>
-                  </li>
+                                    <li className='list-inline-item'>
+                                        <Button><Link>Contact</Link></Button>
+                                    </li>
+                                </ul>
+
+                                {
+                                    windowWidth < 992 &&
+                                    <>
+                                    {
+                                        logged!==true &&
+                                         <div className='pl-3 pr-3'>
+                                            <br />
+                                            <Link to={'/signIn'}>
+                                                <Button className="btn btn-g btn-lg w-100" onClick={closeNav}>Sign In</Button>
+                                            </Link>
+                                        </div>
+                                    }
+                                       
+                                    </>
+                                }
+
 
                   <li className="list-inline-item">
                     <Button>

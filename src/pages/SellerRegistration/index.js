@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Container, Grid, TextField, Button } from '@mui/material';
 //import { getDatabase, ref, push, set, child } from "firebase/database";
-import { useNavigate } from 'react-router-dom';
-import { db, storage } from '../../firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
+import { useNavigate } from "react-router-dom";
+import { db, storage } from "../../firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import {uploadBytes,getDownloadURL, ref} from "firebase/storage"
+import {useSelector} from "react-redux"
+
 
 const SellerForm = () => {
   const navigate = useNavigate();
+  const uid = useSelector((state)=>state.authReducer.uid);
 
   const [formFields, setFormFields] = useState({
     ownerName: '',
@@ -101,13 +104,11 @@ const SellerForm = () => {
     e.preventDefault();
     setIsSubmit(true);
     // Generate a unique key
-    const uniqueKey = localStorage.getItem('uid');
-
+    const uniqueKey = uid;
+    
     //Upload the shop photo image to firebase storage and get url
-    const imageRef = ref(
-      storage,
-      `sellerImages/${localStorage.getItem('uid')}/shopPhoto`
-    );
+    const imageRef = ref(storage, `sellerImages/${uid}/shopPhoto`);
+
     await uploadBytes(imageRef, formFields.shopPhoto);
     const imageUrl = await getDownloadURL(imageRef);
 
@@ -117,9 +118,10 @@ const SellerForm = () => {
     setIsSubmit(false);
   };
 
-  useEffect(() => {
-    checkUserInSellers(localStorage.getItem('uid'));
-  }, []);
+  useEffect(()=>{
+    checkUserInSellers(uid)
+  },[])
+
 
   return (
     <Container

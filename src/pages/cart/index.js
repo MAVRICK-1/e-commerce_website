@@ -1,39 +1,47 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './style.css';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import Rating from '@mui/material/Rating';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./style.css";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import Rating from "@mui/material/Rating";
+
 import {
   Button,
   Card,
   CardActions,
   CardContent,
-  Typography
-} from '@mui/material';
-import QuantityBox from '../../components/quantityBox';
-import { MyContext } from '../../App';
-import { getDatabase, ref, onValue, remove } from 'firebase/database';
-import { useNavigate } from 'react-router-dom';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import MapComponent from '../../components/map/ITEMmap';
-import { db } from '../../firebase';
+  Typography,
+} from "@mui/material";
+import QuantityBox from "../../components/quantityBox";
+import { getDatabase, ref, onValue, remove } from "firebase/database";
+import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import MapComponent from "../../components/map/ITEMmap";
+import { db } from "../../firebase";
 import {
   collection,
   deleteDoc,
   doc,
   getDocs,
-  onSnapshot
-} from 'firebase/firestore';
+  onSnapshot,
+} from "firebase/firestore";
+import {useSelector,useDispatch} from "react-redux"
+import { getDeleteAllCartItem, getDeleteCartItem } from "../../Redux/cart-slice";
+
+
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
-  const context = useContext(MyContext);
   const navigate = useNavigate();
-  const [uid, setUid] = useState(localStorage.getItem('uid'));
+  const uid = useSelector((state)=>state.authReducer.uid)
+  const logged = useSelector((state)=>state.authReducer.isAuth)
+  const dispatch = useDispatch();
+  const isDeleteing = useSelector((state)=>state.cart.isRemoving)
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
+
   useEffect(() => {
     try {
-      if (context.isLogin === 'true') {
+      if (logged === true) {
         fetchCartProducts();
       } else {
         navigate('/signIn'); // Navigate to About Us page if not logged in
@@ -47,8 +55,10 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    fetchCartProducts();
-  }, [db, uid]);
+    if(!isDeleteing){
+      fetchCartProducts();
+    }
+  }, [db, uid, isDeleteing]);
 
   const fetchCartProducts = async () => {
     try {
@@ -56,12 +66,13 @@ const Cart = () => {
       const productsCollectionRef = collection(cartRef, 'products');
       const querySnapshot = await getDocs(productsCollectionRef);
       let products = [];
+      
       let price = 0;
       querySnapshot.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() });
         price += parseInt(doc.data()?.price) * doc.data()?.quantity;
       });
-      context.setCartCount(products.length);
+      // context.setCartCount(products.length);
       setCartItems(products);
       setTotalPrice(price);
     } catch (error) {
@@ -69,11 +80,9 @@ const Cart = () => {
     }
   };
 
-  const deleteCartItem = async (uid, cartItemId) => {
-    const cartItemRef = doc(db, 'carts', uid, 'products', cartItemId);
-
+  const deleteCartItem = async (cartItemId,price) => {
     try {
-      await deleteDoc(cartItemRef);
+      dispatch(getDeleteCartItem({itemId:cartItemId,uid}))
       fetchCartProducts();
       console.log('Cart item deleted successfully.');
     } catch (error) {
@@ -81,16 +90,10 @@ const Cart = () => {
     }
   };
 
-  const deleteAllCartItems = async (uid) => {
-    const productsCollectionRef = collection(db, 'carts', uid, 'products');
-
+  const deleteAllCartItems = () => {
     try {
-      const querySnapshot = await getDocs(productsCollectionRef);
-      querySnapshot.forEach(async (doc) => {
-        await deleteDoc(doc.ref);
-      });
-      await fetchCartProducts();
-      console.log('All cart items deleted successfully.');
+      dispatch(getDeleteAllCartItem({uid}));
+      console.log("All cart items deleted successfully.");
     } catch (error) {
       console.error('Error deleting cart items:', error);
     }
@@ -105,7 +108,7 @@ const Cart = () => {
       {cartItems.length > 0 ? (
         // Render cart section if cartItems array is not empty
         <>
-          {context.windowWidth > 992 && (
+          {windowWidth > 992 && (
             <div className="breadcrumbWrapper mb-4">
               <div className="container-fluid">
                 <ul className="breadcrumb breadcrumb2 mb-0">
@@ -138,7 +141,7 @@ const Cart = () => {
 
                     <span
                       className="ml-auto clearCart d-flex align-items-center cursor "
-                      onClick={() => deleteAllCartItems(uid)}
+                      onClick={() => deleteAllCartItems()}
                     >
                       <DeleteOutlineOutlinedIcon /> Clear Cart
                     </span>
@@ -231,7 +234,7 @@ const Cart = () => {
                                     <span
                                       className="cursor"
                                       onClick={() =>
-                                        deleteCartItem(uid, `${item?.id}`)
+                                        deleteCartItem(`${item?.id}`)
                                       }
                                     >
                                       <DeleteOutlineOutlinedIcon />

@@ -1,6 +1,11 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { getDatabase, onValue, ref } from 'firebase/database';
-import React, { createContext, useEffect, useState } from 'react';
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  getDatabase,
+  onValue,
+  ref
+} from "firebase/database";
+import React, { createContext, useEffect, useState } from "react";
 import {
   createBrowserRouter,
   HashRouter,
@@ -10,23 +15,23 @@ import {
   RouterProvider,
   Routes
 } from 'react-router-dom';
-import './App.css';
-import Loader from './assets/images/loading.gif';
-import Footer from './components/footer/footer';
-import Header from './components/header/header';
-import About from './pages/About';
-import AddProductForm from './pages/AddProd';
-import DetailsPage from './pages/Details';
-import Home from './pages/Home/index';
-import Listing from './pages/Listing';
-import NotFound from './pages/NotFound';
-import SignIn from './pages/SignIn';
+import "./App.css";
+import Loader from "./assets/images/loading.gif";
+import Footer from "./components/footer/footer";
+import Header from "./components/header/header";
+import About from "./pages/About";
+import AddProductForm from "./pages/AddProd";
+import DetailsPage from "./pages/Details";
+import Home from "./pages/Home/index";
+import Listing from "./pages/Listing";
+import NotFound from "./pages/NotFound";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Cart from "./pages/cart";
+import Wishlist from "./pages/wishList";
+import "./responsive.css";
+import {useSelector} from "react-redux"
 import ResetPassword from './pages/ResetPassword';
-import SignUp from './pages/SignUp';
-import Cart from './pages/cart';
-import Wishlist from './pages/wishList';
-import './responsive.css';
-
 // import data from './data';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import MapComponent from './components/map/ITEMmap';
@@ -36,67 +41,30 @@ import SearchResults from './components/search/SearchResults';
 import GoToTop from './components/GoToTop/GoToTop';
 import Contributors from './pages/Contributors/Contributors';
 
-const MyContext = createContext();
+
 
 function App() {
   const [productData, setProductData] = useState([]);
 
   const [cartItems, setCartItems] = useState([]);
-  const [wishlistItems, setWishlistItems] = useState([]);
 
   const [isLoading, setIsloading] = useState(true);
 
-  const [loading, setLoading] = useState(true);
-
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  const [isopenNavigation, setIsopenNavigation] = useState(false);
-
   const [isLogin, setIsLogin] = useState();
-  const [isOpenFilters, setIsopenFilters] = useState(false);
   const [data, setData] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
-  const [wishlistCount, setWishlistCount] = useState(0);
 
-  useEffect(() => {
-    fetchCartProducts();
-    fetchWishlistProducts();
-  }, [isLogin]);
+  const uid = useSelector((state)=>state.authReducer.uid)
+  const logged = useSelector((state)=>state.authReducer.isAuth)
 
-  const fetchCartProducts = async () => {
-    try {
-      const cartRef = doc(db, 'carts', localStorage.getItem('uid'));
-      const productsCollectionRef = collection(cartRef, 'products');
-      const querySnapshot = await getDocs(productsCollectionRef);
-      const products = [];
-      querySnapshot.forEach((doc) => {
-        products.push({ id: doc.id, ...doc.data() });
-      });
-      setCartItems(products);
-      setCartCount(products.length); // Set the product count
-    } catch (error) {
-      console.error('Error fetching cart products:', error);
-    }
-  };
+  function replaceSpecialCharacters(inputString) {
+    // Use a regular expression to replace special characters with underscore _
+    const replacedString = inputString.replace(/[#$\[\].]/g, "_");
 
-  const fetchWishlistProducts = async () => {
-    console.log('fetchWishlistProducts');
-    try {
-      const wishlistRef = doc(db, 'wishlists', localStorage.getItem('uid'));
-      const productsCollectionRef = collection(wishlistRef, 'products');
-      const querySnapshot = await getDocs(productsCollectionRef);
-      console.log(querySnapshot);
-      const products = [];
-      querySnapshot.forEach((doc) => {
-        products.push({ id: doc.id, ...doc.data() });
-      });
-      console.log(products);
-      setWishlistItems(products);
-      setWishlistCount(products.length); // Set the product count
-    } catch (error) {
-      console.error('Error fetching wishlist products:', error);
-    }
-  };
+    return replacedString;
+  }
+  const email = replaceSpecialCharacters(useSelector((state)=>state.authReducer.email))
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -121,8 +89,7 @@ function App() {
   useEffect(() => {
     getData();
 
-    const is_Login = localStorage.getItem('isLogin');
-    setIsLogin(is_Login);
+    setIsLogin(logged);
 
     setTimeout(() => {
       setProductData(data[1]);
@@ -136,7 +103,8 @@ function App() {
       const db = getDatabase();
 
       // Reference to the node or path you want to fetch data from
-      const dataRef = ref(db, localStorage.getItem('user'));
+
+      const dataRef = ref(db, email);
 
       // Fetch data from the specified path
       onValue(
@@ -180,66 +148,6 @@ function App() {
     }
   };
 
-  const addToCart = async (item) => {
-    try {
-      const user = localStorage.getItem('user');
-      // Initialize Firebase database with the provided database URL
-      const db = getDatabase();
-      const cartRef = ref(db, user);
-      // Generate a unique key using the user's email and item details
-      const uniqueKey = user + item.id; // Modify as per your requirement
-      // Add item to the cart in Firebase
-      setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      //console.log('Item added to cart successfully');
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-    }
-  };
-
-  const removeItemsFromCart = (id) => {
-    const arr = cartItems.filter((obj) => obj.id !== id);
-    setCartItems(arr);
-  };
-
-  const emptyCart = () => {
-    setCartItems([]);
-  };
-
-  const signIn = () => {
-    const is_Login = localStorage.getItem('isLogin');
-    setIsLogin(is_Login);
-  };
-
-  const signOut = () => {
-    localStorage.removeItem('isLogin');
-    setIsLogin(false);
-  };
-
-  const openFilters = () => {
-    setIsopenFilters(!isOpenFilters);
-  };
-
-  const value = {
-    cartItems,
-    isLogin,
-    windowWidth,
-    isOpenFilters,
-    addToCart,
-    removeItemsFromCart,
-    emptyCart,
-    signOut,
-    signIn,
-    openFilters,
-    isopenNavigation,
-    setIsopenNavigation,
-    cartCount,
-    setCartCount,
-    wishlistCount,
-    setWishlistCount,
-    fetchCartProducts,
-    fetchWishlistProducts
-  };
-
   useEffect(() => {
     if (window.botpressWebChat) {
       window.botpressWebChat.init({
@@ -249,11 +157,11 @@ function App() {
     }
   }, []);
 
-  const router = createBrowserRouter([
+const router = createBrowserRouter([
     {
       path: '/',
       element: (
-        <MyContext.Provider value={value}>
+        <>
           {isLoading === true && (
             <div className="loader">
               <img src={Loader} />
@@ -263,7 +171,7 @@ function App() {
           <Outlet />
           <Footer />
           <GoToTop />
-        </MyContext.Provider>
+        </>
       ),
       children: [
         {
@@ -336,16 +244,13 @@ function App() {
   ]);
 
   return data && data.productData ? (
-    <MyContext.Provider value={value}>
       <RouterProvider router={router} />
-    </MyContext.Provider>
   ) : (
     <div className="loader">
       <img src={Loader} />
     </div>
   );
 }
-
+          
 export default App;
 
-export { MyContext };

@@ -1,45 +1,53 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './style.css';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import Rating from '@mui/material/Rating';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./style.css";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import Rating from "@mui/material/Rating";
+
 import {
   Button,
   Card,
   CardActions,
   CardContent,
-  Typography
-} from '@mui/material';
-import QuantityBox from '../../components/quantityBox';
-import { MyContext } from '../../App';
-import { useNavigate } from 'react-router-dom';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import MapComponent from '../../components/map/ITEMmap';
-import { db } from '../../firebase';
+  Typography,
+} from "@mui/material";
+import QuantityBox from "../../components/quantityBox";
+import { getDatabase, ref, onValue, remove } from "firebase/database";
+import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import MapComponent from "../../components/map/ITEMmap";
+import { db } from "../../firebase";
+
 import Snackbar from '@mui/material/Snackbar';
+
 import {
   collection,
   deleteDoc,
   doc,
   getDocs,
-  getDoc,
   setDoc,
   updateDoc,
   onSnapshot
-} from 'firebase/firestore';
+  onSnapshot,
+} from "firebase/firestore";
+import {useSelector} from "react-redux"
+
 
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [buttonStatus, setButtonStatus] = useState({});
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
-  const context = useContext(MyContext);
   const navigate = useNavigate();
-  const [uid, setUid] = useState(localStorage.getItem('uid'));
+  const uid = useSelector((state)=>state.authReducer.uid);
+  const logged = useSelector((state)=>state.authReducer.isAuth);
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
+
 
   useEffect(() => {
     try {
-      if (context.isLogin === 'true') {
+      if (logged === true) {
+
         fetchWishlistProducts();
       } else {
         navigate('/signIn');
@@ -67,7 +75,6 @@ const WishList = () => {
         products.push({ id: doc.id, ...doc.data() });
         price += parseInt(doc.data()?.price) * doc.data()?.quantity;
       });
-      context.setWishlistCount(products.length);
       setWishlistItems(products);
       setTotalPrice(price);
     } catch (error) {
@@ -147,7 +154,7 @@ const WishList = () => {
     <>
       {wishlistItems.length > 0 ? (
         <>
-          {context.windowWidth > 992 && (
+          {windowWidth > 992 && (
             <div className="breadcrumbWrapper mb-4">
               <div className="container-fluid">
                 <ul className="breadcrumb breadcrumb2 mb-0">

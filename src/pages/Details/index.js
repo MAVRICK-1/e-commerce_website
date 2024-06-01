@@ -1,18 +1,20 @@
-import React, { useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import Rating from '@mui/material/Rating';
-import InnerImageZoom from 'react-inner-image-zoom';
-import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
-import Slider from 'react-slick';
-import { useRef } from 'react';
-import { useState } from 'react';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useEffect } from 'react';
-import { Button } from '@mui/material';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import Rating from "@mui/material/Rating";
+import InnerImageZoom from "react-inner-image-zoom";
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+import Slider from "react-slick";
+import { useRef } from "react";
+import { useState } from "react";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useEffect } from "react";
+import { Button } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+
 import {
   getDatabase,
   ref,
@@ -20,22 +22,23 @@ import {
   set,
   push,
   child,
-  remove
-} from 'firebase/database';
-import Product from '../../components/product';
-import axios from 'axios';
-import { MyContext } from '../../App';
-import MapComponent from '../../components/map/ITEMmap';
-import { Email } from '@mui/icons-material';
-import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
-import { db } from '../../firebase';
+  remove,
+} from "firebase/database";
+import Product from "../../components/product";
+import axios from "axios";
+import MapComponent from "../../components/map/ITEMmap";
+import { Email } from "@mui/icons-material";
+import useLoggedInUserEmail from "../../Hooks/useLoggedInUserEmail";
+import { db } from "../../firebase";
 import {
   collection,
   doc,
   getDocs,
   setDoc,
-  deleteDoc
-} from 'firebase/firestore';
+  deleteDoc,
+} from "firebase/firestore";
+import {useDispatch, useSelector} from "react-redux"
+import { checkIsItemInCart, getAddToCart } from "../../Redux/cart-slice";
 
 const DetailsPage = (props) => {
   const [zoomInage, setZoomImage] = useState(
@@ -56,8 +59,6 @@ const DetailsPage = (props) => {
   const [isAdded, setIsadded] = useState(false);
   const [isWishlistItemAdded, setIsWishlistItemAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const context = useContext(MyContext);
 
   const [prodCat, setProdCat] = useState({
     parentCat: sessionStorage.getItem('parentCat'),
@@ -86,7 +87,11 @@ const DetailsPage = (props) => {
   const zoomSliderBig = useRef();
   const zoomSlider = useRef();
 
-  let { id } = useParams();
+  let { id} = useParams();
+  const isItemInCart = useSelector((state)=> checkIsItemInCart(state,parseInt(id)))
+  const windowWidth = useSelector((state)=>state.filter.windowWidth);
+  const uid = useSelector((state)=>state.authReducer.uid);
+  const dispatch = useDispatch()
 
   var settings2 = {
     dots: false,
@@ -105,7 +110,7 @@ const DetailsPage = (props) => {
     slidesToShow: 5,
     slidesToScroll: 1,
     fade: false,
-    arrows: context.windowWidth > 992 ? true : false
+    arrows: windowWidth > 992 ? true : false,
   };
 
   var related = {
@@ -115,7 +120,7 @@ const DetailsPage = (props) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     fade: false,
-    arrows: context.windowWidth > 992 ? true : false
+    arrows: windowWidth > 992 ? true : false,
   };
 
   const goto = (index) => {
@@ -256,44 +261,42 @@ const DetailsPage = (props) => {
     }
   };
 
-  const addToCart = async (item) => {
-    try {
-      const user = localStorage.getItem('uid');
-      const cartRef = doc(db, 'carts', user);
-      const productRef = doc(cartRef, 'products', `${item.id}`);
-      await setDoc(productRef, { ...item, quantity: 1 });
-      setIsadded(true);
-      context.setCartCount(context.cartCount + 1);
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-    }
-  };
+  // const addToCart = async (item) => {
+  //   try {
+  //     const user = uid;
+  //     const cartRef = doc(db, "carts", user);
+  //     const productRef = doc(cartRef, "products", `${item.id}`);
+  //     await setDoc(productRef, { ...item, quantity: 1 });
+  //     setIsadded(true);
+  //     context.setCartCount(context.cartCount + 1);
+  //   } catch (error) {
+  //     console.error("Error adding item to cart:", error);
+  //   }
+  // };
+
 
   const toggleWishlistItem = async (item) => {
     if (!isAlreadyAddedInWishlist) {
       try {
-        const user = localStorage.getItem('uid');
-        const wishlistRef = doc(db, 'wishlists', user);
-        const productRef = doc(wishlistRef, 'products', `${item.id}`);
+        const user = uid;
+        const wishlistRef = doc(db, "wishlists", user);
+        const productRef = doc(wishlistRef, "products", `${item.id}`);
         await setDoc(productRef, { ...item, quantity: 1 });
         setIsWishlistItemAdded(true);
         setisAlreadyAddedInWishlist(true);
-        context.setWishlistCount(context.wishlistCount + 1);
       } catch (error) {
         console.error('Error adding item to wishlist:', error);
       }
     } else {
       console.log('isAlreadyAddedInWishlist');
-
-      const user = localStorage.getItem('uid');
-
+      const user = uid;
       const wishlistItemRef = doc(db, `wishlists/${user}/products/${item.id}`);
 
       try {
         await deleteDoc(wishlistItemRef);
         setisAlreadyAddedInWishlist(false);
-        context.setWishlistCount(context.wishlistCount - 1);
-        console.log('Wishlist item deleted successfully.');
+        console.log("Wishlist item deleted successfully.");
+
       } catch (error) {
         console.error('Error deleting wishlist item:', error);
       }
@@ -330,8 +333,8 @@ const DetailsPage = (props) => {
 
   const fetchCartProducts = async () => {
     try {
-      const cartRef = doc(db, 'carts', localStorage.getItem('uid'));
-      const productsCollectionRef = collection(cartRef, 'products');
+      const cartRef = doc(db, "carts", uid);
+      const productsCollectionRef = collection(cartRef, "products");
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach((doc) => {
         if (parseInt(doc.data()?.id) === parseInt(id)) {
@@ -345,8 +348,9 @@ const DetailsPage = (props) => {
 
   const fetchWishlistProducts = async () => {
     try {
-      const wishlistRef = doc(db, 'wishlists', localStorage.getItem('uid'));
-      const productsCollectionRef = collection(wishlistRef, 'products');
+      const wishlistRef = doc(db, "wishlists", uid);
+      const productsCollectionRef = collection(wishlistRef, "products");
+
       const querySnapshot = await getDocs(productsCollectionRef);
       querySnapshot.forEach((doc) => {
         if (parseInt(doc.data()?.id) === parseInt(id)) {
@@ -375,15 +379,16 @@ const DetailsPage = (props) => {
 
   return (
     <>
-      {context.windowWidth < 992 && (
+      {windowWidth < 992 && (
         <Button
           className={`btn-g btn-lg w-100 filterBtn {isAlreadyAddedInCart===true && 'no-click'}`}
-          onClick={() => addToCart(currentProduct)}
+          onClick={() => dispatch(getAddToCart({item:currentProduct,uid}))}
         >
           <ShoppingCartOutlinedIcon />
-          {isAdded === true || isAlreadyAddedInCart === true
-            ? 'Added'
-            : 'Add To Cart'}
+          {isItemInCart
+            ? "Added"
+            : "Add To Cart"}
+
         </Button>
       )}
       <div className="p-5">
@@ -391,7 +396,7 @@ const DetailsPage = (props) => {
       </div>
 
       <section className="detailsPage mb-5">
-        {context.windowWidth > 992 && (
+        {windowWidth > 992 && (
           <div className="breadcrumbWrapper mb-4">
             <div className="container-fluid">
               <ul className="breadcrumb breadcrumb2 mb-0">
@@ -580,17 +585,17 @@ const DetailsPage = (props) => {
 
               <div className="d-flex align-items-center">
                 <div className="d-flex align-items-center">
-                  {context.windowWidth > 992 && (
+                  {windowWidth > 992 && (
                     <Button
                       className={`btn-g btn-lg addtocartbtn ${
                         isAlreadyAddedInCart === true && 'no-click'
                       }`}
-                      onClick={() => addToCart(currentProduct)}
+                      onClick={() => dispatch(getAddToCart({item:currentProduct,uid}))}
                     >
                       <ShoppingCartOutlinedIcon />
-                      {isAdded === true || isAlreadyAddedInCart === true
-                        ? 'Added'
-                        : 'Add To Cart'}
+                      {isItemInCart
+                        ? "Added"
+                        : "Add To Cart"}
                     </Button>
                   )}
                   <Button
