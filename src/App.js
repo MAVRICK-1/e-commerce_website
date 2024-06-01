@@ -26,6 +26,8 @@ import SellerForm from './pages/SellerRegistration';
 import SearchResults from './components/search/SearchResults';
 import Shipping from './components/ShippingAddress/ShippingForm';
 import { Account } from './components/AccountDetails/Account';
+import OrderTracking from './pages/OrderTracking';
+import TrackOrderDetails from './pages/OrderTracking/TrackOrderDetails';
 
 const MyContext = createContext();
 
@@ -305,6 +307,16 @@ function App() {
             element={<Shipping />}
           />
           <Route exact={true} path="/my-account" element={<Account />} />
+          <Route
+            exact={true}
+            path="/track-my-order"
+            element={<OrderTracking />}
+          />
+          <Route
+            exact={true}
+            path="/track-my-order/:orderid"
+            element={<TrackOrderDetails />}
+          />
         </Routes>
         <Footer />
       </MyContext.Provider>

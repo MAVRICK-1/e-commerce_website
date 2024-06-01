@@ -342,16 +342,18 @@ const Header = (props) => {
                           {isOpenDropDown !== false && (
                             <ul className="dropdownMenu">
                               <li>
-                               <Link to={'/my-account'}>
+                                <Link to={'/my-account'}>
                                   <Button className="align-items-center">
                                     <Person2OutlinedIcon /> My Account
                                   </Button>
                                 </Link>
                               </li>
                               <li>
-                                <Button>
-                                  <LocationOnOutlinedIcon /> Order Tracking
-                                </Button>
+                                <Link to="/track-my-order">
+                                  <Button>
+                                    <LocationOnOutlinedIcon /> Order Tracking
+                                  </Button>
+                                </Link>
                               </li>
                               <li>
                                 <Button>
