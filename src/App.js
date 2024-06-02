@@ -7,7 +7,7 @@ import {
   Navigate,
   Outlet,
   Route,
-  RouterProvider,
+  RouterProvider ,
   Routes
 } from 'react-router-dom';
 import './App.css';
@@ -293,6 +293,10 @@ function App() {
         {
           path: '/cart',
           element: <Cart />
+        },
+        {
+          path: '/contact',
+          element: <Contactus />
         },
         {
           path: '/wishlist',
