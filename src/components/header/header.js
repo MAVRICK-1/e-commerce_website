@@ -343,7 +343,15 @@ const Header = (props) => {
                             <ul className="dropdownMenu">
                               <li>
                                 <Button className="align-items-center">
-                                  <Person2OutlinedIcon /> My Account
+                                  <Link
+                                    to="/my-account"
+                                    style={{
+                                      textDecoration: 'none',
+                                      color: 'rgba(0, 0, 0, 0.7)'
+                                    }}
+                                  >
+                                    <Person2OutlinedIcon /> My Account
+                                  </Link>
                                 </Button>
                               </li>
                               <li>

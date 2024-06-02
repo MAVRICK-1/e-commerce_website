@@ -35,6 +35,7 @@ import SellerForm from './pages/SellerRegistration';
 import SearchResults from './components/search/SearchResults';
 import GoToTop from './components/GoToTop/GoToTop';
 import Contributors from './pages/Contributors/Contributors';
+import { Account } from './components/AccountDetails/Account';
 
 const MyContext = createContext();
 
@@ -318,6 +319,10 @@ function App() {
         {
           path: '/addProduct',
           element: <AddProductForm />
+        },
+        {
+          path: '/my-account',
+          element: <Account />
         },
         {
           path: '/search',
