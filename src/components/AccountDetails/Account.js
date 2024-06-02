@@ -21,6 +21,7 @@ import {
   uploadBytes,
   updateMetadata
 } from 'firebase/storage';
+import { IoIosArrowRoundBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import {
   addDoc,
@@ -142,91 +143,76 @@ export function Account() {
   return (
     <>
       <div className="container-fluid d-flex flex-column justify-content-center align-items-center p-5">
-        <h3 className="d-flex align-self-start ml-5 justify-content-center">
-          <Button
-            onClick={handlehistory}
-            className="text-lg-center border border-dark font-weight-bold rounded-circle p-2 mr-2 cursor"
-          >
-            ←
-          </Button>
-          My Account
+        <h3
+          className="d-flex align-self-start ml-5 justify-content-center back-but"
+          onClick={handlehistory}
+        >
+          <IoIosArrowRoundBack size="40px" />
+          BACK
         </h3>
         <Card
           variant="outlined"
-          className="cardwidth m-5 md:shrink-0 d-flex flex-column justify-content-center align-items-stretch"
+          className="cardwidth m-5 md:shrink-0 d-flex flex-column justify-content-center align-items-center"
         >
-          <CardHeader className="d-flex flex-column justify-content-center align-items-center">
-            <div className="position-relative header-background  ">
+          <CardHeader className=" d-flex  flex-column justify-content-center align-items-center card-header">
+            <div className=" header-background back-div  hidden">
               <CardImg
                 src={imageBackground}
-                className="md:shrink-0 imgbackground w-100 "
+                className="md:shrink-0 imgbackground w-100 hidden"
               />
               <CardTitle className="negmargin    p-5">
                 <Row className="d-flex  flex-row justify-content-start align-items-center">
-                  <Col className="d-flex  flex-column justify-content-center align-items-stretch ">
-                    {userImage !== '' ? (
+                  {userImage !== '' ? (
+                    <CardImg
+                      src={userImage}
+                      className="rounded-circle profileImageP md:shrink-1 mb-4"
+                    />
+                  ) : (
+                    <div>
                       <CardImg
-                        src={userImage}
+                        src={file}
                         className="rounded-circle profileImageP md:shrink-1 mb-4"
                       />
-                    ) : (
-                      <div>
-                        <CardImg
-                          src={file}
-                          className="rounded-circle profileImageP md:shrink-1 mb-4"
-                        />
-                        <input
-                          required={true}
-                          type="file"
-                          name="file"
-                          onChange={(e) => setFile(e.target.files[0])}
-                        />
-                      </div>
-                    )}
-                  </Col>
-                  <Col className=" d-flex flex-column justify-content-start  mx-auto my-4">
-                    <Row className=" d-flex flex-row">
-                      <Col>
-                        <h2>{name}</h2>
-                      </Col>
-                      <Col>
-                        <h4>{email}</h4>
-                      </Col>
-                    </Row>
-                    <Row className="text-justify d-flex  justify-content-center align-items-center mx-auto my-4">
-                      {address}
-                    </Row>
-                  </Col>
-                  <Col className="col-4"></Col>
+                      <input
+                        required={true}
+                        type="file"
+                        name="file"
+                        onChange={(e) => setFile(e.target.files[0])}
+                      />
+                    </div>
+                  )}
                 </Row>
               </CardTitle>
             </div>
           </CardHeader>
-          <CardBody>
+          <CardBody className="card-body">
             <CardTitle>
-              <h3 className="font-weight-bold ">Personal</h3>
+              <h3 className="font-weight-bold my-profile text-center">
+                MY PROFILE
+              </h3>
             </CardTitle>
             <CardText>
               <Form id="addEditForm" onSubmit={Onsubmit}>
-                <Form.Group>
-                  <Form.Label>Name</Form.Label>
+                <Form.Group className="myacc-form-group">
+                  <Form.Label className="myacc-label">Name</Form.Label>
                   <Form.Control
                     name="name"
                     type="text"
-                    placeholder="name"
+                    placeholder="Name"
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
                     value={name}
                     required={true}
                     isInvalid={!!errors.name}
+                    className="myacc-input"
                   />
                   <Form.Control.Feedback>
                     {errors.name?.message}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
+                <Form.Group className="myacc-form-group">
+                  <Form.Label className="myacc-label">Email</Form.Label>
                   <Form.Control
                     name="email"
                     type="email"
@@ -237,14 +223,16 @@ export function Account() {
                       setEmail(e.target.value);
                     }}
                     isInvalid={!!errors.email}
+                    className="myacc-input"
                   />
                   <Form.Control.Feedback>
                     {errors.email?.message}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>Address</Form.Label>
+                <Form.Group className="myacc-form-group">
+                  <Form.Label className="myacc-label">Address</Form.Label>
                   <Form.Control
+                    className="myacc-input"
                     name="address"
                     type="type"
                     placeholder="Address"
@@ -262,12 +250,13 @@ export function Account() {
               </Form>
             </CardText>
           </CardBody>
-          <CardFooter className="d-flex justify-content-center align-items-center">
+          <CardFooter className="d-flex justify-content-center align-items-center myacc-save-div">
             <Button
-              className="w-100  "
+              className="myacc-save"
               type="submit"
               form="addEditForm"
               disabled={isSubmitting}
+              style={{ padding: '0px' }}
             >
               <h5 className="font-weight-bold">Save</h5>
             </Button>
