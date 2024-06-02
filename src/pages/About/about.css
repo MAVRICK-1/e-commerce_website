@@ -62,134 +62,6 @@
 
 }
 
-.about-us {
-  display: block;
-  margin: auto;
-  width: 52.5rem;
-  height: 100%;
-  background-color: white;
-}
-
-.about-us-heading {
-  text-align: center;
-  margin-bottom: 3rem;
-  margin-top: 3rem;
-  color: #008080;
-  font-weight: 500;
-  font-size: 40px;
-}
-
-.about-us-block {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.about-us-community, .about-us-product, .about-us-event, .about-us-location {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 35%;
-  height: 15rem;
-  border: 1px solid rgba(206, 212, 218, 1);
-  border-radius: 8px;
-  margin-bottom: 21px;
-}
-
-.about-us-community {
-  border: 2px solid #008080;
-}
-
-.about-us-community:hover {
-  background: #008080;
-  color: white;
-}
-
-.about-us-location {
-  border: 2px solid #3BB77E;
-}
-
-.about-us-location:hover {
-  background: #3BB77E;
-  color: white;
-}
-
-.about-us-product {
-  border: 2px solid #279A65;
-}
-
-.about-us-product:hover {
-  background: #279A65;
-  color: white;
-}
-
-.about-us-event {
-  border: 2px solid #28a745;
-}
-
-.about-us-event:hover {
-  background: #28a745;
-  color: white;
-}
-
-.about-us-community:hover p, .about-us-location:hover p, .about-us-event:hover p, .about-us-product:hover p{
-  color: white;
-}
-
-.about-us-blk-text {
-  font-size: 26px;
-  font-weight: 600;
-  line-height: 30px;
-  letter-spacing: 0em;
-  text-align: left;
-  margin-top: 1rem;
-}
-
-.about-us-blk-para {
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 30px;
-  letter-spacing: 0em;
-  text-align: left;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  color: black;
-}
-
-@media only screen and (max-width: 768px) {
-  .about-us-block {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-  }
-
-  .about-us-community, .about-us-event, .about-us-location, .about-us-product {
-      width: 90%;
-      height: 100%;
-      padding: 0.5rem;
-  }
-}
-
-@media only screen and (max-width: 1020px) {
-  .about-us-block {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-  }
-
-  .about-us-community, .about-us-event, .about-us-location, .about-us-product {
-      width: 90% !important;
-      height: 100%;
-      padding: 0.5rem;
-  }
-}
-
-@media only screen and (max-width: 1250px) {
-  .about-us-community, .about-us-event, .about-us-location, .about-us-product {
-      width: 45%;
-  }
-}
-
-
 @media (min-width: 600px) {
   .about-container {
     width: 100%;
@@ -218,4 +90,161 @@
     font-size: 40px;
   }
 
+}
+
+
+/* Features */
+
+/* Container Styles */
+.about-us {
+  display: block;
+  margin: auto;
+  width: 52.5rem;
+  height: 100%;
+  background-color: white;
+}
+
+/* Heading Styles */
+.about-us-heading {
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+  color: #008080;
+  font-weight: 500;
+  font-size: 40px;
+}
+
+/* Block Styles */
+.about-us-block {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* Feature Block Styles */
+.about-us-community,
+.about-us-product,
+.about-us-event,
+.about-us-location {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 35%;
+  height: 15rem;
+  border: 1px solid rgba(206, 212, 218, 1);
+  border-radius: 8px;
+  margin-bottom: 21px;
+}
+
+/* Community Feature Block Styles */
+.about-us-community {
+  border: 2px solid #008080;
+}
+
+.about-us-community:hover {
+  background: #008080;
+  color: white;
+}
+
+/* Location Feature Block Styles */
+.about-us-location {
+  border: 2px solid #3BB77E;
+}
+
+.about-us-location:hover {
+  background: #3BB77E;
+  color: white;
+}
+
+/* Product Feature Block Styles */
+.about-us-product {
+  border: 2px solid #279A65;
+}
+
+.about-us-product:hover {
+  background: #279A65;
+  color: white;
+}
+
+/* Event Feature Block Styles */
+.about-us-event {
+  border: 2px solid #28a745;
+}
+
+.about-us-event:hover {
+  background: #28a745;
+  color: white;
+}
+
+/* Text Styles */
+.about-us-community:hover p,
+.about-us-location:hover p,
+.about-us-event:hover p,
+.about-us-product:hover p {
+  color: white;
+}
+
+/* Text Block Styles */
+.about-us-blk-text {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 1rem;
+}
+
+/* Paragraph Styles */
+.about-us-blk-para {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  color: black;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+  .about-us-block {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-us-community,
+  .about-us-event,
+  .about-us-location,
+  .about-us-product {
+    width: 90%;
+    height: 100%;
+    padding: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 1020px) {
+  .about-us-block {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-us-community,
+  .about-us-event,
+  .about-us-location,
+  .about-us-product {
+    width: 90% !important;
+    height: 100%;
+    padding: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .about-us-community,
+  .about-us-event,
+  .about-us-location,
+  .about-us-product {
+    width: 45%;
+  }
 }
