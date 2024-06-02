@@ -27,6 +27,71 @@ import NewsletterImg from '../../assets/images/newsletter.webp';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const location = `5171 W Campbell Ave undefined Kent, Utah 53127 United States`;
+  const FooterData = [
+    {
+      title: 'Company',
+      data: [
+        { link: '#', text: 'About Us' },
+        { link: '#', text: 'Delivery Information' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
+        { link: '#', text: 'Contact Us' },
+        { link: '#', text: 'Support Center' },
+        { link: '#', text: 'Careers' },
+        { link: '#', text: 'Contributors' }
+      ]
+    },
+    {
+      title: 'Corporate',
+      data: [
+        { link: '#', title: 'About Us' },
+        { link: '#', title: 'Delivery Information' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
+        { link: '#', text: 'Contact Us' },
+        { link: '#', text: 'Support Center' },
+        { link: '#', text: 'Careers' },
+        { link: '#', text: 'Contributors' }
+      ]
+    },
+    {
+      title: 'Popular',
+      data: [
+        { link: '#', text: 'About Us' },
+        { link: '#', text: 'Delivery Information' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
+        { link: '#', text: 'Contact Us' },
+        { link: '#', text: 'Support Center' },
+        { link: '#', text: 'Careers' },
+        { link: '#', text: 'Contributors' }
+      ]
+    }
+  ];
+  const SocialMedia = [
+    {
+      link: 'https://www.linkedin.com/in/rishi-mondal-5238b2282/',
+      icon: <LinkedinIcon />
+    },
+    { link: 'https://github.com/MAVRICK-1#', icon: <GitHubIcon /> },
+    {
+      link: 'https://mavrick-portfolio.vercel.app/',
+      icon: <DeveloperBoardIcon />
+    },
+    {
+      link: 'https://www.instagram.com/realmavrick_1/?hl=en',
+      icon: <InstagramIcon />
+    },
+    { link: '', icon: <XIcon /> }
+  ];
+  const fluid = [
+    { img: Icon1, header: 'Best prices & offers', para: 'Orders $50 or more' },
+    { img: Icon2, header: 'Free delivery', para: 'Orders $50 or more' },
+    { img: Icon3, header: 'Great daily deal', para: 'Orders $50 or more' },
+    { img: Icon4, header: 'Wide assortment', para: 'Orders $50 or more' },
+    { img: Icon5, header: 'Easy returns', para: 'Orders $50 or more' }
+  ];
+
   return (
     <>
       <section className="newsLetterSection">
@@ -54,65 +119,19 @@ const Footer = () => {
         <div className="footerBoxes">
           <div className="container-fluid">
             <div className="row">
-              <div className="col">
-                <div className="box d-flex align-items-center w-100">
-                  <span>
-                    <img src={Icon1} />
-                  </span>
-                  <div className="info">
-                    <h4>Best prices & offers</h4>
-                    <p>Orders $50 or more</p>
+              {fluid.map((item, index) => (
+                <div key={index} className="col">
+                  <div className="box d-flex align-items-center w-100">
+                    <span>
+                      <img src={item.img} />
+                    </span>
+                    <div className="info">
+                      <h4>{item.header}</h4>
+                      <p>{item.para}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="col">
-                <div className="box d-flex align-items-center w-100">
-                  <span>
-                    <img src={Icon2} />
-                  </span>
-                  <div className="info">
-                    <h4>Free delivery</h4>
-                    <p>Orders $50 or more</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col">
-                <div className="box d-flex align-items-center w-100">
-                  <span>
-                    <img src={Icon3} />
-                  </span>
-                  <div className="info">
-                    <h4>Great daily deal</h4>
-                    <p>Orders $50 or more</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col">
-                <div className="box d-flex align-items-center w-100">
-                  <span>
-                    <img src={Icon4} />
-                  </span>
-                  <div className="info">
-                    <h4>Wide assortment</h4>
-                    <p>Orders $50 or more</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col">
-                <div className="box d-flex align-items-center w-100">
-                  <span>
-                    <img src={Icon5} />
-                  </span>
-                  <div className="info">
-                    <h4>Easy returns</h4>
-                    <p>Orders $50 or more</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -126,10 +145,10 @@ const Footer = () => {
                 </Link>
                 <br />
                 <br />
-                <p>Awesome grocery store website template</p>
+                <h4>Awesome grocery store website template🍊🥝 </h4>
                 <br />
 
-                <p
+                <h6
                   style={{ cursor: 'pointer' }}
                   onClick={() =>
                     window.open(
@@ -138,132 +157,49 @@ const Footer = () => {
                     )
                   }
                 >
-                  <LocationOnOutlinedIcon /> <strong>Address</strong>:{' '}
+                  <LocationOnOutlinedIcon /><strong>🏠 Address : </strong>:{' '}
                   {location}
-                </p>
-                <p
+                </h6>
+                <h6
                   className="mail-tel"
                   onClick={() => (window.location = 'tel: +91 540-025-124553')}
                 >
-                  <HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) -
+                  <HeadphonesOutlinedIcon /> <strong>☏ Call Us : </strong> (+91) -
                   540-025-124553{' '}
-                </p>
-                <p
+                </h6>
+                <h6
                   className="mail-tel"
                   onClick={() => (window.location = 'mailto:sale@Nest.com')}
                 >
-                  <EmailOutlinedIcon /> <strong>Email:</strong> sale@Nest.com
-                </p>
-                <p>
-                  <WatchLaterOutlinedIcon /> <strong>Hours:</strong> 10:00 -
+                  <EmailOutlinedIcon /> <strong>✉ Email : </strong> sale@Nest.com
+                </h6>
+                <h6>
+                  <WatchLaterOutlinedIcon /><strong>🕛 Hours : </strong> 10:00 -
                   18:00, Mon - Sat
-                </p>
+                </h6>
               </div>
 
               <div className="col-md-6 part2">
                 <div className="row">
-                  <div className="col">
-                    <h3>Company</h3>
-                    <ul className="footer-list mb-sm-5 mb-md-0">
-                      <li>
-                        <Link to="#">About Us</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Delivery Information</Link>
-                      </li>
-                      <li>
-                        <Link to="/privacy-policy">Privacy Policy</Link>
-                      </li>
-                      <li>
-                        <Link to="/termsandconditions">
-                          Terms &amp; Conditions
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#">Contact Us</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Support Center</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Careers</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Contributors</Link>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="col">
-                    <h3>Corporate</h3>
-                    <ul className="footer-list mb-sm-5 mb-md-0">
-                      <li>
-                        <Link to="#">About Us</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Delivery Information</Link>
-                      </li>
-                      <li>
-                        <Link to="/privacy-policy">Privacy Policy</Link>
-                      </li>
-                      <li>
-                        <Link to="/termsandconditions">
-                          Terms &amp; Conditions
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#">Contact Us</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Support Center</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Careers</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Contributors</Link>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="col">
-                    <h3>Popular</h3>
-                    <ul className="footer-list mb-sm-5 mb-md-0">
-                      <li>
-                        <Link to="#">About Us</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Delivery Information</Link>
-                      </li>
-                      <li>
-                        <Link to="/privacy-policy">Privacy Policy</Link>
-                      </li>
-                      <li>
-                        <Link to="/termsandconditions">
-                          Terms &amp; Conditions
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#">Contact Us</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Support Center</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Careers</Link>
-                      </li>
-                      <li>
-                        <Link to="#">Contributors</Link>
-                      </li>
-                    </ul>
-                  </div>
+                  {FooterData.map((item, index) => (
+                    <div key={index} className="col">
+                      <h3>{item.title}</h3>
+                      <ul className="footer-list mb-sm-5 mb-md-0">
+                        {item.data.map((ele, eleIndex) => (
+                          <li key={eleIndex}>
+                            <Link to={ele.link}>{ele.text}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               <div className="col-md-3 part3">
                 <h3>Install App</h3>
                 <br className="res-hide" />
-                <p>From App Store or Google Play</p>
+                <h6>From App Store or Google Play</h6>
 
                 <div className="d-flex">
                   <Link to={''}>
@@ -276,7 +212,7 @@ const Footer = () => {
 
                 <br />
 
-                <p>Secured Payment Gateways</p>
+                <h6>Secured Payment Gateways</h6>
                 <img src={paymentImage} />
               </div>
             </div>
@@ -284,13 +220,13 @@ const Footer = () => {
             <hr />
 
             <div className="row lastStrip">
-              <div className="col-md-3 part_1">
-                <p>© {currentYear}, Nest - HTML Ecommerce Template</p>
-                <p>All rights reserved</p>
+              <div className="col-md-4 part_1">
+                <h6>© {currentYear}, Nest - HTML Ecommerce Template</h6>
+                <h6>All rights reserved</h6>
               </div>
 
-              <div className="col-md-6 d-flex part_2">
-                <div className="phNo d-flex align-items-center  mx-5">
+              <div className="col-md-4 d-flex part_2 align-items-center">
+                <div className="phNo d-flex align-items-center mx-5">
                   <span>
                     <HeadphonesOutlinedIcon />
                   </span>
@@ -299,47 +235,21 @@ const Footer = () => {
                     onClick={() => (window.location = 'tel: 1900 - 888')}
                   >
                     <h3 className="text-g mb-0">1900 - 888</h3>
-                    <p className="mb-0">24/7 Support Center</p>
+                    <h6 className="mb-0">24/7 Support Center</h6>
                   </div>
                 </div>
+              </div>
 
-                <div className="col-md-3 part3  part_3">
-                  <div className="d-flex align-items-center">
-                    <h5>Follow Us</h5>
-                    <ul className="list list-inline">
-                      <li className="list-inline-item">
-                        <Link
-                          to={
-                            'https://www.linkedin.com/in/rishi-mondal-5238b2282/'
-                          }
-                        >
-                          <LinkedinIcon />
-                        </Link>
+              <div className="col-md-4 part3 part_3">
+                <div className="d-flex align-items-center">
+                  <h4>Follow Us</h4>
+                  <ul className="follow list list-inline d-inline">
+                    {SocialMedia.map((item, index) => (
+                      <li key={index} className="list-inline-item">
+                        <Link to={item.link}>{item.icon}</Link>
                       </li>
-                      <li className="list-inline-item">
-                        <Link to={'https://github.com/MAVRICK-1#'}>
-                          <GitHubIcon />
-                        </Link>
-                      </li>
-                      <li className="list-inline-item">
-                        <Link to={'https://mavrick-portfolio.vercel.app/'}>
-                          <DeveloperBoardIcon />
-                        </Link>
-                      </li>
-                      <li className="list-inline-item">
-                        <Link
-                          to={'https://www.instagram.com/realmavrick_1/?hl=en'}
-                        >
-                          <InstagramIcon />
-                        </Link>
-                      </li>
-                      <li className="list-inline-item">
-                        <Link to={''}>
-                          <XIcon />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>

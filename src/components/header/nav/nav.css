@@ -56,10 +56,18 @@
   padding-top: 20px;
   padding-bottom: 20px;
 
-  color: #3bb77e !important;
+ 
   border-radius: 3px !important;
 }
-
+.active-link {
+  /* color: #3bb77e !important; */
+  background-color: #73eeb5;
+  padding: 8px;
+  border-radius: 2px;
+  /* color: #fff !important; */
+  font-weight: bold;
+  text-decoration: underline; Optional: add underline
+}
 .nav nav ul li button .MuiSvgIcon-root {
   z-index: 1;
 }
@@ -132,7 +140,7 @@ nav .dropdown_menu li {
 }
 
 .part2 ul li button:hover a{
-  color: #3BB77E !important;
+  color: #191717 !important;
 }
 .nav nav li:hover .open {
   top: 100%;

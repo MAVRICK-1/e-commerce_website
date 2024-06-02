@@ -1,5 +1,6 @@
 import React from 'react';
 import './about.css';
+import About from './About';
 
 function Tes() {
   return (
@@ -25,6 +26,7 @@ function Tes() {
           everything you need in one website.
         </p>
       </div>
+      <About/>
     </div>
   );
 }

@@ -8,18 +8,103 @@
   bottom: 0;
   height: 100%;
   width: 100%;
-  position: absolute;
+ 
 }
 
 .profileImageP {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   border-radius: 50%;
+  align-items: center;
+  top: 18px;
+  left: -15px;
+  position: absolute;
 }
-
+.back-div{
+   height: 200px;
+   position: relative;
+}
+.card-header{
+width: 100%;
+background: #D8F1E5;
+background: url('../../assets/images/bg.webp');
+position: relative;
+}
 .imgbackground {
-  height: 600px;
+position: absolute;
+background-size: contain;
   width: 100vw;
   opacity: 0.5;
-  filter: blur(2px);
+  display: none;
+ 
+}
+.my-profile{
+  font-size: 44px;
+  margin-bottom: 30px;
+}
+.myacc-text-body{
+  width: 100%;
+}
+.card-body{
+  align-items: center;
+  width: 100%;
+}
+.myacc-label{
+font-size: 24px;
+font-weight: bold;
+color: #000;
+margin-bottom: 5px;
+}
+.form-control{
+  height: 70px;
+  font-size: 20px;
+}
+.myacc-form-group{
+  margin-bottom: 20px;
+}
+.myacc-save-div{
+  width: 100%;
+  padding: 0;
+  background-color: #D8F1E5;
+  padding: 0px;
+}
+.myacc-save{
+  width: 100%;
+  background-color: #D8F1E5;
+  color: darkgreen;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.myacc-save h5{
+  color: darkgreen;
+  width: 100%;
+  background-color: #D8F1E5;
+  margin-bottom: 0px;
+  font-size: 20px;
+  padding: 20px 0px;
+  transition: ease-in-out 0.5s;
+}
+.myacc-save h5:hover{
+  color: white;
+  background-color: darkgreen;
+}
+.myacc-input:focus{
+  border-color: #8ac171; /* Change the border color to red */
+  box-shadow: 0 0 5px #69e331; /* Optional: Add a shadow to highlight the focus */
+  outline: none;
+}
+.myacc-back-button{
+  background-color: #D8F1E5;
+  color: black;
+  font-size: 25px;
+}
+.back-but{
+  background-color: #3BB77E;
+  margin-bottom: 0px;
+  align-items: center;
+  border-radius: 5px;
+  color: white;
+  gap: 10px;
+  padding: 10px 20px;
 }

@@ -9,7 +9,7 @@ const NotFound = () => {
     <section className="notFound">
       <div className="container-fluid">
         <div className="box">
-          <img src={NotFoundImg} />
+          <img src={NotFoundImg} className='img404'/>
           <br />
           <br />
           <h1>Page Not Found</h1>
@@ -20,8 +20,8 @@ const NotFound = () => {
           <br />
 
           <div className="d-flex">
-            <Button className="btn-g btn-lg m-auto">
-              <Link to={'/'}>Back to Home Page</Link>
+            <Button className="btn-g btn-lg m-auto btn">
+              <Link to={'/'}>Back to Home</Link>
             </Button>
           </div>
         </div>
