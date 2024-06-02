@@ -703,3 +703,8 @@ input[type='number'] {
   align-items: center;
   justify-content: center;
 }
+
+.container-fluid:hover{
+  transform: scale(1.2);
+  box-shadow: #9a9a9a;
+}
