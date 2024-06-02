@@ -145,10 +145,10 @@ const Footer = () => {
                 </Link>
                 <br />
                 <br />
-                <p>Awesome grocery store website template</p>
+                <h4>Awesome grocery store website template🍊🥝 </h4>
                 <br />
 
-                <p
+                <h6
                   style={{ cursor: 'pointer' }}
                   onClick={() =>
                     window.open(
@@ -157,26 +157,26 @@ const Footer = () => {
                     )
                   }
                 >
-                  <LocationOnOutlinedIcon /> <strong>Address</strong>:{' '}
+                  <LocationOnOutlinedIcon /><strong>🏠 Address : </strong>:{' '}
                   {location}
-                </p>
-                <p
+                </h6>
+                <h6
                   className="mail-tel"
                   onClick={() => (window.location = 'tel: +91 540-025-124553')}
                 >
-                  <HeadphonesOutlinedIcon /> <strong>Call Us:</strong> (+91) -
+                  <HeadphonesOutlinedIcon /> <strong>☏ Call Us : </strong> (+91) -
                   540-025-124553{' '}
-                </p>
-                <p
+                </h6>
+                <h6
                   className="mail-tel"
                   onClick={() => (window.location = 'mailto:sale@Nest.com')}
                 >
-                  <EmailOutlinedIcon /> <strong>Email:</strong> sale@Nest.com
-                </p>
-                <p>
-                  <WatchLaterOutlinedIcon /> <strong>Hours:</strong> 10:00 -
+                  <EmailOutlinedIcon /> <strong>✉ Email : </strong> sale@Nest.com
+                </h6>
+                <h6>
+                  <WatchLaterOutlinedIcon /><strong>🕛 Hours : </strong> 10:00 -
                   18:00, Mon - Sat
-                </p>
+                </h6>
               </div>
 
               <div className="col-md-6 part2">
@@ -199,7 +199,7 @@ const Footer = () => {
               <div className="col-md-3 part3">
                 <h3>Install App</h3>
                 <br className="res-hide" />
-                <p>From App Store or Google Play</p>
+                <h6>From App Store or Google Play</h6>
 
                 <div className="d-flex">
                   <Link to={''}>
@@ -212,7 +212,7 @@ const Footer = () => {
 
                 <br />
 
-                <p>Secured Payment Gateways</p>
+                <h6>Secured Payment Gateways</h6>
                 <img src={paymentImage} />
               </div>
             </div>
@@ -220,12 +220,12 @@ const Footer = () => {
             <hr />
 
             <div className="row lastStrip">
-              <div className="col-md-3 part_1">
-                <p>© {currentYear}, Nest - HTML Ecommerce Template</p>
-                <p>All rights reserved</p>
+              <div className="col-md-4 part_1">
+                <h6>© {currentYear}, Nest - HTML Ecommerce Template</h6>
+                <h6>All rights reserved</h6>
               </div>
 
-              <div className="col-md-6 d-flex part_2">
+              <div className="col-md-4 d-flex part_2 align-items-center">
                 <div className="phNo d-flex align-items-center  mx-5">
                   <span>
                     <HeadphonesOutlinedIcon />
@@ -235,14 +235,28 @@ const Footer = () => {
                     onClick={() => (window.location = 'tel: 1900 - 888')}
                   >
                     <h3 className="text-g mb-0">1900 - 888</h3>
-                    <p className="mb-0">24/7 Support Center</p>
+                    <h6 className="mb-0">24/7 Support Center</h6>
                   </div>
                 </div>
-
-                <div className="col-md-3 part3  part_3">
-                  <div className="d-flex align-items-center">
-                    <h5>Follow Us</h5>
-                    <ul className="list list-inline">
+                <div className="phNo d-flex align-items-center  mx-5">
+                  <span>
+                    <HeadphonesOutlinedIcon />
+                  </span>
+                  <div
+                    className="mail-tel info ml-3"
+                    onClick={() => (window.location = 'tel: 1900 - 888')}
+                  >
+                    <h3 className="text-g mb-0">1900 - 888</h3>
+                    <h6 className="mb-0">24/7 Support Center</h6>
+                  </div>
+                </div>
+</div>
+                
+                
+                <div className="col-md-4 part3  part_3">
+                  <div className="  d-flex align-items-center">
+                    <h4>Follow Us</h4>
+                    <ul className=" follow list list-inline d-inline">
                       {SocialMedia.map((item, index) => (
                         <li key={index} className="list-inline-item">
                           <Link to={`${item.link}`}>{item.icon}</Link>
@@ -251,7 +265,7 @@ const Footer = () => {
                     </ul>
                   </div>
                 </div>
-              </div>
+             
             </div>
           </div>
         </footer>

@@ -1,12 +1,19 @@
 .footerWrapper {
   padding: 45px 0px;
-  width: 100%;
+    width: 100%;
+    background-color: #3bb77e;
 }
 
 .footerWrapper .footerBoxes .box {
   background: #f4f6fa;
   padding: 25px 25px;
   border-radius: 15px;
+}
+.box:hover{
+  transform: scale(0.9);
+  box-shadow: 56px  var(#000);
+ color: black;
+ font-weight: bold;
 }
 
 .footerWrapper .footerBoxes .box .info {
@@ -22,15 +29,22 @@
   font-size: 25px;
   font-weight: 600;
 }
-
+.footerWrapper .footerBoxes .box .info h4 :hover {
+  font-size: 30px;
+  font-weight:bolder;
+}
 .footerWrapper .footerBoxes .box .info p {
   margin-bottom: 0px;
   font-size: 20px;
   opacity: 0.8;
 }
-
+.footerWrapper .footerBoxes .box .info p :hover {
+  font-size: 30px;
+  font-weight: 900;
+}
 .footerWrapper .footerBoxes .box:hover img {
   transform: translateY(-5px);
+ 
 }
 
 footer p,
@@ -46,13 +60,25 @@ footer {
 footer .part1 svg {
   color: #3bb77e !important;
 }
+ footer .part1 h6:hover{
+  padding-left: 5px;
+ }
 
 footer h3 {
-  color: #000;
+  color:whitesmoke;
   font-weight: 600;
   margin-bottom: 20px;
+  font-size: 30px;
 }
 
+footer h3:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #3bb77e,0 0 20px #3bb77e,0 0 40px #fff,0 0 80px #fff;
+  padding-left: 5px;
+  transition: all 0.2s ease-in-out;
+  text-decoration: solid;
+
+}
 footer .part2 ul li {
   list-style: none;
   margin-bottom: 13px;
@@ -63,32 +89,45 @@ footer .part2 ul li a {
   opacity: 0.8;
   font-size: 500;
   transition: all 0.2s ease-in-out;
+  display: flex;
+  justify-content: space-between;
 }
 
 footer .part2 ul li a:hover {
-  text-decoration: none;
-  color: #3bb77e !important;
+  color: whitesmoke !important;
   opacity: 1;
   padding-left: 5px;
+  text-decoration: underline;
+  text-shadow: 0 0 10px #3bb77e,0 0 20px #3bb77e,0 0 40px #fff,0 0 80px #fff;
+
 }
 
 footer .lastStrip {
   padding: 15px 0px;
+  display: flex;
+  justify-content: center;
+  color: #000;
+ 
 }
 
 .phNo svg {
   font-size: 45px !important;
   opacity: 0.8;
+ 
 }
-
+.follow{
+  display: flex;
+}
 .phNo h3 {
-  font-size: 32px !important;
+  font-size: 32px ;
   line-height: 35px !important;
+  color: #f4f6fa;
 }
 
 .phNo p {
   font-size: 16px !important;
   opacity: 0.8;
+  color: #000;
 }
 
 footer .lastStrip .part3 h5 {
@@ -98,12 +137,14 @@ footer .lastStrip .part3 h5 {
 footer .lastStrip .part3 ul {
   margin-bottom: 0px;
   padding-left: 8px;
+    display: flex;
+  justify-content: space-around;
 }
 
 footer .lastStrip .part3 ul li a {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   width: 40px;
   height: 40px;
   background: #3bb77e;
@@ -117,13 +158,33 @@ footer .lastStrip .part3 ul li a svg {
 
 footer .lastStrip .part3 ul li a:hover {
   background: rgb(51, 51, 51);
-}
+  transform: scale(1.1);
 
+}
+ footer .part3 h6:hover{
+  font-weight: bold;
+ }
 .mail-tel {
   cursor: pointer;
+}
+
+footer .part_2{
+  justify-self:center;
 }
 @media (min-width:700px) and (max-width:1200px) {
   footer .lastStrip .part_2 .part_3 .list{
     display: flex;
   }
+
+}
+@media only screen and (min-width: 320px) and (max-width: 992px) {
+ .phNo h3 {
+    font-size: 20px; 
+}
+footer .part2 h3{
+  font-size: 20px; 
+}
+footer .part2 ul li a {
+  font-size: 10px !important ;
+}
 }
