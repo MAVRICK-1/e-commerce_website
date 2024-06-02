@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import './nav.css';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import GridViewIcon from '@mui/icons-material/GridView';
@@ -169,9 +169,15 @@ const Nav = (props) => {
                 <ul className="list list-inline mb-0">
                   <li className="list-inline-item">
                     <Button>
-                      <Link to={'/'} onClick={props.closeNav}>
+                      <NavLink
+                        to={'/'}
+                        onClick={props.closeNav}
+                        className={({ isActive }) =>
+                          isActive ? 'active-link' : ''
+                        }
+                      >
                         Home
-                      </Link>
+                      </NavLink>
                     </Button>
                   </li>
 
@@ -198,6 +204,7 @@ const Nav = (props) => {
                             />
                           </a>
                         </Button>
+
                         {item.items.length !== 0 && (
                           <div
                             className={`dropdown_menu ${
@@ -240,14 +247,21 @@ const Nav = (props) => {
 
                   <li className="list-inline-item">
                     <Button onClick={props.closeNav}>
-                      <Link to={'/AboutUs'}>About</Link>
+                      <NavLink
+                        to={'/AboutUs'}
+                        className={({ isActive }) =>
+                          isActive ? 'active-link' : ''
+                        }
+                      >
+                        About
+                      </NavLink>
                     </Button>
                   </li>
 
                   <li className="list-inline-item position-static">
                     <Button onClick={() => setOpenMegaMenu(!openMegaMenu)}>
                       <Link>
-                        Shop{' '}
+                        Shop
                         <KeyboardArrowDownIcon
                           className={`${openMegaMenu === true && 'rotateIcon'}`}
                         />
@@ -324,18 +338,39 @@ const Nav = (props) => {
 
                                     </li> */}
                     <Button>
-                      <Link>Blog</Link>
+                      <NavLink
+                        to="/blog"
+                        className={({ isActive }) =>
+                          isActive ? 'active-link' : ''
+                        }
+                      >
+                        Blog
+                      </NavLink>
                     </Button>
                   </li>
 
                   <li className="list-inline-item">
                     <Button>
-                      <Link>Contact</Link>
+                      <NavLink
+                        to="/contact"
+                        className={({ isActive }) =>
+                          isActive ? 'active-link' : ''
+                        }
+                      >
+                        Contact
+                      </NavLink>
                     </Button>
                   </li>
                   <li className="list-inline-item">
                     <Button>
-                      <Link to={"/contributors"}>Contributors</Link>
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? 'active-link' : ''
+                        }
+                        to={'/contributors'}
+                      >
+                        Contributors
+                      </NavLink>
                     </Button>
                   </li>
                 </ul>
