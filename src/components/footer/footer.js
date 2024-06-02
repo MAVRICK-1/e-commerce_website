@@ -172,10 +172,12 @@ const Footer = () => {
                         <Link to="#">Delivery Information</Link>
                       </li>
                       <li>
-                        <Link to="#">Privacy Policy</Link>
+                        <Link to="/privacy-policy">Privacy Policy</Link>
                       </li>
                       <li>
-                        <Link to="#">Terms &amp; Conditions</Link>
+                        <Link to="/termsandconditions">
+                          Terms &amp; Conditions
+                        </Link>
                       </li>
                       <li>
                         <Link to="#">Contact Us</Link>
@@ -202,10 +204,12 @@ const Footer = () => {
                         <Link to="#">Delivery Information</Link>
                       </li>
                       <li>
-                        <Link to="#">Privacy Policy</Link>
+                        <Link to="/privacy-policy">Privacy Policy</Link>
                       </li>
                       <li>
-                        <Link to="#">Terms &amp; Conditions</Link>
+                        <Link to="/termsandconditions">
+                          Terms &amp; Conditions
+                        </Link>
                       </li>
                       <li>
                         <Link to="#">Contact Us</Link>
@@ -232,10 +236,12 @@ const Footer = () => {
                         <Link to="#">Delivery Information</Link>
                       </li>
                       <li>
-                        <Link to="#">Privacy Policy</Link>
+                        <Link to="/privacy-policy">Privacy Policy</Link>
                       </li>
                       <li>
-                        <Link to="#">Terms &amp; Conditions</Link>
+                        <Link to="/termsandconditions">
+                          Terms &amp; Conditions
+                        </Link>
                       </li>
                       <li>
                         <Link to="#">Contact Us</Link>
@@ -284,60 +290,59 @@ const Footer = () => {
               </div>
 
               <div className="col-md-6 d-flex part_2">
-           
-                  <div className="phNo d-flex align-items-center  mx-5">
-                    <span>
-                      <HeadphonesOutlinedIcon />
-                    </span>
-                    <div
-                      className="mail-tel info ml-3"
-                      onClick={() => (window.location = 'tel: 1900 - 888')}
-                    >
-                      <h3 className="text-g mb-0">1900 - 888</h3>
-                      <p className="mb-0">24/7 Support Center</p>
-                    </div>
-              </div>
+                <div className="phNo d-flex align-items-center  mx-5">
+                  <span>
+                    <HeadphonesOutlinedIcon />
+                  </span>
+                  <div
+                    className="mail-tel info ml-3"
+                    onClick={() => (window.location = 'tel: 1900 - 888')}
+                  >
+                    <h3 className="text-g mb-0">1900 - 888</h3>
+                    <p className="mb-0">24/7 Support Center</p>
+                  </div>
+                </div>
 
-              <div className="col-md-3 part3  part_3">
-                <div className="d-flex align-items-center">
-                  <h5>Follow Us</h5>
-                  <ul className="list list-inline">
-                    <li className="list-inline-item">
-                      <Link
-                        to={
-                          'https://www.linkedin.com/in/rishi-mondal-5238b2282/'
-                        }
-                      >
-                        <LinkedinIcon />
-                      </Link>
-                    </li>
-                    <li className="list-inline-item">
-                      <Link to={'https://github.com/MAVRICK-1#'}>
-                        <GitHubIcon />
-                      </Link>
-                    </li>
-                    <li className="list-inline-item">
-                      <Link to={'https://mavrick-portfolio.vercel.app/'}>
-                        <DeveloperBoardIcon />
-                      </Link>
-                    </li>
-                    <li className="list-inline-item">
-                      <Link
-                        to={'https://www.instagram.com/realmavrick_1/?hl=en'}
-                      >
-                        <InstagramIcon />
-                      </Link>
-                    </li>
-                    <li className="list-inline-item">
-                      <Link to={''}>
-                        <XIcon />
-                      </Link>
-                    </li>
-                  </ul>
+                <div className="col-md-3 part3  part_3">
+                  <div className="d-flex align-items-center">
+                    <h5>Follow Us</h5>
+                    <ul className="list list-inline">
+                      <li className="list-inline-item">
+                        <Link
+                          to={
+                            'https://www.linkedin.com/in/rishi-mondal-5238b2282/'
+                          }
+                        >
+                          <LinkedinIcon />
+                        </Link>
+                      </li>
+                      <li className="list-inline-item">
+                        <Link to={'https://github.com/MAVRICK-1#'}>
+                          <GitHubIcon />
+                        </Link>
+                      </li>
+                      <li className="list-inline-item">
+                        <Link to={'https://mavrick-portfolio.vercel.app/'}>
+                          <DeveloperBoardIcon />
+                        </Link>
+                      </li>
+                      <li className="list-inline-item">
+                        <Link
+                          to={'https://www.instagram.com/realmavrick_1/?hl=en'}
+                        >
+                          <InstagramIcon />
+                        </Link>
+                      </li>
+                      <li className="list-inline-item">
+                        <Link to={''}>
+                          <XIcon />
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </footer>
       </div>

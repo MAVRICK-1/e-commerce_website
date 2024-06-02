@@ -26,6 +26,8 @@ import SignUp from './pages/SignUp';
 import Cart from './pages/cart';
 import Wishlist from './pages/wishList';
 import './responsive.css';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 // import data from './data';
 import { collection, doc, getDocs } from 'firebase/firestore';
@@ -326,6 +328,14 @@ function App() {
         {
           path: '/contributors',
           element: <Contributors />
+        },
+        {
+          path: '/privacy-policy',
+          element: <PrivacyPolicy />
+        },
+        {
+          path: '/termsandconditions',
+          element: <TermsAndConditions />
         },
         {
           path: '*',
