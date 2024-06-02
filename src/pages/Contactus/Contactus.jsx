@@ -17,9 +17,9 @@ export default function Contactus() {
       user_name: '',
       message:''
     });
-    const serviceId="service_hrz8hfg"
-    const templateId="template_na7xjc4"
-    const publicKey="rId2aw03Pj2ZNq2U5"
+    const serviceId=""
+    const templateId=""
+    const publicKey=""
    
     const validateEmail = (email) => {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
