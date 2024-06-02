@@ -295,6 +295,10 @@ function App() {
           element: <Cart />
         },
         {
+          path: '/contact',
+          element: <Contactus />
+        },
+        {
           path: '/wishlist',
           element: <Wishlist />
         },

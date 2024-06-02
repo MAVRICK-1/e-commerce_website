@@ -330,7 +330,7 @@ const Nav = (props) => {
 
                   <li className="list-inline-item">
                     <Button>
-                      <Link>Contact</Link>
+                      <Link to={'/contact'}>Contact</Link>
                     </Button>
                   </li>
                   <li className="list-inline-item">
