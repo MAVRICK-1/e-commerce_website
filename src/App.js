@@ -35,6 +35,7 @@ import SellerForm from './pages/SellerRegistration';
 import SearchResults from './components/search/SearchResults';
 import GoToTop from './components/GoToTop/GoToTop';
 import Contributors from './pages/Contributors/Contributors';
+import Contactus from './pages/Contactus/Contactus';
 
 const MyContext = createContext();
 
@@ -326,6 +327,10 @@ function App() {
         {
           path: '/contributors',
           element: <Contributors />
+        },
+        {
+          path: '/contact',
+          element: <Contactus />
         },
         {
           path: '*',
