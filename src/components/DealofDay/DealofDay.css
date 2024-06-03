@@ -89,8 +89,8 @@ col{
   font-size: 1.2em;
 }
 
-.close-btn{
-  top:20px;
+ .close-btn{
+  top:0px;
   right:30px;
   position: absolute;
   border: 0;
@@ -98,23 +98,45 @@ col{
 }
 .cross{
   color:red;
+  position: absolute;
+  opacity: 0.5;
   scale: 1.5;
   cursor: pointer;
 }
 
 .cross:hover {
-  color: brown;
-  text-decoration: underline;
-}
+  color: rgb(255, 0, 0);
+  /* font-size: 40px; */
+  opacity: 1;
+  scale:2;
+  text-decoration: none;
+} 
+
 button:hover{
-  background-color: rgb(2, 98, 79) !important;
-  color:white !important;
-  box-shadow: 0 0 10px  yellowgreen;
+  background-color: rgb(70, 165, 89) !important;
+  color:rgb(255, 255, 255) !important;
+  box-shadow: 0 0 10px  rgb(119, 120, 117);
+}
+button a:hover {
+  text-decoration: none;
 }
 .shop-buttons .buy a{
   color:inherit !important;
 }
+@media (max-width: 1244px) {
+  .deal-card {
+    width: 100%;
+  }
 
+  .image-container img {
+    width: 100%;
+  }
+
+  .shop-buttons .view-product,
+  .shop-buttons .close {
+    width: 100%;
+  }
+}
 @media (max-width: 768px) {
   .deal-card {
     width: 90%;
