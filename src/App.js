@@ -38,6 +38,7 @@ import SearchResults from './components/search/SearchResults';
 import GoToTop from './components/GoToTop/GoToTop';
 import Contributors from './pages/Contributors/Contributors';
 import { Account } from './components/AccountDetails/Account';
+import Contactus from './pages/Contactus/Contactus';
 
 const MyContext = createContext();
 
@@ -337,6 +338,10 @@ function App() {
         {
           path: '/privacy-policy',
           element: <PrivacyPolicy />
+        },
+        {
+          path: '/contact',
+          element: <Contactus />
         },
         {
           path: '/termsandconditions',
