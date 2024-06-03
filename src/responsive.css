@@ -161,6 +161,10 @@
     justify-content: left;
   }
 
+  .part3 .d-flex:hover{
+    transform: scale(1.1);
+  }
+
   .lastStrip .part_2 {
     padding: 0px !important;
   }
