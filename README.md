@@ -38,7 +38,7 @@ Our project is an ONDC (Open Network for Digital Commerce) site integrated with 
 
 ### Additional Resources:
 - **YouTube Video Link:** [NestOndc](https://www.youtube.com/watch?v=-WzV5HD6KMo)
-- **Deployment Link:** [Link](https://nestondc.vercel.app/)
+- **Deployment Link:** [Link](https://nestondcshop.vercel.app/)
 
 
 <div align="center">
