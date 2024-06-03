@@ -21,6 +21,7 @@ import GoogleImg from '../../assets/images/google.webp';
 import useLoggedInUserEmail from '../../Hooks/useLoggedInUserEmail';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../../Redux/auth-slice';
+import { toast } from 'react-toastify';
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
@@ -115,6 +116,10 @@ const SignIn = () => {
         localStorage.setItem('userImage', '');
         //console.log(loggedInUserEmail);
         history('/');
+        toast.success('Successfully signed in!', {
+          className: 'Toastify__toast--custom',
+          progressClassName: 'Toastify__progress-bar--custom'
+        });
       })
       .catch((error) => {
         setShowLoader(false);
@@ -137,6 +142,10 @@ const SignIn = () => {
         localStorage.setItem('userImage', result.user.photoURL);
         //console.log(loggedInUserEmail);
         history('/');
+        toast.success('Successfully signed in with Google!', {
+          className: 'Toastify__toast--custom',
+          progressClassName: 'Toastify__progress-bar--custom'
+        });
       })
       .catch((error) => {
         setShowLoader(false);

@@ -27,6 +27,7 @@ import {
   updateDoc,
   onSnapshot
 } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 const WishList = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -101,6 +102,10 @@ const WishList = () => {
       setTimeout(() => {
         deleteWishlistItem(user, `${item.id}`);
       }, 2000);
+      toast.success('Item moved to cart', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
@@ -119,8 +124,16 @@ const WishList = () => {
       await deleteDoc(wishlistItemRef);
       fetchWishlistProducts();
       console.log('Wishlist item deleted successfully.');
+      toast.success('Wishlist item deleted successfully', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error deleting wishlist item:', error);
+      toast.error('Error deleting wishlist item', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     }
   };
 
@@ -134,8 +147,16 @@ const WishList = () => {
       });
       await fetchWishlistProducts();
       console.log('All wishlist items deleted successfully.');
+      toast.success('All wishlist items deleted successfully', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error deleting wishlist items:', error);
+      toast.error('Error deleting wishlist items', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     }
   };
 

@@ -1,4 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './toastify-custom.css';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import React, { createContext, useEffect, useState } from 'react';
 import {
@@ -338,6 +341,7 @@ function App() {
   return data && data.productData ? (
     <MyContext.Provider value={value}>
       <RouterProvider router={router} />
+      <ToastContainer />
     </MyContext.Provider>
   ) : (
     <div className="loader">

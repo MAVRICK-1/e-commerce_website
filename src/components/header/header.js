@@ -9,7 +9,7 @@ import IconCompare from '../../assets/images/icon-compare.svg';
 import IconHeart from '../../assets/images/icon-heart.svg';
 import IconCart from '../../assets/images/icon-cart.svg';
 import IconUser from '../../assets/images/icon-user.svg';
-
+import { toast } from 'react-toastify';
 import Button from '@mui/material/Button';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -120,6 +120,10 @@ const Header = (props) => {
     context.signOut();
     localStorage.setItem('userImage', '');
     history('/');
+    toast.success('Successfully signed out!', {
+      className: 'Toastify__toast--custom',
+      progressClassName: 'Toastify__progress-bar--custom'
+    });
   };
 
   const openSearch = () => {
