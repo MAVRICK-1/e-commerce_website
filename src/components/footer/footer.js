@@ -33,8 +33,8 @@ const Footer = () => {
       data: [
         { link: '#', text: 'About Us' },
         { link: '#', text: 'Delivery Information' },
-        { link: '#', text: 'Privacy Policy' },
-        { link: '#', text: 'Terms &amp; Conditions' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
         { link: '#', text: 'Contact Us' },
         { link: '#', text: 'Support Center' },
         { link: '#', text: 'Careers' },
@@ -46,8 +46,8 @@ const Footer = () => {
       data: [
         { link: '#', title: 'About Us' },
         { link: '#', title: 'Delivery Information' },
-        { link: '#', text: 'Privacy Policy' },
-        { link: '#', text: 'Terms &amp; Conditions' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
         { link: '#', text: 'Contact Us' },
         { link: '#', text: 'Support Center' },
         { link: '#', text: 'Careers' },
@@ -59,8 +59,8 @@ const Footer = () => {
       data: [
         { link: '#', text: 'About Us' },
         { link: '#', text: 'Delivery Information' },
-        { link: '#', text: 'Privacy Policy' },
-        { link: '#', text: 'Terms &amp; Conditions' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
         { link: '#', text: 'Contact Us' },
         { link: '#', text: 'Support Center' },
         { link: '#', text: 'Careers' },
@@ -185,9 +185,9 @@ const Footer = () => {
                     <div key={index} className="col">
                       <h3>{item.title}</h3>
                       <ul className="footer-list mb-sm-5 mb-md-0">
-                        {item?.data?.map((ele) => (
-                          <li>
-                            <Link to={`${ele.link}`}>{ele.text}</Link>
+                        {item.data.map((ele, eleIndex) => (
+                          <li key={eleIndex}>
+                            <Link to={ele.link}>{ele.text}</Link>
                           </li>
                         ))}
                       </ul>
@@ -226,7 +226,7 @@ const Footer = () => {
               </div>
 
               <div className="col-md-4 d-flex part_2 align-items-center">
-                <div className="phNo d-flex align-items-center  mx-5">
+                <div className="phNo d-flex align-items-center mx-5">
                   <span>
                     <HeadphonesOutlinedIcon />
                   </span>
@@ -238,34 +238,20 @@ const Footer = () => {
                     <h6 className="mb-0">24/7 Support Center</h6>
                   </div>
                 </div>
-                <div className="phNo d-flex align-items-center  mx-5">
-                  <span>
-                    <HeadphonesOutlinedIcon />
-                  </span>
-                  <div
-                    className="mail-tel info ml-3"
-                    onClick={() => (window.location = 'tel: 1900 - 888')}
-                  >
-                    <h3 className="text-g mb-0">1900 - 888</h3>
-                    <h6 className="mb-0">24/7 Support Center</h6>
-                  </div>
+              </div>
+
+              <div className="col-md-4 part3 part_3">
+                <div className="d-flex align-items-center">
+                  <h4>Follow Us</h4>
+                  <ul className="follow list list-inline d-inline">
+                    {SocialMedia.map((item, index) => (
+                      <li key={index} className="list-inline-item">
+                        <Link to={item.link}>{item.icon}</Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-</div>
-                
-                
-                <div className="col-md-4 part3  part_3">
-                  <div className="  d-flex align-items-center">
-                    <h4>Follow Us</h4>
-                    <ul className=" follow list list-inline d-inline">
-                      {SocialMedia.map((item, index) => (
-                        <li key={index} className="list-inline-item">
-                          <Link to={`${item.link}`}>{item.icon}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-             
+              </div>
             </div>
           </div>
         </footer>
