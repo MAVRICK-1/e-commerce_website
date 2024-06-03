@@ -16,6 +16,8 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    
+
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" crossorigin="use-credentials" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -49,6 +51,22 @@
       "themeColor": "#2563eb",
       "allowedOrigins": []
   });
+
+  //  added custom css for leaflet-top leaflet-left
+  var style = document.createElement('style');
+        style.type = 'text/css';
+
+        var css = '.leaflet-top, .leaflet-left{ z-index:100; }';
+
+        if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+
+        // Append the style element to the head
+        document.head.appendChild(style);
+
 </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
