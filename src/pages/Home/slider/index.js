@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Slider from 'react-slick';
 import './index.css';
 
@@ -12,9 +12,19 @@ import Button from '@mui/material/Button';
 import Newsletter from '../../../components/newsletter';
 
 import { MyContext } from '../../../App';
+import HomeSliderSkeleton from '../../../components/Skeletons/HomeSliderSkeleton';
 
 const HomeSlider = () => {
   const context = useContext(MyContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Simulate loading time (2 seconds)
+
+    return () => clearTimeout(timer);
+  }, []);
 
   var settings = {
     dots: true,
@@ -26,6 +36,10 @@ const HomeSlider = () => {
     arrows: context.windowWidth > 992 ? true : false,
     autoplay: true
   };
+
+  if (loading) {
+    return <HomeSliderSkeleton />;
+  }
 
   return (
     <section className="homeSlider">
