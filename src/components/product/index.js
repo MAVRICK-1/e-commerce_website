@@ -3,6 +3,7 @@ import './style.css';
 import Rating from '@mui/material/Rating';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
@@ -107,8 +108,16 @@ const Product = (props) => {
       await setDoc(productRef, { ...item, quantity: 1 });
       setIsadded(true);
       context.fetchCartProducts();
+      toast.success('Item added in cart', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error adding item to cart:', error);
+      toast.error('something went wrong!', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     }
   };
 
@@ -121,8 +130,16 @@ const Product = (props) => {
       await setDoc(productRef, { ...item, quantity: 1 });
       setIsadded(true);
       context.fetchWishlistProducts();
+      toast.success('Item added to whishlist', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error adding item to wishlist:', error);
+      toast.error('Error adding item to whishlist', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     }
   };
 

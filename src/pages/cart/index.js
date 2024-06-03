@@ -24,6 +24,7 @@ import {
   getDocs,
   onSnapshot
 } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
@@ -76,8 +77,16 @@ const Cart = () => {
       await deleteDoc(cartItemRef);
       fetchCartProducts();
       console.log('Cart item deleted successfully.');
+      toast.success('Item removed successfuly from cart', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error deleting cart item:', error);
+      toast.error('Error deleting cart item', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     }
   };
 
@@ -91,8 +100,16 @@ const Cart = () => {
       });
       await fetchCartProducts();
       console.log('All cart items deleted successfully.');
+      toast.success('All cart items deleted successfully', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error deleting cart items:', error);
+      toast.error('rror deleting cart items', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     }
   };
 
