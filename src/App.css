@@ -94,6 +94,14 @@ body {
 p {
   color: #7e7e7e;
 }
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
 
 .hd {
   font-size: 38px;

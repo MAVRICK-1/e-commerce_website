@@ -20,6 +20,7 @@ import {
 import { MyContext } from '../../App';
 import { db } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
+import Product_Skeleton from '../Skeletons/Product_Skeleton';
 
 const Product = (props) => {
   const [productData, setProductData] = useState();
@@ -126,7 +127,11 @@ const Product = (props) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Product_Skeleton />
+      </div>
+    );
   }
 
   return (
