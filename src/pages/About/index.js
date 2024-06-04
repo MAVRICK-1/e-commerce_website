@@ -4,7 +4,7 @@ import About from './About';
 
 function Tes() {
   return (
-    <div style={{margin:"10px auto 10px auto"}}>
+    <div style={{ margin: '10px auto 10px auto' }}>
       <div className="about-container background">
         <h1 className="contributor-text">About Us</h1>
         <hr></hr>
@@ -26,7 +26,7 @@ function Tes() {
           everything you need in one website.
         </p>
       </div>
-      <About/>
+      <About />
     </div>
   );
 }

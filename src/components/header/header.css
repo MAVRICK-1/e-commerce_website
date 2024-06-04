@@ -107,7 +107,7 @@ header .headerTabs li span img {
 }
 
 header .headerTabs li span a:hover {
-  color: #3BB77E;
+  color: #3bb77e;
 }
 
 header .headerTabs li span a:hover img {
@@ -139,7 +139,6 @@ header .headerTabs li a .badge,
 header .headerTabs li a .btn {
   transition: all 0.3s ease;
 }
-
 
 .dropdownMenu {
   position: absolute;
