@@ -1,271 +1,270 @@
 .contact-section {
-    padding: 0 20px;
-  }
-  
-  .contact-section-light {
-    background: #fff;
-  }
-  
+  padding: 0 20px;
+}
+
+.contact-section-light {
+  background: #fff;
+}
+
+.contact-parent {
+  display: flex;
+  padding: 30px 0;
+}
+
+.validation {
+  color: #ff2929;
+  margin-top: -1%;
+  margin-bottom: 13px;
+}
+
+.card-heading {
+  padding-top: 12px;
+  margin-bottom: 8px;
+  text-align: center;
+  color: var(--secondary-color);
+  text-transform: capitalize;
+}
+
+.inside-card {
+  width: 75%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+
+.contact-image {
+  max-width: 100%;
+}
+
+.contact-child {
+  flex: 1;
+}
+
+.child1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: #fff;
+}
+
+.child2 {
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.contact-card {
+  width: 75%;
+  height: auto;
+  margin: 0% auto;
+  padding-bottom: 20px;
+  border-radius: 10px;
+}
+
+.goodbye-card {
+  width: 60%;
+  height: auto;
+  background-color: #e7e7e7;
+  margin: 20% auto;
+  border-radius: 10px;
+  box-shadow:
+    5px 5px 15px #888888,
+    -5px -5px 15px #ffffff;
+}
+
+.contact-card-light {
+  background-color: #e7e7e7;
+  box-shadow:
+    5px 5px 15px #888888,
+    -5px -5px 15px #ffffff;
+}
+
+.contact-input > input,
+.contact-input > textarea {
+  font-size: 2rem !important;
+}
+.contact-input > div > input,
+.contact-input > textarea {
+  font-size: 2rem !important;
+}
+.contact-header-text {
+  padding: 15px 0;
+  margin-bottom: 0px;
+  text-transform: capitalize;
+  text-align: center !important;
+  font-size: 3rem;
+}
+
+.contact-header-text-light {
+  color: var(--secondary-color);
+}
+
+.inside-contact {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.inside-card p {
+  padding: 10px 5px;
+  font-size: 1.5rem;
+  font-weight: 580;
+}
+
+.contact-input {
+  position: relative;
+  margin-bottom: 65px;
+}
+.contact-input > input {
+  height: 64px !important;
+}
+.contact-input > input::placeholder,
+.contact-input > textarea::placeholder {
+  font-size: 2rem;
+}
+.contact-input input,
+.contact-input textarea {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #bbbaba;
+  padding: 0 25px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  color: #777777;
+  background-color: #f1f1f1;
+  box-shadow:
+    inset 2px 2px 5px #888888,
+    inset -2px -2px 5px #ffffff;
+}
+
+.contact-input-light input,
+.contact-input-light textarea {
+  border: 1px solid #bbbaba;
+  font-size: 2rem;
+  padding: 1rem;
+  color: #777777;
+  background-color: #f1f1f1;
+  box-shadow:
+    inset 2px 2px 5px #888888,
+    inset -2px -2px 5px #ffffff;
+}
+
+.contact-input input::placeholder,
+.contact-input textarea::placeholder {
+  opacity: 1;
+  color: #777777;
+}
+
+.contact-input input::-moz-placeholder,
+.contact-input textarea::-moz-placeholder {
+  opacity: 1;
+  color: #777777;
+}
+
+.contact-input input::-webkit-input-placeholder,
+.contact-input textarea::-webkit-input-placeholder {
+  opacity: 1;
+  color: #777777;
+}
+
+.contact-input-light input:focus,
+.contact-input-light textarea:focus {
+  /* border-color: #1863ff; */
+  outline: none;
+
+  border: double 2px transparent;
+  background-image: linear-gradient(white, white);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-color: #ffffff;
+}
+
+.contact-input textarea {
+  padding-top: 15px;
+  height: 180px;
+  resize: none;
+}
+
+.contact-input i {
+  position: absolute;
+  right: 25px;
+  top: 15px;
+  font-size: 16px;
+}
+
+.contact-input-light i {
+  color: #777777;
+}
+
+.submit-btn {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.submit-btn-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 750px) {
   .contact-parent {
-    display: flex;
-    padding: 30px 0;
-  }
-  
-    .validation {
-    color: #ff2929;
-    margin-top: -1%;
-    margin-bottom: 13px;
-  }
-  
-  .card-heading {
-    padding-top: 12px;
-    margin-bottom: 8px;
-    text-align: center;
-    color: var(--secondary-color);
-    text-transform: capitalize;
-  }
-  
-  .inside-card {
-    width: 75%;
-    margin: 0 auto;
-    padding-bottom: 10px;
-  }
-  
-  .contact-image {
-    max-width: 100%;
-  }
-  
-  .contact-child {
-    flex: 1;
-  }
-  
-  .child1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    color: #fff;
-  }
-  
-  .child2 {
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  .contact-card {
-    width: 75%;
-    height: auto;
-    margin: 0% auto;
-    padding-bottom: 20px;
-    border-radius: 10px;
-  }
-  
-  .goodbye-card {
-    width: 60%;
-    height: auto;
-    background-color: #e7e7e7;
-    margin: 20% auto;
-    border-radius: 10px;
-    box-shadow:
-      5px 5px 15px #888888,
-      -5px -5px 15px #ffffff;
-  }
-  
-  .contact-card-light {
-    background-color: #e7e7e7;
-    box-shadow:
-      5px 5px 15px #888888,
-      -5px -5px 15px #ffffff;
-  }
-  
-  .contact-input > input,
-  .contact-input > textarea {
-    font-size: 2rem !important;
-  }
-  .contact-input > div > input,
-  .contact-input > textarea {
-    font-size: 2rem !important;
-  }
-  .contact-header-text {
-    padding: 15px 0;
-    margin-bottom: 0px;
-    text-transform: capitalize;
-    text-align: center !important;
-    font-size: 3rem;
-  }
-  
-  .contact-header-text-light {
-    color: var(--secondary-color);
-  }
-  
-  .inside-contact {
-    width: 85%;
-    margin: 0 auto;
-  }
-  
-  .inside-card p {
-    padding: 10px 5px;
-    font-size: 1.5rem;
-    font-weight: 580;
-  }
-  
-  .contact-input {
-    position: relative;
-    margin-bottom: 65px;
-  }
-  .contact-input > input {
-    height: 64px !important;
-  }
-  .contact-input > input::placeholder,
-  .contact-input > textarea::placeholder {
-    font-size: 2rem;
-  }
-  .contact-input input,
-  .contact-input textarea {
+    display: block;
     width: 100%;
-    height: 50px;
-    border: 1px solid #bbbaba;
-    padding: 0 25px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 14px;
-    color: #777777;
-    background-color: #f1f1f1;
-    box-shadow:
-      inset 2px 2px 5px #888888,
-      inset -2px -2px 5px #ffffff;
   }
-  
-  .contact-input-light input,
-  .contact-input-light textarea {
-    border: 1px solid #bbbaba;
-    font-size: 2rem;
-    padding: 1rem;
-    color: #777777;
-    background-color: #f1f1f1;
-    box-shadow:
-      inset 2px 2px 5px #888888,
-      inset -2px -2px 5px #ffffff;
+
+  .child1 {
+    padding: 0 0 10px;
   }
-  
-  .contact-input input::placeholder,
-  .contact-input textarea::placeholder {
-    opacity: 1;
-    color: #777777;
+
+  .contact-card {
+    width: 95%;
+    margin: 10% auto;
   }
-  
-  .contact-input input::-moz-placeholder,
-  .contact-input textarea::-moz-placeholder {
-    opacity: 1;
-    color: #777777;
+
+  .contact-input input,
+  .contact-btn {
+    height: 40px;
   }
-  
-  .contact-input input::-webkit-input-placeholder,
-  .contact-input textarea::-webkit-input-placeholder {
-    opacity: 1;
-    color: #777777;
+
+  .goodbye-card {
+    width: 85%;
+    padding-top: 5px;
   }
-  
-  .contact-input-light input:focus,
-  .contact-input-light textarea:focus {
-    /* border-color: #1863ff; */
-    outline: none;
-  
-    border: double 2px transparent;
-    background-image: linear-gradient(white, white);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    background-color: #ffffff;
+
+  .card-heading {
+    font-size: 1.6rem;
+    margin-bottom: 3px;
+    padding: 9px 0;
   }
-  
-  .contact-input textarea {
-    padding-top: 15px;
-    height: 180px;
-    resize: none;
+
+  .inside-card p {
+    padding: 0px;
+    font-size: 1.3rem;
   }
-  
-  .contact-input i {
-    position: absolute;
-    right: 25px;
-    top: 15px;
-    font-size: 16px;
+
+  .contact-btn {
+    font-size: 20px;
   }
-  
-  .contact-input-light i {
-    color: #777777;
-  }
-  
+
   .submit-btn {
-    display: flex;
-    justify-content: center;
-    width: 40%;
+    width: 60% !important;
     margin: 0 auto;
   }
-  
+
   .submit-btn-text {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: x-small;
+    color: black;
   }
-  
-  @media screen and (max-width: 750px) {
-    .contact-parent {
-      display: block;
-      width: 100%;
-    }
-  
-    .child1 {
-      padding: 0 0 10px;
-    }
-  
-    .contact-card {
-      width: 95%;
-      margin: 10% auto;
-    }
-  
-    .contact-input input,
-    .contact-btn {
-      height: 40px;
-    }
-  
-    .goodbye-card {
-      width: 85%;
-      padding-top: 5px;
-    }
-  
-    .card-heading {
-      font-size: 1.6rem;
-      margin-bottom: 3px;
-      padding: 9px 0;
-    }
-  
-    .inside-card p {
-      padding: 0px;
-      font-size: 1.3rem;
-    }
-  
-    .contact-btn {
-      font-size: 20px;
-    }
-  
-    .submit-btn {
-      width: 60% !important;
-      margin: 0 auto;
-    }
-  
-    .submit-btn-text {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: x-small;
-      color: black;
-    }
-  }
-  .text-xs-center {
-    text-align: center;
-  }
-  
-  .g-recaptcha {
-    display: inline-block;
-  }
-  
+}
+.text-xs-center {
+  text-align: center;
+}
+
+.g-recaptcha {
+  display: inline-block;
+}

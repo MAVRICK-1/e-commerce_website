@@ -157,25 +157,26 @@ const Footer = () => {
                     )
                   }
                 >
-                  <LocationOnOutlinedIcon /><strong>🏠 Address : </strong>:{' '}
-                  {location}
+                  <LocationOnOutlinedIcon />
+                  <strong>🏠 Address : </strong>: {location}
                 </h6>
                 <h6
                   className="mail-tel"
                   onClick={() => (window.location = 'tel: +91 540-025-124553')}
                 >
-                  <HeadphonesOutlinedIcon /> <strong>☏ Call Us : </strong> (+91) -
-                  540-025-124553{' '}
+                  <HeadphonesOutlinedIcon /> <strong>☏ Call Us : </strong> (+91)
+                  - 540-025-124553{' '}
                 </h6>
                 <h6
                   className="mail-tel"
                   onClick={() => (window.location = 'mailto:sale@Nest.com')}
                 >
-                  <EmailOutlinedIcon /> <strong>✉ Email : </strong> sale@Nest.com
+                  <EmailOutlinedIcon /> <strong>✉ Email : </strong>{' '}
+                  sale@Nest.com
                 </h6>
                 <h6>
-                  <WatchLaterOutlinedIcon /><strong>🕛 Hours : </strong> 10:00 -
-                  18:00, Mon - Sat
+                  <WatchLaterOutlinedIcon />
+                  <strong>🕛 Hours : </strong> 10:00 - 18:00, Mon - Sat
                 </h6>
               </div>
 
