@@ -1,0 +1,40 @@
+.container {
+    margin: 20px;
+    padding: 20px;
+    display: inline;
+}
+
+.heading {
+    margin: 20px;
+    text-align: center;
+}
+
+.faq-item {
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+}
+
+.faq-question {
+    background-color: #78ecb4;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+svg {
+    display: inline-flex;
+}
+
+.faq-question:hover {
+    background-color: #40b47c;
+    color: white;
+}
