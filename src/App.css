@@ -17,7 +17,9 @@ body {
 .container-fluid {
   padding: 0px 45px;
 }
-
+.css-12oz945-MuiFormControl-root-MuiTextField-root .MuiInputLabel-root {
+  background: white !important;
+}
 .no-click {
   pointer-events: none !important;
 }
@@ -90,16 +92,16 @@ body {
   color: #8b8b8b !important;
 }
 
-
 p {
   color: #7e7e7e;
 }
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 
@@ -712,7 +714,7 @@ input[type='number'] {
   justify-content: center;
 }
 
-.container-fluid:hover{
+.container-fluid:hover {
   transform: scale(1.2);
   box-shadow: #9a9a9a;
 }
