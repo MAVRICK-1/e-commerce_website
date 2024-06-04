@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './toastify-custom.css';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import React, { createContext, useEffect, useState } from 'react';
+import FAQ from './components/faq/FAQ';
 import {
   createBrowserRouter,
   HashRouter,
@@ -268,6 +269,7 @@ function App() {
           )}
           <Header data={data.productData} />
           <Outlet />
+          <FAQ />
           <Footer />
           <GoToTop />
         </MyContext.Provider>
