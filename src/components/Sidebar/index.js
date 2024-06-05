@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
 import { Button } from '@mui/material';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import bannerImg from '../../assets/images/banner1.webp';
+import bannerImg from '../../assets/images/banner1.jpeg';
 import { Link, useParams } from 'react-router-dom';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
