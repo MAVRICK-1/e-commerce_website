@@ -98,6 +98,10 @@ const Product = (props) => {
       setDrivingDistance(distance);
       setLoading(false);
     }
+
+    if (!userLocation) {
+      setLoading(false)
+    }
   }, [userLocation, productData]);
 
   const addToCart = async (item) => {
