@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "pre-commit": "PATH=$PATH:/c/Program\\ Files/nodejs npx lint-staged"
+  }
+}

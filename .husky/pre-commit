@@ -1,1 +1,6 @@
+#!/bin/sh
+# Adjust the PATH to include the Node.js binary directory
+export PATH=$PATH:/c/Program\ Files/nodejs
+
+# Run lint-staged
 npx lint-staged

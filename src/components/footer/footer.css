@@ -187,4 +187,21 @@ footer .part2 h3{
 footer .part2 ul li a {
   font-size: 10px !important ;
 }
+}.scroll-down-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #3bb77e;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999; 
 }
+.scroll-down-btn:hover {
+  background-color: #2e8b57; 
+}
+
