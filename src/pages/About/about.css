@@ -13,27 +13,27 @@
   overflow: hidden;
 }
 
-.background{
- background-color: beige;
- background-image: url(/src/assets/images/bg2.jpg);
- transition: all 0.3s;
- transform: translateY(2px);
- margin: auto;
- padding: 30px;
- width:92% !important;
- border-radius: 5px;
+.background {
+  background-color: beige;
+  background-image: url(/src/assets/images/bg2.jpg);
+  transition: all 0.3s;
+  transform: translateY(2px);
+  margin: auto;
+  padding: 30px;
+  width: 92% !important;
+  border-radius: 5px;
 }
 
-.about-container hr{
+.about-container hr {
   border: 0;
   height: 1px;
-  width:50%;
+  width: 50%;
   margin: auto;
   margin-bottom: 30px;
   background: #72857c88;
   border-radius: 5px;
 }
-.desc{
+.desc {
   font-size: 26px;
   text-align: center;
   color: grey;
@@ -45,7 +45,6 @@
   font-weight: 500;
   margin-bottom: 30px;
 }
-
 
 @media (max-width: 586px) {
   .about-container {
@@ -59,7 +58,6 @@
     justify-content: center;
     margin: auto;
   }
-
 }
 
 @media (min-width: 600px) {
@@ -75,7 +73,6 @@
     justify-content: center;
     font-size: 50px;
   }
-
 }
 
 @media (min-width: 600px) and (max-width: 1024px) {
@@ -89,9 +86,7 @@
   .about-container > .contributor-text {
     font-size: 40px;
   }
-
 }
-
 
 /* Features */
 
@@ -147,21 +142,21 @@
 
 /* Location Feature Block Styles */
 .about-us-location {
-  border: 2px solid #3BB77E;
+  border: 2px solid #3bb77e;
 }
 
 .about-us-location:hover {
-  background: #3BB77E;
+  background: #3bb77e;
   color: white;
 }
 
 /* Product Feature Block Styles */
 .about-us-product {
-  border: 2px solid #279A65;
+  border: 2px solid #279a65;
 }
 
 .about-us-product:hover {
-  background: #279A65;
+  background: #279a65;
   color: white;
 }
 

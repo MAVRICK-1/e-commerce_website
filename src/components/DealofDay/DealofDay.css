@@ -16,7 +16,7 @@
   padding: 1em;
   box-shadow: 0 0 20px grey;
 }
-col{
+col {
   align-items: center;
 }
 .image-container img {
@@ -52,21 +52,21 @@ col{
 .shop-buttons {
   width: 100%;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   padding: 1em;
   gap: 0.5em;
   justify-content: center;
   align-items: center;
 }
-.shop-buttons button{
+.shop-buttons button {
   background-color: rgb(59, 183, 126);
-  :hover{
+  :hover {
     transition: 0.3s;
   }
 }
 
-.shop-buttons .view-product a{
-  color:white;
+.shop-buttons .view-product a {
+  color: white;
 }
 
 .shop-buttons .view-product {
@@ -76,45 +76,67 @@ col{
   padding: 0.85em 0;
   /* gap: 0.7em; */
   border-radius: 0.5em;
-  font-size: 1.2em; 
+  font-size: 1.2em;
 }
 
 .shop-buttons .buy {
   background-color: white;
   border: 1px solid rgb(59, 183, 126);
-  color:rgb(59, 183, 126);
+  color: rgb(59, 183, 126);
   width: 50%;
   padding: 1em 0;
   border-radius: 0.5em;
   font-size: 1.2em;
 }
 
-.close-btn{
-  top:20px;
-  right:30px;
+.close-btn {
+  top: 0px;
+  right: 30px;
   position: absolute;
   border: 0;
   background-color: transparent;
 }
-.cross{
-  color:red;
+.cross {
+  color: red;
+  position: absolute;
+  opacity: 0.5;
   scale: 1.5;
   cursor: pointer;
 }
 
 .cross:hover {
-  color: brown;
-  text-decoration: underline;
-}
-button:hover{
-  background-color: rgb(2, 98, 79) !important;
-  color:white !important;
-  box-shadow: 0 0 10px  yellowgreen;
-}
-.shop-buttons .buy a{
-  color:inherit !important;
+  color: rgb(255, 0, 0);
+  /* font-size: 40px; */
+  opacity: 1;
+  scale: 2;
+  text-decoration: none;
 }
 
+button:hover {
+  background-color: rgb(70, 165, 89) !important;
+  color: rgb(255, 255, 255) !important;
+  box-shadow: 0 0 10px rgb(119, 120, 117);
+}
+button a:hover {
+  text-decoration: none;
+}
+.shop-buttons .buy a {
+  color: inherit !important;
+}
+@media (max-width: 1244px) {
+  .deal-card {
+    width: 100%;
+  }
+
+  .image-container img {
+    width: 100%;
+  }
+
+  .shop-buttons .view-product,
+  .shop-buttons .close {
+    width: 100%;
+  }
+}
 @media (max-width: 768px) {
   .deal-card {
     width: 90%;

@@ -23,11 +23,11 @@
   margin-top: 25px;
 }
 
-@media  only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .notFound .box h1 {
     font-size: 40px;
   }
-  .img404{
+  .img404 {
     width: 120%;
     margin-left: -5%;
     margin-right: 45%;
@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: column;
   }
-  .btn{
+  .btn {
     width: 100% !important;
     height: auto !important;
   }

@@ -10,6 +10,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
+import { toast } from 'react-toastify';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
@@ -264,8 +265,16 @@ const DetailsPage = (props) => {
       await setDoc(productRef, { ...item, quantity: 1 });
       setIsadded(true);
       context.setCartCount(context.cartCount + 1);
+      toast.success('Item is added to Cart', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     } catch (error) {
       console.error('Error adding item to cart:', error);
+      toast.error('Something went wrong!', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
     }
   };
 
@@ -279,8 +288,16 @@ const DetailsPage = (props) => {
         setIsWishlistItemAdded(true);
         setisAlreadyAddedInWishlist(true);
         context.setWishlistCount(context.wishlistCount + 1);
+        toast.success('Item added to whishlist', {
+          className: 'Toastify__toast--custom',
+          progressClassName: 'Toastify__progress-bar--custom'
+        });
       } catch (error) {
         console.error('Error adding item to wishlist:', error);
+        toast.error('Error adding item to wishlist', {
+          className: 'Toastify__toast--custom',
+          progressClassName: 'Toastify__progress-bar--custom'
+        });
       }
     } else {
       console.log('isAlreadyAddedInWishlist');
@@ -294,8 +311,16 @@ const DetailsPage = (props) => {
         setisAlreadyAddedInWishlist(false);
         context.setWishlistCount(context.wishlistCount - 1);
         console.log('Wishlist item deleted successfully.');
+        toast.success('Wishlist item deleted successfully', {
+          className: 'Toastify__toast--custom',
+          progressClassName: 'Toastify__progress-bar--custom'
+        });
       } catch (error) {
         console.error('Error deleting wishlist item:', error);
+        toast.error('Error deleting wishlist item', {
+          className: 'Toastify__toast--custom',
+          progressClassName: 'Toastify__progress-bar--custom'
+        });
       }
     }
   };

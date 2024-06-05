@@ -14,7 +14,7 @@
 }
 
 @media (min-width: 1000px) and (max-width: 1400px) {
-.browBtn {
+  .browBtn {
     padding: auto !important;
     height: 79px !important;
   }
@@ -29,7 +29,6 @@
     margin-top: 10px;
   }
 }
-
 
 .catTab .MuiSvgIcon-root {
   fill: #fff !important; /* Set icon color */
@@ -56,7 +55,6 @@
   padding-top: 20px;
   padding-bottom: 20px;
 
- 
   border-radius: 3px !important;
 }
 .active-link {
@@ -66,14 +64,15 @@
   border-radius: 2px;
   /* color: #fff !important; */
   font-weight: bold;
-  text-decoration: underline; Optional: add underline
+  text-decoration: underline;
+  optional: add underline;
 }
 .nav nav ul li button .MuiSvgIcon-root {
   z-index: 1;
 }
 
 .nav nav ul li button:hover {
-  color: #fff; 
+  color: #fff;
 }
 
 .nav nav ul li button a {
@@ -134,12 +133,12 @@ nav .dropdown_menu li {
   font-weight: 400 !important;
 }
 
-.part2 ul li button:hover{
+.part2 ul li button:hover {
   background-color: inherit !important;
   box-shadow: none !important;
 }
 
-.part2 ul li button:hover a{
+.part2 ul li button:hover a {
   color: #191717 !important;
 }
 .nav nav li:hover .open {
@@ -270,4 +269,3 @@ nav .all_menu li {
   font-size: 25px;
   text-decoration: none;
 }
-

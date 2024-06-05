@@ -161,6 +161,10 @@
     justify-content: left;
   }
 
+  .part3 .d-flex:hover {
+    transform: scale(1.1);
+  }
+
   .lastStrip .part_2 {
     padding: 0px !important;
   }
@@ -727,11 +731,11 @@
 /* Media queries for different screen sizes */
 @media only screen and (min-width: 992px) and (max-width: 1292px) {
   .newsLetterBanner {
-    top:77%;
+    top: 77%;
     width: 20%;
     bottom: 300px;
     left: 9%;
-    height:60px;
+    height: 60px;
   }
 
   .newsLetterBanner input {
@@ -751,12 +755,12 @@
 }
 @media only screen and (min-width: 767px) and (max-width: 992px) {
   .newsLetterBanner {
-    top:70%;
+    top: 70%;
     width: 20%;
     padding-right: 20%;
     bottom: 300px;
     left: 7%;
-    height:60px
+    height: 60px;
   }
 
   .newsLetterBanner input {
@@ -777,12 +781,12 @@
 
 @media only screen and (min-width: 575px) and (max-width: 767px) {
   .newsLetterBanner {
-    top:76%;
+    top: 76%;
     width: 20%;
     padding-right: 20%;
     bottom: 300px;
     left: 7%;
-    height:50px;
+    height: 50px;
   }
 
   .newsLetterBanner input {
@@ -803,12 +807,12 @@
 
 @media only screen and (min-width: 446px) and (max-width: 575px) {
   .newsLetterBanner {
-    top:60%;
+    top: 60%;
     width: 20%;
     padding-right: 20%;
     bottom: 300px;
     left: 7%;
-    height:60px;
+    height: 60px;
   }
 
   .newsLetterBanner input {
@@ -829,7 +833,7 @@
 
 @media only screen and (min-width: 320px) and (max-width: 446px) {
   .newsLetterBanner {
-    top:60%;
+    top: 60%;
     width: 20%;
     padding-right: 25%;
     bottom: 300px;
@@ -852,4 +856,3 @@
     font-size: 1.8vh;
   }
 }
-
