@@ -1,7 +1,7 @@
 @media only screen and (min-width: 320px) and (max-width: 575px) {
   nav,
   .dropdownMenuAcc {
-    width: 80% !important;
+    width: 70% !important;
   }
   .home_slider_Main .item .info h2 {
     font-size: 8vw !important;
@@ -181,7 +181,7 @@
 @media only screen and (min-width: 767px) and (max-width: 992px) {
   nav,
   .dropdownMenuAcc {
-    width: 30% !important;
+    width: 500px !important;
   }
 
   .home_slider_Main .item .info h2 {
@@ -321,7 +321,6 @@
     transition: all 0.3s;
     opacity: 0;
     height: 100% !important;
-    overflow: scroll !important;
     padding-bottom: 50px !important;
   }
   nav.open {
@@ -345,7 +344,9 @@
     justify-content: space-between;
     width: 100%;
     font-size: 24px !important;
-    color: rgba(0, 0, 0, 0.8) !important;
+    color: white ;
+    font-weight: 900;
+    padding: 7px 25px;
   }
   nav ul li button a svg {
     margin-left: auto !important;
