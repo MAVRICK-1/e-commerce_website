@@ -82,7 +82,7 @@ const DealofDay = ({ productData }) => {
                     </a>
                   </Button>
                   <Button className="buy">
-                    <a href="#">Buy Now</a>
+                    <a href="#">Buy a</a>
                   </Button>
                 </div>
               </Col>
