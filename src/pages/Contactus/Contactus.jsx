@@ -94,7 +94,7 @@ export default function Contactus() {
             </h1>
             <div className="inside-contact">
               <form ref={form}>
-                <div className="contact-input contact-input-light">
+                {/* <div className="contact-input contact-input-light">
                   <TextField
                     id="user_name"
                     type="text"
@@ -102,7 +102,7 @@ export default function Contactus() {
                     autoFocus="on"
                     autoComplete="off"
                     placeholder="Your Name"
-                    className="w-100 text-zinc-800"
+                    
                     onChange={onChangeField}
                     value={formFields.user_name}
                     error={inputErrors.user_name}
@@ -123,7 +123,7 @@ export default function Contactus() {
                     type="email"
                     name="user_email"
                     placeholder="Your Email"
-                    className="w-100 text-zinc-800"
+                    
                     onChange={onChangeField}
                     value={formFields.user_email}
                     autoComplete="email"
@@ -147,7 +147,7 @@ export default function Contactus() {
                     autoComplete="off"
                     name="message"
                     placeholder="Your Message"
-                    className="w-100 text-zinc-800"
+                    
                     onChange={onChangeField}
                     value={formFields.message}
                     error={inputErrors.message}
@@ -161,16 +161,39 @@ export default function Contactus() {
                       {inputErrors.message}
                     </Typography>
                   )}
-                  <i className="fas fa-comment-dots"></i>
-                  {/* {formerrors["message"] ? (
-                      <div className="validation">
-                        * {formerrors["message"]}
-                      </div>
-                    ) : (
-                      <div>&nbsp; &nbsp;</div>
-                    )} */}
-                </div>
-                <br></br>
+                  
+                </div> */}
+                <input
+                  id="user_name"
+                  name="user_name"
+                  autoFocus="on"
+                  autoComplete="off"
+                  onChange={onChangeField}
+                  value={formFields.user_name}
+                  error={inputErrors.user_name}
+                  type="text"
+                  placeholder="Your Name"
+                />
+                <input
+                  id="user_email"
+                  type="email"
+                  name="user_email"
+                  placeholder="Your Email"
+                  onChange={onChangeField}
+                  value={formFields.user_email}
+                  autoComplete="email"
+                  error={inputErrors.user_email}
+                />
+                <input
+                  id="message"
+                  type="text"
+                  autoComplete="off"
+                  name="message"
+                  placeholder="Your Message"
+                  onChange={onChangeField}
+                  value={formFields.message}
+                  error={inputErrors.message}
+                />
                 <div className="submit-btn">
                   <Button
                     className="btn btn-g btn-lg w-100"

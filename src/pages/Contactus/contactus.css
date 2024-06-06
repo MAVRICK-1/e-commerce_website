@@ -1,4 +1,4 @@
-.contact-section {
+/* .contact-section {
   padding: 0 20px;
 }
 
@@ -72,10 +72,12 @@
 }
 
 .contact-card-light {
-  background-color: #e7e7e7;
-  box-shadow:
-    5px 5px 15px #888888,
-    -5px -5px 15px #ffffff;
+  backdrop-filter: blur(16px) saturate(127%);
+  -webkit-backdrop-filter: blur(16px) saturate(127%);
+  background-color: rgba(55, 186, 126, 0.62);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  padding: 20px;
 }
 
 .contact-input > input,
@@ -95,7 +97,9 @@
 }
 
 .contact-header-text-light {
-  color: var(--secondary-color);
+  color: white;
+  font-weight: 700;
+  font-size: 60px;
 }
 
 .inside-contact {
@@ -110,12 +114,9 @@
 }
 
 .contact-input {
-  position: relative;
-  margin-bottom: 65px;
+  margin-bottom: 20px;
 }
-.contact-input > input {
-  height: 64px !important;
-}
+
 .contact-input > input::placeholder,
 .contact-input > textarea::placeholder {
   font-size: 2rem;
@@ -147,6 +148,9 @@
     inset 2px 2px 5px #888888,
     inset -2px -2px 5px #ffffff;
 }
+.form-input{
+  width: 90%;
+}
 
 .contact-input input::placeholder,
 .contact-input textarea::placeholder {
@@ -168,7 +172,7 @@
 
 .contact-input-light input:focus,
 .contact-input-light textarea:focus {
-  /* border-color: #1863ff; */
+  
   outline: none;
 
   border: double 2px transparent;
@@ -180,7 +184,7 @@
 
 .contact-input textarea {
   padding-top: 15px;
-  height: 180px;
+  height: 10px;
   resize: none;
 }
 
@@ -219,7 +223,7 @@
   }
 
   .contact-card {
-    width: 95%;
+    width: 90vw;
     margin: 10% auto;
   }
 
@@ -267,4 +271,65 @@
 
 .g-recaptcha {
   display: inline-block;
+} */
+
+.contact-section-light {
+  margin: auto;
+  margin-top: 15%;
+  width: 90vw;
+  max-width: 600px;
+}
+@media (max-width: 600px) {
+  .contact-section-light {
+    width:92%;
+    max-width: none;
+  margin-top: 25%;
+
+  }
+}
+.contact-card {
+  backdrop-filter: blur(16px) saturate(127%);
+  -webkit-backdrop-filter: blur(16px) saturate(127%);
+  background-color: rgba(55, 186, 126, 0.62);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 40px 0;
+  height: 600px;
+
+}
+
+.contact-card h1{
+  font-size: 40px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+
+}
+
+
+.contact-card input{
+  color: black;
+  background: white;
+}
+.inside-contact{
+  /* background: #000; */
+  width: 90%;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 350px;
+}
+input{
+  border-radius: 10px;
+  padding: 12px 15px;
+  color: gray;
+  border:none
 }
