@@ -17,7 +17,7 @@ body {
 .container-fluid {
   padding: 0px 45px;
 }
-.css-nx41s9-MuiFormControl-root-MuiTextField-root .MuiInputLabel-root{
+.css-nx41s9-MuiFormControl-root-MuiTextField-root .MuiInputLabel-root {
   background: white !important;
 }
 .no-click {
@@ -713,4 +713,3 @@ input[type='number'] {
   align-items: center;
   justify-content: center;
 }
-
