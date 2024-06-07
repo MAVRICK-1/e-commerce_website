@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from '@mui/material/Skeleton';
-import Banner1 from '../../assets/images/banner1.webp';
-import Banner2 from '../../assets/images/banner2.webp';
-import Banner3 from '../../assets/images/banner3.webp';
+import Banner1 from '../../assets/images/banner1.jpeg';
+import Banner2 from '../../assets/images/banner2.jpeg';
+import Banner3 from '../../assets/images/banner3.jpeg';
 
 import './style.css';
 

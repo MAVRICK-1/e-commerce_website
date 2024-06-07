@@ -713,7 +713,6 @@ input[type='number'] {
   align-items: center;
   justify-content: center;
 }
-
 .container-fluid:hover {
   box-shadow: #9a9a9a;
 }
