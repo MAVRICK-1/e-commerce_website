@@ -8,6 +8,8 @@
   background: #f4f6fa;
   padding: 25px 25px;
   border-radius: 15px;
+  width: 230px;
+  height: 200px;
 }
 .box:hover {
   transform: scale(0.9);
