@@ -148,7 +148,7 @@ const Footer = () => {
                 <h4>Awesome grocery store website template🍊🥝 </h4>
                 <br />
 
-                <h6
+                <h5
                   style={{ cursor: 'pointer' }}
                   onClick={() =>
                     window.open(
@@ -158,30 +158,29 @@ const Footer = () => {
                   }
                 >
                   <LocationOnOutlinedIcon />
-                  <strong>🏠 Address : </strong>: {location}
-                </h6>
-                <h6
+                  <strong>Address : </strong> {location}
+                </h5>
+                <h5
                   className="mail-tel"
                   onClick={() => (window.location = 'tel: +91 540-025-124553')}
                 >
-                  <HeadphonesOutlinedIcon /> <strong>☏ Call Us : </strong> (+91)
+                  <HeadphonesOutlinedIcon /> <strong> Call Us : </strong> (+91)
                   - 540-025-124553{' '}
-                </h6>
-                <h6
+                </h5>
+                <h5
                   className="mail-tel"
                   onClick={() => (window.location = 'mailto:sale@Nest.com')}
                 >
-                  <EmailOutlinedIcon /> <strong>✉ Email : </strong>{' '}
-                  sale@Nest.com
-                </h6>
-                <h6>
+                  <EmailOutlinedIcon /> <strong> Email : </strong> sale@Nest.com
+                </h5>
+                <h5>
                   <WatchLaterOutlinedIcon />
-                  <strong>🕛 Hours : </strong> 10:00 - 18:00, Mon - Sat
-                </h6>
+                  <strong> Hours : </strong> 10:00 - 18:00, Mon - Sat
+                </h5>
               </div>
 
               <div className="col-md-6 part2">
-                <div className="row">
+                <div className="footer-grid">
                   {FooterData.map((item, index) => (
                     <div key={index} className="col">
                       <h3>{item.title}</h3>
