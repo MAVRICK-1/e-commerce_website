@@ -716,3 +716,6 @@ input[type='number'] {
 .container-fluid:hover {
   box-shadow: #9a9a9a;
 }
+.info h3{
+  color: rgb(45, 45, 45) !important;
+}
