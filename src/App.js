@@ -43,6 +43,7 @@ import GoToTop from './components/GoToTop/GoToTop';
 import Contributors from './pages/Contributors/Contributors';
 import { Account } from './components/AccountDetails/Account';
 import Contactus from './pages/Contactus/Contactus';
+import Blog from './pages/blog/blog';
 
 const MyContext = createContext();
 
@@ -347,6 +348,10 @@ function App() {
         {
           path: '/contact',
           element: <Contactus />
+        },
+        {
+          path: '/blog',
+          element: <Blog />
         },
         {
           path: '/termsandconditions',
