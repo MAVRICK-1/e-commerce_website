@@ -266,3 +266,9 @@ nav .all_menu li {
   font-size: 25px;
   text-decoration: none;
 }
+
+/* CSS file */
+.bold-h4 {
+  font-weight: bold;
+  color: #191717;
+}
