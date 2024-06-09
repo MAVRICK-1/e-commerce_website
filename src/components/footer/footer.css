@@ -23,8 +23,8 @@
   width: 230px;
   height: 200px;
 }
-.box:hover {
-  transform: scale(0.9);
+.footer-box:hover {
+  transform: scale(1);
   box-shadow: 56px var(#000);
   color: black;
   font-weight: bold;
@@ -58,6 +58,10 @@
 }
 .footerWrapper .footerBoxes .box:hover img {
   transform: translateY(-5px);
+}
+.footerWrapper .footerBoxes .box:hover {
+  transform: scale(0.9);
+  transition-duration: 1s;
 }
 
 footer p,
