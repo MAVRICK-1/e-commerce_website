@@ -1,12 +1,15 @@
 .productThumb {
   width: 100%;
-  height: auto;
+  height: auto !important;
   border: 1px solid rgba(0, 0, 0, 0.1);
   overflow: hidden;
   border-radius: 15px;
   padding: 25px;
   transition: all 0.3s ease-in-out;
   position: relative;
+}
+.item{
+  height: auto;
 }
 
 .productThumb .badge {

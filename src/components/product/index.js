@@ -8,24 +8,15 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import {
-  getDatabase,
-  ref,
-  onValue,
-  set,
-  push,
-  child,
-  remove
-} from 'firebase/database';
-
 import { MyContext } from '../../App';
 import { db } from '../../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 import Product_Skeleton from '../Skeletons/Product_Skeleton';
 
 const Product = (props) => {
   const [productData, setProductData] = useState();
-  const [isAdded, setIsadded] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [drivingDistance, setDrivingDistance] = useState(null);
@@ -39,12 +30,10 @@ const Product = (props) => {
     sessionStorage.setItem('parentCat', productData.parentCatName);
     sessionStorage.setItem('subCatName', productData.subCatName);
   };
-  ////console.log(productData); //printing1000 data
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // //console.log(position.coords.latitude, position.coords.longitude);
         setUserLocation([position.coords.latitude, position.coords.longitude]);
       },
       (error) => {
@@ -53,22 +42,10 @@ const Product = (props) => {
     );
   }, [context.isLogin]);
 
-  // const getDrivingDistance = async (start, end) => {
-  //     const response = await fetch(`https://router.project-osrm.org/route/v1/driving/${start.longitude},${start.latitude};${end.longitude},${end.latitude}`);
-  //     const data = await response.json();
-  //     if (data.code === 'Ok') {
-  //       const distance = data.routes[0].distance; // Distance in meters
-  //       //console.log(distance) ;
-  //       return distance;
-  //     } else {
-  //       throw new Error('Unable to calculate driving distance');
-  //     }
-  //   };
-
   const getDistance = (start, end) => {
     const toRadians = (degrees) => (degrees * Math.PI) / 180;
 
-    const earthRadiusKm = 6371; // Radius of the Earth in kilometers
+    const earthRadiusKm = 6371;
     const dLat = toRadians(end[0] - start[0]);
     const dLon = toRadians(end[1] - start[1]);
 
@@ -79,13 +56,13 @@ const Product = (props) => {
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = earthRadiusKm * c; // Distance in kilometers
+    const distance = earthRadiusKm * c;
 
-    return distance; // Convert distance to meters
+    return distance;
   };
 
   const getDisplacement = (start, end) => {
-    const distance = getDistance(start, end); // Calculate the straight-line distance
+    const distance = getDistance(start, end);
     return distance;
   };
 
@@ -93,7 +70,6 @@ const Product = (props) => {
     if (userLocation && productData?.coordinates) {
       const userCoords = userLocation;
       const productCoords = productData.coordinates;
-      // taking the nearest integer value
       const distance = Math.round(getDisplacement(userCoords, productCoords));
       setDrivingDistance(distance);
       setLoading(false);
@@ -106,15 +82,16 @@ const Product = (props) => {
       const cartRef = doc(db, 'carts', user);
       const productRef = doc(cartRef, 'products', `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });
-      setIsadded(true);
+      setIsAdded(true);
+      setQuantity(1);
       context.fetchCartProducts();
-      toast.success('Item added in cart', {
+      toast.success('Item added to cart', {
         className: 'Toastify__toast--custom',
         progressClassName: 'Toastify__progress-bar--custom'
       });
     } catch (error) {
       console.error('Error adding item to cart:', error);
-      toast.error('something went wrong!', {
+      toast.error('Something went wrong!', {
         className: 'Toastify__toast--custom',
         progressClassName: 'Toastify__progress-bar--custom'
       });
@@ -122,26 +99,94 @@ const Product = (props) => {
   };
 
   const addToWishlist = async (item) => {
-    console.log('addToWishlist');
     try {
       const user = localStorage.getItem('uid');
       const wishlistRef = doc(db, 'wishlists', user);
       const productRef = doc(wishlistRef, 'products', `${item.id}`);
       await setDoc(productRef, { ...item, quantity: 1 });
-      setIsadded(true);
+      setIsAdded(true);
       context.fetchWishlistProducts();
-      toast.success('Item added to whishlist', {
+      toast.success('Item added to wishlist', {
         className: 'Toastify__toast--custom',
         progressClassName: 'Toastify__progress-bar--custom'
       });
     } catch (error) {
       console.error('Error adding item to wishlist:', error);
-      toast.error('Error adding item to whishlist', {
+      toast.error('Error adding item to wishlist', {
         className: 'Toastify__toast--custom',
         progressClassName: 'Toastify__progress-bar--custom'
       });
     }
   };
+
+  const increaseQuantity = async () => {
+    try {
+      const user = localStorage.getItem('uid');
+      const cartRef = doc(db, 'carts', user, 'products', `${productData.id}`);
+      await updateDoc(cartRef, { quantity: quantity + 1 });
+      setQuantity(quantity + 1);
+      context.fetchCartProducts();
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+      toast.error('Error updating quantity', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
+    }
+  };
+
+  const decreaseQuantity = async () => {
+    if (quantity === 1) return;
+    try {
+      const user = localStorage.getItem('uid');
+      const cartRef = doc(db, 'carts', user, 'products', `${productData.id}`);
+      await updateDoc(cartRef, { quantity: quantity - 1 });
+      setQuantity(quantity - 1);
+      context.fetchCartProducts();
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+      toast.error('Error updating quantity', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
+    }
+  };
+
+  const removeFromCart = async () => {
+    try {
+      const user = localStorage.getItem('uid');
+      const cartRef = doc(db, 'carts', user, 'products', `${productData.id}`);
+      await deleteDoc(cartRef);
+      setIsAdded(false);
+      context.fetchCartProducts();
+      toast.success('Item removed from cart', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+      toast.error('Error removing item from cart', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
+    }
+  };
+
+  useEffect(() => {
+    const checkIfItemIsInCart = async () => {
+      const user = localStorage.getItem('uid');
+      const cartRef = doc(db, 'carts', user, 'products', `${productData.id}`);
+      const docSnap = await getDoc(cartRef);
+      if (docSnap.exists()) {
+        setIsAdded(true);
+        setQuantity(docSnap.data().quantity);
+      }
+    };
+
+    if (productData) {
+      checkIfItemIsInCart();
+    }
+  }, [productData]);
 
   if (loading) {
     return (
@@ -153,11 +198,9 @@ const Product = (props) => {
 
   return (
     <div className="productThumb" onClick={setProductCat}>
-      {props.tag !== null && props.tag !== undefined && (
-        <span className={`badge ${props.tag}`}>{props.tag}</span>
-      )}
+      {props.tag && <span className={`badge ${props.tag}`}>{props.tag}</span>}
 
-      {productData !== undefined && (
+      {productData && (
         <>
           <Link to={`/product/${productData.id}`}>
             <div className="imgWrapper">
@@ -214,20 +257,38 @@ const Product = (props) => {
               <div className="d-flex align-items-center w-100">
                 <span className="price text-g font-weight-bold">
                   Rs {productData.price}
-                </span>{' '}
+                </span>
                 <span className="oldPrice ml-auto">
                   Rs {productData.oldPrice}
                 </span>
               </div>
             </div>
 
-            <Button
-              className="w-100 transition mt-3"
-              onClick={() => addToCart(productData)}
-            >
-              <ShoppingCartOutlinedIcon />
-              {isAdded === true ? 'Added' : 'Add'}
-            </Button>
+            {isAdded ? (
+              <div className="d-flex align-items-center mt-3">
+                <Button className="transition" onClick={decreaseQuantity}>
+                  -
+                </Button>
+                <span className="mx-2">{quantity}</span>
+                <Button className="transition" onClick={increaseQuantity}>
+                  +
+                </Button>
+                <Button
+                  className="ml-auto transition bg-red"
+                  onClick={removeFromCart}
+                >
+                  Remove
+                </Button>
+              </div>
+            ) : (
+              <Button
+                className="w-100 transition mt-3"
+                onClick={() => addToCart(productData)}
+              >
+                <ShoppingCartOutlinedIcon />
+                Add
+              </Button>
+            )}
           </div>
         </>
       )}
