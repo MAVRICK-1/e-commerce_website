@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './about.css';
 import product from '../../assets/images/product.png';
 import producthover from '../../assets/images/producthover.png';
@@ -14,7 +14,9 @@ const AboutUs = () => {
   const [paymentHovered, setPaymentHovered] = useState(false);
   const [deliveryHovered, setDeliveryHovered] = useState(false);
   const [uxHovered, setUxHovered] = useState(false);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
   return (
     <div
       id="about-us"
