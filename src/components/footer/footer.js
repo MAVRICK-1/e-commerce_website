@@ -31,7 +31,7 @@ const Footer = () => {
     {
       title: 'Company',
       data: [
-        { link: '#', text: 'About Us' },
+        { link: '/AboutUs', text: 'About Us' },
         { link: '#', text: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
@@ -44,7 +44,7 @@ const Footer = () => {
     {
       title: 'Corporate',
       data: [
-        { link: '#', title: 'About Us' },
+        { link: '/AboutUs', title: 'About Us' },
         { link: '#', title: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
@@ -57,7 +57,7 @@ const Footer = () => {
     {
       title: 'Popular',
       data: [
-        { link: '#', text: 'About Us' },
+        { link: '/AboutUs', text: 'About Us' },
         { link: '#', text: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
