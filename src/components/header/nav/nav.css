@@ -58,14 +58,11 @@
   border-radius: 3px !important;
 }
 .active-link {
-  /* color: #3bb77e !important; */
-  background-color: #73eeb5;
-  padding: 8px;
+  background-color: #aef3d3;
+  /* background: #017640; */
+  color: #017640 !important;
   border-radius: 2px;
-  /* color: #fff !important; */
-  font-weight: bold;
-  text-decoration: underline;
-  optional: add underline;
+  border-radius: 10px;
 }
 .nav nav ul li button .MuiSvgIcon-root {
   z-index: 1;
@@ -77,7 +74,7 @@
 
 .nav nav ul li button a {
   text-decoration: none !important;
-  color: rgba(0, 0, 0, 0.8) !important;
+  color: rgba(0, 0, 0, 0.8);
   font-size: 21px;
 }
 
@@ -268,4 +265,10 @@ nav .all_menu li {
   color: rgba(0, 0, 0, 0.7);
   font-size: 25px;
   text-decoration: none;
+}
+
+/* CSS file */
+.bold-h4 {
+  font-weight: bold;
+  color: #191717;
 }

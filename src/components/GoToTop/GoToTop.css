@@ -1,9 +1,16 @@
 .back-to-top-button {
   color: #ffffff;
   font-size: 1.875rem;
+
   width: 3rem;
   height: 3rem;
+  background-color: #28a745;
+  border: 3px solid #ffffff;
+
+  width: 4rem;
+  height: 4rem;
   background-color: #3bb77e;
+
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   position: fixed;
@@ -14,7 +21,7 @@
   align-items: center;
   cursor: pointer;
   /* visibility: hidden;  */
-  box-shadow: 0px 2px 4px 1px rgba(154, 154, 154, 0.25);
+  box-shadow: 0px 2px 4px 1px rgba(132, 132, 76, 0.25);
   z-index: 99;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -27,4 +34,11 @@
 .back-to-top-button:hover {
   scale: 1.2;
   box-shadow: 0px 2px 4px 1px rgb(167, 253, 130);
+}
+
+@media screen and (max-width: 768px) {
+  .back-to-top-button {
+    right: 15vw;
+    bottom: 4px;
+  }
 }

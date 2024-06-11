@@ -31,6 +31,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import { Satellite } from '@mui/icons-material';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { cities } from './cities';
+import zIndex from '@mui/material/styles/zIndex';
 
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
@@ -73,6 +74,7 @@ const Header = (props) => {
     if (query.trim() !== '') {
       navigate(`/search?query=${query}`);
     }
+    searchInput.current.focus();
   };
 
   const handleKeyPress = (event) => {
@@ -248,7 +250,7 @@ const Header = (props) => {
                     />
                     <SearchIcon
                       className="searchIcon cursor"
-                      onClick={handleSearch}
+                      onClick={() => handleSearch()}
                     />
                   </div>
                 </div>
