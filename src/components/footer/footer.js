@@ -6,6 +6,7 @@ import Icon2 from '../../assets/images/icon-2.svg';
 import Icon3 from '../../assets/images/icon-3.svg';
 import Icon4 from '../../assets/images/icon-4.svg';
 import Icon5 from '../../assets/images/icon-5.svg';
+import Icon6 from '../../assets/images/icon-6.svg';
 import Logo from '../../assets/images/logo.svg';
 import { Link } from 'react-router-dom';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -23,7 +24,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import XIcon from '@mui/icons-material/X';
 import Newsletter from '../../components/newsletter/index';
 import NewsletterImg from '../../assets/images/newsletter.webp';
-
+// discord import
+import DiscordIcon from './DiscordIcon';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const location = `5171 W Campbell Ave undefined Kent, Utah 53127 United States`;
@@ -82,7 +84,11 @@ const Footer = () => {
       link: 'https://www.instagram.com/realmavrick_1/?hl=en',
       icon: <InstagramIcon />
     },
-    { link: '', icon: <XIcon /> }
+    { link: '', icon: <XIcon /> },
+    {
+      link: 'https://discord.com/',
+      icon: <DiscordIcon />
+    }
   ];
   const fluid = [
     { img: Icon1, header: 'Best prices & offers', para: 'Orders $50 or more' },
