@@ -175,7 +175,7 @@ header .headerTabs li a .btn {
 .dropdownMenu li button:hover {
   background: #f1f1f1 !important;
 }
-.open{
+.open {
   backdrop-filter: blur(14px) saturate(135%);
   -webkit-backdrop-filter: blur(14px) saturate(135%);
   background-color: rgba(59, 183, 126, 0.49);

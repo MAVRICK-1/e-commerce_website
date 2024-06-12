@@ -197,21 +197,23 @@ const Product = (props) => {
   }
 
   return (
-    <div className="productThumb" onClick={setProductCat}>
-      {props.tag && <span className={`badge ${props.tag}`}>{props.tag}</span>}
+    <div className="productThumb1" onClick={setProductCat}>
+      {props.tag && (
+        <span className={`badge-icon ${props.tag}`}>{props.tag}</span>
+      )}
 
       {productData && (
         <>
           <Link to={`/product/${productData.id}`}>
-            <div className="imgWrapper">
-              <div className="p-4 wrapper mb-3">
+            <div className="imgWrapper1">
+              <div className="p-4 wrapping mb-3">
                 <img
                   src={productData.catImg + '?im=Resize=(420,420)'}
                   className="w-100"
                 />
               </div>
 
-              <div className="overlay transition">
+              <div className="overlays transition">
                 <ul className="list list-inline mb-0">
                   <li
                     className="list-inline-item"
@@ -237,8 +239,8 @@ const Product = (props) => {
           </Link>
 
           <div className="info">
-            <span className="d-block catName">{productData.brand}</span>
-            <h4 className="title">
+            <span className="d-block catNames">{productData.brand}</span>
+            <h4 className="titles">
               <Link>{productData.productName.substr(0, 50) + '...'}</Link>
             </h4>
             <Rating
@@ -247,7 +249,7 @@ const Product = (props) => {
               precision={0.5}
               readOnly
             />
-            <span className="brand d-block text-g">
+            <span className="branding d-block text-g">
               By <Link className="text-g">{productData.brand}</Link>
             </span>
             <span className="d-block text-g">
