@@ -74,6 +74,7 @@ const Header = (props) => {
     if (query.trim() !== '') {
       navigate(`/search?query=${query}`);
     }
+    searchInput.current.focus();
   };
 
   const handleKeyPress = (event) => {
@@ -249,7 +250,7 @@ const Header = (props) => {
                     />
                     <SearchIcon
                       className="searchIcon cursor"
-                      onClick={handleSearch}
+                      onClick={() => handleSearch()}
                     />
                   </div>
                 </div>

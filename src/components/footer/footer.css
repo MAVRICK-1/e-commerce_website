@@ -4,6 +4,18 @@
   background-color: #3bb77e;
 }
 
+.footer-grid{
+  display: grid ;
+  grid-template-columns:repeat(3,1fr);
+}
+.footer-grid h3{
+  font-size: 22px !important;
+}
+.footer-grid li a{
+  font-weight: 700;
+  font-size: 20px;
+}
+
 .footerWrapper .footerBoxes .box {
   background: #f4f6fa;
   padding: 25px 25px;
@@ -11,8 +23,8 @@
   width: 230px;
   height: 200px;
 }
-.box:hover {
-  transform: scale(0.9);
+.footer-box:hover {
+  transform: scale(1);
   box-shadow: 56px var(#000);
   color: black;
   font-weight: bold;
@@ -47,6 +59,10 @@
 .footerWrapper .footerBoxes .box:hover img {
   transform: translateY(-5px);
 }
+.footerWrapper .footerBoxes .box:hover {
+  transform: scale(0.9);
+  transition-duration: 1s;
+}
 
 footer p,
 footer a {
@@ -54,12 +70,22 @@ footer a {
 }
 
 footer {
-  padding: 60px 0px;
+  width: 100%;
+  padding: 60px 40px;
   padding-bottom: 0px;
 }
 
 footer .part1 svg {
-  color: #3bb77e !important;
+  color: #ffffff !important;
+}
+footer .part1 {
+  padding-left: 50px;
+}
+footer .part1 h4 {
+  font-size: 40px;
+}
+footer .part1 h6 {
+  font-size: 25px;
 }
 footer .part1 h6:hover {
   padding-left: 5px;
@@ -69,13 +95,13 @@ footer h3 {
   color: whitesmoke;
   font-weight: 600;
   margin-bottom: 20px;
-  font-size: 30px;
+  font-size: 50px;
 }
 
 footer h3:hover {
-  color: #fff;
+  color: #087066;
   text-shadow:
-    0 0 10px #3bb77e,
+    0 0 10px #2ed688,
     0 0 20px #3bb77e,
     0 0 40px #fff,
     0 0 80px #fff;
@@ -83,6 +109,12 @@ footer h3:hover {
   transition: all 0.2s ease-in-out;
   text-decoration: solid;
 }
+
+footer .part2 {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 footer .part2 ul li {
   list-style: none;
   margin-bottom: 13px;
@@ -95,6 +127,7 @@ footer .part2 ul li a {
   transition: all 0.2s ease-in-out;
   display: flex;
   justify-content: space-between;
+  font-size: 30px;
 }
 
 footer .part2 ul li a:hover {
@@ -145,7 +178,15 @@ footer .lastStrip .part3 ul {
   display: flex;
   justify-content: space-around;
 }
-
+footer .lastStrip .part_1 h6 {
+  font-size: 25px;
+}
+footer .part3 {
+  padding-right: 50px;
+}
+footer .lastStrip .part3 .part_3 h4 {
+  font-size: 25px;
+}
 footer .lastStrip .part3 ul li a {
   display: flex;
   align-items: center;
@@ -178,7 +219,9 @@ footer .part_2 {
 @media (min-width: 700px) and (max-width: 1200px) {
   footer .lastStrip .part_2 .part_3 .list {
     display: flex;
+    flex-wrap: wrap;
   }
+  
 }
 @media only screen and (min-width: 320px) and (max-width: 992px) {
   .phNo h3 {
@@ -188,6 +231,14 @@ footer .part_2 {
     font-size: 20px;
   }
   footer .part2 ul li a {
-    font-size: 10px !important ;
+    font-size: 18px !important ;
   }
+}
+@media (max-width:480px) {
+  .footer-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+footer .part1 h5{
+  /* background: #000; */
 }
