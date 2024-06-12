@@ -1,11 +1,11 @@
 .container {
     margin: 20px;
-    padding: 20px;
+    padding: 10px 20px;
     display: inline;
 }
 
 .heading {
-    margin: 20px;
+    margin: 10px;
     text-align: center;
 }
 

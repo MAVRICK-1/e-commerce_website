@@ -9,6 +9,7 @@
   display: flex; /* Use flexbox for alignment */
   align-items: center; /* Center items vertically */
   box-sizing: border-box;
+  margin: 20px;
 }
 
 .newsLetterBanner input {
