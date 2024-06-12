@@ -251,6 +251,7 @@ function App() {
 
   useEffect(() => {
     if (window.botpressWebChat) {
+      const webChatContainer = document.querySelector('.webchat-app-container');
       window.botpressWebChat.init({
         botId: '41bcf48e-b15e-4c9e-8d0e-c9e9055742eb', // Replace with your Botpress bot ID
         host: 'https://cdn.botpress.cloud/webchat/v1' // Replace with your Botpress server URL

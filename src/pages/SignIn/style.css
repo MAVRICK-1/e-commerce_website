@@ -76,8 +76,8 @@
   width: 40px;
   margin-right: 15px;
 }
-.height-fix{
-  height:auto !important;
+.height-fix {
+  height: auto !important;
 }
 .formLoader {
   position: absolute !important;
