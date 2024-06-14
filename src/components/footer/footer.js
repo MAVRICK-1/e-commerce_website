@@ -65,7 +65,7 @@ const Footer = () => {
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
         { link: '#', text: 'Contact Us' },
-        { link: '#', text: 'Support Center' },
+        { link: '/faq', text: 'FAQ' },
         { link: '#', text: 'Careers' },
         { link: '#', text: 'Contributors' }
       ]
