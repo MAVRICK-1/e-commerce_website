@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './footer.css';
+
+import { useScrollToTop } from 'react-scroll-to-top';
 
 import Icon1 from '../../assets/images/icon-1.svg';
 import Icon2 from '../../assets/images/icon-2.svg';
@@ -25,6 +27,33 @@ import Newsletter from '../../components/newsletter/index';
 import NewsletterImg from '../../assets/images/newsletter.webp';
 
 const Footer = () => {
+  const scrollToBottomRef = useRef(null);
+  const [showScrollBottomButton, setShowScrollBottomButton] = useState(false);
+
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    if (scrollToBottomRef.current) {
+      scrollToBottomRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+      });
+      setShowScrollBottomButton(false); // Hide the button after clicking
+    }
+  };
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+    if (scrollPosition > 200) {
+      setShowScrollBottomButton(true);
+    } else {
+      setShowScrollBottomButton(false);
+    }
+  };
+
+  // Attach scroll event listener
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const currentYear = new Date().getFullYear();
   const location = `5171 W Campbell Ave undefined Kent, Utah 53127 United States`;
   const FooterData = [
@@ -36,7 +65,7 @@ const Footer = () => {
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
         { link: '#', text: 'Contact Us' },
-        { link: '#', text: 'Support Center' },
+        { link: '/faq', text: 'FAQ' },
         { link: '#', text: 'Careers' },
         { link: '#', text: 'Contributors' }
       ]
@@ -255,6 +284,13 @@ const Footer = () => {
             </div>
           </div>
         </footer>
+        {/* Scroll down button */}
+        <button className="scroll-down-btn" onClick={scrollToBottom}>
+          ↓
+        </button>
+
+        {/* Ref element for scrolling to bottom */}
+        <div ref={scrollToBottomRef} />
       </div>
     </>
   );

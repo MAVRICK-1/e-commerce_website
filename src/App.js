@@ -271,7 +271,6 @@ function App() {
           )}
           <Header data={data.productData} />
           <Outlet />
-          <FAQ />
           <Footer />
           <GoToTop />
         </MyContext.Provider>
@@ -345,6 +344,10 @@ function App() {
         {
           path: '/privacy-policy',
           element: <PrivacyPolicy />
+        },
+        {
+          path: '/faq',
+          element: <FAQ />
         },
         {
           path: '/contact',
