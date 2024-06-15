@@ -271,7 +271,7 @@ const Footer = () => {
 
               <div className="col-md-4 part3 part_3">
                 <div className="d-flex align-items-center">
-                  <h4>Follow Us</h4>
+                  <h4 className="m-0">Follow Us</h4>
                   <ul className="follow list list-inline d-inline">
                     {SocialMedia.map((item, index) => (
                       <li key={index} className="list-inline-item">
