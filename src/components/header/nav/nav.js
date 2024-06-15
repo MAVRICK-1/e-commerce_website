@@ -400,7 +400,7 @@ const Nav = (props) => {
                   <HeadphonesOutlinedIcon />
                 </span>
                 <div className="info ml-3">
-                <h4 class="bold-h4">1900-888</h4>
+                  <h4 class="bold-h4">1900-888</h4>
                   <p className="mb-0">24/7 Support Center</p>
                 </div>
               </div>

@@ -281,10 +281,9 @@
 }
 @media (max-width: 600px) {
   .contact-section-light {
-    width:92%;
+    width: 92%;
     max-width: none;
-  margin-top: 25%;
-
+    margin-top: 25%;
   }
 }
 .contact-card {
@@ -300,36 +299,33 @@
   justify-content: space-evenly;
   padding: 40px 0;
   height: 600px;
-
 }
 
-.contact-card h1{
+.contact-card h1 {
   font-size: 40px;
   font-weight: 700;
   color: white;
   letter-spacing: 1px;
-
 }
 
-
-.contact-card input{
+.contact-card input {
   color: black;
   background: white;
 }
-.inside-contact{
+.inside-contact {
   /* background: #000; */
   width: 90%;
 }
 
-form{
+form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   height: 350px;
 }
-input{
+input {
   border-radius: 10px;
   padding: 12px 15px;
   color: gray;
-  border:none
+  border: none;
 }
