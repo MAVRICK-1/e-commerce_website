@@ -65,7 +65,7 @@ const Footer = () => {
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
         { link: '#', text: 'Contact Us' },
-        { link: '#', text: 'Support Center' },
+        { link: '/faq', text: 'FAQ' },
         { link: '#', text: 'Careers' },
         { link: '#', text: 'Contributors' }
       ]
@@ -284,11 +284,6 @@ const Footer = () => {
             </div>
           </div>
         </footer>
-        {/* Scroll up button */}
-        <button className="scroll-up-btn" onClick={useScrollToTop}>
-          ↑
-        </button>
-
         {/* Scroll down button */}
         <button className="scroll-down-btn" onClick={scrollToBottom}>
           ↓
