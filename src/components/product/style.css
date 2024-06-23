@@ -1,7 +1,8 @@
 .productThumb1 {
   width: 100%;
+  
   height: auto !important;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px dashed rgba(22, 217, 0, 0.819);
   overflow: hidden;
   border-radius: 15px;
   padding: 25px;
@@ -10,6 +11,18 @@
 }
 .item {
   height: auto !important;
+}
+.plusminus{
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid rgba(1, 139, 24, 0.112) ;
+}
+.plusminus span{
+  padding: 5px;
+  color: #00723d;
+  font-weight: 800;
 }
 
 .productThumb1 .badge-icon {
@@ -107,8 +120,8 @@
 
 .productThumb1 .catNames {
   color: #000;
-  opacity: 0.8;
-  font-size: 14px;
+ 
+  font-size: 20px;
 }
 .productThumb1 .titles {
   margin: 10px 0px;
@@ -121,7 +134,7 @@
   line-height: 22px;
 }
 .productThumb1 .branding {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0);
 }
 .productThumb1 .branding a {
   text-decoration: none;
@@ -129,12 +142,12 @@
 
 .productThumb1 button {
   font-size: 20px !important;
-  color: #3bb77e !important;
+  color: #00723d !important;
   padding: 5px 25px !important;
-  background: #def9ec !important;
+  background: #d5ffeb !important;
   text-transform: capitalize !important;
 }
 .productThumb1 button:hover {
-  background: #3bb77e !important;
+  background: #06824d !important;
   color: #fff !important;
 }
