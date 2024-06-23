@@ -235,17 +235,18 @@ footer .part2 ul li a {
 }
 }.scroll-down-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #3bb77e;
+  bottom: 4px;
+  right: 139px;
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   font-size: 24px;
   cursor: pointer;
   z-index: 9999; 
+  justify-content: center;
 }
 .scroll-down-btn:hover {
   background-color: #2e8b57; 
