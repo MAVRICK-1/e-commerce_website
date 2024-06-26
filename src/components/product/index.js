@@ -268,6 +268,7 @@ const Product = (props) => {
 
             {isAdded ? (
               <div className="d-flex align-items-center mt-3">
+                <div className='plusminus'>
                 <Button className="transition" onClick={decreaseQuantity}>
                   -
                 </Button>
@@ -275,6 +276,7 @@ const Product = (props) => {
                 <Button className="transition" onClick={increaseQuantity}>
                   +
                 </Button>
+                </div>
                 <Button
                   className="ml-auto transition bg-red"
                   onClick={removeFromCart}
