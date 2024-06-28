@@ -49,7 +49,8 @@
 }
 
 .go-to-top-button:hover {
-  background-color: #03361e;;
+  background-color: #03361e;
+}
 
 
 @media screen and (max-width: 768px) {
