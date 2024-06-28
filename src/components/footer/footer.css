@@ -262,9 +262,14 @@ footer .part2 ul li a {
 
 }
 
+@media (max-width: 480px) {
+  .footer-grid {
+
+
 
 @media (max-width:480px) {
   .footer-grid{
+
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -272,3 +277,7 @@ footer .part1 h5 {
   /* background: #000; */
 }
 
+
+.newsLetterSection {
+  margin: 20px 30px;
+}
