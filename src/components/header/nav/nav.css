@@ -98,12 +98,13 @@
   top: 150%;
   left: 0px;
   width: 300px;
+  padding: 13px 0px 10px 35px;
   height: auto;
   background: #fff;
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.16),
     0 3px 6px rgba(0, 0, 0, 0.23);
-  padding: 10px 0px;
+
   z-index: 100;
   opacity: 0;
   visibility: hidden;
@@ -129,7 +130,9 @@ nav .dropdown_menu li {
 .nav nav .dropdown_menu li button a {
   font-weight: 400 !important;
 }
-
+.megaMenu .col ul li a:hover{
+  font-weight: 600;
+}
 .part2 ul li button:hover {
   background-color: inherit !important;
   box-shadow: none !important;
