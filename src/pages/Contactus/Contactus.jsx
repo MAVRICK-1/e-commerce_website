@@ -93,76 +93,8 @@ export default function Contactus() {
               Get In Touch
             </h1>
             <div className="inside-contact">
-              <form ref={form}>
-                {/* <div className="contact-input contact-input-light">
-                  <TextField
-                    id="user_name"
-                    type="text"
-                    name="user_name"
-                    autoFocus="on"
-                    autoComplete="off"
-                    placeholder="Your Name"
-                    
-                    onChange={onChangeField}
-                    value={formFields.user_name}
-                    error={inputErrors.user_name}
-                  />
-                  {inputErrors.user_name && (
-                    <Typography
-                      variant="caption"
-                      style={{ fontSize: '1.4rem' }}
-                      sx={{ color: 'red', padding: '5px' }}
-                    >
-                      {inputErrors.user_name}
-                    </Typography>
-                  )}
-                </div>
-                <div className="contact-input contact-input-light">
-                  <TextField
-                    id="user_email"
-                    type="email"
-                    name="user_email"
-                    placeholder="Your Email"
-                    
-                    onChange={onChangeField}
-                    value={formFields.user_email}
-                    autoComplete="email"
-                    error={inputErrors.user_email}
-                  />
-                  {inputErrors.user_email && (
-                    <Typography
-                      variant="caption"
-                      style={{ fontSize: '1.4rem' }}
-                      sx={{ color: 'red', padding: '5px' }}
-                    >
-                      {inputErrors.user_email}
-                    </Typography>
-                  )}
-                </div>
-
-                <div className="contact-input contact-input-light">
-                  <TextareaAutosize
-                    id="message"
-                    type="text"
-                    autoComplete="off"
-                    name="message"
-                    placeholder="Your Message"
-                    
-                    onChange={onChangeField}
-                    value={formFields.message}
-                    error={inputErrors.message}
-                  />
-                  {inputErrors.message && (
-                    <Typography
-                      variant="caption"
-                      style={{ fontSize: '1.4rem' }}
-                      sx={{ color: 'red', padding: '5px' }}
-                    >
-                      {inputErrors.message}
-                    </Typography>
-                  )}
-                  
-                </div> */}
+              <form ref={form} className='contact-form'>
+                
                 <input
                   id="user_name"
                   name="user_name"

@@ -22,7 +22,7 @@
   z-index: 99;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-
+}
 .go-to-top {
   position: fixed;
   bottom: 4px;
