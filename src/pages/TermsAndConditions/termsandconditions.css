@@ -20,10 +20,7 @@
   color: #3bb77e;
 }
 
-.terms-and-conditions-container p {
-  margin-bottom: 10px;
-}
-
+.terms-and-conditions-container p,
 .terms-and-conditions-container ul {
   margin-bottom: 10px;
 }

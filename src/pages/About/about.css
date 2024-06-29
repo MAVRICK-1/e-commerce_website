@@ -1,10 +1,12 @@
-.about-container * {
+/* Universal Styles */
+* {
   text-decoration: none;
   list-style: none;
   align-items: center;
   justify-content: center;
 }
 
+/* Container Styles */
 .about-container {
   width: 100%;
   height: 100%;
@@ -20,7 +22,7 @@
   transform: translateY(2px);
   margin: auto;
   padding: 30px;
-  width: 92% !important;
+  width: 92%;
   border-radius: 5px;
 }
 
@@ -33,13 +35,14 @@
   background: #72857c88;
   border-radius: 5px;
 }
+
 .desc {
   font-size: 26px;
-  text-align: center;
-  color: rgb(88, 88, 88);
   text-align: justify;
+  color: rgb(88, 88, 88);
 }
-.about-container > .contributor-text {
+
+.contributor-text {
   text-transform: capitalize;
   font-size: 40px;
   color: #008080;
@@ -49,12 +52,10 @@
 
 @media (max-width: 586px) {
   .about-container {
-    width: 100%;
-    height: 100%;
     padding: 5vw;
   }
 
-  .about-container > .contributor-text {
+  .contributor-text {
     text-align: center;
     justify-content: center;
     margin: auto;
@@ -63,12 +64,11 @@
 
 @media (min-width: 600px) {
   .about-container {
-    width: 100%;
     height: 50%;
     padding: 5vw;
   }
 
-  .about-container > .contributor-text {
+  .contributor-text {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,13 +78,11 @@
 
 @media (min-width: 600px) and (max-width: 1024px) {
   .about-container {
-    width: 100%;
-    height: 100%;
     padding: 3vw;
     margin-top: 3.5vw;
   }
 
-  .about-container > .contributor-text {
+  .contributor-text {
     font-size: 40px;
   }
 }
@@ -103,8 +101,7 @@
 /* Heading Styles */
 .about-us-heading {
   text-align: center;
-  margin-bottom: 3rem;
-  margin-top: 3rem;
+  margin: 3rem 0;
   color: #008080;
   font-weight: 500;
   font-size: 40px;
@@ -114,6 +111,7 @@
 .about-us-block {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 /* Feature Block Styles */
@@ -129,54 +127,46 @@
   border: 1px solid rgba(206, 212, 218, 1);
   border-radius: 8px;
   margin-bottom: 21px;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Community Feature Block Styles */
+.about-us-community:hover,
+.about-us-product:hover,
+.about-us-event:hover,
+.about-us-location:hover {
+  color: white;
+}
+
 .about-us-community {
   border: 2px solid #008080;
 }
 
 .about-us-community:hover {
   background: #008080;
-  color: white;
 }
 
-/* Location Feature Block Styles */
 .about-us-location {
   border: 2px solid #3bb77e;
 }
 
 .about-us-location:hover {
   background: #3bb77e;
-  color: white;
 }
 
-/* Product Feature Block Styles */
 .about-us-product {
   border: 2px solid #279a65;
 }
 
 .about-us-product:hover {
   background: #279a65;
-  color: white;
 }
 
-/* Event Feature Block Styles */
 .about-us-event {
   border: 2px solid #28a745;
 }
 
 .about-us-event:hover {
   background: #28a745;
-  color: white;
-}
-
-/* Text Styles */
-.about-us-community:hover p,
-.about-us-location:hover p,
-.about-us-event:hover p,
-.about-us-product:hover p {
-  color: white;
 }
 
 /* Text Block Styles */
@@ -184,7 +174,6 @@
   font-size: 26px;
   font-weight: 600;
   line-height: 30px;
-  letter-spacing: 0em;
   text-align: left;
   margin-top: 1rem;
 }
@@ -194,18 +183,21 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
-  letter-spacing: 0em;
   text-align: left;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  color: black;
+  margin: 0 1rem;
+}
+
+.about-us-community:hover .about-us-blk-para,
+.about-us-location:hover .about-us-blk-para,
+.about-us-event:hover .about-us-blk-para,
+.about-us-product:hover .about-us-blk-para {
+  color: white;
 }
 
 /* Responsive Styles */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
   .about-us-block {
     flex-direction: column;
-    justify-content: center;
     align-items: center;
   }
 
@@ -214,24 +206,7 @@
   .about-us-location,
   .about-us-product {
     width: 90%;
-    height: 100%;
-    padding: 0.5rem;
-  }
-}
-
-@media only screen and (max-width: 1020px) {
-  .about-us-block {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .about-us-community,
-  .about-us-event,
-  .about-us-location,
-  .about-us-product {
-    width: 90% !important;
-    height: 100%;
+    height: auto;
     padding: 0.5rem;
   }
 }

@@ -1,8 +1,8 @@
+/* Universal Styles */
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
   text-decoration: none;
   list-style-type: none;
   outline: none;
@@ -17,7 +17,7 @@ html {
 .top {
   display: flex;
   flex-wrap: wrap;
-  height: 85dvh;
+  height: 85vh;
   margin: 2% 5%;
   gap: 10px;
   padding-top: 25px;
@@ -26,7 +26,7 @@ html {
 .main,
 .item {
   flex: 1 1 1000px;
-  height: 85dvh;
+  height: 85vh;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -59,7 +59,6 @@ html {
   flex-direction: column;
   background-color: #f4f6fa;
   justify-content: center;
-  gap: 0;
 }
 
 .top .topics h3 {
@@ -69,10 +68,8 @@ html {
 }
 
 .top .topics li {
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: left;
   gap: 20px;
   padding: 10px;
   border-bottom: 1px solid rgb(205, 205, 205);
@@ -129,7 +126,6 @@ html {
 .card {
   background-color: #f4f6fa;
   display: flex;
-  gap: 15px;
   flex-direction: column;
   cursor: pointer;
   overflow: hidden;
@@ -186,7 +182,7 @@ button {
   font-size: 20px;
 }
 
-/* slider styles */
+/* Slider Styles */
 .homeSlider {
   width: 100%;
   height: 100%;

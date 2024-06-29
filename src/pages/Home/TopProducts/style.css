@@ -5,14 +5,15 @@
   padding-bottom: 20px;
   margin-bottom: 30px;
 }
+
 .topSelling_box h3:after {
   content: '';
   width: 100%;
   height: 3px;
   background: #f0f0f0;
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+  left: 0;
 }
 
 .topSelling_box h3:before {
@@ -21,28 +22,32 @@
   height: 3px;
   background: #b0e5c2;
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+  left: 0;
   z-index: 10;
 }
 
 .topSelling_box .items {
-  padding: 20px 0px;
+  padding: 20px 0;
   position: relative;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
+
 .topSelling_box .items .img {
   width: 30%;
   background: #ccc;
 }
+
 .topSelling_box .items .info {
   width: 70%;
 }
+
 .topSelling_box .items .info h4 {
-  font-weight: 600 !important;
+  font-weight: 600;
   opacity: 0.8;
-  font-size: 22px !important;
+  font-size: 22px;
 }
+
 .topSelling_box .items .info a {
   text-decoration: none;
   color: #000;

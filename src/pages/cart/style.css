@@ -1,7 +1,7 @@
 .cartSection {
   width: 100%;
   height: auto;
-  padding: 10px 0px;
+  padding: 10px 0;
   display: flex;
   justify-content: center;
 }
