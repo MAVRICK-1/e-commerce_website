@@ -12,6 +12,14 @@
   font-size: 20px !important;
   text-transform: capitalize !important;
 }
+.dropdown_menu ul li button a:hover {
+  color: #3bb77e;
+ 
+}
+.nav nav .dropdown_menu li button a:hover {
+  color: #3bb77e !important; 
+ 
+}
 
 @media (min-width: 1000px) and (max-width: 1400px) {
   .browBtn {
@@ -132,6 +140,7 @@ nav .dropdown_menu li {
 }
 .megaMenu .col ul li a:hover{
   font-weight: 600;
+  color: #3bb77e;
 }
 .part2 ul li button:hover {
   background-color: inherit !important;
