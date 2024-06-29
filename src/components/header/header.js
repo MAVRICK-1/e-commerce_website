@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../header/header.css';
 import Logo from '../../assets/images/logo.svg';
 import SearchIcon from '@mui/icons-material/Search';
@@ -19,19 +19,13 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 
 import Nav from './nav/nav';
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { MyContext } from '../../App';
-import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { Satellite } from '@mui/icons-material';
-import { getDatabase, ref, onValue } from 'firebase/database';
+
 import { cities } from './cities';
-import zIndex from '@mui/material/styles/zIndex';
 
 const Header = (props) => {
   const [isOpenDropDown, setisOpenDropDown] = useState(false);
@@ -47,7 +41,7 @@ const Header = (props) => {
   const [profile, setProfile] = useState('');
 
   const context = useContext(MyContext);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const [categories, setcategories] = useState([
     'Clothing & beauty',
@@ -68,13 +62,11 @@ const Header = (props) => {
   // search
   const [query, setQuery] = useState('');
   const searchInput = useRef(null);
-  const navigate = useNavigate();
 
   const handleSearch = () => {
     if (query.trim() !== '') {
       navigate(`/search?query=${query}`);
     }
-    searchInput.current.focus();
   };
 
   const handleKeyPress = (event) => {
@@ -82,46 +74,15 @@ const Header = (props) => {
       handleSearch();
     }
   };
-  // useEffect(() => {
-  //   getCountry("https://countriesnow.space/api/v0.1/countries/");
-  // }, []);
 
   useEffect(() => {
     setProfile(localStorage.getItem('userImage'));
   }, [context.isLogin]);
-  // const getCountry = async (url) => {
-  //   try {
-  //     await axios.get(url).then((res) => {
-  //       if (res !== null) {
-  //         ////console.log(res.data.data);
-  //         res.data.data.map((item, index) => {
-  //           countryList.push(item.country);
-  //           ////console.log(item.country)
-  //         });
-
-  //         ////console.log(res.data.data[0].country)
-  //       }
-  //     });
-  //   } catch (error) {
-  //     //console.log(error.message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //     window.addEventListener("scroll", () => {
-  //         let position = window.pageYOffset;
-  //         if (position > 100) {
-  //             headerRef.current.classList.add('fixed');
-  //         } else {
-  //             headerRef.current.classList.remove('fixed');
-  //         }
-  //     })
-  // }, [])
 
   const signOut = () => {
     context.signOut();
     localStorage.setItem('userImage', '');
-    history('/');
+    navigate('/');
     toast.success('Successfully signed out!', {
       className: 'Toastify__toast--custom',
       progressClassName: 'Toastify__progress-bar--custom'
@@ -148,6 +109,18 @@ const Header = (props) => {
     setIsOpenNav(false);
     setisOpenAccDropDown(false);
     context.setIsopenNavigation(false);
+  };
+
+  const handleProfileClick = () => {
+    if (context.isLogin === 'true') {
+      navigate('/my-account');
+    } else {
+      toast.error('Please log in to view your profile', {
+        className: 'Toastify__toast--custom',
+        progressClassName: 'Toastify__progress-bar--custom'
+      });
+      navigate('/signIn');
+    }
   };
 
   return (
@@ -185,7 +158,7 @@ const Header = (props) => {
                       <div
                         onClick={() => setisOpenAccDropDown(!isOpenAccDropDown)}
                       >
-                        {profile != '' ? (
+                        {profile !== '' ? (
                           <img
                             src={profile}
                             alt=""
@@ -221,13 +194,6 @@ const Header = (props) => {
                     isopenSearch === true ? 'open' : ''
                   }`}
                 >
-                  {/* {
-                                            windowWidth < 992 &&
-                                            <div className='countryWrapper mb-4 w-100'>
-                                                <Select data={countryList} placeholder={'Your Location'} icon={<LocationOnOutlinedIcon style={{ opacity: '0.5' }} />} />
-                                            </div>
-                                        } */}
-
                   {windowWidth < 992 && (
                     <div className="closeSearch" onClick={closeSearch}>
                       <ArrowBackIosIcon />
@@ -250,7 +216,7 @@ const Header = (props) => {
                     />
                     <SearchIcon
                       className="searchIcon cursor"
-                      onClick={() => handleSearch()}
+                      onClick={handleSearch}
                     />
                   </div>
                 </div>
@@ -315,12 +281,19 @@ const Header = (props) => {
                         </span>
                       </li>
 
+                      <li className="list-inline-item">
+                        <span onClick={handleProfileClick} className="cursor-pointer">
+                          <img src={IconUser} alt="Profile" />
+                          Profile
+                        </span>
+                      </li>
+
                       {context.isLogin === 'true' ? (
                         <li className="list-inline-item">
                           <span
                             onClick={() => setisOpenDropDown(!isOpenDropDown)}
                           >
-                            {profile != '' ? (
+                            {profile !== '' ? (
                               <img
                                 src={profile}
                                 alt=""

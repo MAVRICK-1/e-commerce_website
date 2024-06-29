@@ -1,7 +1,10 @@
 import React from 'react';
 import './termsandconditions.css';
-
+import { useEffect } from 'react';
 const TermsAndConditions = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="terms-and-conditions-container">
       <h1>Terms and Conditions</h1>

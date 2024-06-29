@@ -1,8 +1,34 @@
+
+.back-to-top-button {
+  color: #ffffff;
+  font-size: 1.875rem;
+  border: 3px solid #ffffff;
+
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #3bb77e;
+  margin-top: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  position: fixed;
+  bottom: 0.7rem;
+  right: 4.7vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* visibility: hidden;  */
+  box-shadow: 0px 2px 4px 1px rgba(132, 132, 76, 0.25);
+  z-index: 99;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
 .go-to-top {
   position: fixed;
   bottom: 4px;
   right: 64px;
   z-index: 1000;
+
 }
 
 .go-to-top-button {
@@ -23,6 +49,14 @@
 }
 
 .go-to-top-button:hover {
-  background-color: #03361e;;
+  background-color: #03361e;
+}
+
+
+@media screen and (max-width: 768px) {
+  .back-to-top-button {
+    right: 15vw;
+    bottom: 4px;
+  }
 
 }

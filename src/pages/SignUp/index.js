@@ -327,7 +327,7 @@ const SignUp = () => {
             </Backdrop>
 
             <h3 className="text-center">SignUp</h3>
-            <form className="mt-4 w-100">
+            <form className="height-fix w-100">
               <div className="form-group mb-4 w-100">
                 <TextField
                   id="email"
