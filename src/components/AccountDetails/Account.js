@@ -54,6 +54,10 @@ export function Account() {
   const [name, setName] = useState(userName);
   const [email, setEmail] = useState(userEmail);
   const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const [age, setAge] = useState('');
+  const [dob, setDob] = useState('');
+  const [gender, setGender] = useState('');
   const [file, setFile] = useState(pfp);
   const navigate = useNavigate();
 
@@ -62,10 +66,15 @@ export function Account() {
       const docref = doc(db, 'users', `${user_uid ? user_uid : nanoid()}`);
       const docSnap = await getDoc(docref);
       if (docSnap.exists()) {
-        setName(docSnap.data().Name);
-        setEmail(docSnap.data().Email);
-        setAddress(docSnap.data().Address);
-        setFile(docSnap.data().photo);
+        const data = docSnap.data();
+        setName(data.Name);
+        setEmail(data.Email);
+        setAddress(data.Address);
+        setPhone(data.Phone);
+        setAge(data.Age);
+        setDob(data.Dob);
+        setGender(data.Gender);
+        setFile(data.photo);
       } else {
         console.log(null);
       }
@@ -82,19 +91,16 @@ export function Account() {
 
     const querySnapshot = getDocs(collectionRef);
 
-    // return updateUser(name, email, address, file)
-
     querySnapshot.then((doc) => {
-      console.log(doc.docs.includes(user_uid));
-      if (doc.docs.includes(user_uid)) {
-        return updateUser(name, email, address, file);
+      if (doc.docs.map(d => d.id).includes(user_uid)) {
+        return updateUser(name, email, address, phone, age, dob, gender, file);
       } else {
-        return addUser(name, email, address, file);
+        return addUser(name, email, address, phone, age, dob, gender, file);
       }
     });
   }
 
-  const addUser = async (name, email, address, file) => {
+  const addUser = async (name, email, address, phone, age, dob, gender, file) => {
     try {
       const imageRef = ref(
         storage,
@@ -106,6 +112,10 @@ export function Account() {
         Name: name,
         Email: email,
         Address: address,
+        Phone: phone,
+        Age: age,
+        Dob: dob,
+        Gender: gender,
         photo: imageUrl
       });
       setFile(imageUrl);
@@ -114,7 +124,7 @@ export function Account() {
     }
   };
 
-  const updateUser = async (name, email, address, file) => {
+  const updateUser = async (name, email, address, phone, age, dob, gender, file) => {
     try {
       const imageRef = ref(
         storage,
@@ -124,15 +134,14 @@ export function Account() {
 
       const imageUrl = await getDownloadURL(imageRef);
 
-      console.log(imageUrl);
-      console.log(name);
-      console.log(email);
-      console.log(address);
-
       await updateDoc(doc(db, 'users', `${user_uid}`), {
         Name: name,
         Email: email,
         Address: address,
+        Phone: phone,
+        Age: age,
+        Dob: dob,
+        Gender: gender,
         photo: imageUrl
       });
     } catch (err) {
@@ -234,7 +243,7 @@ export function Account() {
                   <Form.Control
                     className="myacc-input"
                     name="address"
-                    type="type"
+                    type="text"
                     placeholder="Address"
                     required={true}
                     value={address}
@@ -245,6 +254,82 @@ export function Account() {
                   />
                   <Form.Control.Feedback>
                     {errors.address?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="myacc-form-group">
+                  <Form.Label className="myacc-label">Phone Number</Form.Label>
+                  <Form.Control
+                    className="myacc-input"
+                    name="phone"
+                    type="text"
+                    placeholder="Phone Number"
+                    required={true}
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                    }}
+                    isInvalid={!!errors.phone}
+                  />
+                  <Form.Control.Feedback>
+                    {errors.phone?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="myacc-form-group">
+                  <Form.Label className="myacc-label">Age</Form.Label>
+                  <Form.Control
+                    className="myacc-input"
+                    name="age"
+                    type="number"
+                    placeholder="Age"
+                    required={true}
+                    value={age}
+                    onChange={(e) => {
+                      setAge(e.target.value);
+                    }}
+                    isInvalid={!!errors.age}
+                  />
+                  <Form.Control.Feedback>
+                    {errors.age?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="myacc-form-group">
+                  <Form.Label className="myacc-label">Date of Birth</Form.Label>
+                  <Form.Control
+                    className="myacc-input"
+                    name="dob"
+                    type="date"
+                    placeholder="Date of Birth"
+                    required={true}
+                    value={dob}
+                    onChange={(e) => {
+                      setDob(e.target.value);
+                    }}
+                    isInvalid={!!errors.dob}
+                  />
+                  <Form.Control.Feedback>
+                    {errors.dob?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="myacc-form-group">
+                  <Form.Label className="myacc-label">Gender</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="myacc-input"
+                    name="gender"
+                    required={true}
+                    value={gender}
+                    onChange={(e) => {
+                      setGender(e.target.value);
+                    }}
+                    isInvalid={!!errors.gender}
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </Form.Control>
+                  <Form.Control.Feedback>
+                    {errors.gender?.message}
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form>
