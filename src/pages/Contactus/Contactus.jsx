@@ -93,7 +93,7 @@ export default function Contactus() {
               Get In Touch
             </h1>
             <div className="inside-contact">
-              <form ref={form}>
+              <form ref={form} className='contact-form'>
                 {/* <div className="contact-input contact-input-light">
                   <TextField
                     id="user_name"
