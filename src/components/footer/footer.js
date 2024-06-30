@@ -120,7 +120,29 @@ const Footer = () => {
     { img: Icon4, header: 'Wide assortment', para: 'Orders $50 or more' },
     { img: Icon5, header: 'Easy returns', para: 'Orders $50 or more' }
   ];
-
+  
+  const addGoogleTranslateScript = () => {
+    if (!document.getElementById('google-translate-script')) {
+      const script = document.createElement('script');
+      script.id = 'google-translate-script';
+      script.type = 'text/javascript';
+      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      document.body.appendChild(script);
+    }
+  };
+  
+  window.googleTranslateElementInit = () => {
+    if (!window.googleTranslateElementInitialized) {
+      new window.google.translate.TranslateElement(
+        { pageLanguage: 'en' },
+        'google_translate_element'
+      );
+      window.googleTranslateElementInitialized = true;
+    }
+  };
+  
+  addGoogleTranslateScript();
+  
   return (
     <>
       <section className="newsLetterSection">
@@ -243,6 +265,7 @@ const Footer = () => {
 
                 <h6>Secured Payment Gateways</h6>
                 <img src={paymentImage} />
+                <div id="google_translate_element" className="mt-5 p-2 bg-[#2E8B57] rounded-lg shadow-md w-8 h-16"></div>
               </div>
             </div>
 
