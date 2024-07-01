@@ -284,3 +284,22 @@ nav .all_menu li {
   font-weight: bold;
   color: #191717;
 }
+
+@media (max-width:768px) {
+  .dropdown_menu ul li button a {
+    color: black;
+   
+  }
+  .nav nav .dropdown_menu li button a {
+    color: black;
+   
+  }
+  .dropdown_menu ul li button a:hover {
+    color: #3bb77e;
+   
+  }
+  .nav nav .dropdown_menu li button a:hover {
+    color: #3bb77e !important; 
+   
+  }
+}
