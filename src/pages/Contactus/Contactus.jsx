@@ -4,6 +4,11 @@ import emailjs from '@emailjs/browser';
 import { Button, Snackbar, TextareaAutosize, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
+import MapIcon from '@mui/icons-material/Map';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+
 export default function Contactus() {
   let form = useRef();
   const [formFields, setFormFields] = useState({
@@ -207,6 +212,34 @@ export default function Contactus() {
           </div>
         </React.Fragment>
       </div>
+      <section className="section-p1">
+        <div className="details">
+          <span>GET IN TOUCH</span>
+          <h2>Visit one of our agency locations or contact us today</h2>
+          <h3>Head Office</h3>
+          <div>
+            <li>
+              <MapIcon />
+              <p>5171 W Campbell Ave undefined Kent, Utah 53127 United States</p>
+            </li>
+            <li>
+              <EmailIcon />
+              <p>sale@Nest.com</p>
+            </li>
+            <li>
+              <PhoneIcon />
+              <p>(+91) - 540-025-124553</p>
+            </li>
+            <li>
+              <AccessTimeIcon />
+              <p>Monday-Saturday 10:00 am to 6:00 pm</p>
+            </li>
+          </div>
+        </div>
+        <div className="map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153898.0090667806!2d-114.18749901456506!3d39.46981386754793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x874c6bc78f13f9cd%3A0xbddf4aa56cd7463f!2sUtah%2C%20USA!5e0!3m2!1sen!2sin!4v1719849554647!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </section>
     </div>
   );
 }

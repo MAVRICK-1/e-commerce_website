@@ -345,3 +345,52 @@ input {
   color: gray;
   border: none;
 }
+.section-p1 {
+  padding: 40px 80px;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.details {
+  width: 40%;
+}
+
+.details span {
+  font-size: 12px;
+}
+
+.details h2 {
+  font-size: 26px;
+  line-height: 35px;
+  padding: 20px 0;
+}
+
+.details li {
+  list-style: none;
+  display: flex;
+  padding: 10px 0;
+}
+
+.details li svg {
+  font-size: 14px;
+  padding-right: 22px;
+}
+
+.details li p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.map {
+  width: 55%;
+  height: 400px;
+}
+
+.map iframe {
+  width: 100%;
+  height: 100%;
+}
