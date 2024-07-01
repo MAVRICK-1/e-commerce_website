@@ -284,3 +284,32 @@ nav .all_menu li {
   font-weight: bold;
   color: #191717;
 }
+
+@media (max-width:768px) {
+  .dropdown_menu ul li button a {
+    color: white;
+   
+  }
+  .nav nav .dropdown_menu li button a {
+    color: white;
+   
+  }
+  .dropdown_menu ul li button a:hover {
+    color: #3bb77e;
+   
+  }
+  .megaMenu .col ul li a {
+    color: white;
+  }
+  .part2 ul li button:hover a {
+    color: white !important;
+  }
+  .nav nav .dropdown_menu.open{
+    backdrop-filter: blur(14px) saturate(135%);
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+    background-color: rgba(59, 183, 126, 0.49);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    
+  }
+}
