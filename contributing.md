@@ -38,12 +38,18 @@ in case you are stuck:
    Launch GitHub Desktop and log in to your GitHub account if you haven't already.
 
 2. **Clone the Repository:**
-   - If you haven't cloned the ResourceHub repository yet, you can do so by clicking on the "File" menu and selecting "Clone Repository."
-   - Choose the ResourceHub repository from the list of repositories on GitHub and clone it to your local machine.
+   - If you haven't cloned the e-commerce_website repository yet, you can do so by clicking on the "File" menu and selecting "Clone Repository."
+   - Choose the e-commerce_website repository from the list of repositories on GitHub and clone it to your local machine.
+   
+   ![image](https://github.com/PradnyaGaitonde/e-commerce_website/assets/116059908/904d0f45-b3d5-4873-8e29-07264ff016d9)
+
+   ![image](https://github.com/PradnyaGaitonde/e-commerce_website/assets/116059908/7e7d9cbd-d93b-44a6-a470-773f943571c0)
 
 3. **Switch to the Correct Branch:**
    - Ensure you are on the branch that you want to submit a pull request for.
    - If you need to switch branches, you can do so by clicking on the "Current Branch" dropdown menu and selecting the desired branch.
+   
+   ![image](https://github.com/PradnyaGaitonde/e-commerce_website/assets/116059908/31a68125-bd6b-45f4-bc40-88b4ae4b7146)
 
 4. **Make Changes:**
    Make your changes to the code or files in the repository using your preferred code editor(like vs code).
@@ -52,19 +58,25 @@ in case you are stuck:
    - In GitHub Desktop, you'll see a list of the files you've changed. Check the box next to each file you want to include in the commit.
    - Enter a summary and description for your changes in the "Summary" and "Description" fields, respectively. Click the "Commit to <branch-name>" button to commit your changes to the local branch.
 
+   ![image](https://github.com/PradnyaGaitonde/e-commerce_website/assets/116059908/a397bf2c-baa9-4560-af52-b4b59b56a0e8)
+
 6. **Push Changes to GitHub:**
      After committing your changes, click the "Push origin" button in the top right corner of GitHub Desktop to push your changes to your forked repository on GitHub.
 
+   ![image](https://github.com/PradnyaGaitonde/e-commerce_website/assets/116059908/cac3ef5a-d695-4e8c-9a33-485873603393)
+
 7. **Create a Pull Request:**
-     -  Go to the GitHub website and navigate to your fork of the ResourceHub repository.
+     -  Go to the GitHub website and navigate to your fork of the e-commerce_website repository.
      -  You should see a button to "Compare & pull request" between your fork and the original repository. Click on it.
+
+   ![image](https://github.com/PradnyaGaitonde/e-commerce_website/assets/116059908/0b869592-4f04-4457-9b52-57cbe0689000)
 
 8. **Review and Submit:**
    - On the pull request page, review your changes and add any additional information, such as a title and description, that you want to include with your pull request.
    - Once you're satisfied, click the "Create pull request" button to submit your pull request.
 
 9. **Wait for Review:**
-    Your pull request will now be available for review by the project maintainers. They may provide feedback or ask for changes before merging your pull request into the main branch of the ResourceHub repository.
+    Your pull request will now be available for review by the project maintainers. They may provide feedback or ask for changes before merging your pull request into the main branch of the e-commerce_website repository.
 
 
 ## **Pull Request Process**
