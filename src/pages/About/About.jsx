@@ -16,7 +16,7 @@ const AboutUs = () => {
   const [uxHovered, setUxHovered] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  },[]);
   return (
     <div
       id="about-us"
