@@ -1,88 +1,114 @@
 .cardwidth {
-  width: 80%;
-  max-width: 600px;
+  width: 75%;
+  height: auto;
 }
 
-.card-header {
-  background-color: #f8f9fa;
-}
-
-.card-body {
-  padding: 20px;
-}
-
-.card-footer {
-  background-color: #f8f9fa; 
-  padding: 20px;
+.negmargin {
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .profileImageP {
-  width: 100px; 
-  height: 100px; 
-  object-fit: cover;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  align-items: center;
+  top: 18px;
+  left: -15px;
+  position: absolute;
 }
-
-.header-background {
+.back-div {
+  height: 200px;
   position: relative;
 }
-
+.card-header {
+  width: 100%;
+  background: #d8f1e5;
+  background: url('../../assets/images/bg.webp');
+  position: relative;
+}
 .imgbackground {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.5; 
-}
-
-.my-profile {
-  color: #333; 
-}
-
-.myacc-label {
-  font-weight: bold;
-}
-
-.myacc-input {
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  padding: 10px;
-  width: 100%;
-}
-
-.myacc-save {
-  background-color: #007bff; 
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.myacc-save:hover {
-  background-color: #0056b3; 
-}
-
-.back-but {
-  cursor: pointer;
-}
-
-.back-div {
-  position: relative;
-}
-
-.hidden {
+  background-size: contain;
+  width: 100vw;
+  opacity: 0.5;
   display: none;
 }
+.my-profile {
+  font-size: 44px;
+  margin-bottom: 30px;
+}
+.myacc-text-body {
+  width: 100%;
+}
+.card-body {
+  align-items: center;
+  width: 100%;
+  height: 1050px !important;
+}
+.myacc-label {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+.form-control {
+  height: 70px;
+  font-size: 20px;
+}
+.myacc-form-group {
+  margin-bottom: 20px;
+}
+.myacc-save-div {
+  width: 100%;
+  padding: 0;
+  background-color: #d8f1e5;
+  padding: 0px;
+}
+.myacc-save {
+  width: 100%;
+  background-color: #d8f1e5;
+  color: darkgreen;
+  cursor: pointer;
+  padding: 0px;
+}
 
-@media (max-width: 768px) {
-  .cardwidth {
-    width: 100%;
-  }
-
-  .md:shrink-0 {
-    flex-basis: 0;
-    flex-grow: 1;
-    max-width: 100%;
-  }
+.myacc-save h5 {
+  color: darkgreen;
+  width: 100%;
+  background-color: #d8f1e5;
+  margin-bottom: 0px;
+  font-size: 20px;
+  padding: 20px 0px;
+  transition: ease-in-out 0.5s;
+}
+.myacc-save h5:hover {
+  color: white;
+  background-color: darkgreen;
+}
+.myacc-input:focus {
+  border-color: #8ac171; /* Change the border color to red */
+  box-shadow: 0 0 5px #69e331; /* Optional: Add a shadow to highlight the focus */
+  outline: none;
+}
+.myacc-back-button {
+  background-color: #d8f1e5;
+  color: black;
+  font-size: 25px;
+}
+.back-but {
+  background-color: #3bb77e;
+  margin-bottom: 0px;
+  align-items: center;
+  border-radius: 5px;
+  color: white;
+  gap: 10px;
+  padding: 10px 20px;
+}
+@media (max-width:1024px) {
+.Profile-section{
+  margin-top: 150px;
+}
 }

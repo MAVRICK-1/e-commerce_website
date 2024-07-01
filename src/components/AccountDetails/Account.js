@@ -151,112 +151,112 @@ export function Account() {
 
   return (
     <>
-      <div className="container-fluid d-flex flex-column justify-content-center align-items-center p-5">
-        <h3
-          className="d-flex align-self-start ml-5 justify-content-center back-but"
-          onClick={handlehistory}
-        >
-          <IoIosArrowRoundBack size="40px" />
-          BACK
-        </h3>
-        <Card
-          variant="outlined"
-          className="cardwidth m-5 md:shrink-0 d-flex flex-column justify-content-center align-items-center"
-        >
-          <CardHeader className=" d-flex  flex-column justify-content-center align-items-center card-header">
-            <div className=" header-background back-div  hidden">
-              <CardImg
-                src={imageBackground}
-                className="md:shrink-0 imgbackground w-100 hidden"
-              />
-              <CardTitle className="negmargin    p-5">
-                <Row className="d-flex  flex-row justify-content-start align-items-center">
-                  {userImage !== '' ? (
+    <div className="Profile-section container-fluid d-flex flex-column justify-content-center align-items-center p-5">
+      <h3
+        className="d-flex align-self-start ml-5 justify-content-center back-but"
+        onClick={handlehistory}
+      >
+        <IoIosArrowRoundBack size="40px" />
+        BACK
+      </h3>
+      <Card
+        variant="outlined"
+        className="cardwidth m-5 md:shrink-0 d-flex flex-column justify-content-center align-items-center"
+      >
+        <CardHeader className=" d-flex  flex-column justify-content-center align-items-center card-header">
+          <div className=" header-background back-div  hidden">
+            <CardImg
+              src={imageBackground}
+              className="md:shrink-0 imgbackground w-100 hidden"
+            />
+            <CardTitle className="negmargin    p-5">
+              <Row className="d-flex  flex-row justify-content-start align-items-center">
+                {userImage !== '' ? (
+                  <CardImg
+                    src={userImage}
+                    className="rounded-circle profileImageP md:shrink-1 mb-4"
+                  />
+                ) : (
+                  <div>
                     <CardImg
-                      src={userImage}
+                      src={file}
                       className="rounded-circle profileImageP md:shrink-1 mb-4"
                     />
-                  ) : (
-                    <div>
-                      <CardImg
-                        src={file}
-                        className="rounded-circle profileImageP md:shrink-1 mb-4"
-                      />
-                      <input
-                        required={true}
-                        type="file"
-                        name="file"
-                        onChange={(e) => setFile(e.target.files[0])}
-                      />
-                    </div>
-                  )}
-                </Row>
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardBody className="card-body">
-            <CardTitle>
-              <h3 className="font-weight-bold my-profile text-center">
-                MY PROFILE
-              </h3>
+                    <input
+                      required={true}
+                      type="file"
+                      name="file"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                  </div>
+                )}
+              </Row>
             </CardTitle>
-            <CardText>
-              <Form id="addEditForm" onSubmit={Onsubmit}>
-                <Form.Group className="myacc-form-group">
-                  <Form.Label className="myacc-label">Name</Form.Label>
-                  <Form.Control
-                    name="name"
-                    type="text"
-                    placeholder="Name"
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                    value={name}
-                    required={true}
-                    isInvalid={!!errors.name}
-                    className="myacc-input"
-                  />
-                  <Form.Control.Feedback>
-                    {errors.name?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="myacc-form-group">
-                  <Form.Label className="myacc-label">Email</Form.Label>
-                  <Form.Control
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    required={true}
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                    isInvalid={!!errors.email}
-                    className="myacc-input"
-                  />
-                  <Form.Control.Feedback>
-                    {errors.email?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="myacc-form-group">
-                  <Form.Label className="myacc-label">Address</Form.Label>
-                  <Form.Control
-                    className="myacc-input"
-                    name="address"
-                    type="text"
-                    placeholder="Address"
-                    required={true}
-                    value={address}
-                    onChange={(e) => {
-                      setAddress(e.target.value);
-                    }}
-                    isInvalid={!!errors.address}
-                  />
-                  <Form.Control.Feedback>
-                    {errors.address?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="myacc-form-group">
+          </div>
+        </CardHeader>
+        <CardBody className="card-body">
+          <CardTitle>
+            <h3 className="font-weight-bold my-profile text-center">
+              MY PROFILE
+            </h3>
+          </CardTitle>
+          <CardText>
+            <Form id="addEditForm" onSubmit={Onsubmit}>
+              <Form.Group className="myacc-form-group">
+                <Form.Label className="myacc-label">Name</Form.Label>
+                <Form.Control
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  value={name}
+                  required={true}
+                  isInvalid={!!errors.name}
+                  className="myacc-input"
+                />
+                <Form.Control.Feedback>
+                  {errors.name?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="myacc-form-group">
+                <Form.Label className="myacc-label">Email</Form.Label>
+                <Form.Control
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  required={true}
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  isInvalid={!!errors.email}
+                  className="myacc-input"
+                />
+                <Form.Control.Feedback>
+                  {errors.email?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="myacc-form-group">
+                <Form.Label className="myacc-label">Address</Form.Label>
+                <Form.Control
+                  className="myacc-input"
+                  name="address"
+                  type="type"
+                  placeholder="Address"
+                  required={true}
+                  value={address}
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                  isInvalid={!!errors.address}
+                />
+                <Form.Control.Feedback>
+                  {errors.address?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="myacc-form-group">
                   <Form.Label className="myacc-label">Phone Number</Form.Label>
                   <Form.Control
                     className="myacc-input"
@@ -332,22 +332,23 @@ export function Account() {
                     {errors.gender?.message}
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Form>
-            </CardText>
-          </CardBody>
-          <CardFooter className="d-flex justify-content-center align-items-center myacc-save-div">
-            <Button
-              className="myacc-save"
-              type="submit"
-              form="addEditForm"
-              disabled={isSubmitting}
-              style={{ padding: '0px' }}
-            >
-              <h5 className="font-weight-bold">Save</h5>
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </>
+            </Form>
+          </CardText>
+        </CardBody>
+        <CardFooter className="d-flex justify-content-center align-items-center myacc-save-div">
+          <Button
+            className="myacc-save"
+            type="submit"
+            form="addEditForm"
+            disabled={isSubmitting}
+            style={{ padding: '0px' }}
+          >
+            <h5 className="font-weight-bold">Save</h5>
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  </>
+
   );
 }
