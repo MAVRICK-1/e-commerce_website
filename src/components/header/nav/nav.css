@@ -298,7 +298,9 @@ nav .all_menu li {
     color: #3bb77e;
    
   }
- 
+  .megaMenu .col ul li a {
+    color: white;
+  }
   .part2 ul li button:hover a {
     color: white !important;
   }
