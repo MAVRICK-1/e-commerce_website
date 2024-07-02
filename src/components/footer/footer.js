@@ -64,10 +64,10 @@ const Footer = () => {
         { link: '#', text: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
-        { link: '#', text: 'Contact Us' },
+        { link: '/contact', text: 'Contact Us' },
         { link: '/faq', text: 'FAQ' },
         { link: '#', text: 'Careers' },
-        { link: '#', text: 'Contributors' }
+        { link: '/contributors', text: 'Contributors' }
       ]
     },
     {
@@ -77,10 +77,10 @@ const Footer = () => {
         { link: '#', title: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
-        { link: '#', text: 'Contact Us' },
+        { link: '/contact', text: 'Contact Us' },
         { link: '#', text: 'Support Center' },
         { link: '#', text: 'Careers' },
-        { link: '#', text: 'Contributors' }
+        { link: '/contributors', text: 'Contributors' }
       ]
     },
     {
@@ -90,10 +90,10 @@ const Footer = () => {
         { link: '#', text: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
-        { link: '#', text: 'Contact Us' },
+        { link: '/contact', text: 'Contact Us' },
         { link: '#', text: 'Support Center' },
         { link: '#', text: 'Careers' },
-        { link: '#', text: 'Contributors' }
+        { link: '/contributors', text: 'Contributors' }
       ]
     }
   ];

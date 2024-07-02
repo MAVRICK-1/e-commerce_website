@@ -8,6 +8,7 @@ function Contributors() {
 
   useEffect(() => {
     async function fetchContributors() {
+      window.scrollTo(0, 0); 
       try {
         const response = await axios.get(
           'https://api.github.com/repos/MAVRICK-1/e-commerce_website/contributors'
