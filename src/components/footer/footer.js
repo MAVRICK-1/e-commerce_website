@@ -66,7 +66,7 @@ const Footer = () => {
         { link: '/termsandconditions', text: 'Terms & Conditions' },
         { link: '#', text: 'Contact Us' },
         { link: '/faq', text: 'FAQ' },
-        { link: '#', text: 'Careers' },
+        { link: '/feedback', text: 'Feedback' },
         { link: '#', text: 'Contributors' }
       ]
     },

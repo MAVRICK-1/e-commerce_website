@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -317,7 +318,7 @@ const SignUp = () => {
         </div>
 
         <div className="loginWrapper">
-          <div className="card shadow">
+          <div className="card shadow animator">
             <Backdrop
               sx={{ color: '#000', zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={showLoader}
@@ -326,8 +327,8 @@ const SignUp = () => {
               <CircularProgress color="inherit" />
             </Backdrop>
 
-            <h3 className="text-center">SignUp</h3>
-            <form className="height-fix w-100">
+            <h3 className="text-center h-size" style={{color:"#3bb77e"}}>SignUp</h3>
+            <form className="mt-4 w-100">
               <div className="form-group mb-4 w-100">
                 <TextField
                   id="email"
@@ -337,6 +338,11 @@ const SignUp = () => {
                   placeholder="Email"
                   onChange={onChangeField}
                   value={formFields.email}
+                  sx={{
+                    '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input::placeholder':{
+                     fontSize:"1.5rem "
+                    }
+                   ,}}
                   autoComplete="email"
                 />
                 {inputErrors.email && (
@@ -359,6 +365,11 @@ const SignUp = () => {
                     onChange={onChangeField}
                     value={formFields.password}
                     autoComplete="new-password"
+                    sx={{
+                      '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input::placeholder':{
+                       fontSize:"1.5rem "
+                      }
+                     ,}}
                   />
                   <Button
                     className="icon"
@@ -393,6 +404,11 @@ const SignUp = () => {
                     value={formFields.confirmPassword}
                     autoComplete="new-password"
                     error={inputErrors.confirmPassword}
+                    sx={{
+                      '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input::placeholder':{
+                       fontSize:"1.5rem "
+                      }
+                     ,}}
                   />
                   <Button
                     className="icon"
@@ -426,6 +442,11 @@ const SignUp = () => {
                     onChange={onChangeField}
                     value={formFields.phoneNumber}
                     autoComplete="tel"
+                    sx={{
+                      '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input::placeholder':{
+                       fontSize:"1.5rem "
+                      }
+                     ,}}
                   />
                   {inputErrors.phoneNumber && (
                     <Typography
@@ -437,6 +458,8 @@ const SignUp = () => {
                   )}
                   <Button
                     onClick={handleSendOtp}
+                    style={{fontSize:"1.5rem",marginTop:"20px"}}
+                
                     disabled={!validatePhoneNumber(formFields.phoneNumber)}
                   >
                     Send OTP
@@ -454,13 +477,15 @@ const SignUp = () => {
                     placeholder="Enter OTP"
                     onChange={onChangeField}
                     value={formFields.otp}
+                    
                     autoComplete="one-time-code"
                   />
                   <Button onClick={handleVerifyOtp}>Verify OTP</Button>
                   {inputErrors.otp && (
                     <Typography
                       variant="caption"
-                      sx={{ color: 'red', padding: '5px' }}
+                    
+                      sx={{ color: 'red', padding: '5px'}}
                     >
                       {inputErrors.otp}
                     </Typography>
@@ -478,7 +503,7 @@ const SignUp = () => {
                 </Button>
               </div>
 
-              <p className="text-center">
+              <p className="text-center" style={{fontSize:"1.6rem",cursor:"auto"}}>
                 Already have an account?
                 <b>
                   <Link to="/signIn">Sign In</Link>

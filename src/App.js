@@ -5,6 +5,7 @@ import './toastify-custom.css';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import React, { createContext, useEffect, useState } from 'react';
 import FAQ from './components/faq/FAQ';
+import Feedback from './pages/FeedbackForm/Feedback';
 import {
   createBrowserRouter,
   HashRouter,
@@ -44,6 +45,7 @@ import Contributors from './pages/Contributors/Contributors';
 import { Account } from './components/AccountDetails/Account';
 import Contactus from './pages/Contactus/Contactus';
 import Blog from './pages/blog/blog';
+
 
 const MyContext = createContext();
 
@@ -348,6 +350,10 @@ function App() {
         {
           path: '/faq',
           element: <FAQ />
+        },
+        {
+          path: '/feedback',
+          element: <Feedback />
         },
         {
           path: '/contact',

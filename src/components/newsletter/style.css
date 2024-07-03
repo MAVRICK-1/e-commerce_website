@@ -1,16 +1,17 @@
 .newsLetterBanner {
-  width: 80%; /* Reduced width to avoid overlap */
-  max-width: 600px; /* Ensures it doesn't get too wide on large screens */
-  height: 80px; /* Relative to viewport height for better responsiveness */
+  width: 80%; 
+  max-width: 600px;
+  height: 80px; 
   position: absolute;
-  bottom: 35%; /* Adjust as needed based on design */
-  left: 8%; /* Adjusted to avoid overlapping with neighboring divs */
+  bottom: 25%; 
+  left: 8%; 
   z-index: 10;
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Center items vertically */
+  display: flex;
+  align-items: center; 
   box-sizing: border-box;
   margin: 20px;
 }
+
 
 .newsLetterBanner input {
   width: 100%;
