@@ -7,6 +7,8 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import { MyContext } from '../../../App';
 import { useSelector } from 'react-redux';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { FaStar } from 'react-icons/fa';
 
 //BROWSE ALL CATEGORY ICONS
 import milk from '../../../assets/images/milk.svg';
@@ -73,8 +75,24 @@ const Nav = (props) => {
     { id: 19, imgSrc: rice, text: 'Dals and pulses', link: '/dals-and-pulses' },
     { id: 20, imgSrc: diet, text: 'Diet Food', link: '/' }
   ];
-  //END OF CONTENT
 
+    const [modal, setModal] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [feedback, setFeedback] = useState('');
+  
+    const toggle = () => setModal(!modal);
+  
+    const handleRating = (rate) => setRating(rate);
+  
+    const handleSubmit = () => {
+      // Handle the submission logic here
+      console.log('Rating:', rating);
+      console.log('Feedback:', feedback);
+  
+      // Close the modal
+      toggle();
+    };
+  
   const [items, setItems] = useState(initialItems);
   const [expanded, setExpanded] = useState(false);
 
@@ -372,6 +390,49 @@ const Nav = (props) => {
                         Contributors
                       </NavLink>
                     </Button>
+                    <span
+        onClick={toggle}
+        className="rate-us-text"
+        style={{ cursor: 'pointer', marginLeft: '10px' }}
+      >
+        Rate Us
+      </span>
+
+      <Modal isOpen={modal} toggle={toggle} className="rate-us-modal">
+        <ModalHeader className="modal-header">
+          Rate Us
+          <button type="button" className="close custom-close" onClick={toggle}>
+            &times;
+          </button>
+        </ModalHeader>
+        <ModalBody>
+          <div className="stars">
+            {[...Array(5)].map((star, index) => (
+              <FaStar
+                key={index}
+                size={30}
+                onClick={() => handleRating(index + 1)}
+                className={index < rating ? 'star-selected' : ''}
+              />
+            ))}
+          </div>
+          <textarea
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            placeholder="Leave your feedback here..."
+            rows="4"
+            style={{ width: '100%' }}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={handleSubmit}>
+            Submit
+          </Button>{' '}
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
                   </li>
                 </ul>
 
@@ -411,5 +472,4 @@ const Nav = (props) => {
     </>
   );
 };
-
 export default Nav;

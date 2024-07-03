@@ -313,3 +313,81 @@ nav .all_menu li {
     
   }
 }
+/* Navbar style to ensure it stays on top */
+.navbar {
+  position: relative;
+  z-index: 1050; /* Higher than the modal */
+}
+
+/* Common style for Contributors and Rate Us text */
+.common-style {
+  font-size: 16px; /* Example size */
+  font-family: Arial, sans-serif; /* Example font */
+  color: #000; /* Example color */
+}
+
+/* Rate Us text style */
+.rate-us-text {
+  font-size: 15px; /* Very small font size for Rate Us text */
+  font-family: Arial, sans-serif;
+  color: #000;
+  transition: color 0.3s ease;
+}
+
+.rate-us-text:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+/* Modal style for creative effect */
+.rate-us-modal .modal-content {
+  border-radius: 10px;
+  animation: modalFadeIn 0.5s;
+  z-index: 1040; /* Lower than the navbar */
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Modal header style */
+.modal-header {
+  position: relative;
+}
+
+/* Modal header close button style */
+.modal-header .close.custom-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #000; /* Background color black */
+  color: #fff; /* Text color white */
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  opacity: 1;
+}
+
+.star-selected {
+  color: gold;
+  transition: color 0.3s ease;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+textarea {
+  border-radius: 5px;
+  padding: 10px;
+}
