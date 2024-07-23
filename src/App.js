@@ -5,6 +5,7 @@ import './toastify-custom.css';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import React, { createContext, useEffect, useState } from 'react';
 import FAQ from './components/faq/FAQ';
+import Feedback from './pages/FeedbackForm/Feedback';
 import {
   createBrowserRouter,
   HashRouter,
@@ -44,6 +45,7 @@ import Contributors from './pages/Contributors/Contributors';
 import { Account } from './components/AccountDetails/Account';
 import Contactus from './pages/Contactus/Contactus';
 import Blog from './pages/blog/blog';
+
 
 const MyContext = createContext();
 
@@ -251,6 +253,7 @@ function App() {
 
   useEffect(() => {
     if (window.botpressWebChat) {
+      const webChatContainer = document.querySelector('.webchat-app-container');
       window.botpressWebChat.init({
         botId: '41bcf48e-b15e-4c9e-8d0e-c9e9055742eb', // Replace with your Botpress bot ID
         host: 'https://cdn.botpress.cloud/webchat/v1' // Replace with your Botpress server URL
@@ -270,7 +273,6 @@ function App() {
           )}
           <Header data={data.productData} />
           <Outlet />
-          <FAQ />
           <Footer />
           <GoToTop />
         </MyContext.Provider>
@@ -344,6 +346,14 @@ function App() {
         {
           path: '/privacy-policy',
           element: <PrivacyPolicy />
+        },
+        {
+          path: '/faq',
+          element: <FAQ />
+        },
+        {
+          path: '/feedback',
+          element: <Feedback />
         },
         {
           path: '/contact',

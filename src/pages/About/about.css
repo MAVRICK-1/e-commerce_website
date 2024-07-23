@@ -36,7 +36,8 @@
 .desc {
   font-size: 26px;
   text-align: center;
-  color: grey;
+  color: rgb(88, 88, 88);
+  text-align: justify;
 }
 .about-container > .contributor-text {
   text-transform: capitalize;

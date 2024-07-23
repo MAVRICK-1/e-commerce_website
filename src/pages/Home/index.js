@@ -1,159 +1,128 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext, useMemo, useCallback } from 'react';
 import SliderBanner from './slider/index';
 import CatSlider from '../../components/catSlider';
 import DealofDay from '../../components/DealofDay/DealofDay';
-
 import Banners from '../../components/banners';
-
 import './style.css';
 import Product from '../../components/product';
 import Banner4 from '../../assets/images/banner4.webp';
-
 import Slider from 'react-slick';
 import TopProducts from './TopProducts';
-import axios from 'axios';
 import { MyContext } from '../../App';
 
-const Home = (props) => {
-  const [prodData, setprodData] = useState(props.data);
-  const [catArray, setcatArray] = useState([]);
-  const [activeTab, setactiveTab] = useState();
-  const [activeTabIndex, setactiveTabIndex] = useState(0);
+const Home = ({ data }) => {
+  const [prodData, setProdData] = useState(data);
+  const [catArray, setCatArray] = useState([]);
+  const [activeTab, setActiveTab] = useState('');
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [activeTabData, setActiveTabData] = useState([]);
-
   const [bestSells, setBestSells] = useState([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 
   const productRow = useRef();
   const context = useContext(MyContext);
 
-  var settings = {
+  const settings = useMemo(() => ({
     dots: false,
-    infinite: context.windowWidth < 992 ? false : true,
+    infinite: context.windowWidth >= 992,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
     fade: false,
-    arrows: context.windowWidth < 992 ? false : true
-  };
+    arrows: context.windowWidth >= 992
+  }), [context.windowWidth]);
 
-  const catArr = [];
   useEffect(() => {
-    prodData.length !== 0 &&
-      prodData.map((item) => {
-        item.items.length !== 0 &&
-          item.items.map((item_) => {
-            catArr.push(item_.cat_name);
-          });
-      });
+    document.title = "Popular Products - Your Website";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Discover popular products and top-selling items on Your Website.");
+    }
 
-    const list2 = catArr.filter(
-      (item, index) => catArr.indexOf(item) === index
-    );
-    setcatArray(list2);
-
-    setactiveTab(list2[0]);
-
+    const categories = new Set();
+    prodData.forEach(item => item.items.forEach(subItem => categories.add(subItem.cat_name)));
+    const uniqueCategories = Array.from(categories);
+    setCatArray(uniqueCategories);
+    setActiveTab(uniqueCategories[0]);
     window.scrollTo(0, 0);
-  }, []);
+  }, [prodData]);
 
   useEffect(() => {
-    var arr = [];
-    setActiveTabData(arr);
-    prodData.length !== 0 &&
-      prodData.map((item, index) => {
-        item.items.map((item_, index_) => {
-          if (item_.cat_name === activeTab) {
-            {
-              item_.products.length !== 0 &&
-                item_.products.map((product) => {
-                  arr.push({
-                    ...product,
-                    parentCatName: item.cat_name,
-                    subCatName: item_.cat_name
-                  });
-                });
-
-              setActiveTabData(arr);
-              setTimeout(() => {
-                setIsLoadingProducts(false);
-              }, [1000]);
-            }
+    const fetchData = () => {
+      const tabData = [];
+      prodData.forEach(item => {
+        item.items.forEach(subItem => {
+          if (subItem.cat_name === activeTab) {
+            subItem.products.forEach(product => {
+              tabData.push({ ...product, parentCatName: item.cat_name, subCatName: subItem.cat_name });
+            });
           }
         });
       });
-  }, [activeTab, activeTabData]);
+      setActiveTabData(tabData);
+      setTimeout(() => setIsLoadingProducts(false), 1000);
+    };
 
-  const bestSellsArr = [];
+    setActiveTabData([]);
+    fetchData();
+  }, [activeTab, prodData]);
 
   useEffect(() => {
-    prodData.length !== 0 &&
-      prodData.map((item) => {
+    const fetchBestSells = () => {
+      const sells = [];
+      prodData.forEach(item => {
         if (item.cat_name === 'Electronics') {
-          item.items.length !== 0 &&
-            item.items.map((item_) => {
-              item_.products.length !== 0 &&
-                item_.products.map((product, index) => {
-                  bestSellsArr.push(product);
-                });
+          item.items.forEach(subItem => {
+            subItem.products.forEach(product => {
+              sells.push(product);
             });
+          });
         }
       });
+      setBestSells(sells);
+    };
 
-    setBestSells(bestSellsArr);
+    fetchBestSells();
+  }, [prodData]);
+
+  const handleTabClick = useCallback((cat, index) => {
+    setActiveTab(cat);
+    setActiveTabIndex(index);
+    productRow.current.scrollLeft = 0;
+    setIsLoadingProducts(true);
   }, []);
 
   return (
-    <div style={{ display: 'block' }}>
+    <main style={{ display: 'block' }}>
       <DealofDay productData={prodData} />
       <SliderBanner />
       <CatSlider data={prodData} />
-
       <Banners />
 
       <section className="homeProducts homeProductWrapper">
         <div className="container-fluid">
           <div className="d-flex align-items-center homeProductsTitleWrap">
-            <h2 className="hd mb-0 mt-0 res-full">Popular Products</h2>
+            <h1 className="hd mb-0 mt-0 res-full">Popular Products</h1>
             <ul className="list list-inline ml-auto filterTab mb-0 res-full">
-              {catArray.length !== 0 &&
-                catArray.map((cat, index) => {
-                  return (
-                    <li className="list list-inline-item">
-                      <a
-                        className={`cursor text-capitalize 
-                                                ${
-                                                  activeTabIndex === index
-                                                    ? 'act'
-                                                    : ''
-                                                }`}
-                        onClick={() => {
-                          setactiveTab(cat);
-                          setactiveTabIndex(index);
-                          productRow.current.scrollLeft = 0;
-                          setIsLoadingProducts(true);
-                        }}
-                      >
-                        {cat}
-                      </a>
-                    </li>
-                  );
-                })}
+              {catArray.map((cat, index) => (
+                <li className="list list-inline-item" key={cat}>
+                  <button
+                    className={`cursor text-capitalize ${activeTabIndex === index ? 'act' : ''}`}
+                    onClick={() => handleTabClick(cat, index)}
+                  >
+                    {cat}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div
-            className={`productRow ${isLoadingProducts === true && 'loading'}`}
-            ref={productRow}
-          >
-            {activeTabData.length !== 0 &&
-              activeTabData.map((item, index) => {
-                return (
-                  <div className="item" key={index}>
-                    <Product tag={item.type} item={item} />
-                  </div>
-                );
-              })}
+          <div className={`productRow ${isLoadingProducts && 'loading'}`} ref={productRow}>
+            {activeTabData.map((item, index) => (
+              <div className="item" key={index}>
+                <Product tag={item.type} item={item} />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -164,23 +133,18 @@ const Home = (props) => {
             <h2 className="hd mb-0 mt-0">Daily Best Sells</h2>
           </div>
 
-          <br className="res-hide" />
-          <br className="res-hide" />
           <div className="row">
             <div className="col-md-3 pr-5 res-hide">
-              <img src={Banner4} className="w-100" />
+              <img src={Banner4} alt="Promotional Banner" className="w-100" />
             </div>
 
             <div className="col-md-12">
               <Slider {...settings} className="prodSlider">
-                {bestSells.length !== 0 &&
-                  bestSells.map((item, index) => {
-                    return (
-                      <div className="item" key={index}>
-                        <Product tag={item.type} item={item} />
-                      </div>
-                    );
-                  })}
+                {bestSells.map((item, index) => (
+                  <div className="item" key={index}>
+                    <Product tag={item.type} item={item} />
+                  </div>
+                ))}
               </Slider>
             </div>
           </div>
@@ -193,22 +157,19 @@ const Home = (props) => {
             <div className="col">
               <TopProducts title="Top Selling" />
             </div>
-
             <div className="col">
               <TopProducts title="Trending Products" />
             </div>
-
             <div className="col">
               <TopProducts title="Recently added" />
             </div>
-
             <div className="col">
               <TopProducts title="Top Rated" />
             </div>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

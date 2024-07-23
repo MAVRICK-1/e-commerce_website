@@ -277,7 +277,7 @@
   margin: auto;
   margin-top: 11%;
   width: 90vw;
-  max-width: 600px;
+  /* max-width: 600px; */
 }
 @media (max-width: 600px) {
   .contact-section-light {
@@ -289,15 +289,16 @@
 .contact-card {
   backdrop-filter: blur(16px) saturate(127%);
   -webkit-backdrop-filter: blur(16px) saturate(127%);
-  background-color: rgba(55, 186, 126, 0.62);
+  background-color: rgba(192, 255, 204, 0.199);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.282);
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   padding: 40px 0;
+<<<<<<< HEAD
   height: 700px;
 }
 
@@ -305,18 +306,53 @@
   font-size: 40px;
   font-weight: 700;
   color: white;
+=======
+
+}
+
+.contact-card h1 {
+  font-size: 72px;
+  font-weight: 800;
+  color: rgb(8, 90, 31);
+>>>>>>> af8dd9d11e4d459ff9d66de24f659e31373f46c3
   letter-spacing: 1px;
 }
 
 .contact-card input {
+<<<<<<< HEAD
   color: black;
   background: white;
 }
+=======
+  color: rgb(1, 80, 0);
+  background-color: rgba(192, 255, 204, 0.199);
+border: 1px solid darkgreen;
+}
+.contact-card input::placeholder{
+  color: darkgreen;
+}
+
+.contact-card input:focus{
+  background-color: rgba(58, 137, 58, 0.208);
+}
+>>>>>>> af8dd9d11e4d459ff9d66de24f659e31373f46c3
 .inside-contact {
   /* background: #000; */
   width: 90%;
 }
+<<<<<<< HEAD
 
+=======
+.contact-form{
+  display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 70%;
+    height: 430px;
+    /* padding: 50px; */
+    margin: auto;
+}
+>>>>>>> af8dd9d11e4d459ff9d66de24f659e31373f46c3
 form {
   display: flex;
   flex-direction: column;

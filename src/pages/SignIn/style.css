@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -5,6 +6,9 @@
   padding: 75px 0px;
   background: #f1f1f1;
   height: auto;
+}
+.btn :hover{
+  color: white ;
 }
 .loginWrapper .card {
   width: 650px;
@@ -24,6 +28,25 @@
 }
 .loginWrapper .card fieldset {
   border-radius: 10px !important;
+}
+form{
+  height: auto !important;
+}
+.form-group span{
+  font-size: 1rem !important;
+}
+.loginWrapper .card button{
+  padding-left: 0px !important;
+}
+#email{
+  font-size: xx-large;
+}
+.h-size{
+  font-size: 4rem !important;
+  color: #3bb77e;
+}
+.card{
+  border-radius: 25px !important;
 }
 .loginWrapper .card .MuiFormLabel-root {
   line-height: 43px !important;
@@ -55,11 +78,17 @@
   color: #000 !important;
   font-size: 18px !important;
 }
+.signInOr button:hover{
+  color: white !important;
+}
 .signInOr button img {
   width: 40px;
   margin-right: 15px;
+  
 }
-
+.loginWrapper{
+  height: 1000px;
+}
 .formLoader {
   position: absolute !important;
   background: rgba(255, 255, 255, 0.5) !important;
@@ -78,5 +107,19 @@
     padding: 40px;
     border: 0px !important;
     height: auto;
+  }
+}
+.animator{
+  animation: animate forwards 1s !important;
+ 
+}
+@keyframes animate {
+  from{
+    opacity: 0;
+    position: relative;
+    top: 200px;
+  }to{
+    top: 0px;
+    opacity: 1;
   }
 }

@@ -264,7 +264,11 @@ button {
 }
 
 .item {
+<<<<<<< HEAD
   background-color: aliceblue;
+=======
+  background-color: #f0fffae8;
+>>>>>>> af8dd9d11e4d459ff9d66de24f659e31373f46c3
 }
 
 .w-100 {
