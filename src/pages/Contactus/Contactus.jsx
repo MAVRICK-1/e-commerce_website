@@ -1,6 +1,6 @@
-import { Button, TextField, TextareaAutosize, Typography } from '@mui/material';
+import { Button, TextareaAutosize, TextField, Typography } from '@mui/material';
 import React, { useRef, useState } from 'react';
-import { Slide, ToastContainer, toast } from 'react-toastify';
+import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './contactus.css';
 
@@ -83,7 +83,7 @@ export default function Contactus() {
       theme: 'light',
       transition: Slide,
       closeButton: true,
-      style: { fontSize: '16px' } // Increase font size of the toast
+      style: { fontSize: '16px' }
     });
   };
 
@@ -96,8 +96,8 @@ export default function Contactus() {
               Get In Touch
             </h1>
             <div className="inside-contact">
-              <form ref={form}>
-                {/* <div className="contact-input contact-input-light">
+              <form ref={form} onSubmit={handleSubmit}>
+                <div className="contact-input contact-input-light">
                   <TextField
                     id="user_name"
                     type="text"
@@ -110,9 +110,6 @@ export default function Contactus() {
                     value={formFields.user_name}
                     error={!!inputErrors.user_name}
                     helperText={inputErrors.user_name}
-                    InputProps={{
-                      style: { fontSize: '1.2rem', padding: '10px' } // Increase input text size
-                    }}
                   />
                 </div>
                 <br />
@@ -129,12 +126,11 @@ export default function Contactus() {
                     error={!!inputErrors.user_email}
                     helperText={inputErrors.user_email}
                     InputProps={{
-                      style: { fontSize: '1.2rem', padding: '10px' } // Increase input text size
+                      style: { fontSize: '1.2rem', padding: '10px' }
                     }}
                   />
                 </div>
                 <br />
-
                 <div className="contact-input contact-input-light">
                   <TextareaAutosize
                     id="message"
@@ -149,7 +145,7 @@ export default function Contactus() {
                       height: '100px',
                       padding: '10px',
                       fontSize: '1.2rem'
-                    }} // Increase textarea text size
+                    }}
                     className={inputErrors.message ? 'error' : ''}
                   />
                   {inputErrors.message && (
@@ -167,25 +163,13 @@ export default function Contactus() {
                   <Button
                     type="submit"
                     className="btn btn-g btn-lg w-100"
-                    style={{ fontSize: '1.2rem' }} // Increase button text size
+                    style={{ fontSize: '1.2rem' }}
                   >
-                    Sign In
+                    Submit
                   </Button>
                 </div>
               </form>
-              <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-                transition={Slide}
-              />
+              <ToastContainer />
             </div>
           </div>
         </React.Fragment>
