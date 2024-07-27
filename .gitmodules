@@ -1,0 +1,3 @@
+[submodule "e-commerce_website"]
+  path = e-commerce_website
+  url = https://github.com/MAVRICK-1/e-commerce_website.git
