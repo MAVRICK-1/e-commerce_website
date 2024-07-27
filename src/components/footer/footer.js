@@ -171,7 +171,7 @@ const Footer = () => {
           <div className="container-fluid">
             <div className="row">
               {fluid.map((item, index) => (
-                <div key={index} className="col">
+                <div key={index} className="col fluid-item">
                   <div className="box d-flex align-items-center w-100">
                     <span>
                       <img src={item.img} />
