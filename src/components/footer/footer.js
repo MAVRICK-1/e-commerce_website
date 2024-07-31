@@ -61,6 +61,7 @@ const Footer = () => {
       title: 'Company',
       data: [
         { link: '/AboutUs', text: 'About Us' },
+        { link: '/delivery', text: 'Delivery Information' },
         { link: '*', text: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
@@ -74,6 +75,12 @@ const Footer = () => {
       title: 'Corporate',
       data: [
         { link: '/AboutUs', title: 'About Us' },
+        { link: '/delivery', title: 'Delivery Information' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
+        { link: '/contact', text: 'Contact Us' },
+        { link: '/support', text: 'Support Center' },
+        { link: '/careers', text: 'Careers' },
         { link: '*', title: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
@@ -87,6 +94,12 @@ const Footer = () => {
       title: 'Popular',
       data: [
         { link: '/AboutUs', text: 'About Us' },
+        { link: '/delivery', text: 'Delivery Information' },
+        { link: '/privacy-policy', text: 'Privacy Policy' },
+        { link: '/termsandconditions', text: 'Terms & Conditions' },
+        { link: '/contact', text: 'Contact Us' },
+        { link: '/support', text: 'Support Center' },
+        { link: '/careers', text: 'Careers' },
         { link: '*', text: 'Delivery Information' },
         { link: '/privacy-policy', text: 'Privacy Policy' },
         { link: '/termsandconditions', text: 'Terms & Conditions' },
