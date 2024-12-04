@@ -4,8 +4,13 @@ import { categories, blogs } from './data';
 import { ArrowRightAltRounded } from '@mui/icons-material';
 import Slider from 'react-slick';
 import { MyContext } from '../../App';
+import { color, motion } from "framer-motion";
 
 function Blog() {
+  const eventVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  };
   return (
     <>
       <section class="top">
@@ -20,11 +25,22 @@ function Blog() {
       />
       {categories.map((cat) => {
         return (
+          <motion.div
+          initial="hidden"
+          whileInView="visible"
+          // whileHover={{ scale: 1.10 }}
+          viewport={{ once: true }}
+          variants={eventVariants}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        
+         
+        >  
           <StoriesList
             title={cat.name}
             categoryId={cat.id}
             list={blogs.filter((blog) => blog.category === cat.id).slice(0, 4)}
           />
+          </motion.div>
         );
       })}
     </>

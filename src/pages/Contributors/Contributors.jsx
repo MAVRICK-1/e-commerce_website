@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './style.css';
 import axios from 'axios';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { color, motion } from "framer-motion";
 
 function Contributors() {
   const [contributors, setContributors] = useState([]);
-
+  const eventVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
     async function fetchContributors() {
@@ -27,6 +31,16 @@ function Contributors() {
       <h1 className="contributor-text">Our Contributors</h1>
       <Grid className="container-grid">
         {contributors.map((contributor) => (
+          <motion.div
+          initial="hidden"
+          whileInView="visible"
+          // whileHover={{ scale: 1.10 }}
+          viewport={{ once: true }}
+          variants={eventVariants}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+        
+         
+        >  
           <Grid item key={contributor.id}>
             <Card className="card">
               <a
@@ -70,6 +84,7 @@ function Contributors() {
               </CardContent>
             </Card>
           </Grid>
+          </motion.div>
         ))}
       </Grid>
     </div>
