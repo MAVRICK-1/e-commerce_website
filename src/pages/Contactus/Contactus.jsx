@@ -1,11 +1,11 @@
+import { Button, TextareaAutosize, TextField, Typography } from '@mui/material';
 import React, { useRef, useState } from 'react';
+import { Slide, toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './contactus.css';
-import emailjs from '@emailjs/browser';
-import { Button, Snackbar, TextareaAutosize, Typography } from '@mui/material';
-import TextField from '@mui/material/TextField';
 
 export default function Contactus() {
-  let form = useRef();
+  const form = useRef();
   const [formFields, setFormFields] = useState({
     user_email: '',
     user_name: '',
@@ -16,74 +16,77 @@ export default function Contactus() {
     user_name: '',
     message: ''
   });
-  const serviceId = '';
-  const templateId = '';
-  const publicKey = '';
 
   const validateEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
+
   const onChangeField = (e) => {
     const name = e.target.name;
     const value = e.target.value;
 
     let errors = { ...inputErrors };
 
-    // Validate email
     if (name === 'user_email') {
       errors.user_email = !validateEmail(value) ? 'Invalid email address' : '';
     }
 
-    if (name == 'user_name' && value.length > 0) {
+    if (name === 'user_name' && value.length > 0) {
       errors.user_name = '';
     }
-    if (name == 'message' && value.length > 0) {
+    if (name === 'message' && value.length > 0) {
       errors.message = '';
     }
+
     setInputErrors(errors);
     setFormFields((prevFormFields) => ({
       ...prevFormFields,
       [name]: value
     }));
   };
-  const handleClick = (e) => {
-    e.preventDefault();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
     let errors = { ...inputErrors };
 
-    if (formFields.user_name.length == 0) {
+    if (formFields.user_name.length === 0) {
       errors.user_name = 'Please Enter Name';
-      setInputErrors(errors);
-      return;
-    } else if (formFields.message.length == 0) {
-      errors.message = 'please Enter message';
-      setInputErrors(errors);
-      return;
-    } else if (formFields.user_email.length == 0) {
-      errors.user_email = 'please Enter Email';
-      setInputErrors(errors);
+    }
+    if (formFields.message.length === 0) {
+      errors.message = 'Please Enter Message';
+    }
+    if (formFields.user_email.length === 0) {
+      errors.user_email = 'Please Enter Email';
+    }
+
+    setInputErrors(errors);
+
+    if (errors.user_email || errors.message || errors.user_name) {
       return;
     }
-    if (
-      inputErrors.user_email ||
-      inputErrors.message ||
-      inputErrors.user_name
-    ) {
-      return;
-    }
-    console.log(formFields);
-    emailjs
-      .sendForm(serviceId, templateId, form.current, {
-        publicKey: publicKey
-      })
-      .then(
-        () => {
-          console.log('SUCCESS!');
-        },
-        (error) => {
-          console.log('FAILED...', error);
-        }
-      );
+
+    setFormFields({
+      user_email: '',
+      user_name: '',
+      message: ''
+    });
+
+    toast.success('Sent Successfully!', {
+      position: 'top-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      transition: Slide,
+      closeButton: true,
+      style: { fontSize: '16px' }
+    });
   };
+
   return (
     <div className="contact-section-light">
       <div className="contact-parent">
@@ -93,53 +96,41 @@ export default function Contactus() {
               Get In Touch
             </h1>
             <div className="inside-contact">
-              <form ref={form} className='contact-form'>
-                {/* <div className="contact-input contact-input-light">
+              <form ref={form} onSubmit={handleSubmit}>
+                <div className="contact-input contact-input-light">
                   <TextField
                     id="user_name"
                     type="text"
                     name="user_name"
-                    autoFocus="on"
+                    autoFocus
                     autoComplete="off"
                     placeholder="Your Name"
-                    
+                    style={{ width: '100%' }}
                     onChange={onChangeField}
                     value={formFields.user_name}
-                    error={inputErrors.user_name}
+                    error={!!inputErrors.user_name}
+                    helperText={inputErrors.user_name}
                   />
-                  {inputErrors.user_name && (
-                    <Typography
-                      variant="caption"
-                      style={{ fontSize: '1.4rem' }}
-                      sx={{ color: 'red', padding: '5px' }}
-                    >
-                      {inputErrors.user_name}
-                    </Typography>
-                  )}
                 </div>
+                <br />
                 <div className="contact-input contact-input-light">
                   <TextField
                     id="user_email"
                     type="email"
                     name="user_email"
                     placeholder="Your Email"
-                    
                     onChange={onChangeField}
                     value={formFields.user_email}
                     autoComplete="email"
-                    error={inputErrors.user_email}
+                    style={{ width: '100%' }}
+                    error={!!inputErrors.user_email}
+                    helperText={inputErrors.user_email}
+                    InputProps={{
+                      style: { fontSize: '1.2rem', padding: '10px' }
+                    }}
                   />
-                  {inputErrors.user_email && (
-                    <Typography
-                      variant="caption"
-                      style={{ fontSize: '1.4rem' }}
-                      sx={{ color: 'red', padding: '5px' }}
-                    >
-                      {inputErrors.user_email}
-                    </Typography>
-                  )}
                 </div>
-
+                <br />
                 <div className="contact-input contact-input-light">
                   <TextareaAutosize
                     id="message"
@@ -147,62 +138,38 @@ export default function Contactus() {
                     autoComplete="off"
                     name="message"
                     placeholder="Your Message"
-                    
                     onChange={onChangeField}
                     value={formFields.message}
-                    error={inputErrors.message}
+                    style={{
+                      width: '100%',
+                      height: '100px',
+                      padding: '10px',
+                      fontSize: '1.2rem'
+                    }}
+                    className={inputErrors.message ? 'error' : ''}
                   />
                   {inputErrors.message && (
                     <Typography
                       variant="caption"
-                      style={{ fontSize: '1.4rem' }}
+                      style={{ fontSize: '1rem' }}
                       sx={{ color: 'red', padding: '5px' }}
                     >
                       {inputErrors.message}
                     </Typography>
                   )}
-                  
-                </div> */}
-                <input
-                  id="user_name"
-                  name="user_name"
-                  autoFocus="on"
-                  autoComplete="off"
-                  onChange={onChangeField}
-                  value={formFields.user_name}
-                  error={inputErrors.user_name}
-                  type="text"
-                  placeholder="Your Name"
-                />
-                <input
-                  id="user_email"
-                  type="email"
-                  name="user_email"
-                  placeholder="Your Email"
-                  onChange={onChangeField}
-                  value={formFields.user_email}
-                  autoComplete="email"
-                  error={inputErrors.user_email}
-                />
-                <input
-                  id="message"
-                  type="text"
-                  autoComplete="off"
-                  name="message"
-                  placeholder="Your Message"
-                  onChange={onChangeField}
-                  value={formFields.message}
-                  error={inputErrors.message}
-                />
+                </div>
+                <br />
                 <div className="submit-btn">
                   <Button
+                    type="submit"
                     className="btn btn-g btn-lg w-100"
-                    onClick={handleClick}
+                    style={{ fontSize: '1.2rem' }}
                   >
-                    Sign In
+                    Submit
                   </Button>
                 </div>
               </form>
+              <ToastContainer />
             </div>
           </div>
         </React.Fragment>
